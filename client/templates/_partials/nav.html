@@ -1,0 +1,351 @@
+<template name="nav">
+  <div id="layout" class="full">
+    {{> login }}
+    {{> signUp }}
+    {{> resetMailTemplate }}
+    {{> NewPasswordTemplate }}
+    <header id="header" class="glue exampleHeader">
+      <div class="row clearfix">
+        <div class="little-head" id="exampleHeader">
+          <div class="social social-head">
+            <a href="http://twitter.com/behzadg1" class="bottomtip" title="Follow us on Twitter" target="_blank"><i class="icon-twitter"></i></a>
+            <a href="http://fb.com/theme20" class="bottomtip" title="Like us on Facebook" target="_blank"><i class="icon-facebook"></i></a>
+            <a href="https://plus.google.com/u/0/104807493509867599773" class="bottomtip" title="GooglePlus" target="_blank"><i class="icon-google-plus"></i></a>
+            <a href="http://instagram.com/" class="bottomtip" title="instagram" target="_blank"><i class="icon-instagram"></i></a>
+            <a href="http://dribbble.com/behzadg" class="bottomtip" title="Dribbble" target="_blank"><i class="icon-dribbble"></i></a>
+            <a href="https://soundcloud.com/behzad-gh" class="bottomtip" title="Soundcloud" target="_blank"><i class="icon-cloud"></i></a>
+            <a href="http://reverbnation.com/" class="bottomtip" target="_blank" title="Reverbnation"><i class="icon-star"></i></a>
+            <a href="http://youtube.com/" class="bottomtip" target="_blank" title="YouTube"><i class="icon-youtube-play"></i></a>
+            <a href="http://youtube.com/" class="bottomtip" target="_blank" title="Flickr"><i class="icon-flickr"></i></a>
+            <a href="http://www.linkedin.com/" class="bottomtip" title="Linkedin" target="_blank"><i class="icon-linkedin"></i></a>
+          </div><!-- end social -->
+          <div class="search">
+            <form action="search.html" id="search" method="get">
+              <input id="inputhead" name="search" type="text" onfocus="if (this.value=='Start Searching...') this.value = '';" onblur="if (this.value=='') this.value = 'Start Searching...';" value="Start Searching..." placeholder="Start Searching ..."/>
+              <button type="submit"><i class="icon-search"></i></button>
+            </form><!-- end form -->
+          </div><!-- search -->
+        </div><!-- little head -->
+        <div id="info">
+            {{#if currentUser }}
+              {{> UserConnected }} 
+            {{else}}
+              {{> signUpHeader }}
+            {{/if}}
+          </div>
+      </div><!-- row -->
+      <div class="headdown">
+        <div class="row clearfix">
+          <nav>
+            <ul class="sf-menu">
+              <li class="current selectedLava"><a href="{{pathFor 'homeIndex'}}">Home<span class="sub">start here</span></a>
+                <ul>
+                  <li><a href="index_revolution.html">Home 2 - Revolution</a></li>
+                  <li><a href="index_modern.html">Home 3 - Modern</a></li>
+                  <li><a href="index_footer.html">Home with Footer</a></li>
+                  <li><a href="index_loading.html">Home with Loading</a></li>
+                </ul>
+              </li>
+              <li><a href="index.html">Features<span class="sub">remix all features</span></a>
+                <ul>
+                  <li><a href="#">Shortcodes</a>
+                    <ul>
+                      <li><a href="shortcode_accordion.html">Accordion</a></li>
+                      <li><a href="shortcode_buttons.html">Buttons</a></li>
+                      <li><a href="#">Typography</a>
+                        <ul>
+                          <li><a href="shortcode_columns.html">Grid Columns</a></li>
+                          <li><a href="shortcode_quote.html">Quote</a></li>
+                          <li><a href="shortcode_list_styles.html">List Styles</a></li>
+                          <li><a href="shortcode_googlefonts.html">Google Fonts</a></li>
+                          <li><a href="shortcode_dropcaps.html">Dropcaps</a></li>
+                          <li><a href="shortcode_divider_lines.html">Divider Lines</a></li>
+                          <li><a href="shortcode_highlights.html">Highlights</a></li>
+                        </ul>
+                      </li>
+                      <li><a href="shortcode_tables.html">Tables</a></li>
+                      <li><a href="shortcode_lightbox.html">Lightbox</a></li>
+                      <li><a href="shortcode_googlemap.html">Google Map</a></li>
+                      <li><a href="shortcode_video.html">Video</a></li>
+                      <li><a href="shortcode_social_icons.html">Retina Social Icons</a></li>
+                      <li><a href="shortcode_tab.html">Tab</a></li>
+                      <li><a href="shortcode_toggle.html">Toggle</a></li>
+                      <li><a href="shortcode_message_box.html">Message box</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="shop.html">Shop</a>
+                    <ul>
+                      <li><a href="shop.html">Shop Page</a></li>
+                      <li><a href="shop_product.html">Shop Product</a></li>
+                      <li><a href="shop_cart.html">Shopping Cart</a></li>
+                      <li><a href="shop_checkout.html">Shop Checkout</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="under_construction.html">Under Construction</a></li>
+                  <li><a href="icons.html"><i class="icon-microphone mi"></i>660 Retina Icons</a></li>
+                  <li><a href="#"><i class="icon-caret-right mi"></i>3rd Level</a>
+                    <ul>
+                      <li><a href="#">1st Menu</a></li>
+                      <li><a href="#">2nd Menu</a></li>
+                      <li><a href="#">Another Sub</a>
+                        <ul>
+                          <li><a href="#">1st Menu</a></li>
+                           <li><a href="#">2nd Menu</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="mp3s.html">MP3<span class="sub">full archive</span></a></li>
+              <li><a href="videos.html">Video<span class="sub">latest clips</span></a></li>
+              <li><a href="gallery4.html">Portfolio<span class="sub">Photo Gallery</span></a>
+                <ul>
+                  <li><a href="gallery4.html">Gallery 4 Column</a></li>
+                  <li><a href="gallery3.html">Gallery 3 Column</a></li>
+                  <li><a href="gallery2.html">Gallery 2 Column</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Blog<span class="sub">more templates</span></a>
+                <ul>
+                  <li><a href="rtl.html">RTL Support</a></li>
+                  <li><a href="events.html">Events</a></li>
+                  <li><a href="mp3_single_wide.html">MP3 Single Wide</a></li>
+                  <li><a href="mp3_single_half.html">MP3 Single Half</a></li>
+                  <li><a href="video_single_wide.html">Video Single Wide</a></li>
+                  <li><a href="video_single_half.html">Video Single Half</a></li>
+                  <li><a href="fullwide.html">Fullwide Page</a></li>
+                  <li><a href="support_forum.html">Support Forum</a></li>
+                  <li><a href="contact.html">Contact</a></li>
+                  <li><a href="contact2.html">Contact 2</a></li>
+                  <li><a href="search.html">Search Result</a></li>
+                  <li><a href="404.html">Custom 404</a></li>
+                  <li><a href="archive.html">Archive</a></li>
+                  <li><a href="news_single.html">News Single</a></li>
+                </ul>
+              </li>
+              <li><a href="blog-right-sidebar.html">Contact<span class="sub">latest news</span></a>
+                <ul>
+                  <li><a href="blog-right-sidebar.html">Blog</a></li>
+                  <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
+                  <li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
+                  <li><a href="blog-without-sidebar.html">Blog Without Sidebar</a></li>
+                  <li><a href="blog-single_wide.html">Blog Single Wide</a></li>
+                  <li><a href="blog-single_half.html">Blog Single Half</a></li>
+                  <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
+                  <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
+                </ul>
+              </li>
+            </ul><!-- end menu -->
+          </nav><!-- end nav -->
+        </div><!-- row -->
+      </div><!-- headdown -->
+    </header><!-- end header -->
+  </div><!-- end layout -->
+  </template>
+  <template name="signUpHeader" >
+    <div id="Login_PopUp_Link" class="sign-btn tbutton small">
+      <span id="signInSpan">Sign In</span>
+    </div>
+  </template>
+   <template name="UserConnected">  
+    <div class="tempwrap">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" id="toggedfirst">
+        <div id="UserConnected" >
+          <a href="javascript:;" id ="showProfile" class="dropdown-toggle" data-toggle="dropdown">
+            <img class="img-rounded inline" id="avatarProf" style="height: 32px; margin-top: 4px; " src="../../images/avatarProfileM2.png" />
+            <label>{{currentUser.profile.name}}</label>
+          </a>
+        </div>  
+          <ul class="dropdown-menu" id="ProfileMenu">
+            <li><a href="{{pathFor 'homeProfile'}}">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+            <li class="nav-divider"></li>
+            <li><a href="#">Stats <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+            <li class="nav-divider"></li>
+            <li id="profileMessages"><a href="#" >Messages <span class="badge pull-right"> 42 </span></a></li>
+            <li class="nav-divider"></li>
+            <li><a href="#">Notifications <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+            <li class="nav-divider"></li>
+            <li><a href="#" id="logOut">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+          </ul>
+        </li>
+      </ul> 
+   </div> 
+  </template>
+  <template name="login">
+      <div id="popupLogin">
+        <div class="def-block widget">
+          <h4> Login </h4><span id="errorMsgLgn"></span><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+            {{> templateForm}}
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupLoginClose">x</div>
+      </div>
+      <div id="LoginBackgroundPopup"></div>
+  </template>
+  <template name="signUp">
+    <div id="popupSignUp">
+      <div class="def-block widget">
+        <h4> Join </h4><span id="errorMsgSgnUp"></span><span class="liner"></span>        
+        <div class="widget-content row-fluid" id="signupwrapper">
+          {{> templateSignUpForm}}
+        </div><!-- content -->
+      </div><!-- widget -->
+      <div id="popupSignUpClose">x</div>
+    </div>
+    <div id="bgsup"></div>
+</template>    
+<template name="templateSignUpForm">
+ <form id="popup_signup_form">
+            <!--<label for="signup_username" class="liner">username</label>-->
+            <!--username-->
+            <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="your username" title="your username">
+                <i class="icon-user registerForm" alt="your username" title="your username"></i>
+              </span>
+              <input type="text" name="signup_username" title="your username" id="signup_username" onfocus="if (this.value=='username') this.value = '';" onblur="if (this.value=='') this.value = 'username';" value="username" placeholder="username">
+              <i id="validUsername_sgnUp" class="glyphicon"></i>
+            </div>
+            <!--first name-->
+             <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="your first name" title="your firstname">
+                <i class="icon-user registerForm" alt="your first name" title="your username"></i>
+              </span>
+              <input type="text" name="signup_firstname" title="your first name" id="signup_firstname" onfocus="if (this.value=='first name') this.value = '';" onblur="if (this.value=='') this.value = 'first name';" value="first name" placeholder="first name">
+              <i id="validFisrtName_sgnUp" class="glyphicon"></i>
+            </div>
+            <!--last name-->
+             <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="your last name" title="your last name">
+                <i class="icon-user registerForm" alt="your last name" title="your last name"></i>
+              </span>
+              <input type="text" name="signup_lastname" title="your last name" id="signup_lastname" onfocus="if (this.value=='last name') this.value = '';" onblur="if (this.value=='') this.value = 'last name';" value="last name" placeholder="last name">
+              <i id="validLastName_sgnUp" class="glyphicon"></i>
+            </div>
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="your email" title="your email"><i class="icon-envelope registerForm" alt="your email" title="your email"></i></span>
+                 <input type="text" alt="your email" title="your email" name="signup_email" id="signup_email" onfocus="if (this.value=='email') this.value = '';" onblur="if (this.value=='email') this.value = '';" value="email" placeholder="youremail@example.com">
+                 <i id="validEmail_sgnUp" class="glyphicon"></i>
+            </div>
+            <!--user type-->
+             <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="your choice " title="your choice">
+                <i class="icon-user registerForm" alt="your choice" title="your choice"></i>
+              </span>
+              <label id="userTypeLable">I want to</label>
+              <div class="dropdown" id="divToggleType">
+                  <button id="Utype" class="btn dropdown-toggle" type="button" data-toggle="dropdown">Select a choice
+                     <i class="glyphicon glyphicon-chevron-right"></i>
+                  </button>
+                    <ul class="dropdown-menu" id="choiceType">
+                       <li><a href="#">book bands</a></li>
+                       <li><a href="#">join as an agent</a></li>
+                       <li><a href="#">join as an artist</a></li>
+                       <li><a href="#">join as a band</a></li>
+
+                    </ul>
+              </div>
+            </div>    
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt=" password" title=" your password"><i class="icon-lock registerForm" alt="your password" title="your password"></i></span>
+                 <input type="password" name="login_password" id="signup_password" onfocus="if (this.value=='password') this.value = '';" onblur="if (this.value=='') this.value = 'password';" value="password" placeholder="password">
+                 <i id="viewPasswd_sgnUp" class="glyphicon glyphicon-eye-open"></i>
+                 <i id="validPasswd_sgnUp" class="glyphicon"></i>
+            </div>
+            <div class="input-group input-group-lg">
+                <span class="input-goup-addon" alt="retype password" title="confirm your password">
+                  <i class="icon-lock registerForm"></i>
+                </span>
+                <input type="password" name="signup_retypePassword" id="signup_retypePassword" onfocus="if (this.value=='password') this.value = '';" onblur="if (this.value=='password' || this.value=='' ) this.value = 'password';" value="password" placeholder="confirm password">
+                <i id="viewRePasswd_sgnUp" class="glyphicon glyphicon-eye-open"></i>
+                <i id="validRePsswd_sgnUp" class="glyphicon"></i>
+            </div>
+                <a href="#" id="signup_register" class="tbutton small"><span>Register</span></a>
+                <a href="#" id="signup_cancel" class="tbutton color2 small"><span>Cancel</span></a>
+  </form><!-- login form -->
+</template>
+  <template name="templateForm">
+    <form id="popup_login_form">
+              <!--<label for="signup_username" class="liner">username</label>-->
+              <div class="input-group input-group-lg">
+                <span class="input-goup-addon" alt="your username" title="your username"><i class="icon-user registerForm" alt="your username" title="your username"></i></span><span class="tooltip">your username</span>
+                <input type="text" name="login_username" title="your username" id="login_username" onfocus="if (this.value=='username') this.value = '';" onblur="if (this.value=='') this.value = 'username';" value="username" placeholder="username">
+                <!--<label for="signup_email" class="liner">email</label>-->
+                <i id="validUsername" class="glyphicon"></i> 
+              </div>
+              <div class="input-group input-group-lg">
+                <span class="input-goup-addon" alt=" password" title=" your password"><i class="icon-lock registerForm" alt="your password" title="your password"></i></span>
+                <input type="password" name="login_password" id="login_password" onfocus="if (this.value=='password') this.value = '';" onblur="if (this.value=='') this.value = 'password';" value="password" placeholder="password">
+                <i id="validPassword" class="glyphicon"></i> 
+                <!--<label for="login_retypePassword" class="liner">Retype password</label>-->
+              </div> 
+                <a  id="signin_login" class="tbutton small"><span>Login</span></a>
+                <a  id="signin_register" class="tbutton color2 small"><span>Register</span></a>
+               <!--<div >-->
+                <button type="button" id="signin_facebook" class="btn btn-primary">Login with
+                  <i class="icon-facebook" id="iconFacebook"></i>
+                </button>
+                <button  type="button" id="signin_twitter" class="btn btn-primary">Login with
+                 <i class="icon-twitter Twitter" id="iconTwitter" ></i>
+                </button>
+                <div>
+                  <a  id="forgetPassword" class="forgetPassword" ><span>Forgot Password</span></a> 
+                </div>
+               <!--</div>  -->
+    </form><!-- login form -->
+  </template>
+<template name="resetMailTemplate" >
+  <div id="popupResetPassword">
+      <div class="def-block widget">
+        <h4> Reset Password  </h4><span class="liner"></span>        
+        <div class="widget-content row-fluid">
+          {{> resetform}}
+        </div><!-- content -->
+      </div><!-- widget -->
+      <div id="popupResetPasswordClose">x</div>
+  </div>
+    <div id="rst_pw_bg"></div> 
+</template>
+<template name="resetform">
+  <form id="pop_rstpwd_frm">
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="your email" title="your email"><i class="icon-envelope registerForm" alt="your email" title="your email"></i></span>
+                 <input type="text" alt="your email" title="your email" name="reset_email" id="reset_email" onfocus="if (this.value=='email') this.value = '';" onblur="if (this.value=='email') this.value = '';" value="email" placeholder="youremail@example.com">
+            </div> 
+                
+                <a href="#" id="reset_mail_send" class="tbutton small"><span>Send</span></a>
+                <a href="#" id="reset_mail_cancel" class="tbutton color2 small"><span>Cancel</span></a>
+          </form><!-- login form -->
+</template>
+<template name="NewPasswordTemplate" >
+ <div id="popupNewPassword">
+      <div class="def-block widget">
+        <h4> New Password  </h4><span class="liner"></span>        
+        <div class="widget-content row-fluid">
+          {{> newPasswordForm}}
+        </div><!-- content -->
+      </div><!-- widget -->
+      <div id="popup_new_pass">x</div>
+    </div>
+    <div id="new_pw_bg"></div> 
+</template> 
+<template name="newPasswordForm">
+  <form id="popup_newPassword_form">
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt=" password" title=" your new password"><i class="icon-lock registerForm" alt="your new password" title="your new password"></i></span>
+                 <input type="password" name="login_password" id="signup_password" onfocus="if (this.value=='password') this.value = '';" onblur="if (this.value=='') this.value = 'password';" value="password" placeholder="password">
+                <!--<label for="login_retypePassword" class="liner">Retype password</label>-->
+            </div>
+            <div class="input-group input-group-lg">
+                <span class="input-goup-addon" alt="retype new password" title="retype new password">
+                  <i class="icon-lock registerForm"></i>
+                </span>
+                <input type="password" name="login_retypePassword" id="signup_retypePassword" onfocus="if (this.value=='password') this.value = '';" onblur="if (this.value=='password' || this.value=='' ) this.value = 'password';" value="password" placeholder="retype new password">
+            </div>  
+                <a href="#" id="new_password" class="tbutton small"><span>Change</span></a>
+                <a href="#" id="new_password_cancel" class="tbutton color2 small"><span>Cancel</span></a>
+  </form><!-- login form -->
+</template>
+ 

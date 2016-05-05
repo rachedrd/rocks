@@ -1,0 +1,74 @@
+<template name="homeProfile">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div class="cover2">
+    <div class="fb-profile">
+        <img align="left" class="fb-image-lg" src="../../images/5.jpeg" alt="Profile image example"/>
+        <img align="left" class="fb-image-profile thumbnail" src="../../images/avatarProfileM2.png" alt="Profile image example"/>
+        <div class="fb-profile-text">
+            <h1>{{currentUser.profile.name}}</h1>
+            <p>{{currentUser.profile.name}} is {{currentUser.profile.type}}</p>
+        </div>
+         <table class="wallInfoTable">
+                    <tbody>
+                      <tr>
+                        <td>full name:</td>
+                        <td>{{currentUser.profile.firstname}} {{currentUser.profile.lastname}} </td>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <td>{{currentUser.emails.[0].address}}</td>
+                      </tr>
+                      <tr>
+                        <td>Date of Birth</td>
+                        {{# if currentUser.profile.birthdate }}
+                        		<td>{{currentUser.profile.birthdate}}</td>
+                        {{else}}
+                               		<td>Click here to set your birthday</td>
+                        {{/if}}		
+                      </tr>
+                      <tr>
+                        <td>Gender</td>
+                        {{# if currentUser.profile.gender }}
+                            <td>{{currentUser.profile.gender}}</td>
+                        {{else}}
+                                  <td>Click here to set your gender</td>
+                        {{/if}}   
+                      </tr>
+                      <tr>
+                        <td>Home Address</td>
+                        {{# if currentUser.profile.country }}
+                            <td>{{currentUser.profile.country}}</td>
+                        {{else}}
+                                  <td>Click here to set your address</td>
+                        {{/if}}  
+                      </tr>
+                      <tr>
+                        <td>Phone Number</td>
+                        {{# if currentUser.profile.phoneNumber }}
+                            <td>{{currentUser.profile.phoneNumber}}(mobile)</td>
+                        {{else}}
+                                  <td>Click here to set your phne number</td>
+                        {{/if}}  
+                      </tr>
+                      <tr>
+                        <td>Publicity Code</td>
+                        <td>{{currentUser.profile.publicityCode}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Status:</td>
+                        <td>{{currentUser.profile.Status}}</td>
+                      </tr>
+                      <tr>
+                        <td>Publicity Counter:</td>
+                        <td>{{currentUser.profile.publicityCounter}}</td>
+                      </tr>
+
+
+                    </tbody>
+                  </table>
+     
+    </div>
+
+</div><!-- /container -->  
+</template>
