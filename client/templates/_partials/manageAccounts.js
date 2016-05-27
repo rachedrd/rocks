@@ -1,7 +1,76 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
+import { Mongo } from 'meteor/mongo';
+import { Tasks } from '../../../imports/api/tasks.js';
+import { Images } from '../../../imports/api/images.js';
+Meteor.startup (function(){
+$.getScript('../js/modernizr.custom.63321.js');
+$.getScript('../js/jquery.stapel.js');
+$.getScript('../js/jquery.prettyPhoto.js');
+$.getScript('../js/jquery.flexslider-min.js');
+$.getScript('../js/jquery.nicescroll.min.js');
+$.getScript('../js/twitter/jquery.tweet.js');
+$.getScript('../js/theme20.js');
+$.getScript('../js/abbCostume.js');
+});
+
 var count = new ReactiveVar(false);
+ /*
+  uploader.send(document.getElementById('input').files[0], function (error, downloadUrl) {
+    if (error) {
+      // Log service detailed response
+      console.error('Error uploading', uploader.xhr.response);
+      alert (error);
+    }
+    else {
+      Meteor.users.update(Meteor.userId(), {$push: {"profile.files": downloadUrl}});
+    }
+  });
+  Template.progressBar.helpers({
+  progress: function () {
+    return Math.round(this.uploader.progress() * 100);
+  }
+});
+Template.myPicture.helpers({
+  url: function () {
+    return this.uploader.url(true);
+  }
+});
+*/
+Template.body.helpers({
+  tasks() {
+   return Tasks.find({});
+   //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
+
+  },
+  /*images() {
+   return Images.find({});
+   //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
+
+  },*/
+
+});
+Template.body.helpers({
+  /*tasks() {
+   return Tasks.find({});
+   //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
+
+  },*/
+  /*images() {
+   return Images.find({});
+   //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
+
+  },*/
+
+});
+/*Template.homeProfile.helpers({
+  images() {
+   return Images.find({});
+   //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
+
+  },
+});*/
 Template.templateSignUpForm.events({
 	'click #signup_register' : function(evt, t) 
 	{             

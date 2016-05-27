@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Email } from 'meteor/email';
-import '../imports/api/Users.js';
+//import '../imports/api/Users.js';
+import '../imports/api/tasks.js';
 
 //smtp = {
     /*username: 'postmaster%40sandbox34ce7a7c610c427d9dce572def302b89.mailgun.org',

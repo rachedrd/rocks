@@ -1,4 +1,5 @@
 //social accounts configuartion file
+import { Mongo } from 'meteor/mongo';
 ServiceConfiguration.configurations.remove({
   service: "facebook"
 });
@@ -16,3 +17,15 @@ ServiceConfiguration.configurations.insert({
   consumerKey: "mKPyDdTVcY2lMJKRIpHXXQmPW",
   secret: "7hQUAhojXET16IM1FhuPylTsqN70v5VR7ni56uPhI7wtw648l1"
 });
+
+
+
+//CORS settings
+/*[
+  {
+    "origin": ["*"],
+    "responseHeader": ["*"],
+    "method": ["GET", "POST", "PUT", "HEAD"],
+    "maxAgeSeconds": 3000
+  }
+]*/

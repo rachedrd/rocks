@@ -1,7 +1,7 @@
 /**
  * jquery.stapel.js v1.0.0
  * http://www.codrops.com
- *
+ *  
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  * 
@@ -192,7 +192,7 @@
 		gutter : 40,
 		// the rotations degree for the 2nd and 3rd item 
 		// (to give a more realistic pile effect)
-		pileAngles : 2,
+		pileAngles : 0,
 		// animation settings for the clicked pile's items
 		pileAnimation : { 
 			openSpeed : 400,
@@ -415,7 +415,7 @@
 						$el.css( extraStyle ).data( 'extraStyle', extraStyle );
 					}
 					else if( pile.substr( 0, 6 ) !== 'nopile' ) {
-						$el.data( 'front', true ).append( '<div class="tp-title"><span>' + pile + '</span><span>' + len + '</span></div>' );
+						$el.data( 'front', true ).append( '<div class="removeAlbum"><span class="removeImage">X</span></div><div class="tp-title"><span>' + pile + '</span><span>' + len + '</span></div>' );
 					}
 
 					$el.css( styleCSS ).data( {
@@ -562,7 +562,8 @@
 						}
 						
 						fs = elem.finalPosition;
-						fs.transform = this.options.randomAngle && i !== p.index ? 'rotate(' + Math.floor( Math.random() * ( 5 + 5 + 1 ) - 5 ) + 'deg)' : 'none';
+						//fs.transform = this.options.randomAngle && i !== p.index ? 'rotate(' + Math.floor( Math.random() * ( 5 + 5 + 1 ) - 5 ) + 'deg)' : 'none';
+						fs.transform = this.options.randomAngle && i !== p.index ? 'rotate(' + 0 + 'deg)' : 'none';
 
 						if( !this.support ) {
 							$item.css( 'transform', 'none' );
@@ -621,6 +622,7 @@
 
 		},
 		_closePile : function() {
+		showDelte = 0;
 
 			var self = this;
 

@@ -1,11 +1,9 @@
 import { Template } from 'meteor/templating';
-import { Tasks } from '../api/Users.js';
-import { Mongo } from 'meteor/mongo';
-import './body.html';
+import { Tasks } from '../api/tasks.js';
+import { Images } from '../api/images.js';
 /*Template.body.helpers({
   tasks() {
-  	return Tasks;
-   //return Tasks.find({});
+   return Tasks.find({});
    //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
 
   },

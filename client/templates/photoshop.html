@@ -1,0 +1,163 @@
+<!--template name="homeProfile">
+    <div class="under_header">
+      <img src="../../images/assets/breadcrumbs1.png" alt="#">
+    </div>
+        <div class="page-content back_to_up">
+      <div class="row clearfix mb">
+        <div class="breadcrumbIn">
+          <ul>
+            <li><a href="index.html" class="toptip" original-title="Homepage"> <i class="icon-home"></i> </a></li>
+            <li> Gallery 4 Column </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row row-fluid clearfix mbf">
+        <div class="posts">
+          <div class="def-block" style="min-height: 400px;">
+          <div class="topbar">
+            <div id="close" class="tbutton small tback"><span> Back to Albums</span></div>
+            <h4 id="name">Photo Gallery</h4><span class="addAlbum">add new album</span><span class="liner"></span>
+          </div>
+          <ul id="tp-grid" class="tp-grid">
+            {{#each images}}
+            {{> task}}
+          {{/each}}
+          </ul>
+          {{> imageUploader}}
+          </div>
+        </div>
+      </div>
+    </div>
+     <li data-pile="Billie Jean" class="grid_3 lastLi " id="1">
+    <div class="removeDiv">
+    <span class="removeImage">X</span>
+    </div>
+    <a href="{{imageurl}}" rel="prettyPhoto[{{imageFolder}}]">
+      <img src="{{imageurl}}" alt="{{imageName}}" />
+    </a>
+  </li>
+</template>
+ <template name="album">
+</template>
+<template name="task">
+  <li data-pile="Billie Jean" class="grid_3" id="1">
+    <div class="removeDiv">
+    <span class="removeImage">X</span>
+    </div>
+      <a href="{{imageurl}}" rel="prettyPhoto[{{imageFolder}}]">
+      <img src="{{imageurl}}" alt="{{imageName}}" />
+    </a>
+  </li>
+</template>
+<template name="imageUploader">
+  <div class="container">
+    <br>
+    <br>
+    <input type="file" id="files" />
+<img id="image" />
+files 
+<br>
+<br>
+    <div class="col-md-6 col-md-offset-3">
+      <h1>PhotoShot</h1>
+      <span style="font-size:15px; margin-left:10px;">
+    <div class="form-group">
+      <p class="help-block">Upload image here. {{progress}} % Complete </p>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;">
+            <span class="sr-only currentprogress">{{progress}} % Completeeeee</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    </span>
+  </div>
+{{isUploading}}
+  </div>    
+ <div class="fileUpload">
+            <input type="file"  class="uploadFile upload" id="uploadFile">
+            <span class="addImage">add new image</span>
+  </div>
+</template>
+
+-->
+<!--
+<template name="homeProfile">
+    <div class="under_header">
+      <img src="../../images/assets/breadcrumbs1.png" alt="#">
+    </div>
+        <div class="page-content back_to_up">
+      <div class="row clearfix mb">
+        <div class="breadcrumbIn">
+          <ul>
+            <li><a href="index.html" class="toptip" original-title="Homepage"> <i class="icon-home"></i> </a></li>
+            <li> Gallery 4 Column </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row row-fluid clearfix mbf">
+        <div class="posts">
+          <div class="def-block" style="min-height: 400px;">
+          <div class="topbar">
+            <div id="close" class="tbutton small tback"><span> Back to Albums</span></div>
+            <h4 id="name">Photo Gallery</h4><span class="addAlbum">add new album</span><span class="liner"></span>
+          </div>
+          <ul id="tp-grid" class="tp-grid">
+            {{#each images}}
+            {{> task}}
+          {{/each}}
+          </ul>
+          {{> imageUploader}}
+          </div>
+        </div>
+      </div>
+    </div>
+</template>
+ <template name="album">
+</template>
+<template name="task">
+  <li data-pile="Billie Jean" class="grid_3" id="1">
+    <div class="removeDiv">
+    <span class="removeImage">X</span>
+    </div>
+      <a href="{{imageurl}}" rel="prettyPhoto[{{imageFolder}}]">
+      <img  src="{{imageurl}}" alt="{{imageName}}" />
+    </a>
+  </li>
+</template>
+<template name="imageUploader">
+  <div class="container">
+    <br>
+    <br>
+    <input type="file" id="files" />
+<img id="image" />
+files 
+<br>
+<br>
+    <div class="col-md-6 col-md-offset-3">
+      <h1>PhotoShot</h1>
+      <span style="font-size:15px; margin-left:10px;">
+    <div class="form-group">
+      <p class="help-block">Upload image here. {{progress}} % Complete </p>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;">
+            <span class="sr-only currentprogress">{{progress}} % Completeeeee</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    </span>
+  </div>
+{{isUploading}}
+  </div>    
+ <div class="fileUpload">
+            <input type="file"  class="uploadFile upload" id="uploadFile">
+            <span class="addImage">add new image</span>
+  </div>
+</template>-->
