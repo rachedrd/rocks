@@ -3,7 +3,8 @@
   // staging 
   /*"servers": [
     {
-      "host": "192.168.220.164",
+      //"host": "192.168.220.164",
+      "host": "10.0.0.12",
       "username": "dev",
       "password": "root"
       // or pem file (ssh based authentication)
@@ -47,7 +48,7 @@
   "env": {
     //"ROOT_URL": "http://staging.localhost",
     //"ROOT_URL": "http://localhost", //staging url 
-    "ROOT_URL": "http://188.166.170.22", // droplet domain
+    "ROOT_URL": "http://www.giggorilla.co.uk", // droplet domain
     "PORT": "80"
   },
 

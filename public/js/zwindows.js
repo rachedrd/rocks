@@ -1,30 +1,219 @@
 jQuery(document).ready(function ($) {
+ var albumname = "";
+ var albumsize = 0;
+ var fileCounter = 0;
+ var newalbm = 0;
+ var rmImgIndx = -1; 
+ var closeIt = false;
+ function getalbumName ()
+		{
+			return albumname;
+		}
+if ( $('.def-block ul.tp-grid').children().length === 0 )
+			$('.addAlbum').show();
+		
+ function calculatealbumsize(id)
+ {
+ 	albumsize = 0;
+ 	$grid.children().each(function() {
+ 		if($(this).attr('id') === id )
+           albumsize ++;
+ 	});
+ 	return albumsize;
+ }
+ if( $(".userType").attr('value') === "artist" || $(".userType").attr('value') === "band" )
+ {
+ $('.representsArtist').show();
+ }
+ else
+ {
+ $('.representsArtist').hide();
+ }
+
+ 
+      	$('.def-block').on('mouseenter', 'ul.tp-grid li ', function()
+		{
+			albumname = $(this).attr('id');
+			calculatealbumsize(albumname);
+			getalbumName();
+		//	alert(getalbumName());
+			
+
+			if(showDelte === 1)
+			{
+			$('.removeAlbum').css('visibility', 'hidden');	
+			$(this).find('> div.removeDiv').show();
+			}
+			if(showDelte === 0)
+			{
+			$('.removeAlbum').show();
+			$('.removeAlbum').css('visibility', 'visible');
+			}
+		}).on('mouseleave', 'ul.tp-grid li', function () {
+
+			$(".removeDiv").hide();
+			if(showDelte === 0)
+			{
+			$('.removeAlbum').hide();
+			$('.removeAlbum').css('visibility', 'hidden');
+			}
+});
+		$('.def-block').on('keydown'
+
+      , 'ul.tp-grid li' , function(e) {
+    if (e.keyCode == 9) {
+        e.preventDefault();
+        albumname = $(this).attr('id');
+        calculatealbumsize(albumname);
+			
+    }
+});
+	/*end of standard cropper*/
+	var horizontalDifference = 0; 
+ 	var VerticalDifference = 0; 
+    /*$('.def-block').on('click',' .rvc', function(evt){
+
+    	alert('rmImgIndx : ');
+    	//evt.preventDefault();
+    	evt.stopPropagation();
+    	alert('rmImgIndx : ' + rmImgIndx);
+    	var li = $grid.find('li');
+			liLength = parseInt($grid.children().length) - 1;
+            alert('liLength : ' + liLength);
+			//liLength = albumsize;
+ 			liWidth = li.outerWidth();
+ 			liHeight = li.outerHeight();
+ 			$grid.children().each(function() {
+        		if (liLength > 2 ) 
+        		{
+        			//alert('firstone position left' + $grid.find('li').eq(1).position().left);
+        			//alert('firstone width ' + $grid.find('li').eq(0).outerHeight());
+
+        			//alert('secondone position left' + $grid.find('li').eq(2).position().left);
+
+        			horizontalDifference = $grid.find('li').eq(1).position().left - ( $grid.find('li').eq(0).position().left + $grid.find('li').eq(0).outerWidth());
+        			//alert(horizontalDifference);
+        		}
+
+        		if (liLength > 5 ) 
+        		{
+        			VerticalDifference = $grid.find('li').eq(5).position().top - ( $grid.find('li').eq(0).position().top + $grid.find('li').eq(0).outerHeight());
+        			//alert(VerticalDifference);
+        		}
+        		if(liLength <= 3 &&  liLength > 1  && $(this).index() > rmImgIndx ) 
+        		{
+        				$(this).animate({"left": "-=" + (liWidth + horizontalDifference) + "px" }, "slow");
+        				
+        		}
+        		if(liLength > 3) {
+        		 if($grid.find('li').eq(3).position().left > 800){
+        			if($(this).index() > rmImgIndx) {
+        				if($(this).index()% 4 !== 0 ) {	
+        					$(this).animate({"left": "-=" + (liWidth + horizontalDifference) + "px" }, "slow");}
+        				else
+        				{  
+        					if(liLength === 5)
+        					{
+        					$(this).animate({"left": "+=" + ((liWidth + horizontalDifference )* 3)   + "px",  "top": "0" }, "slow");
+        					}
+        					else{
+        						$(this).animate({"left": "+=" + ((liWidth + horizontalDifference )* 3)   + "px", "top": "-=" + (liHeight + VerticalDifference ) + "px"}, "slow");
+        		                    
+        					}
+        					
+        				}
+        			}
+        		}
+        		if($grid.find('li').eq(3).position().left < 20){
+        			if($(this).index() > rmImgIndx){
+        				if($(this).index()% 3 !== 0 ){	
+        					$(this).animate({"left": "-=" + (liWidth + 24) + "px" }, "slow");}
+        				else
+        				{  
+        					$(this).animate({"left": "+=" +  ((liWidth * 2) +  43) + "px", "top": "-=" + (liHeight + 29 )  + "px"}, "slow");
+        				}
+        			}
+        		}
+        		} 			
+        	});
+        	// alert(' gris width ' + $grid.height());
+        	//alert( 'place : '+ $grid.find('> li:nth-last-child(1)').position().top );
+        	//alert( 'suggested place : ' + ($grid.find('> li:nth-last-child(1)').position().top + liHeight) );    
+ 			//$('.fileUpload').css('margin-top',  ($grid.find('> li:nth-last-child(1)').position().top - ( 2* liHeight) - VerticalDifference ));
+			if($grid.children().length % 4 === 0 )
+			$('.fileUpload').css('margin-top',  parseInt( $('.fileUpload').css('margin-top') )- liHeight - VerticalDifference );
+			spanLength = $(".tp-title").find('span').eq(1).text();
+			$(".tp-title").find('span').eq(1).text(parseInt(spanLength) -1 );
+			
+			alert('before deleting : ' + $grid.children().length);
+			$grid.find('li').eq(rmImgIndx -1).remove();
+			//$grid.find('li').eq(rmImgIndx - 1).remove();
+			//$grid.find('li').eq(rmImgIndx + 1).remove();
+			alert(' after deleting ...' +$grid.children().length);
+			$('.rnm').trigger('click');
+			$('#removeImgCnfrm').hide();
+		$('#removeImgbg').show();
+				
+         
+    });   */ 	
 	$('.def-block').on('click','.removeImage', function(e){
+		//e.stopPropagation();
+		e.preventDefault();
+	//	alert('capturing item');
+	//	$('#removeImgCnfrm').show();
+	//	$('#removeImgbg').show();
+		var $li = $(this).closest('li');
+		    rmImgIndx = $li.parent().children().index($li);
 			if($(':animated').length) {
               return false;             }  
 			e.preventDefault();
-		    var $li = $(this).closest('li');
-			var myindex = $li.parent().children().index($li);
+			var $li = $(this).closest('li');
+		    var myindex = $li.parent().children().index($li);
+		  //  alert('myindex' + myindex); 
 			var li = $grid.find('li');
-			liLength = parseInt($grid.children().length );
+			liLength = parseInt($grid.children().length) - 1;
+			//liLength = albumsize;
  			liWidth = $li.outerWidth();
  			liHeight = $li.outerHeight();
  			var i = parseInt(myindex);
-        	$grid.children().each(function() {
+ 			$grid.children().each(function() {
+        		if (liLength > 2 ) 
+        		{
+        			//alert('firstone position left' + $grid.find('li').eq(1).position().left);
+        			//alert('firstone width ' + $grid.find('li').eq(0).outerHeight());
+
+        			//alert('secondone position left' + $grid.find('li').eq(2).position().left);
+
+        			horizontalDifference = $grid.find('li').eq(1).position().left - ( $grid.find('li').eq(0).position().left + $grid.find('li').eq(0).outerWidth());
+        			//alert(horizontalDifference);
+        		}
+
+        		if (liLength > 5 ) 
+        		{
+        			VerticalDifference = $grid.find('li').eq(5).position().top - ( $grid.find('li').eq(0).position().top + $grid.find('li').eq(0).outerHeight());
+        			//alert(VerticalDifference);
+        		}
         		if(liLength <= 3 &&  liLength > 1  && $(this).index() > myindex ) 
         		{
-        				$(this).animate({"left": "-=" + (liWidth + 17) + "px" }, "slow");
+        				$(this).animate({"left": "-=" + (liWidth + horizontalDifference) + "px" }, "slow");
         				
         		}
         		if(liLength > 3) {
         		 if($grid.find('li').eq(3).position().left > 800){
         			if($(this).index() > myindex) {
         				if($(this).index()% 4 !== 0 ) {	
-        					$(this).animate({"left": "-=" + (liWidth + 17) + "px" }, "slow");}
+        					$(this).animate({"left": "-=" + (liWidth + horizontalDifference) + "px" }, "slow");}
         				else
         				{  
-        					$(this).animate({"left": "+=" + ((liWidth + 17 )* 3)   + "px", "top": "-=" + (liHeight +29 ) + "px"}, "slow");
-        		
+        					if(liLength === 5)
+        					{
+        					$(this).animate({"left": "+=" + ((liWidth + horizontalDifference )* 3)   + "px",  "top": "0" }, "slow");
+        					}
+        					else{
+        						$(this).animate({"left": "+=" + ((liWidth + horizontalDifference )* 3)   + "px", "top": "-=" + (liHeight + VerticalDifference ) + "px"}, "slow");
+        		                    
+        					}
+        					
         				}
         			}
         		}
@@ -40,32 +229,167 @@ jQuery(document).ready(function ($) {
         		}
         		} 			
         	});
-        	$grid.find('li').eq(myindex).remove();
+        	// alert(' gris width ' + $grid.height());
+        	//alert( 'place : '+ $grid.find('> li:nth-last-child(1)').position().top );
+        	//alert( 'suggested place : ' + ($grid.find('> li:nth-last-child(1)').position().top + liHeight) );    
+ 			//$('.fileUpload').css('margin-top',  ($grid.find('> li:nth-last-child(1)').position().top - ( 2* liHeight) - VerticalDifference ));
+			if($grid.children().length % 4 === 0 )
+			$('.fileUpload').css('margin-top',  parseInt( $('.fileUpload').css('margin-top') )- liHeight - VerticalDifference );
 			spanLength = $(".tp-title").find('span').eq(1).text();
 			$(".tp-title").find('span').eq(1).text(parseInt(spanLength) -1 );
+			//$('.rvc').trigger('click');
+			$grid.find('li').eq(myindex).remove();
+			//$grid.find('li').eq(myindex - 1).remove();
+		});       
+$('.def-block').on('click' , '#createAlbum', function (evnt) {
+	$("#validAlmName").css("color","red");
+            $('#errorMsgAlb').html('');
+            $("#validAlmName").removeClass('glyphicon-asterisk');
+            $("#validAlmName").removeClass('glyphicon-remove');
+            $("#validAlmName").removeClass('glyphicon-ok');
+
+
+var existingAlbum = 0;
+	evnt.stopPropagation();
+	 var albumname = $("#album_name").val();
+	/* $grid.children().each(function() {
+ 		if($(this).attr('id') === albumname )
+ 		{
+ 		existingAlbum ++;
+ 		}
+           
+ 	});*/
+	  if((albumname === '') || (albumname === 'album name') || (albumname === null) || (albumname === undefined) )
+          {
+          	$("#validAlmName").css("color","red");
+            $('#errorMsgAlb').html('album name empty');
+            $("#validAlmName").addClass('glyphicon-asterisk');
+          }
+          /*if( existingAlbum >  0 )
+          {
+            $("#validAlmName").css("color","red");
+            $('#errorMsgAlb').html('album already exists');
+            $("#validAlmName").addClass('glyphicon-remove');
+          }*/
+          else
+          {
+          	$("#validAlmName").addClass('glyphicon-ok');
+            $("#validAlmName").css("color","green");
+
+          }
+
+	message = ''+$("#errorMsgAlb").html() + '';
+	
+	if(message === '')
+	{
+	$("#new_al_bg").removeClass('zigmaIn').hide();
+	$("#popupnewalbbum").removeClass('zigmaIn').hide();
+	newalbm = 1 ;
+   $('.upload').trigger('click');
+	}
+  });
+if ( parseInt($('.notification-count').attr('value')) > 0 )
+{
+ $('.notification-count').show();
+} 
+else 
+{
+ $('.notification-count').hide();
+}
+$('.fb-profile').on('click' , '.notificationsicon', function() {
+$(".profile").toggle();
+});
+$('.fb-profile').on('click' , '.notification-count', function() {
+$(".profile").toggle();
+});
+
+$('.def-block').on('click' , '.addAlbum', function() {
+		//Aligning our box in the middle
+		var windowWidth = document.documentElement.clientWidth;
+		var windowHeight = document.documentElement.clientHeight;
+		var popupHeight = $("#popupnewalbbum").height();
+		var popupWidth = $("#popupnewalbbum").width();
+		// Centering
+		$("#popupnewalbbum").css({
+			"top": windowHeight / 2 - popupHeight / 2,
+			"left": windowWidth / 2 - popupWidth / 2
 		});
-		$(".fileUpload").on('change', '.upload', function () {
+		// Aligning bg
+		$("#new_al_bg").css({"height": windowHeight});
+			$("#new_al_bg").css({"opacity": "0.7"});
+			$("#new_al_bg").fadeIn("slow");
+			$("#new_al_bg").addClass('zigmaIn').fadeIn("slow");
+			$("#popupnewalbbum").addClass('zigmaIn').fadeIn("slow");
+	});
+		$(".fileUpload").on('change', '.upload', function (evt) {
+			 // 	alert('albumname  :  ' + albumname);
+          evt.preventDefault();
+    	evt.stopPropagation();
+			liLength = parseInt($grid.children().length );
+			
+			//alert(liLength);
+			//alert('albumname ');
+			if (liLength > 2 ) 
+        		{
+        			//alert('firstone position left' + $grid.find('li').eq(1).position().left);
+        			//alert('firstone width ' + $grid.find('li').eq(0).outerHeight());
+
+        			//alert('secondone position left' + $grid.find('li').eq(2).position().left);
+
+        			horizontalDifference = $grid.find('li').eq(1).position().left - ( $grid.find('li').eq(0).position().left + $grid.find('li').eq(0).outerWidth());
+        			//alert(horizontalDifference);
+        		}
+
+        		if (liLength > 5 ) 
+        		{
+        			VerticalDifference = $grid.find('li').eq(5).position().top - ( $grid.find('li').eq(0).position().top + $grid.find('li').eq(0).outerHeight());
+        			//alert(VerticalDifference);
+        		}
+			//alert('albumname ' + albumname);
+			liLength = parseInt($grid.children().length );
 			var $li = $('.def-block ul.tp-grid').find(' >li:nth-last-child(1)');
 			var myindex = $li.parent().children().index($li);
-			liLength = parseInt($grid.children().length );
+			//liLength = albumsize;
  			liWidth = $li.outerWidth();
  			liHeight = $li.outerHeight();
+ 			//$('.fileUpload').css('margin-top', $grid.find('> li:nth-last-child(1)').position().top )
  			var i = parseInt(myindex);
- lastOne = $('<li data-pile="Billie Jean" class="grid_3 lastLi"><div class="removeDiv"><span class="removeImage">X</span></div><a href="../../images/assets/gallery/70.jpg" rel="prettyPhoto[Billie Jean]"><img src="../../images/assets/gallery/70.jpg" alt="china concert" /></a></li>');
+ 			var foldername = $("#album_name").val();
+ 		//	alert( 'getalbumName : '+ getalbumName());
+ 			if(foldername === '' || foldername === undefined)
+ 				foldername = albumname;
+ 			//alert(foldername);
+ lastOne = $('<li data-pile="'+foldername+'" class="grid_3 lastLi" id="'+foldername+'"><div class="removeDiv"><span class="removeImage">X</span></div><a href="../../images/assets/gallery/1.jpg" rel="prettyPhoto['+foldername+']"><img src="../../images/assets/gallery/1.jpg"  alt="'+document.getElementById('uploadFile').files[0].name+'" /></a></li>');
     var reader = new FileReader();
+     var imgId = $("#image").attr("id");
+var imgObj = document.getElementById(imgId);
+var canvasContext = $("#myCanvas")[0].getContext('2d');
     reader.onload = function (e) {
     	e.preventDefault();
-          lastOne.find('> a img').attr("src",e.target.result);
+    	e.stopPropagation();
+         // lastOne.find('> a img').attr("src",e.target.result);
+          $("#image").attr("src",e.target.result);
+          var img = new Image();
+img.onload = function() {
+canvasContext.drawImage(imgObj, 0, 0, $('#image').get(0).naturalWidth, 
+  $('#image').get(0).naturalHeight, 0 , 0 , 670, 525 );
+$("#rac").attr("src", document.getElementById("myCanvas").toDataURL("image/jpeg"));
+lastOne.find('> a img').attr("src", $("#rac").attr("src"));
+$( ".uploading" ).trigger( "click" );
+   }
+img.src = $('#image').attr('src');
           lastOne.find('> a').attr("href",e.target.result);
           if(liLength < 4) 
           {
           	if(liLength === 0)
           	{
           		lastOne.css({top: 0 , left: 0});
+        	  
           	}
           	else
           	{ 
           		lastOne.css({top: 0, left: $grid.find('> li:nth-last-child(1)').position().left + liWidth + 20});
+          		
           		}				
           }
           if(liLength >= 4){          		
@@ -89,21 +413,61 @@ jQuery(document).ready(function ($) {
         				lastOne.css({top: $grid.find('> li:nth-last-child(1)').position().top + liHeight + 30, left: 0 });
          			}
         			        		                         }
-        			        }       		                         
-        	    $grid.append(lastOne);
-        	    galleryItem = $('<li class=""><a href="#"><img src="https://giggorrilla.storage.googleapis.com/rachednemr/germanyTour/10.jpg" alt="" width="50"></a></li>');
-        	    galleryItem.find('> a img').attr("src",e.target.result);
+        			        }
+                
+        	   $grid.append(lastOne); 
+        	   $('.addAlbum').hide();
+			
+        	  	if($grid.children().length % 4 === 1 )
+        		{
+        		//$('.fileUpload').css('margin-top',  parseInt( $('.fileUpload').css('margin-top') ) + liHeight + VerticalDifference );
+        	$('.fileUpload').css('margin-top',  parseInt( $('.fileUpload').css('margin-top') ) +  liHeight + VerticalDifference );
+			    }
+        	     //$grid.find('> li:nth-last-child(1)').css({"visibility":"visible"});
+              //  galleryItem = $('<li class=""><a href="#"><img src="https://giggorrilla.storage.googleapis.com/rachednemr/germanyTour/10.jpg" alt="" width="50"></a></li>');
+        	  //  galleryItem.find('> a img').attr("src",e.target.result);
         	    //$('div.nicescroll-rails').find('> div ul li:nth-last-child(1)').append(galleryItem);
-         	    $grid.children().each(function() {
+         	    /*$grid.children().each(function() {
         		$("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
 	
-        		});
-       $('.def-block ul.tp-grid').find(' >li:nth-last-child(1)').show();
+        		});*/
+      // $('.def-block ul.tp-grid').find(' >li:nth-last-child(1)').show();
 	    
-    };
-
+    };        	    
     // read the image file as a data URL.
     reader.readAsDataURL(this.files[0]);
+    var windowWidth = document.documentElement.clientWidth;
+		var windowHeight = document.documentElement.clientHeight;
+		var popupHeight = $("#process").height();
+		var popupWidth = $("#process").width();
+		// Centering
+		$("#process").css({
+			"top": windowHeight / 2 - popupHeight / 2,
+			"left": windowWidth / 2 - popupWidth / 2
+		});
+    $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+    spanLength = $(".tp-title").find('span').eq(1).text();
+                $(".tp-title").find('span').eq(1).text(parseInt(spanLength) + 1 );             
+      function closet(){
+  if( closeIt === true ){	
+  //alert('closing ...');    
+ // setTimeout(function() { 
+  	//$('#close').trigger('click');
+  	//}, 1000);
+}
+    }
+    function incriment(callback)
+    {
+     if(newalbm === 1)
+     {
+      	closeIt = true;
+      callback();
+   newalbm = 0;
+  }
+    }
+    incriment(
+    	function() {  closet(); }
+    	);   	
 });
 	if ($("#tp-grid")[0]) {
 		var $grid = $( '#tp-grid' ),
@@ -144,19 +508,39 @@ jQuery(document).ready(function ($) {
 				$close.show();
 			}
 		});
-		$close.on( 'click', function() {
+		$('.def-block').on('click' , '.tp-grid > li', function () {
 
-				$grid.children().each(function() {
-        			$(this).removeClass('lastLi');				
-        	});
-				$grid.find('> li:nth-last-child(1)').css('z-index', 10000);
+	//alert("#pp_full_res.html()");
+		});
+		$close.on( 'click', function() {/*
+			$grid.children().each(function() {
+				if($grid.children().length > 1)
+				{
+                   if ( $(this).hasClass("lastLi") ) {
+                     $grid.find('li').eq($(this).index()).remove();
+                   }
+               }
+               });*/
+
+			if ( $('.def-block ul.tp-grid').children().length === 0 )
 			$('.addAlbum').show();
+			$('.fileUpload').css('margin-top', 0 );
+  var j = 0 ;
+/*setTimeout(function(){},1000);
+  $grid.children().each(function() {
+        if ( $(this).hasClass("lastLi") ) {
+        	j++ ;
+          $grid.find('li').eq($(this).index()).remove();
+        }
+      });*/
+			$grid.find('> li:nth-last-child(1)').css('z-index', 10000);
+			//$('.addAlbum').show();
 			$('.fileUpload').hide();
 			$(this).hide();
-			$('.def-block').on('mouseenter', 'ul.tp-grid li a img', function()
+			/*$('.def-block').on('mouseenter', 'ul.tp-grid li a img', function()
 		{
 		}).on('mouseleave', 'ul.tp-grid li a img', function () {
-});
+});*/
 			$("a[rel^='prettyPhoto']").prettyPhoto().unbind();
 			$(".removeDiv").hide();
 			$name.empty().html('Photo Gallery');
@@ -173,7 +557,8 @@ jQuery(document).ready(function ($) {
 				$name.html( pileName );
 			},
 			onAfterOpen : function( pileName ) {
-				showDelte = 1;
+				$('.fileUpload').show();
+								showDelte = 1;
 				$('.addAlbum').hide();
 						$('.def-block').on('mouseenter', 'ul.tp-grid li ', function()
 		{
@@ -196,20 +581,6 @@ jQuery(document).ready(function ($) {
 	}	
 });
 
-	/*$(".fileUpload").on('change', '.upload', function(){
-		alert( "Size: " + $(".def-block ul.tp-grid").children().length );
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-    	alert('onload')
-        // get loaded data and render thumbnail.
-        $("image").src = e.target.result;
-    };
-
-    // read the image file as a data URL.
-    reader.readAsDataURL(this.files[0]);
-
-	});*/
 	
 		//$('.def-block ul.tp-grid li').remove();
 		//alert('stapel.items.length : ' +stapel.items.length);

@@ -8,6 +8,7 @@ function sendMail(details) {
         subject: details.subject,
         text: details.text
     });
+    return;
 }
 function allUsers()
 {

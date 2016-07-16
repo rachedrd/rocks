@@ -28,6 +28,8 @@ Meteor.methods({
       subject: subject,
       text: text
     });
+    return ;
+
   }
 });
 

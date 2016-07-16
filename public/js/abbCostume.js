@@ -233,6 +233,14 @@ $("#popupSignUp").on('click', '#signup_username ', function(){
 	 $("#validUsername_sgnUp").removeClass('glyphicon-asterisk');
 
 	});
+$("#popupnewalbbum").on('click', '#album_name ', function(){
+     $("#errorMsgAlb").html("");
+     $("#validAlmName").css("color","red");
+     $("#validAlmName").removeClass('glyphicon-remove');
+	 $("#validAlmName").removeClass('glyphicon-asterisk');
+	 $("#validAlmName").removeClass('glyphicon-ok');
+
+	});
 
 $("#popupSignUp").on('click', '#signup_firstname ', function(){
      $("#errorMsgSgnUp").html("");
@@ -694,6 +702,17 @@ $("#popupLogin").on('click', '#login_password ', function(){
 		}
 	});
 	// close reset mail form
+	$("#cancelAddAlbm").click(function() {
+		    $('#errorMsgAlb').html('');
+		    $("#validAlmName").removeClass('glyphicon-asterisk');
+		    $("#validAlmName").removeClass('glyphicon-remove');
+		    $("#validAlmName").removeClass('glyphicon-ok');
+
+			$("#popupnewalbbum").fadeOut("slow");
+			$("#new_al_bg").removeClass('zigmaIn').fadeOut("slow");
+
+	});
+	// close add new album
 	$("#reset_mail_cancel").click(function() {
 		if (popupRstPwdStts == 1) {
 			$("#popupResetPassword").fadeOut("slow");
@@ -723,6 +742,16 @@ $("#popupLogin").on('click', '#login_password ', function(){
 			popupRstPwdStts = 0;
 		}
 	});
+		$("#popupAlmClose").click(function() {
+			$("#popupnewalbbum").fadeOut("slow");
+			$("#new_al_bg").removeClass('zigmaIn').fadeOut("slow");
+			$("#validAlmName").css("color","red");
+						$('#errorMsgAlb').html('');
+						$("#validAlmName").removeClass('glyphicon-remove');
+						$("#validAlmName").removeClass('glyphicon-asterisk');
+						$("#validAlmName").removeClass('glyphicon-ok');
+
+	});
 	// signup close X button 
 	$("#popupSignUpClose").click(function() {
 		if (popupSignUpStatus == 1) {
@@ -741,11 +770,33 @@ $("#popupLogin").on('click', '#login_password ', function(){
 			popupSignUpStatus = 0;
 		}
 	});
+	// clcik on background album div to hide new album frame
+	$("#new_al_bg").click(function() {
+
+		$("#popupnewalbbum").removeClass('zigmaIn').fadeOut("slow");
+		$("#new_al_bg").removeClass('zigmaIn').fadeOut("slow");
+		$("#validAlmName").css("color","red");
+						$('#errorMsgAlb').html('');
+						$("#validAlmName").removeClass('glyphicon-remove');
+						$("#validAlmName").removeClass('glyphicon-asterisk');
+						$("#validAlmName").removeClass('glyphicon-ok');
+		});
 // click on body rome frames and back grounds
+
 	$("body").click(function() {
+
+		$("#validAlmName").css("color","red");
+						$('#errorMsgAlb').html('');
+						$("#validAlmName").removeClass('glyphicon-remove');
+						$("#validAlmName").removeClass('glyphicon-asterisk');
+						$("#validAlmName").removeClass('glyphicon-ok');
+						
 		$("#LoginBackgroundPopup").fadeOut("slow");
+		
 		$("#SignupBackgroundPopup").fadeOut("slow");
 		$("#bgsup").fadeOut("slow");
+
+
 		$("#rst_pw_bg").fadeOut("slow");
 		$("#new_pw_bg").fadeOut("slow");
 
@@ -798,27 +849,6 @@ $("#popupLogin").on('click', '#login_password ', function(){
 		});
 	}
 	// Gallery
-	$('.def-block').on('mouseenter', 'ul.tp-grid li ', function()
-		{
-			if(showDelte === 1)
-			{
-			$('.removeAlbum').css('visibility', 'hidden');	
-			$(this).find('> div.removeDiv').show();
-			}
-			if(showDelte === 0)
-			{
-			$('.removeAlbum').show();
-			$('.removeAlbum').css('visibility', 'visible');
-			}
-		}).on('mouseleave', 'ul.tp-grid li', function () {
-
-			$(".removeDiv").hide();
-			if(showDelte === 0)
-			{
-			$('.removeAlbum').hide();
-			$('.removeAlbum').css('visibility', 'hidden');
-			}
-});
 		
 	//alert('$(tp-grid)[0]' + $("#tp-grid")[0]);
 /*if ($("#tp-grid")[0]) {

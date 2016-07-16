@@ -1,15 +1,49 @@
 <template name="homeProfile">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">  
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="cover2">
     <div class="fb-profile">
         <img align="left" class="fb-image-lg" src="../../images/5.jpeg" alt="Profile image example"/>
         <img align="left" class="fb-image-profile thumbnail" src="../../images/avatarProfileM2.png" alt="Profile image example"/>
-        <div class="fb-profile-text">
-            <h1>{{currentUser.profile.name}}</h1>
-            <p>{{currentUser.profile.name}} is {{currentUser.profile.type}}</p>
-        </div>
          <table class="wallInfoTable">
                     <tbody>
+                      <tr>
+                        <td>
+                          <span class="usrPrflnm">{{currentUser.profile.name}}</span>           
+                        </td>
+                        <td>        
+                          <span class="notificationsicon" alt="Notifications" title="Notifications">
+                             <span class="notification-count" value="{{counter}}">{{counter}}</span>
+                             <i class="glyphicon glyphicon-globe" alt="NOtifications" title="NOtifications"></i>
+                          </span>
+                          <span class="messagessicon" alt="Messages" title="Messages">
+                              <i class="glyphicon glyphicon-envelope" alt="Messages" title="Messages"></i>
+                        </span>
+                        <!--notification panel template-->
+                              <div class="container profile">
+                                <div class="col-sm-7 sm-margin-bottom-30">
+                                    <div class="panel panel-profile">
+                                        <div class="panel-heading overflow-h">
+                                            <h2 class="panel-title heading-sm pull-left">Notifications</h2>
+                                            <a href="#"><i class="fa fa-cog pull-right"></i></a>
+                                        </div>
+                                        <div id="scrollbar3" class="panel-body contentHolder ps-container">
+                                          {{# each notifications}}
+                                          {{> notification}}
+                                          {{/each}}
+                                        <div class="ps-scrollbar-x-rail" style="width: 459px; display: none; left: 0px; bottom: -100px;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 103px; height: 320px; display: inherit; right: 3px;"><div class="ps-scrollbar-y" style="top: 78px; height: 242px;"></div></div></div>
+                                    </div>
+                                </div>
+                              </div>
+                             <!--end notification panel template-->
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{{currentUser.profile.name}} is 
+                        </td>
+                        <td><span class="userType" value="{{currentUser.profile.type}}">{{currentUser.profile.type}}</span>
+                        </td>  
+                      </tr>
                       <tr>
                         <td>full name:</td>
                         <td>{{currentUser.profile.firstname}} {{currentUser.profile.lastname}} </td>
@@ -21,10 +55,10 @@
                       <tr>
                         <td>Date of Birth</td>
                         {{# if currentUser.profile.birthdate }}
-                        		<td>{{currentUser.profile.birthdate}}</td>
+                            <td>{{currentUser.profile.birthdate}}</td>
                         {{else}}
-                               		<td>Click here to set your birthday</td>
-                        {{/if}}		
+                                  <td>Click here to set your birthday</td>
+                        {{/if}}   
                       </tr>
                       <tr>
                         <td>Gender</td>
@@ -63,24 +97,11 @@
                         <td>Publicity Counter:</td>
                         <td>{{currentUser.profile.publicityCounter}}</td>
                       </tr>
-
-
                     </tbody>
                   </table>
      
     </div>
 </div>
-    <!--<div class="under_header">
-      <img src="../../images/assets/breadcrumbs1.png" alt="#">
-    </div>-->
-      <!--<div class="row clearfix mb">
-        <div class="breadcrumbIn">
-          <ul>
-            <li><a href="index.html" class="toptip" original-title="Homepage"> <i class="icon-home"></i> </a></li>
-            <li> Gallery 4 Column </li>
-          </ul>
-        </div>
-      </div>-->
       <br>
       <br>
       <br>
@@ -88,28 +109,78 @@
         <div class="def-block" style="min-height: 400px;">
           <div class="topbar">
             <div id="close" class="tbutton small tback"><span> Back to Albums</span></div>
-            <h4 id="name">Photo Gallery</h4><span class="addAlbum">add new album</span><span class="liner"></span>
+            <h4 id="name">Photo Gallery</h4>
+            <span class="addAlbum">add new album</span><span class="liner"></span>
           </div>
           <ul id="tp-grid" class="tp-grid">
             {{#each images}}
             {{> task}}
-          {{/each}}
+          {{/each}}   
           </ul>
           {{> imageUploader}}
+          {{> newAlbum}}
+          <!--<div>
+    <div id="removeImgCnfrm">
+      <div class="def-block widget">
+        <h4>Removing Image</h4><span class="liner"></span><div class="widget-content row-fluid">
+          <form id="pop_rstpwd_frm">
+            <div class="input-group input-group-lg">
+              <label class="processmsg">Are you sure to remove </label>   
+            </div> 
+            <a href="#" id="reset_mail_send" class="tbutton small rvc"><span>Remove</span></a>
+            <a href="#" id="reset_mail_cancel" class="tbutton color2 small"><span>Cancel</span></a>
+          </form>
         </div>
       </div>
-</template>
- <template name="album">
-</template>
+  </div>
+  <div id="removeImgbg"></div>
+</div>-->
+  
+        </div>
+      </div>
+<div id="processingImage">
+  <div id="process">
+      <div class="def-block widget">
+        <h4>Processing Image</h4><span class="liner"></span><div class="widget-content row-fluid">
+          <form id="pop_rstpwd_frm">
+            <div class="input-group input-group-lg">
+              <label class="processmsg">Please Wait ...</label>   
+            </div> 
+          </form>
+        </div>
+      </div>
+  </div>
+  <div id="processbg"></div> 
+</div>      
+ </template>    
 <template name="task">
-  <li data-pile="Billie Jean" class="grid_3" id="1">
+  <li data-pile="{{imageFolder}}" class="grid_3" id="{{imageFolder}}">
     <div class="removeDiv">
     <span class="removeImage">X</span>
     </div>
       <a href="{{imageurl}}" rel="prettyPhoto[{{imageFolder}}]">
       <img  src="{{imageurl}}" alt="{{imageName}}" />
     </a>
-  </li>
+   </li>
+   </template>
+<template name="newAlbum">    
+  <div id="popupnewalbbum">
+      <div class="def-block widget">
+        <h4> New Album  </h4><span id="errorMsgAlb" value=""></span><span class="liner"></span><div class="widget-content row-fluid">
+          <form id="pop_rstpwd_frm">
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="Album name" title="Album name"><i class="glyphicon glyphicon-folder-open registerForm" alt="Album name" title="Album name"></i></span>
+                 <input type="text" alt="album name" title="album name" name="album_name" id="album_name" onfocus="if (this.value=='') this.value = '';" onblur="if (this.value=='') this.value = '';" value="" placeholder="Album name">
+                 <i id="validAlmName" class="glyphicon"></i>
+            </div> 
+                <a href="#" id="createAlbum" class="tbutton small"><span>Add</span></a>
+                <a href="#" id="cancelAddAlbm" class="tbutton color2 small"><span>Cancel</span></a>
+          </form>
+        </div>
+      </div>
+      <div id="popupAlmClose">x</div>
+  </div>
+  <div id="new_al_bg"></div> 
 </template>
 <template name="imageUploader">
   <!--<div class="container">
@@ -120,20 +191,48 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;">
-                <span class="sr-only currentprogress">{{progress}} % Completeeeee</span>
-              </div>
-            </div>
+            <span class="sr-only currentprogress">{{progress}} % Completeeeee</span>
           </div>
         </div>
       </span>
     </div>
     {{isUploading}}
-  </div> -->   
- <div class="fileUpload">
+  </div>-->   
+  <div class="fileUpload"> 
     <input type="file"  class="uploadFile upload" id="uploadFile">
     <span class="addImage">add new image</span>
   </div>
+
+  <input type="button" class="uploading" value="uploading" />
+  <br>
+  <div id="myProgress">
+    <span id="progressUploading"> {{progress}} %</span>
+  <div id="myBar" style="width: {{progress}}%;"></div>
+</div>
+<div class="cropper">
+    <div id="givs">
+      next image
+     <img class="img-responsive" id="image" src="" alt="Picture" width="670" height="525">
+    </div>
+    <canvas id="myCanvas" width="670"  height="525" style="border:1px solid #d3d3d3;">
+    </canvas>    
+    <img id="rac" src="" width="670"  height="525">
+  </div>
+</template>
+<template name="notification">
+  <div class="alert-blocks alert-blocks-pending alert-dismissable">
+                                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                                  <i class="icon-custom rounded-x icon-bg-gray fa fa-bolt"></i>
+                                                <div class="overflow-h"  id="{{_id}}">
+                                                    <strong class="color-yellow">{{type}}<small class="pull-right"><em>{{formatdate time }}</em></small></strong> 
+                                                    <p>{{type}} sent by <a href="/Artists/{{ownerId}}" class="owner" id="{{ownerId}}" value="{{ownerName}}">{{ownerName}}</a> is {{status}}</p>
+                                                    {{#if compareStatus status recieverId _id currentUser._id  }}
+                                                     <a href="#" id="{{ownerId}}" class="reject">Reject</a>
+                                                     <a href="#" id="{{ownerId}}" class="accept" value="{{owner}}" >Accept</a>
+                                                    {{/if}}
+                                                   
+                                                    
+                                                </div>    
+                                            </div>                                            
 </template>
  

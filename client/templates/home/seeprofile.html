@@ -1,0 +1,142 @@
+<template name="seeprofile">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div class="cover2">
+    <div class="fb-profile">
+        <img align="left" class="fb-image-lg" src="../../images/5.jpeg" alt="Profile image example"/>
+        <img align="left" class="fb-image-profile thumbnail" src="../../images/avatarProfileM2.png" alt="Profile image example"/>
+         <table class="wallInfoTable">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="usrPrflnm">{{profile.name}}</span>           
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{{profile.name}} is 
+                        </td>
+                        <td><span class="userType" value="{{profile.type}}">{{profile.type}}</span>
+                        </td>  
+                      </tr>
+                       <tr>
+                        <td>Agent on behalf:</td>
+                        <td>{{agent.name}}</td>
+                      </tr>
+                      <tr>
+                        <td>full name:</td>
+                        <td>{{profile.firstname}} {{profile.lastname}} </td>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <td>{{emails.[0].address}}</td>
+                      </tr>
+                      <tr>
+                        <td>Date of Birth</td>
+                        {{# if profile.birthdate }}
+                            <td>{{profile.birthdate}}</td>
+                        {{else}}
+                                  <td>Not set</td>
+                        {{/if}}   
+                      </tr>
+                      <tr>
+                        <td>Gender</td>
+                        {{# if profile.gender }}
+                            <td>{{ profile.gender}}</td>
+                        {{else}}
+                                  <td>Not set</td>
+                        {{/if}}   
+                      </tr>
+                      <tr>
+                        <td>Home Address</td>
+                        {{# if profile.country }}
+                            <td>{{profile.country}}</td>
+                        {{else}}
+                                  <td>Not set </td>
+                        {{/if}}  
+                      </tr>
+                      <tr>
+                        <td>Phone Number</td>
+                        {{# if profile.phoneNumber }}
+                            <td>{{profile.phoneNumber}}(mobile)</td>
+                        {{else}}
+                                  <td>Not set</td>
+                        {{/if}}  
+                      </tr>
+                      <tr>
+                        <td>Publicity Code</td>
+                        <td>{{profile.publicityCode}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Status:</td>
+                        <td>{{profile.Status}}</td>
+                      </tr>
+                      <tr>
+                        <td>Publicity Counter:</td>
+                        <td>{{profile.publicityCounter}} id is {{newfunction}}</td>
+
+                      </tr>
+                      <tr>
+                        {{> represntationreq}}
+                      </tr>
+                    </tbody>
+                  </table>
+     
+    </div>
+</div>
+      <br>
+      <br>
+      <br>
+      <div class="posts">
+        <div class="def-block" style="min-height: 400px;">
+          <div class="topbar">
+            <div id="close" class="tbutton small tback"><span> Back to Albums</span></div>
+            <h4 id="name">Photo Gallery</h4>
+            <span class="addAlbum">add new album</span><span class="liner"></span>
+          </div>
+          <ul id="tp-grid" class="tp-grid">
+            {{#each imgs}}
+            {{> image}}
+          {{/each}}   
+          </ul>
+        </div>
+      </div>  
+      <br>
+      <br>
+      mp3
+      <div class="posts">
+        <div class="def-block" style="min-height: 400px;">
+          <div class="topbar">
+            <div id="close" class="tbutton small tback"><span> Back to Albums</span></div>
+            <h4 id="name">Photo Gallery</h4>
+            <span class="addAlbum">add new album</span><span class="liner"></span>
+          </div>
+          <ul id="tp-grid" class="tp-grid">
+            {{#each images}}
+            mp3
+          {{/each}}   
+          </ul>
+        </div>
+      </div>  
+
+ </template>  
+<template name="image">
+  <li data-pile="{{imageFolder}}" class="grid_3" id="{{imageFolder}}">
+    <div class="removeDiv">
+    <span class="removeImage">X</span>
+    </div>
+      <a href="{{imageurl}}" rel="prettyPhoto[{{imageFolder}}]">
+      <img  src="{{imageurl}}" alt="{{imageName}}" />
+    </a>
+   </li>
+   </template>
+ <template name="represntationreq">
+                        <a href="#" class="sendreqRep">
+                        <div class="widget-content representsArtist">
+                          <p>
+                              <i class="icons-bag mid" style="font-size: 40px;vertical-align: middle;">
+                              </i>send engagment request to {{currentUser.profile.name}}
+                          </p>
+                        </div>
+                      </a>
+                    </template>    
+ 

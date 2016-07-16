@@ -2,8 +2,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { Mongo } from 'meteor/mongo';
-import { Tasks } from '../../../imports/api/tasks.js';
-import { Images } from '../../../imports/api/images.js';
+//import { Tasks } from '../../../imports/api/tasks.js';
+//import { Images } from '../../../imports/api/images.js';
 Meteor.startup (function(){
 $.getScript('../js/modernizr.custom.63321.js');
 $.getScript('../js/jquery.stapel.js');
@@ -14,7 +14,21 @@ $.getScript('../js/twitter/jquery.tweet.js');
 $.getScript('../js/theme20.js');
 $.getScript('../js/abbCostume.js');
 });
-
+Meteor.subscribe("USERS");
+/*Meteor.setInterval(function()
+	{
+Meteor.Users.forEach( function(USR){
+	if (USR.status.online === false ) {
+	 Meteor.logout( function(err)
+						{
+						if(err)
+						{
+							alert("error loggin out ... ");
+						}
+						});
+	  };
+return; } );
+	}, 1000);*/
 var count = new ReactiveVar(false);
  /*
   uploader.send(document.getElementById('input').files[0], function (error, downloadUrl) {
@@ -38,12 +52,14 @@ Template.myPicture.helpers({
   }
 });
 */
+
 Template.body.helpers({
-  tasks() {
+
+  /*tasks() {
    return Tasks.find({});
    //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
 
-  },
+  },*/
   /*images() {
    return Images.find({});
    //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
@@ -100,6 +116,7 @@ Template.templateSignUpForm.events({
 					  break;  
 					  default: type  ='nothing';
 					     	} 
+					     	console.log("type : "  + type);
 					if(username === '' || username === 'username')
 					{
 						$('#errorMsgSgnUp').html('username empty');
@@ -239,10 +256,14 @@ Template.templateSignUpForm.events({
 							$('#errorMsgSgnUp').html('');
 							//Meteor.users.update({username: username}, { $set: {"emails.0" : { "verified" : true , "address": email} } });
 							$("#popupSignUp").removeClass('zigmaIn').fadeOut("slow");
+
+ 
+
  							$("#LoginBackgroundPopup").fadeOut("slow");
  							$("#bgsup").fadeOut("slow");
 							$("#popupLogin").removeClass('zigmaIn').fadeOut("slow");
 							}
+							return err;
 						});
 					//end validations}
 					return false;
@@ -436,7 +457,6 @@ Template.resetform.events({
 				{
 					evt.preventDefault();
 					var email = t.find("#reset_email").value;
-					alert(email);
 					Meteor.call('sendEmail', email,
             						'Welcome to giggorilla.uk.com web site',
             						'Thanks for joining us. Enjoy our service.');

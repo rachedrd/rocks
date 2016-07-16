@@ -35,6 +35,9 @@
       </div><!-- row -->
       <div class="headdown">
         <div class="row clearfix">
+          <div class="logo bottomtip" title="Best and Most Popular Musics">
+            <a href="#"><img src="images/logo.png" alt="Best and Most Popular Musics"></a>
+          </div><!-- end logo -->
           <nav>
             <ul class="sf-menu">
               <li class="current selectedLava"><a href="{{pathFor 'homeIndex'}}">Home<span class="sub">start here</span></a>
@@ -72,12 +75,12 @@
                       <li><a href="shortcode_message_box.html">Message box</a></li>
                     </ul>
                   </li>
-                  <li><a href="shop.html">Shop</a>
+                  <li><a href="shop.html">Entertainments</a>
                     <ul>
-                      <li><a href="shop.html">Shop Page</a></li>
-                      <li><a href="shop_product.html">Shop Product</a></li>
-                      <li><a href="shop_cart.html">Shopping Cart</a></li>
-                      <li><a href="shop_checkout.html">Shop Checkout</a></li>
+                      <li><a href="{{pathFor 'homeBands'}}">Artists/Bands</a></li>
+                      <li><a href="shop_product.html">Discos & DJs</a></li>
+                      <li><a href="shop_cart.html">mingel & Mix</a></li>
+                      <li><a href="shop_checkout.html">Equipments</a></li>
                     </ul>
                   </li>
                   <li><a href="under_construction.html">Under Construction</a></li>
@@ -133,6 +136,8 @@
                   <li><a href="blog-single_half.html">Blog Single Half</a></li>
                   <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
                   <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
+                  <li><a href="{{pathFor 'homeAbout' }}">aout us</a></li>
+
                 </ul>
               </li>
             </ul><!-- end menu -->
@@ -143,7 +148,7 @@
     
   </template>
   <template name="signUpHeader" >
-    <div id="Login_PopUp_Link" class="sign-btn tbutton small">
+    <div id="Login_PopUp_Link" class="sign-btn tbutton small color3">
       <span id="signInSpan">Sign In</span>
     </div>
   </template>
@@ -280,7 +285,7 @@
                 <i id="validPassword" class="glyphicon"></i> 
                 <!--<label for="login_retypePassword" class="liner">Retype password</label>-->
               </div> 
-                <a  id="signin_login" class="tbutton small"><span>Login</span></a>
+                <a  id="signin_login" class="tbutton small color3"><span>Login</span></a>
                 <a  id="signin_register" class="tbutton color2 small"><span>Register</span></a>
                <!--<div >-->
                 <button type="button" id="signin_facebook" class="btn btn-primary">Login with
@@ -305,7 +310,7 @@
       </div><!-- widget -->
       <div id="popupResetPasswordClose">x</div>
   </div>
-    <div id="rst_pw_bg"></div> 
+  <div id="rst_pw_bg"></div> 
 </template>
 <template name="resetform">
   <form id="pop_rstpwd_frm">
