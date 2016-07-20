@@ -1,11 +1,8 @@
 <template name="nav">
-    {{> login }}
-    {{> signUp }}
-    {{> resetMailTemplate }}
-    {{> NewPasswordTemplate }}
+    {{> login }} <!--{{> signUp }} {{> resetMailTemplate }}{{> NewPasswordTemplate }}-->
     <header id="header" class="glue exampleHeader">
-      <div class="row clearfix">
-        <div class="little-head" id="exampleHeader">
+      <div class="row clearfix rp">
+        <div class="little-head lefter">
           <div class="social social-head">
             <a href="http://twitter.com/behzadg1" class="bottomtip" title="Follow us on Twitter" target="_blank"><i class="icon-twitter"></i></a>
             <a href="http://fb.com/theme20" class="bottomtip" title="Like us on Facebook" target="_blank"><i class="icon-facebook"></i></a>
@@ -18,37 +15,41 @@
             <a href="http://youtube.com/" class="bottomtip" target="_blank" title="Flickr"><i class="icon-flickr"></i></a>
             <a href="http://www.linkedin.com/" class="bottomtip" title="Linkedin" target="_blank"><i class="icon-linkedin"></i></a>
           </div><!-- end social -->
+
           <div class="search">
             <form action="search.html" id="search" method="get">
-              <input id="inputhead" name="search" type="text" onfocus="if (this.value=='Start Searching...') this.value = '';" onblur="if (this.value=='') this.value = 'Start Searching...';" value="Start Searching..." placeholder="Start Searching ..."/>
+              <input id="inputhead" name="search" type="text" onfocus="if (this.value=='Start Searching...') this.value = '';" onblur="if (this.value=='') this.value = 'Start Searching...';" value="Start Searching..." placeholder="Start Searching ...">
               <button type="submit"><i class="icon-search"></i></button>
             </form><!-- end form -->
           </div><!-- search -->
         </div><!-- little head -->
-        <div id="info">
-            {{#if currentUser }}
-              {{> UserConnected }} 
+        {{#if currentUser }}
+              {{>  UserConnected }} 
             {{else}}
-              {{> signUpHeader }}
-            {{/if}}
-          </div>
+              {{>  signUpHeader  }}
+           {{/if}}   
+        
       </div><!-- row -->
+
       <div class="headdown">
         <div class="row clearfix">
           <div class="logo bottomtip" title="Best and Most Popular Musics">
-            <a href="#"><img src="images/logo.png" alt="Best and Most Popular Musics"></a>
+            <a href="{{pathFor 'homeIndex'}}">
+              <img src="images/logo5.png" alt="Best and Most Popular Musics">
+            </a>
           </div><!-- end logo -->
+
           <nav>
             <ul class="sf-menu">
-              <li class="current selectedLava"><a href="{{pathFor 'homeIndex'}}">Home<span class="sub">start here</span></a>
+              <li class="current selectedLava"><a href="index.html">Talen Directory<span class="sub">start here</span></a>
                 <ul>
-                  <li><a href="index_revolution.html">Home 2 - Revolution</a></li>
-                  <li><a href="index_modern.html">Home 3 - Modern</a></li>
-                  <li><a href="index_footer.html">Home with Footer</a></li>
+                  <li><a href="{{pathFor 'homeBands'}}">Bands</a></li>
+                  <li><a href="index_modern.html">Artists</a></li>
+                  <li class="current"><a href="index_footer.html">About us</a></li>
                   <li><a href="index_loading.html">Home with Loading</a></li>
                 </ul>
               </li>
-              <li><a href="index.html">Features<span class="sub">remix all features</span></a>
+              <li><a href="index.html">Hot acts<span class="sub">Hot acts</span></a>
                 <ul>
                   <li><a href="#">Shortcodes</a>
                     <ul>
@@ -75,12 +76,12 @@
                       <li><a href="shortcode_message_box.html">Message box</a></li>
                     </ul>
                   </li>
-                  <li><a href="shop.html">Entertainments</a>
+                  <li><a href="shop.html">Shop</a>
                     <ul>
-                      <li><a href="{{pathFor 'homeBands'}}">Artists/Bands</a></li>
-                      <li><a href="shop_product.html">Discos & DJs</a></li>
-                      <li><a href="shop_cart.html">mingel & Mix</a></li>
-                      <li><a href="shop_checkout.html">Equipments</a></li>
+                      <li><a href="shop.html">Shop Page</a></li>
+                      <li><a href="shop_product.html">Shop Product</a></li>
+                      <li><a href="shop_cart.html">Shopping Cart</a></li>
+                      <li><a href="shop_checkout.html">Shop Checkout</a></li>
                     </ul>
                   </li>
                   <li><a href="under_construction.html">Under Construction</a></li>
@@ -92,23 +93,23 @@
                       <li><a href="#">Another Sub</a>
                         <ul>
                           <li><a href="#">1st Menu</a></li>
-                           <li><a href="#">2nd Menu</a></li>
+                          <li><a href="#">2nd Menu</a></li>
                         </ul>
                       </li>
                     </ul>
                   </li>
                 </ul>
               </li>
-              <li><a href="mp3s.html">MP3<span class="sub">full archive</span></a></li>
-              <li><a href="videos.html">Video<span class="sub">latest clips</span></a></li>
-              <li><a href="gallery4.html">Portfolio<span class="sub">Photo Gallery</span></a>
+              <li><a href="mp3s.html">How it works<span class="sub">How it works</span></a></li>
+              <li><a href="videos.html">About us<span class="sub">About us</span></a></li>
+              <li><a href="gallery4.html">Backstage<span class="sub">Backstage</span></a>
                 <ul>
                   <li><a href="gallery4.html">Gallery 4 Column</a></li>
                   <li><a href="gallery3.html">Gallery 3 Column</a></li>
                   <li><a href="gallery2.html">Gallery 2 Column</a></li>
                 </ul>
               </li>
-              <li><a href="#">Blog<span class="sub">more templates</span></a>
+              <!--<li><a href="#">Success story<span class="sub">Success story</span></a>
                 <ul>
                   <li><a href="rtl.html">RTL Support</a></li>
                   <li><a href="events.html">Events</a></li>
@@ -126,7 +127,7 @@
                   <li><a href="news_single.html">News Single</a></li>
                 </ul>
               </li>
-              <li><a href="blog-right-sidebar.html">Contact<span class="sub">latest news</span></a>
+              <li><a href="blog-right-sidebar.html">Blog<span class="sub">latest news</span></a>
                 <ul>
                   <li><a href="blog-right-sidebar.html">Blog</a></li>
                   <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
@@ -136,32 +137,71 @@
                   <li><a href="blog-single_half.html">Blog Single Half</a></li>
                   <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
                   <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
-                  <li><a href="{{pathFor 'homeAbout' }}">aout us</a></li>
-
                 </ul>
-              </li>
+              </li>-->
+              <!--<li><a href="blog-right-sidebar.html">Privacy/Terms<span class="sub">latest news</span></a>
+                <ul>
+                  <li><a href="blog-right-sidebar.html">Blog</a></li>
+                  <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
+                  <li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
+                  <li><a href="blog-without-sidebar.html">Blog Without Sidebar</a></li>
+                  <li><a href="blog-single_wide.html">Blog Single Wide</a></li>
+                  <li><a href="blog-single_half.html">Blog Single Half</a></li>
+                  <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
+                  <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
+                </ul>
+              </li>-->
+              <!--<li><a href="blog-right-sidebar.html">Terms<span class="sub">latest news</span></a>
+                <ul>
+                  <li><a href="blog-right-sidebar.html">Blog</a></li>
+                  <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
+                  <li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
+                  <li><a href="blog-without-sidebar.html">Blog Without Sidebar</a></li>
+                  <li><a href="blog-single_wide.html">Blog Single Wide</a></li>
+                  <li><a href="blog-single_half.html">Blog Single Half</a></li>
+                  <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
+                  <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
+                </ul>
+              </li>-->
+              <!--<li><a href="blog-right-sidebar.html">Contact us<span class="sub">latest news</span></a>
+                <ul>
+                  <li><a href="blog-right-sidebar.html">Blog</a></li>
+                  <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
+                  <li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
+                  <li><a href="blog-without-sidebar.html">Blog Without Sidebar</a></li>
+                  <li><a href="blog-single_wide.html">Blog Single Wide</a></li>
+                  <li><a href="blog-single_half.html">Blog Single Half</a></li>
+                  <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
+                  <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
+                </ul>
+              </li>-->
             </ul><!-- end menu -->
           </nav><!-- end nav -->
         </div><!-- row -->
       </div><!-- headdown -->
     </header><!-- end header -->
-    
   </template>
   <template name="signUpHeader" >
     <div id="Login_PopUp_Link" class="sign-btn tbutton small color3">
       <span id="signInSpan">Sign In</span>
     </div>
   </template>
-   <template name="UserConnected">  
-    <div class="tempwrap">
-      <ul class="nav navbar-nav navbar-right">
+ <template name="UserConnected">
+    <div id="tempwrap" >  
+    <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" id="toggedfirst">
-        <div id="UserConnected" >
-          <a href="javascript:;" id ="showProfile" class="dropdown-toggle" data-toggle="dropdown">
+        <div id="UserConnected" class="usrcnnctd">
+          <ul id="ulProfile">
+            <li>
+          <a id="showProfile" class="dropdown-toggle" data-toggle="dropdown">
             <img class="img-rounded inline" id="avatarProf" style="height: 32px; margin-top: 4px; " src="../../images/avatarProfileM2.png" />
-            <label>{{currentUser.profile.name}}</label>
           </a>
-        </div>  
+        </li>
+        <li>
+            <p class="usrname">{{currentUser.profile.name}}</p>
+        </li>
+        </ul>
+        </div> 
           <ul class="dropdown-menu" id="ProfileMenu">
             <li><a href="{{pathFor 'homeProfile'}}">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
             <li class="nav-divider"></li>
@@ -175,8 +215,8 @@
           </ul>
         </li>
       </ul> 
-   </div> 
-  </template>
+   </div>
+</template>
   <template name="login">
       <div id="popupLogin">
         <div class="def-block widget">
@@ -285,8 +325,11 @@
                 <i id="validPassword" class="glyphicon"></i> 
                 <!--<label for="login_retypePassword" class="liner">Retype password</label>-->
               </div> 
+              <div id="loginRegister">
                 <a  id="signin_login" class="tbutton small color3"><span>Login</span></a>
                 <a  id="signin_register" class="tbutton color2 small"><span>Register</span></a>
+              </div>
+              <div id="sociallogin">  
                <!--<div >-->
                 <button type="button" id="signin_facebook" class="btn btn-primary">Login with
                   <i class="icon-facebook" id="iconFacebook"></i>
@@ -294,10 +337,10 @@
                 <button  type="button" id="signin_twitter" class="btn btn-primary">Login with
                  <i class="icon-twitter Twitter" id="iconTwitter" ></i>
                 </button>
+               </div> 
                 <div>
                   <a  id="forgetPassword" class="forgetPassword" ><span>Forgot Password</span></a> 
                 </div>
-               <!--</div>  -->
     </form><!-- login form -->
   </template>
 <template name="resetMailTemplate" >

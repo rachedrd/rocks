@@ -4,7 +4,10 @@ import { Email } from 'meteor/email';
 import { Mongo } from 'meteor/mongo';
 //import { Tasks } from '../../../imports/api/tasks.js';
 //import { Images } from '../../../imports/api/images.js';
+
 Meteor.startup (function(){
+alert('startup ...');
+/*
 $.getScript('../js/modernizr.custom.63321.js');
 $.getScript('../js/jquery.stapel.js');
 $.getScript('../js/jquery.prettyPhoto.js');
@@ -13,6 +16,7 @@ $.getScript('../js/jquery.nicescroll.min.js');
 $.getScript('../js/twitter/jquery.tweet.js');
 $.getScript('../js/theme20.js');
 $.getScript('../js/abbCostume.js');
+*/
 });
 Meteor.subscribe("USERS");
 /*Meteor.setInterval(function()
@@ -52,7 +56,73 @@ Template.myPicture.helpers({
   }
 });
 */
+Template.layout.onRendered(function(){
+/*$.getScript('../js/modernizr.custom.63321.js');
+$.getScript('../js/jquery.stapel.js');
+$.getScript('../js/jquery.prettyPhoto.js');
+$.getScript('../js/jquery.flexslider-min.js');
+$.getScript('../js/jquery.nicescroll.min.js');
+$.getScript('../js/jquery.tweet.js');
+$.getScript('../js/theme20.js');
+$.getScript('../js/abbCostume.js');*/
+/*setTimeout(function(){
+$.getScript('../js/zzzrevolution.js');
+}, 20000);*/
+/*setTimeout(function(){
+//$('head').append('<script type="text/javascript" src ="../js/cdthemeplugins.min.js">');
+//$('head').append('<script type="text/javascript" src ="../js/cthemepunchrevolution.js">');
+	$('head').append('<script type="text/javascript" src ="../js/zzzrevolution.js">');
+	alert('revolution ');
+}, 10000);*/
 
+/*$('head').append('<script type="text/javascript" src ="../js/modernizr.custom.63321.js">');
+$('head').append('<script type="text/javascript" src ="../js/jquery.stapel.js">');
+$('head').append('<script type="text/javascript" src ="../js/jquery.prettyPhoto.js">');
+$('head').append('<script type="text/javascript" src ="../js/jquery.flexslider-min.js">');
+$('head').append('<script type="text/javascript" src ="../js/jquery.jplayer.js">');
+$('head').append('<script type="text/javascript" src ="../js/ttw-music-player-min.js">');
+$('head').append('<script type="text/javascript" src ="../js/jquery.masonry.min.js">');
+$('head').append('<script type="text/javascript" src ="../js/iiiimyplaylist.js">');
+$('head').append('<script type="text/javascript" src ="../js/jquery.nicescroll.min.js">');
+$('head').append('<script type="text/javascript" src ="../js/jquery.tweet.js">');
+$('head').append('<script type="text/javascript" src ="../js/gmap3.js">');
+$('head').append('<script type="text/javascript" src ="../js/theme20.js">');
+$('head').append('<script type="text/javascript" src ="../js/abbCostume.js">');*/
+//trying libs
+
+$('head').append('<script type="text/javascript" src="js/jquery.min.js"></script>');
+$('head').append('<script type="text/javascript" src ="js/jquery.stapel.js">');
+$('head').append('<script type="text/javascript" src="js/theme20.js"></script>');
+//$('head').append('<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>');
+$('head').append('<script type="text/javascript" src="js/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>');	
+$('head').append('<script type="text/javascript" src="js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>');
+$('head').append('<script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>');
+$('head').append('<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>');
+$('head').append('<script type="text/javascript" src="js/countdown.js"></script>');
+$('head').append('<script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>');
+$('head').append('<script type="text/javascript" src="js/jquery.jplayer.js"></script>');
+$('head').append('<script type="text/javascript" src="js/ttw-music-player-min.js"></script>');
+$('head').append('<script type="text/javascript" src="js/iiiimyplaylist.js"></script>');
+$('head').append('<script type="text/javascript" src="js/twitter/jquery.tweet.js"></script>');
+$('head').append('<script type="text/javascript" src="js/abbCostume.js"></script>');
+/*
+$('head').append('<script type="text/javascript" src="../js/ajquery.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/bthem.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/cbootstrap.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/ddprettyPhoto.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/eeflexslidermin.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/ffjplayer.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/ggplayermin.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/gmap3.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/iiiimyplaylist.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/jjjcntdn.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/kkknicescroll.js"></script>');
+$('head').append('<script type="text/javascript" src="../js/llljquerytweet.js"></script>');
+$('head').append('<script type="text/javascript" src ="../js/abbCostume.js">');
+*/
+/*$('head').append('<script type="text/javascript" src="js/nnncustom.js"></script>');*/
+
+});
 Template.body.helpers({
 
   /*tasks() {

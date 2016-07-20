@@ -62,9 +62,19 @@ Template.seeprofile.onCreated(function(){
   Meteor.subscribe("notifications");
  setTimeout(function(){
   $.getScript('../js/zwindows.js');    
-},3000);
+},2000);
 
 });
+
+
+Template.homeIndex.onCreated(function(){
+ alert('homeIndex');
+ setTimeout(function(){
+$.getScript('../js/zzzrevolution.js');
+}, 2000);
+});
+
+
 Template.seeprofile.helpers({ 
   imgs: function(){
     return Images.find({uploadedBy : this._id});
@@ -189,8 +199,22 @@ $.getScript('../js/jquery.flexslider-min.js');
 $.getScript('../js/jquery.nicescroll.min.js');
 $.getScript('../js/twitter/jquery.tweet.js');
 $.getScript('../js/theme20.js');*/
+//$('head').append('<script type="text/javascript" src ="../js/modernizr.custom.63321.js">');
+//$('head').append('<script type="text/javascript" src ="../js/jquery.stapel.js">');
+//$('head').append('<script type="text/javascript" src ="../js/jquery.prettyPhoto.js">');
+//$('head').append('<script type="text/javascript" src ="../js/jquery.flexslider-min.js">');
+//$('head').append('<script type="text/javascript" src ="../js/jquery.nicescroll.min.js">');
+//$('head').append('<script type="text/javascript" src ="../js/twitter/jquery.tweet.js">');
+//$('head').append('<script type="text/javascript" src ="../js/jquery.flexslider-min.js">');
+//$('head').append('<script type="text/javascript" src ="../js/theme20.js">');
+//$('head').append('<script type="text/javascript" src ="../js/abbCostume.js">');
+
 setTimeout(function(){
-  $.getScript('../js/zwindows.js');
+  alert('adding images');
+ 
+ $('head').append('<script type="text/javascript" src ="../js/zwindows.js">');
+
+  //$.getScript('../js/zwindows.js');
   /*$grid.children().each(function() {
         if ( $(this).hasClass("lastLi") ) {
           $grid.find('li').eq($(this).index()).remove();
