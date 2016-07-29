@@ -1,6 +1,129 @@
 <template name="homeProfile">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div class="profilecover">
+ <img class = "coverImage" src="images/assets/alexander1.jpg" />
+  <div class="subcover">
+    <div class="avatarContainer">
+    <div class="changeAvatar">
+    <br>
+    <span>chnage avatar</span>
+    </div>
+    <img class = "avatarImage" src="images/assets/breadcrumbs1.png" />
+    </div>
+    <div class="usercontainer">
+      <div class="username"><span class="usrPrflnm">{{currentUser.profile.name}}</span></div>
+      <div class="usernotifications">
+          <span class="notificationsicon" alt="Notifications" title="Notifications">
+            <span class="notificationcount" value="{{counter}}">{{counter}}</span>
+            <i class="glyphicon glyphicon-globe" alt="NOtifications" title="NOtifications"></i>
+          </span>
+         </div>
+        <div class="usermessages dropdown" >
+          <span class="messagessicon  dropdown-toggle" data-toggle="dropdown" alt="Messages" title="Messages">
+            <i class="glyphicon glyphicon-envelope" alt="Messages" title="Messages"></i>
+          </span>
+          <ul class="dropdown-menu" id="messagesList" > 
+            <li><a href="{{pathFor 'homeProfile'}}">Messages 1 <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+            <li class="nav-divider"></li>
+            <li><a href="#">Stats <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+            <li class="nav-divider"></li>
+            <li id="profileMessages"><a href="#" >Messages 2 <span class="badge pull-right"> 42 </span></a></li>
+            <li class="nav-divider"></li>
+            <li><a href="#">Messages 3 <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+            <li class="nav-divider"></li>
+            <li><a href="#" id="logOut">Messages 4 <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+          </ul>
+        </div>
+      <div id="notificationWrapper">
+<div id="notificationTitle"> <h4> NOTIFICATIONS </h4><span class="liner"></span> </div>
+<div id="notificationList">
+<ul id="ullist" class="ullist"> 
+{{#if emtyNotifcations }}
+  <p class="emptynot"> there is no notifications</p>
+  {{/if}}                  
+ {{# each notifications}}
+              {{> notification}}
+              {{> notification}}
+              {{> notification}}
+              {{> notification}}
+              {{> notification}}
+              {{> notification}}
+              {{> notification}}
+              {{> notification}}
+              
+            {{/each}}</ul>
+</div>  
+</div>
+    </div>
+    
+  </div><div class="changeCover">
+         <a href="#" class="btn btn-xs btn-primary pull-right" style="margin:10px;"><span class="glyphicon glyphicon-picture"></span> Change cover</a>
+             </div>
+  </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+        <div class="posts tabprofile">
+          <div class="def-block">
+            <div class="topbar">
+              <div id="close" class="tbutton small tback"><span> Back to Albums</span></div>
+                <!--<span class="addAlbum">add new album</span><span class="liner"></span>-->
+            </div>
+            <ul class="tabs">
+              <li><a href="#Latest" class="active"> Details </a></li>
+              <li><a href="#Featured"> Mp3 </a></li>
+              <li><a href="#Lightbox"> Photo gallery </a></li>
+              <li><a href="#Lightbox"> Video </a></li>
+              <li><a href="#Lightbox"> Events </a></li>
+              <li><a href="#Lightbox"> Calender </a></li>
+            </ul><!-- tabs -->
+            <ul class="tabs-content">
+              <li id="Latest" class="active">
+                <div class="video-grid">
+                  some informations details and forms goes here 
+                </div><!-- video grid -->
+              </li><!-- tab content -->
+              <li id="Featured">
+                <div class="video-grid">
+                  <a href="video_single_wide.html" class="grid_3">
+                    <img src="images/assets/videos6.jpg" alt="#">
+                    <span><strong>Dj Back</strong>I Like It (Radio Edit)</span>
+                  </a>
+                  <a href="video_single_wide.html" class="grid_3">
+                    <img src="images/assets/videos7.jpg" alt="#">
+                    <span><strong>Anna</strong>Bad Dog</span>
+                  </a>
+                  <a href="video_single_wide.html" class="grid_3">
+                    <img src="images/assets/videos8.jpg" alt="#">
+                    <span><strong>Armando</strong>On Time</span>
+                  </a>
+                </div><!-- video grid -->
+              </li><!-- tab content -->
+
+              <li id="Lightbox">
+                <div class="video-grid">
+                   <ul id="tp-grid" class="tp-grid">
+                          {{#each images}}
+                            {{> task}}
+                          {{/each}}   
+                        </ul>
+                        {{> imageUploader}}
+                </div><!-- video grid -->
+              </li><!-- tab content -->
+            </ul><!-- end tabs -->
+
+          </div><!-- def block -->
+        </div><!-- posts -->
+
+      <!--</div>--><!-- row clearfix -->      
+ </template>    
+
+<template name="homeProfile2">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="cover2">
     <div class="fb-profile">
         <img align="left" class="fb-image-lg" src="../../images/5.jpeg" alt="Profile image example"/>
@@ -162,7 +285,11 @@
       <img  src="{{imageurl}}" alt="{{imageName}}" />
     </a>
    </li>
-   {{imageurl}}  {{imageurl}} {{imageName}}
+   <br>
+   <br>
+   <br>
+   <img src="{{imageurl}}" alt="{{imageurl}}" caption="{{imageName}}" /> 
+   <br>  
    </template>
 <template name="newAlbum">    
   <div id="popupnewalbbum">
@@ -221,19 +348,28 @@
   </div>
 </template>
 <template name="notification">
-  <div class="alert-blocks alert-blocks-pending alert-dismissable">
-                                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                                  <i class="icon-custom rounded-x icon-bg-gray fa fa-bolt"></i>
-                                                <div class="overflow-h"  id="{{_id}}">
-                                                    <strong class="color-yellow">{{type}}<small class="pull-right"><em>{{formatdate time }}</em></small></strong> 
-                                                    <p>{{type}} sent by <a href="/Artists/{{ownerId}}" class="owner" id="{{ownerId}}" value="{{ownerName}}">{{ownerName}}</a> is {{status}}</p>
-                                                    {{#if compareStatus status recieverId _id currentUser._id  }}
-                                                     <a href="#" id="{{ownerId}}" class="reject">Reject</a>
-                                                     <a href="#" id="{{ownerId}}" class="accept" value="{{owner}}" >Accept</a>
-                                                    {{/if}}
-                                                   
-                                                    
-                                                </div>    
-                                            </div>                                            
+ <li class="notification-box notification-box-one notification" id="{{_id}}">
+              <header><p> {{type}} </p><p>{{formatdate time }}</p>
+              </header>
+              <br>
+              <p class="notcontent"><i class="glyphicon glyphicon-globe"></i>
+                {{#if notificationReciever status recieverId _id currentUser._id  }}
+                 <a href="/Artists/{{ownerId}}" class="owner" id="{{ownerId}}" value="{{ownerName}}">{{ownerName}}</a> {{status}} your {{type}} 
+                {{/if}}
+                  
+                {{#if notificationOwner status recieverId _id currentUser._id  }}
+                 
+                 <a href="/Artists/{{ownerId}}" class="owner" id="{{ownerId}}" value="{{ownerName}}">{{ownerName}}</a> {{type}} is {{status}}TED
+                {{/if}}
+                {{#if compareStatus status recieverId _id currentUser._id  }}
+                   <a href="/Artists/{{ownerId}}" class="owner" id="{{ownerId}}" value="{{ownerName}}">{{ownerName}}</a> sent for you {{type}}
+                    <a href="#" id="{{ownerId}}" class="reject">Reject</a>
+                    <a href="#" id="{{ownerId}}" class="accept" value="{{owner}}" >Accept</a>
+
+                                                    {{/if}}</p>
+    
+                <a href="#" id="{{_id}}"  class="removenotif notification-close remove toptip" original-title="remove notification" alt="Remove notification"><i class="icon-remove"></i></a>
+  </li>
+  
 </template>
  

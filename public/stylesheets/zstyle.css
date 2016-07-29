@@ -1,0 +1,290 @@
+.profilecover{ width: 100%; height: 450px; position: relative; /*background-color: red;*/
+  }
+  .coverImage{width: 100% ; height: 100%}
+.subcover{ /*background-color: yellow;*/ width: 100%; height: 100px;  position : absolute ; bottom: -35px}
+.avatarContainer { width : 150px ;
+ height : 150px; margin-left: 5% ;
+  /*background-color: blue;*/ float: left ;
+  border: 8px solid white; border-radius: 5px }
+.usercontainer { /*width : 80% ;*/ height : 20%; color: gray; /*background-color: white ;*/ float: left ; margin-top: 68px; }
+.usercontainer div {width : 33.3333%; 
+	/*background-color: orange; */
+	display: inline; margin-left: 10px}
+.avatarImage { width: 100% ; height: 100% ;  }
+.notificationcount{margin-left: 15px; font-size: 10px;
+ background-color: red ; padding: 0px 1px;
+ position: absolute; color: white; z-index: 1;
+  font-weight: bold;
+  line-height: 10px;
+   border-radius: 3px;
+   padding: 3px 5px; display: none;
+
+  }
+.changeAvatar{position: absolute; height:50px;  bottom: -45px;/*  background-color: pink;*/ width: 135px ;} 
+.changeAvatar span{float: right ; margin-right: 4px;}
+.changeCover{  position: absolute ; bottom: 10px ; width: 100%; }
+.changeCover span {float: left; margin-right: 10px;}
+.usernotifications{ }
+.usrPrflnm{line-height: 24px;
+	font-family: "Oswald", Tahoma, Arial;
+	font-weight: bold;
+	line-height: 1; color:white;	text-transform: uppercase;
+	font-size: 30px ; }
+.usernotifications .dropdown-menu {height: 200px; overflow-x: hidden; overflow-y: scroll;}
+#rachini{
+	background-color: white;
+	height: 250px; background-color: red; display: block;
+	width: 100%; padding: 20px;
+	overflow-y: scroll;
+	overflow-x: hidden;}
+	#rachini2{
+	height: auto; background-color: yellow; display: block;
+	width: 100%; padding: 20px;
+	overflow-y: scroll;
+	overflow-x: hidden;}
+#notificationsList{
+	height: auto;
+	/*overflow-y: scroll;
+	overflow-x: hidden;*/
+ white-space: nowrap; 
+background: rgba(0, 0, 0, 0.4);
+	border-radius: 6px;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.04);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .15), 0 1px 0 rgba(255, 255, 255, .04);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.04);
+padding: 10px;}
+#notificationTitle{width: 100%; margin-left: 0px; background-color: transparent; height: 20%;
+ display: block;}
+#notificationTitle	h4 {
+	padding: 0 0 10px;
+	margin: 0;
+	border-bottom: 1px solid #ff6600;
+	display: inline-block;
+}
+#notificationWrapper{ 
+	white-space: nowrap; 
+background: rgba(0, 0, 0, 0.4);
+	border-radius: 6px;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.04);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .15), 0 1px 0 rgba(255, 255, 255, .04);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.04);
+padding: 10px;
+margin-left: 10px; 
+width: 100%; height: auto; 
+max-height: 300px;
+ display: none; 
+ visibility: hidden;
+ margin-top: 15px;
+}
+/*#notificationWrapper:before {
+    content: "nnn";
+    width:12px;
+    border-bottom: 10px solid white;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: relative;
+    top: -20px;
+    float: right;
+    right: 40px;
+    opacity: 0.5;
+    z-index: 10;
+}*/
+.usernotifications {
+	text-align: right;
+    
+}
+.togglenotification
+{
+	background-color: black;
+    padding-left: 12px; padding-right:  5px;
+    padding-top: 2px; padding-bottom:  20px;
+    opacity: 0.5;
+    border-radius: 5px 5px 0px 0px;
+}
+#notificationList{margin-left: 0px; width: 300px; height: 80px ; background:blue ; }
+#ullist{width:100%; padding: 10px;height: auto; max-height:200px ; overflow-x:hidden;
+ overflow-y:scroll ; background-color: transparent;
+ }
+#ullist  li {padding: 5px}
+.accept , .reject{color: black }
+
+.accept:hover {color: green }
+.reject:hover{color: red }
+.owner {color: black }
+.owner:hover{color: gray; }
+.nonotification{color: gray; width: 100%; margin-top: -15px; background-color: transparent;
+ font-size: 12px}
+#notificationsList header p , .notification header p{display: inline; float: left; font-size: 11px;}
+#notificationsList header p:last-child,  .notification header p:last-child {float: right;margin-right: 20px }
+ .removenotif{margin-top: -25px;  margin-right: -18px}
+/*.usernotifications  li{background-image: none;}*/
+.usernotifications  li a:hover{ background-image: none; background-color: transparent;}
+.usernotifications  li a:active, .usernotifications  li a:focus, .usernotifications  li a:target{ background-image: none; background-color: transparent;}
+
+
+.notification-box-one{
+	background-color: #ff6600;
+	opacity: 0.8;
+	padding: 8px;
+}
+.closeNotif:hover, .closeNotif:active{background-color: transparent;}
+/* #Tablet (Landscape)
+----------------------------------------------------------------------*/
+@media only screen and (min-width: 959px) and (max-width: 1177px) {
+	.usernotifications {
+	
+}
+.togglenotification{text-align: right;
+    background-color: black;
+    padding-left: 12px; padding-right:  5px;
+    padding-top: 2px; padding-bottom:  20px;
+    opacity: 0.5;
+    border-radius: 5px 5px 0px 0px;}
+	.profilecover { height: 200px}
+	.usercontainer{margin-top: 68px}
+	.avatarContainer{height: 100px; width: 100px ; margin-top: 20px;}
+	.changeAvatar {width: 90px ; bottom: -15px}
+	.changeAvatar span {margin-right: 10px}
+	.wall{ background-color: red; width: 10%;}
+.usrPrflnm , .notificationsicon, .messagessicon {font-size: 25px ; cursor: pointer;}
+}
+
+/* #Tablet (Portrait)
+----------------------------------------------------------------------*/
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+	.usernotifications {
+	text-align: right;
+    
+}
+.notificationcount{
+	margin-left: 8px; font-size: 8px;
+ background-color: red ; padding: 0px 1px;
+ position: absolute; color: white; z-index: 1;
+  font-weight: bold;
+  line-height: 10px;
+   border-radius: 3px;
+   padding: 2px 4px; display: none;
+
+  }
+	.togglenotification{background-color: black;
+    padding-left: 12px; padding-right:  5px;
+    padding-top: 1px; padding-bottom:  22px;
+    opacity: 0.5;
+    border-radius: 5px 5px 0px 0px;}
+    #notificationTitle h4{font-size: 12px; }
+.usrPrflnm , .notificationsicon, .messagessicon {font-size: 20px }
+	.profilecover { height: 350px}
+	.usercontainer{margin-top: 68px}
+	.changeAvatar  span{font-size: 10px}
+	.avatarContainer{height: 80px; width: 80px ; margin-top: 30px ; border: 5px solid white; border-radius: 3px }
+	.changeAvatar {width: 70px; bottom : -8px}
+	.wall{ background-color: blue; width: 100%; height: 500px;}
+.username{font-size : 0.5em ;}
+}
+
+/* #Mobile (Landscape)
+----------------------------------------------------------------------*/
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	.usernotifications {
+	text-align: right;
+    
+}
+.notificationcount{
+	margin-left: 5px; font-size: 8px;
+ background-color: red ; padding: 0px 1px;
+ position: absolute; color: white; z-index: 1;
+  font-weight: bold;
+  line-height: 10px;
+   border-radius: 3px;
+   padding: 2px 4px; display: none;
+
+  }
+.togglenotification{background-color: black;
+    padding-left: 12px; padding-right:  5px;
+    padding-top: 8px; padding-bottom:  20px;
+    opacity: 0.5;
+    border-radius: 5px 5px 0px 0px;}
+#notificationTitle h4{font-size: 13px}
+#notificationWrapper{padding:9px; margin-top: 12px; }
+.usrPrflnm , .notificationsicon, .messagessicon {font-size: 15px }
+	.profilecover { height: 300px}
+	.usercontainer{margin-top: 70px; float: none;}
+	.changeAvatar  span{font-size: 10px}
+	.avatarContainer{height: 80px ; width: 80px ;  margin-top: 36px; border: 5px solid white; border-radius: 3px }
+	.changeAvatar {width: 70px; bottom: -15px}
+	/*.avatarContainer span{height: 80% ; font-size: 5px; color: red;}*/
+	.wall{ background-color: blue; width: 10%; height: 500px}
+.username{font-size : 0.5em ;}
+#notificationWrapper{float: left; width: 75% ; padding:9px;}
+#ullist li p.notcontent  { display:inline; float: none; width: 100% }
+
+#ullist li .notcontent a  { /*display: block;*/ }
+#ullist li .notcontent a.accept  { display: block; float: none; width:  30% }
+#ullist li .notcontent a.reject  { display: block; float: left; width: 60% }
+
+/*#ullist li .notcontent a.accept  { display: block; float: none; width:  20% }
+#ullist li .notcontent a.reject  { display: inline; float: right; width: 0% }*/
+.notcontent i {display: none;}
+	#notificationWrapper #ullist li > p > a.owner  
+	{/*display: inline;float: none; */
+		width: 10% ;font-size: 13px}
+.ullist header p  {font-size: 12px ; }
+p.notcontent {font-size: 12px ;  width:100%; display: block;}
+//*#ullist li a {display: block; float: none;width: 100%}*/
+}
+
+/*  #Mobile (Portrait) 320px
+----------------------------------------------------------------------*/
+@media only screen and (min-width: 100px) and (max-width: 479px) {
+	.notificationcount{margin-left: 5px; font-size: 10px;
+ background-color: red ; padding: 0px 1px;
+ position: absolute; color: white; z-index: 1;
+  font-weight: bold;
+  line-height: 10px;
+   border-radius: 3px;
+   padding: 1px 3px; display: none;
+   margin-top: 2px;
+
+  }
+
+#notificationTitle h4{font-size: 12px; line-height: 3px}
+	.usercontainer div{ display: inline ; }
+	.usercontainer{float: none;}
+	.usernotifications {
+	text-align: left;
+   
+}
+.togglenotification{
+	 background-color: black;
+    padding-left: 5px; padding-right:  2px;
+    padding-top: 2px; padding-bottom:  11px;
+    opacity: 0.5;
+    border-radius: 5px 5px 0px 0px;
+}
+#notificationWrapper{float: none; 
+	width: 75% ; padding:9px;  margin-left: 85px;
+	margin-top: -5px;
+}
+.username{width: 100%; float: none; font-size : 0.5em ;}
+/*.usernotifications, .usermessages{width: 50%; float: left }*/
+#notificationWrapper{float: left; width: 75% ; padding:9px;}
+#ullist li .notcontent a.accept  { display: block; float: none; width:  20% }
+#ullist li .notcontent a.reject  { display: inline; float: left; width: 20% }
+.notcontent i {display: none;}
+
+.usrPrflnm , .notificationsicon, .messagessicon {font-size: 12px }
+
+	.profilecover { height: 200px}
+	.usercontainer{margin-top: 65px}
+	
+	.changeAvatar  span{font-size: 10px}
+	.changeAvatar span {display:none}
+	.avatarContainer{height: 60px ; width:60px ; margin-top: 40px;  border: 3px solid white; border-radius: 2px}
+	.changeAvatar {width: 60px}
+	.wall{font-size : 0.5em ; background-color: blue; width: 10%; height: 500px;}
+	#notificationWrapper #ullist > li > p.owner  {font-size: 12px }
+	#notificationWrapper #ullist li > p > a.owner  {display: block;float: none; width: 100% ; font-size: 12px}
+.ullist header p  {font-size: 11px}
+p.notcontent {font-size: 11px}
+
+}

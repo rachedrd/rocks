@@ -2358,6 +2358,8 @@ html[xmlns] .slides {display: block;}
 .flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
 
 @media screen and (max-width: 860px) {
+	.chngavatr{bottom: 85px ; left: 15px}
+	.changeavatar{bottom: 70px;}
 	.flex-direction-nav .flex-prev {opacity: 1; left: 0;}
 	.flex-direction-nav .flex-next {opacity: 1; right: 0;}
 }
@@ -3403,7 +3405,23 @@ a.notification-close {
 	z-index: 99999998;
 	margin-left: 0;
 }
-#popupLogin .def-block  {  
+#popupSignUp {
+	display:none;
+	position:fixed;
+	width:360px;
+	top:50%;
+	left:50%;
+	z-index: 99999998;
+	margin-left: 0;
+}
+#popupLogin .def-block
+ {  
+	background: #000;
+	background: rgba(0, 0, 0, 0.9) !important;
+	box-shadow: none;
+	border: 2px solid #1F1F1F;
+}
+ #popupSignUp .def-block {  
 	background: #000;
 	background: rgba(0, 0, 0, 0.9) !important;
 	box-shadow: none;
@@ -3422,14 +3440,15 @@ a.notification-close {
 #popupLoginClose:hover {
 	color: #fff
 }
-#login_username, #login_password {
+#login_username, #login_password, #signup_username, #signup_firstname,
+#signup_lastname, #signup_email, #signup_retypePassword, #signup_password {
 	display: block !important;
 	width: 100% !important;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	box-shadow: none;
-	padding: 0 12px;
+	padding: 0 40px;
 	line-height: 24px;
 	height: 34px;
 	border: 0;
@@ -4673,8 +4692,8 @@ a.notification-close {
 
 /*	IE7 & IE8 & IE9 Hacks
 ----------------------------------------------------------------------*/
-.ie8 #header, .ie8 .sf-menu ul li, .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup,
-.ie7 #header, .ie7 .sf-menu ul li, .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup {
+.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup,
+.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup {
 	background: transparent url(../images/ie_000_80.png) repeat;
 }
 .ie8 .footer-last, .ie8 .ttw-music-player .player-controls, .ie8 .def-block, .ie8 .ttw-music-player .tracklist, .ie8 .breadcrumbIn,
@@ -4690,10 +4709,19 @@ a.notification-close {
 	background: #ff6600
 }
 .ie8 #login_username, .ie8 #login_password, 
+.ie8 #signup_username, .ie8 #signup_firstname,
+.ie8 #signup_lastname,.ie8  #signup_email,
+.ie8 #signup_retypePassword, .ie8  #signup_password,
+.ie9 #signup_username, .ie9 #signup_firstname,
+.ie9 #signup_lastname, .ie9  #signup_email,
+.ie9 #signup_retypePassword, .ie9  #signup_password,
 .ie9 #login_username, .ie9 #login_password {
 	padding: 4px 10px 22px;
 }
-.ie7 #login_username, .ie7 #login_password {
+.ie7 #login_username, .ie7 #login_password, .ie7 #signup_username, .ie7 #signup_firstname,
+.ie7 #signup_lastname, .ie7  #signup_email,
+.ie7 #signup_retypePassword, .ie7  #signup_password
+ {
 	padding: 4px 10px;
 	width: 276px !important
 }
@@ -4865,6 +4893,9 @@ a.notification-close {
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 959px) and (max-width: 1177px) {
+	.chngavatr{bottom: 75px}
+	.changeavatar{bottom: -35px;}
+	#errorMsgSgnUp {float: right; margin: -5px 20px 0px 0px;}
 	body {overflow-x: hidden}
 	.boxed, .boxed-margin {width: 1000px}
 	.row { width: 944px }
@@ -4891,6 +4922,12 @@ a.notification-close {
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 768px) and (max-width: 959px) {
+	.usrPrflnm, .notificationsicon, .messagessicon{line-height: 10px;
+	font-family: "Tahoma", Helvetica, Arial; 
+	font-size: 15px}
+  .chngavatr{bottom: 55px}
+	.changeavatar{bottom: 20px;}
+	#errorMsgSgnUp {float: right; margin: -5px 20px 0px 0px;}
 	body {overflow-x: hidden}
 	#Login_PopUp_Link{ float: left; margin-left: 80%; }
 	#tempwrap{ float: left; margin-left: 80%; }
@@ -4936,6 +4973,14 @@ a.notification-close {
 /* #Mobile (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
+	.usrPrflnm, .notificationsicon, .messagessicon{line-height: 13px;
+	font-family: "Tahoma", Helvetica, Arial;
+	font-size: 12px}
+	.chngavatr{bottom: 80px}
+	.fb-profile .cover a.changecover { width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
+	.fb-profile .cover a.changeavatar { bottom: 30px; width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
+
+	#errorMsgSgnUp {float: right; margin: -6px 20px 0px 0px;}
 	#tempwrap{ /*float: left; margin-left: 60%;*/ 
 		width: 100%;
 		position: relative;
@@ -5033,7 +5078,18 @@ a.notification-close {
 /*  #Mobile (Portrait) 320px
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 100px) and (max-width: 479px) {
-		#errorMsgLgn{float: right; margin: -30px 30px 0px 0px;}
+	.usrPrflnm, .notificationsicon, .messagessicon{line-height: 8px;
+	font-family: "Tahoma", Helvetica, Arial;
+	font-size: 10px}
+     .chngavatr{display: none;}
+	/*.changeavatar{margin-left: -80px; margin-top: 0px;}*/
+	.fb-profile .cover a.changeavatar { visibility: hidden; width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
+	.fb-profile .cover a.changecover { width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
+	
+		#errorMsgLgn {float: right; margin: -33px 20px 0px 0px;}
+		#errorMsgSgnUp {float: right; margin: -5px 20px 0px 0px;}
+
+		/*#errorMsgSgnUp {width: 100%}*/
 
 	#loginRegister a:last-child {margin-right: 20px; float: right;}
 		#tempwrap{
@@ -5135,7 +5191,8 @@ a.notification-close {
 	ul.showcomments li.child {margin: 0 0px 32px 2px}
 	.topbar h2, .topbar h3 { text-align: left; padding: 0; display: block;}
 	.tback {top: 40px}
-	#popupLogin {width: 310px}
+	#popupLogin { width: 310px}
+	  #popupSignUp { width: 310px ; margin-top: 0px}
 	.ajde_evcal_calendar .calendar_header p {font-size: 26px}
 	.forum .search-forum {position: relative;width: 100%}
 	.event-timer li {width: 53px}
@@ -5174,11 +5231,11 @@ a.notification-close {
     z-index: 9;
 }
 /*login form styling */
-#popupLogin .input-group 
-{
+#popupLogin .input-group {
 display: block !important;
 width: 100% !important;
 }
+
 .input-group{width: 83%;}
 .input-group span{ 
 	width:30px ;
@@ -5196,19 +5253,7 @@ width: 100% !important;
 	     margin-left: 8px;
 	      position: absolute;
 	  }
-	  #login_username, #login_password {
-	display: block !important;
-	width: 100% !important;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	box-shadow: none;
-	padding: 0 12px;
-	line-height: 24px;
-	height: 34px;
-	border: 0;
-	padding-left: 35px;
-}
+
 #signup_username, #signup_firstname, #signup_lastname, #signup_password , #signup_email, #signup_retypePassword, #reset_email,#album_name{
 	display: block !important;
 	width: 100% !important;
@@ -5224,7 +5269,10 @@ width: 100% !important;
 	margin-left: 30px;
 	border-radius: 5px 5px 5px 0px;
 }
-#signup_register, #signup_cancel  {margin-top: 25px ; margin-right: 0px; margin-left: 30px; margin-bottom: 0px}
+#signup_register, #signup_cancel  { float: left;
+	margin-top: 0px ; margin-right:
+	 0px; margin-left: 30px; position: 0px}
+
 #signin_facebbok, #signin_twitter  { margin-right: 0px; margin-left: 15px;}
 #reset_mail_send, #reset_mail_cancel, #createAlbum ,#cancelAddAlbm  { margin-top: 5px ; margin-right: 0px; margin-left: 40px; margin-bottom: 0px}
 #new_password, #new_password_cancel  { margin-top: 5px ; margin-right: 0px; margin-left: 35px; margin-bottom: 0px}
@@ -5255,7 +5303,209 @@ width: 100% !important;
   #errorMsgAlb
   { color: red;}
   #popupLogin h4 {margin-right: 45%;}
-#errorMsgSgnUp{margin-left: 160px;}
+   #popupSignUp h4 {margin-right: 24%;}
+/*#errorMsgSgnUp{ margin-left: 160px;}*/
 #errorMsgAlb{margin-left: 60px;}
 
-/*en login form styling*/
+/*end login form styling*/
+/*popup signup styling*/
+/*	Popup SignIn
+----------------------------------------------------------------------*/
+#bgsup {  
+	display:none;
+	position:fixed;
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background:#000;
+	z-index: 99999997;
+} 
+#popupSignUpClose {
+	position: absolute;
+	top: 25px;
+	right: 33px;
+	font-size: 24px;
+	color: #5C5C5C;
+	cursor: pointer;
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+#popupSignUpClose:hover {
+	color: #fff
+}
+.zigmaIn {
+	-webkit-animation: zigma 0.8s;
+	animation: zigma 0.8s;
+}
+@-webkit-keyframes zigma {
+	0% {-webkit-transform: perspective(400px) rotateY(90deg);opacity: 0;}
+	40% {-webkit-transform: perspective(400px) rotateY(-10deg);}
+	70% {-webkit-transform: perspective(400px) rotateY(10deg);}
+	100% {-webkit-transform: perspective(400px) rotateY(0deg);opacity: 1;}
+}
+@keyframes zigma {
+	0% {transform: perspective(400px) rotateY(90deg);opacity: 0;}
+	40% {transform: perspective(400px) rotateY(-10deg);}
+	70% {transform: perspective(400px) rotateY(10deg);}
+	100% {transform: perspective(400px) rotateY(0deg);opacity: 1;}
+}
+#userTypeLable{color: gray; float: left; margin-left: 38px; margin-top: 5px;}
+#divToggleType{margin-left: 130px; margin-top: 0px; margin-bottom: 10px;  color: #ff6600}
+#divToggleType .dropdown-menu:hover {background-color: white;}
+#divToggleType .dropdown-menu li a:hover{background-color: white; color: #ff6600}
+#divToggleType .dropdown{background-color: white;}
+#divToggleType .dropdown:hover{background-color: white;}
+#divToggleType button:hover {background-color: white;}
+#userTypeLable{color: gray; float: left; margin-left: 38px; margin-top: 5px;}
+#divToggleType .btn {background-color: white; background-image: none; color: #ff6600}
+#divToggleType .dropdown-toggle {background-color: white; background-image: none;}
+#choiceType li{background-image: none;}
+#choiceType li:hover {background-color: white; background-image: none;}
+#choiceType li a:hover{background-color: white; color: black; background-image: none;}
+/*end popup signup styling */
+/*profile styling*/
+.fb-profile .cover img.fb-image-lg{
+    z-index: 0;
+    width: 100%; 
+    height: auto;
+    max-height: 500px;  
+    margin-bottom: 10px;
+    /*background-image: url(../../images/avatarProfileM2.png);*/
+}
+.insidea{background-color: red; position: absolute; margin-left: -100px; margin-top: 20px;}
+.chngavatr{position: relative; float: left; margin-left: -110px ; margin-top: 90px }
+.fb-profile .cover a.changeavatar {
+    bottom: 20px;
+    position: absolute;
+    right: 20px;
+    bottom: 50px;
+}
+.fb-profile .cover a.changecover {
+   
+    bottom: 10px;
+    position: absolute;
+    right: 5px;
+    bottom: 55px;
+}
+.avatar2{z-index: 9999999; display: inline; }
+.changeavatar{position: relative; vertical-align: bottom;}
+
+/*.fb-profile .avatar a{
+   
+    bottom: 10px;
+    position: absolute;
+    right: 5px;
+    bottom: 45px;
+    background-image: url(../../images/avatarProfileM2.png);
+}*/
+.cover{display: inline; height: 100%}
+.fb-profile .avatar  {position: relative; display: block;}
+.fb-profile .avatar  {position: relative; display: block;}
+
+.fb-image-profile
+{
+    margin: -90px 10px 0px 50px;
+    z-index: 9;
+    width: 20%; 
+}
+.tp-title li {
+    animation: 
+        openspace 0.3s ease forwards, 
+        restored-item-animation 0.3s 0.3s cubic-bezier(0, 0.8, 0.32, 1.07) forwards;
+}
+#rac, #image{width: 670px; height: 525px; background: red; visibility: hidden;}
+.cropper {
+	visibility: hidden;
+	      }
+	      #myCanvas{ background: url('checkboard.png'); visibility: hidden;}
+	#givs{width: 550px;
+	 height: }
+#myProgress {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    background-color: gray;
+    visibility: hidden;
+}
+#myBar {
+    position: absolute;
+    width: 1%;
+    height: 100%;
+    background-color: #ff6600;
+}
+#subprofilemessages, #subprofilenotification, #subprofileusername{display: inline; width: 20%}
+#progressUploading{float: right; color: : #ff6600;}
+.fb-profile-text{margin-bottom: 12%; position: relative; }	 
+@keyframes openspace {
+    to {
+        height: auto;
+    }
+}
+
+@media (max-width:768px)
+{
+.fb-profile-text p {
+    font-weight: 700;
+    font-size:16px;
+}
+.fb-image-profile
+{
+    margin: -45px 10px 0px 25px;
+    z-index: 9;
+    width: 20%; 
+    height: auto;
+    background-color: white;
+}
+}
+
+
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+.rotateLeft i { -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";}
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+}
+.toppad
+{margin-top:20px;
+}
+.cover2{position : relative;  }
+.usrPrflnm, .notificationsicon, .messagessicon{line-height: 24px;
+	font-family: "Tahoma", Helvetica, Arial;
+	font-size: 30px}
+	.chrvtr{margin-left: -10%}
+.tabprofile{width: 99% ; margin:  0px auto;}	
+/*#tempwrap {position: absolute; margin-left: 1000px; float: right;}*/
+#notificationsList{position: absolute; margin-top: 20px; }
+#notificationsList:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -9px;
+    right: 134px;
+    z-index: 10;
+}
+#notificationsList:after {
+    content: "";
+    border-bottom: 12px solid #ccc;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    position: absolute;
+    top: -11px;
+    right: 133px;
+    z-index: 9;
+}
+/**end profile styling*/

@@ -50,12 +50,34 @@ addNotification: function(obj){
   "time": obj.time,
   "type": obj.typ , 
   "status" : obj.status,
-  "viewed" : false
+  "viewed" : obj.viewed
    });
  if(obj.status === "accepted")
  	Notifications.update({ "recieverId" : obj.ownerId,
-  "ownerId": obj.recieverId }, { $set : {"status" : "accepted"} });
+  "ownerId": obj.recieverId }, { $set : {"status" : "accept"} });
 return "inserted";
+//Users.upsert({"_id": "hnCoTgyqB84894uCz"}, {$set : { "agent.name":name}    });
+},
+
+rejectNotification: function(obj){
+ Notifications.insert({ "ownerId" : obj.ownerId,
+  "ownerName" : obj.ownerName,
+  "recieverId": obj.recieverId ,
+  "recieverName": obj.recieverName ,
+  "time": obj.time,
+  "type": obj.typ , 
+  "status" : obj.status,
+  "viewed" : obj.viewed
+   });
+ if(obj.status === "rejected")
+  Notifications.update({ "recieverId" : obj.ownerId,
+  "ownerId": obj.recieverId }, { $set : {"status" : "reject"} });
+return "rejected";
+//Users.upsert({"_id": "hnCoTgyqB84894uCz"}, {$set : { "agent.name":name}    });
+},
+removeNotification: function(id){
+ Notifications.remove({ "_id" : id });
+return "removed";
 //Users.upsert({"_id": "hnCoTgyqB84894uCz"}, {$set : { "agent.name":name}    });
 },
 	viewedNotification: function(id){

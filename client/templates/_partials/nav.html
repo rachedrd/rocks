@@ -1,5 +1,7 @@
 <template name="nav">
-    {{> login }} <!--{{> signUp }} {{> resetMailTemplate }}{{> NewPasswordTemplate }}-->
+    {{> login }}
+    {{> signUp }}
+     <!-- {{> resetMailTemplate }}{{> NewPasswordTemplate }}-->
     <header id="header" class="glue exampleHeader">
       <div class="row clearfix rp">
         <div class="little-head lefter">
@@ -109,72 +111,6 @@
                   <li><a href="gallery2.html">Gallery 2 Column</a></li>
                 </ul>
               </li>
-              <!--<li><a href="#">Success story<span class="sub">Success story</span></a>
-                <ul>
-                  <li><a href="rtl.html">RTL Support</a></li>
-                  <li><a href="events.html">Events</a></li>
-                  <li><a href="mp3_single_wide.html">MP3 Single Wide</a></li>
-                  <li><a href="mp3_single_half.html">MP3 Single Half</a></li>
-                  <li><a href="video_single_wide.html">Video Single Wide</a></li>
-                  <li><a href="video_single_half.html">Video Single Half</a></li>
-                  <li><a href="fullwide.html">Fullwide Page</a></li>
-                  <li><a href="support_forum.html">Support Forum</a></li>
-                  <li><a href="contact.html">Contact</a></li>
-                  <li><a href="contact2.html">Contact 2</a></li>
-                  <li><a href="search.html">Search Result</a></li>
-                  <li><a href="404.html">Custom 404</a></li>
-                  <li><a href="archive.html">Archive</a></li>
-                  <li><a href="news_single.html">News Single</a></li>
-                </ul>
-              </li>
-              <li><a href="blog-right-sidebar.html">Blog<span class="sub">latest news</span></a>
-                <ul>
-                  <li><a href="blog-right-sidebar.html">Blog</a></li>
-                  <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-                  <li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
-                  <li><a href="blog-without-sidebar.html">Blog Without Sidebar</a></li>
-                  <li><a href="blog-single_wide.html">Blog Single Wide</a></li>
-                  <li><a href="blog-single_half.html">Blog Single Half</a></li>
-                  <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
-                  <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
-                </ul>
-              </li>-->
-              <!--<li><a href="blog-right-sidebar.html">Privacy/Terms<span class="sub">latest news</span></a>
-                <ul>
-                  <li><a href="blog-right-sidebar.html">Blog</a></li>
-                  <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-                  <li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
-                  <li><a href="blog-without-sidebar.html">Blog Without Sidebar</a></li>
-                  <li><a href="blog-single_wide.html">Blog Single Wide</a></li>
-                  <li><a href="blog-single_half.html">Blog Single Half</a></li>
-                  <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
-                  <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
-                </ul>
-              </li>-->
-              <!--<li><a href="blog-right-sidebar.html">Terms<span class="sub">latest news</span></a>
-                <ul>
-                  <li><a href="blog-right-sidebar.html">Blog</a></li>
-                  <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-                  <li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
-                  <li><a href="blog-without-sidebar.html">Blog Without Sidebar</a></li>
-                  <li><a href="blog-single_wide.html">Blog Single Wide</a></li>
-                  <li><a href="blog-single_half.html">Blog Single Half</a></li>
-                  <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
-                  <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
-                </ul>
-              </li>-->
-              <!--<li><a href="blog-right-sidebar.html">Contact us<span class="sub">latest news</span></a>
-                <ul>
-                  <li><a href="blog-right-sidebar.html">Blog</a></li>
-                  <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-                  <li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
-                  <li><a href="blog-without-sidebar.html">Blog Without Sidebar</a></li>
-                  <li><a href="blog-single_wide.html">Blog Single Wide</a></li>
-                  <li><a href="blog-single_half.html">Blog Single Half</a></li>
-                  <li><a href="blog-single_facebook_comment.html">With Facebook Comment</a></li>
-                  <li><a href="blog-single_comment_form.html">With Comment Form</a></li>
-                </ul>
-              </li>-->
             </ul><!-- end menu -->
           </nav><!-- end nav -->
         </div><!-- row -->
@@ -209,7 +145,7 @@
             <li class="nav-divider"></li>
             <li id="profileMessages"><a href="#" >Messages <span class="badge pull-right"> 42 </span></a></li>
             <li class="nav-divider"></li>
-            <li><a href="#">Notifications <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+            <li><a href="#">Notifications {{> count}}</a></li>
             <li class="nav-divider"></li>
             <li><a href="#" id="logOut">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
           </ul>
@@ -222,7 +158,7 @@
         <div class="def-block widget">
           <h4> Login </h4><span id="errorMsgLgn"></span><span class="liner"></span>        
           <div class="widget-content row-fluid">
-            {{> templateForm}}
+            {{> templateForm }}
           </div><!-- content -->
         </div><!-- widget -->
         <div id="popupLoginClose">x</div>
@@ -234,17 +170,15 @@
       <div class="def-block widget">
         <h4> Join </h4><span id="errorMsgSgnUp"></span><span class="liner"></span>        
         <div class="widget-content row-fluid" id="signupwrapper">
-          {{> templateSignUpForm}}
-        </div><!-- content -->
-      </div><!-- widget -->
+          {{> templateSignUpForm }}
+        </div>
+      </div>
       <div id="popupSignUpClose">x</div>
     </div>
     <div id="bgsup"></div>
 </template>    
 <template name="templateSignUpForm">
  <form id="popup_signup_form">
-            <!--<label for="signup_username" class="liner">username</label>-->
-            <!--username-->
             <div class="input-group input-group-lg">
               <span class="input-goup-addon" alt="your username" title="your username">
                 <i class="icon-user registerForm" alt="your username" title="your username"></i>
@@ -252,7 +186,6 @@
               <input type="text" name="signup_username" title="your username" id="signup_username" onfocus="if (this.value=='username') this.value = '';" onblur="if (this.value=='') this.value = 'username';" value="username" placeholder="username">
               <i id="validUsername_sgnUp" class="glyphicon"></i>
             </div>
-            <!--first name-->
              <div class="input-group input-group-lg">
               <span class="input-goup-addon" alt="your first name" title="your firstname">
                 <i class="icon-user registerForm" alt="your first name" title="your username"></i>
@@ -260,7 +193,6 @@
               <input type="text" name="signup_firstname" title="your first name" id="signup_firstname" onfocus="if (this.value=='first name') this.value = '';" onblur="if (this.value=='') this.value = 'first name';" value="first name" placeholder="first name">
               <i id="validFisrtName_sgnUp" class="glyphicon"></i>
             </div>
-            <!--last name-->
              <div class="input-group input-group-lg">
               <span class="input-goup-addon" alt="your last name" title="your last name">
                 <i class="icon-user registerForm" alt="your last name" title="your last name"></i>
@@ -273,8 +205,7 @@
                  <input type="text" alt="your email" title="your email" name="signup_email" id="signup_email" onfocus="if (this.value=='email') this.value = '';" onblur="if (this.value=='email') this.value = '';" value="email" placeholder="youremail@example.com">
                  <i id="validEmail_sgnUp" class="glyphicon"></i>
             </div>
-            <!--user type-->
-             <div class="input-group input-group-lg">
+            <div class="input-group input-group-lg">
               <span class="input-goup-addon" alt="your choice " title="your choice">
                 <i class="icon-user registerForm" alt="your choice" title="your choice"></i>
               </span>
@@ -312,18 +243,15 @@
 </template>
   <template name="templateForm">
     <form id="popup_login_form">
-              <!--<label for="signup_username" class="liner">username</label>-->
               <div class="input-group input-group-lg">
                 <span class="input-goup-addon" alt="your username" title="your username"><i class="icon-user registerForm" alt="your username" title="your username"></i></span><span class="tooltip">your username</span>
                 <input type="text" name="login_username" title="your username" id="login_username" onfocus="if (this.value=='username') this.value = '';" onblur="if (this.value=='') this.value = 'username';" value="username" placeholder="username">
-                <!--<label for="signup_email" class="liner">email</label>-->
                 <i id="validUsername" class="glyphicon"></i> 
               </div>
               <div class="input-group input-group-lg">
                 <span class="input-goup-addon" alt=" password" title=" your password"><i class="icon-lock registerForm" alt="your password" title="your password"></i></span>
                 <input type="password" name="login_password" id="login_password" onfocus="if (this.value=='password') this.value = '';" onblur="if (this.value=='') this.value = 'password';" value="password" placeholder="password">
                 <i id="validPassword" class="glyphicon"></i> 
-                <!--<label for="login_retypePassword" class="liner">Retype password</label>-->
               </div> 
               <div id="loginRegister">
                 <a  id="signin_login" class="tbutton small color3"><span>Login</span></a>
@@ -395,4 +323,8 @@
                 <a href="#" id="new_password_cancel" class="tbutton color2 small"><span>Cancel</span></a>
   </form><!-- login form -->
 </template>
- 
+<template name="count">
+  {{#if mycounter}}
+ <span class="badge pull-right"> {{mycounter}} </span>
+  {{/if}}
+</template>

@@ -2,21 +2,13 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { Mongo } from 'meteor/mongo';
+import { Session } from 'meteor/session';
+
+
 //import { Tasks } from '../../../imports/api/tasks.js';
 //import { Images } from '../../../imports/api/images.js';
 
 Meteor.startup (function(){
-alert('startup ...');
-/*
-$.getScript('../js/modernizr.custom.63321.js');
-$.getScript('../js/jquery.stapel.js');
-$.getScript('../js/jquery.prettyPhoto.js');
-$.getScript('../js/jquery.flexslider-min.js');
-$.getScript('../js/jquery.nicescroll.min.js');
-$.getScript('../js/twitter/jquery.tweet.js');
-$.getScript('../js/theme20.js');
-$.getScript('../js/abbCostume.js');
-*/
 });
 Meteor.subscribe("USERS");
 /*Meteor.setInterval(function()
@@ -57,43 +49,9 @@ Template.myPicture.helpers({
 });
 */
 Template.layout.onRendered(function(){
-/*$.getScript('../js/modernizr.custom.63321.js');
-$.getScript('../js/jquery.stapel.js');
-$.getScript('../js/jquery.prettyPhoto.js');
-$.getScript('../js/jquery.flexslider-min.js');
-$.getScript('../js/jquery.nicescroll.min.js');
-$.getScript('../js/jquery.tweet.js');
-$.getScript('../js/theme20.js');
-$.getScript('../js/abbCostume.js');*/
-/*setTimeout(function(){
-$.getScript('../js/zzzrevolution.js');
-}, 20000);*/
-/*setTimeout(function(){
-//$('head').append('<script type="text/javascript" src ="../js/cdthemeplugins.min.js">');
-//$('head').append('<script type="text/javascript" src ="../js/cthemepunchrevolution.js">');
-	$('head').append('<script type="text/javascript" src ="../js/zzzrevolution.js">');
-	alert('revolution ');
-}, 10000);*/
-
-/*$('head').append('<script type="text/javascript" src ="../js/modernizr.custom.63321.js">');
-$('head').append('<script type="text/javascript" src ="../js/jquery.stapel.js">');
-$('head').append('<script type="text/javascript" src ="../js/jquery.prettyPhoto.js">');
-$('head').append('<script type="text/javascript" src ="../js/jquery.flexslider-min.js">');
-$('head').append('<script type="text/javascript" src ="../js/jquery.jplayer.js">');
-$('head').append('<script type="text/javascript" src ="../js/ttw-music-player-min.js">');
-$('head').append('<script type="text/javascript" src ="../js/jquery.masonry.min.js">');
-$('head').append('<script type="text/javascript" src ="../js/iiiimyplaylist.js">');
-$('head').append('<script type="text/javascript" src ="../js/jquery.nicescroll.min.js">');
-$('head').append('<script type="text/javascript" src ="../js/jquery.tweet.js">');
-$('head').append('<script type="text/javascript" src ="../js/gmap3.js">');
-$('head').append('<script type="text/javascript" src ="../js/theme20.js">');
-$('head').append('<script type="text/javascript" src ="../js/abbCostume.js">');*/
-//trying libs
-
 $('head').append('<script type="text/javascript" src="js/jquery.min.js"></script>');
 $('head').append('<script type="text/javascript" src ="js/jquery.stapel.js">');
 $('head').append('<script type="text/javascript" src="js/theme20.js"></script>');
-//$('head').append('<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>');
 $('head').append('<script type="text/javascript" src="js/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>');	
 $('head').append('<script type="text/javascript" src="js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>');
 $('head').append('<script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>');
@@ -105,26 +63,16 @@ $('head').append('<script type="text/javascript" src="js/ttw-music-player-min.js
 $('head').append('<script type="text/javascript" src="js/iiiimyplaylist.js"></script>');
 $('head').append('<script type="text/javascript" src="js/twitter/jquery.tweet.js"></script>');
 $('head').append('<script type="text/javascript" src="js/abbCostume.js"></script>');
-/*
-$('head').append('<script type="text/javascript" src="../js/ajquery.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/bthem.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/cbootstrap.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/ddprettyPhoto.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/eeflexslidermin.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/ffjplayer.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/ggplayermin.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/gmap3.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/iiiimyplaylist.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/jjjcntdn.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/kkknicescroll.js"></script>');
-$('head').append('<script type="text/javascript" src="../js/llljquerytweet.js"></script>');
-$('head').append('<script type="text/javascript" src ="../js/abbCostume.js">');
-*/
-/*$('head').append('<script type="text/javascript" src="js/nnncustom.js"></script>');*/
-
+});
+Template.count.helpers({
+mycounter: function (){
+	if(parseInt(Session.get('notcounter')) > 0)
+	return Session.get('notcounter');
+	else
+	return false; 
+}
 });
 Template.body.helpers({
-
   /*tasks() {
    return Tasks.find({});
    //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
@@ -189,26 +137,26 @@ Template.templateSignUpForm.events({
 					     	console.log("type : "  + type);
 					if(username === '' || username === 'username')
 					{
-						$('#errorMsgSgnUp').html('username empty');
+						$('#errorMsgSgnUp').html('username is empty');
 						$("#validUsername_sgnUp").addClass('glyphicon-asterisk');
 					}
 
 					if((firstName === '' || firstName === 'first name') && (username !== '') && (username !== 'username'))
 					{
-						$('#errorMsgSgnUp').html('first name empty');
+						$('#errorMsgSgnUp').html('firstname is empty');
 						$("#validFisrtName_sgnUp").addClass('glyphicon-asterisk');
 					}
 
 					if(( lastName === ''|| lastName === 'last name') &&
 						(firstName !== '') && (firstName !== 'first name') && (username !== '') && (username !== 'username'))
 					{
-						$('#errorMsgSgnUp').html('last name empty');
+						$('#errorMsgSgnUp').html('lastname is empty');
 						$("#validLastName_sgnUp").addClass('glyphicon-asterisk');
 					}
 					if(( email === '' || email === 'email') && ( lastName !== '' ) && (lastName !== 'last name') &&
 						(firstName !== '') && (firstName !== 'first name') && (username !== '') && (username !== 'username'))
 					{
-						$('#errorMsgSgnUp').html('email empty');
+						$('#errorMsgSgnUp').html('email address is empty');
 						$("#validEmail_sgnUp").addClass('glyphicon-asterisk');
 					}
 					if(( email !== '') && (email !== 'email') && ( lastName !== '' ) && (lastName !== 'last name') &&
@@ -223,14 +171,14 @@ Template.templateSignUpForm.events({
 						 (lastName !== 'last name') &&(firstName !== '') && (firstName !== 'first name') && (username !== '') &&
 						  (username !== 'username')&& (validateEmail(email) ))
 						{
-							$('#errorMsgSgnUp').html('Select choice');
+							$('#errorMsgSgnUp').html('Select your choice');
 						}
 
 					if((type !== 'nothing') &&(password === '' || password == 'password') && ( email !== '') && (email !== 'email') && ( lastName !== '' ) && (lastName !== 'last name') &&
 						(firstName !== '') && (firstName !== 'first name') && (username !== '') && (username !== 'username')
 						&& (validateEmail(email) ))
 						{
-							$('#errorMsgSgnUp').html('empty password');
+							$('#errorMsgSgnUp').html('password is empty');
 						    $("#validPasswd_sgnUp").addClass('glyphicon-asterisk');
 						}
 
@@ -238,9 +186,9 @@ Template.templateSignUpForm.events({
 						(firstName !== '') && (firstName !== 'first name') && (username !== '') && (username !== 'username')
 						&& (validateEmail(email) ))
 						{
-							$('#errorMsgSgnUp').html('password must be > 6 characters');
+							$('#errorMsgSgnUp').html('password < 6 characters');
 						    $("#validPasswd_sgnUp").removeClass('glyphicon-asterisk');
-						    $("#errorMsgSgnUp").css({"margin-left": "90px"});
+						    //$("#errorMsgSgnUp").css({"margin-left": "90px"});
 						    $("#validPasswd_sgnUp").addClass('glyphicon-remove');
 						}	
 
@@ -248,7 +196,7 @@ Template.templateSignUpForm.events({
 						(firstName !== '') && (firstName !== 'first name') && (username !== '') && (username !== 'username')
 						&& (validateEmail(email) ))
 						{
-							$('#errorMsgSgnUp').html('Retype password');
+							$('#errorMsgSgnUp').html('Retype your password');
 						    $("#validRePsswd_sgnUp").addClass('glyphicon-asterisk');
 						}
 
@@ -256,7 +204,7 @@ Template.templateSignUpForm.events({
 						(firstName !== '') && (firstName !== 'first name') && (username !== '') && (username !== 'username')
 						&& (validateEmail(email) ))
 						{
-							$('#errorMsgSgnUp').html('passwords not much');
+							$('#errorMsgSgnUp').html('passwords does not much');
 						    $("#validRePsswd_sgnUp").addClass('glyphicon-remove');
 						    $("#validRePsswd_sgnUp").removeClass('glyphicon-asterisk');
 						}
@@ -288,7 +236,8 @@ Template.templateSignUpForm.events({
 					     	streetName: null,
 					     	city: null,
 					     	Country: null,
-						}
+					     	defalutAgent: "ubms company"
+						}, 
 					}, function(err)
 						{
 							$('#errorMsgSgnUp').html('');
@@ -299,7 +248,7 @@ Template.templateSignUpForm.events({
 							 if(error.indexOf('Username already exists') !==-1) 
 							 	{
 								$('#errorMsgSgnUp').html('Username already exists');
-								$('#errorMsgSgnUp').css({"margin-left":"110px"});
+								//$('#errorMsgSgnUp').css({"margin-left":"110px"});
 								$("#validUsername_sgnUp").addClass('glyphicon-remove');
 								}
 								else
@@ -317,7 +266,7 @@ Template.templateSignUpForm.events({
           							   }
           							});*/
 								$('#errorMsgSgnUp').html('error registration');
-								$('#errorMsgSgnUp').css({"margin-left":"160px"});
+								//$('#errorMsgSgnUp').css({"margin-left":"160px"});
 								$("#validUsername_sgnUp").addClass('glyphicon-remove');
 								}
                         	}
@@ -359,6 +308,9 @@ Meteor.logout( function(err)
 						});
 }
 });
+Template.templateForm.onCreated(function(){
+	Meteor.subscribe("notifications"); 
+});
 Template.templateForm.events({
 'click #signin_login ':	function(event, t)
 				{
@@ -399,9 +351,13 @@ Template.templateForm.events({
 								$("#validPassword").addClass('glyphicon-remove');
 							}
 							//$("#validUsername").removeClass('glyphicon-ok');
+							//$('.notificationcount').value('5');
+							//$('.notificationcount').val('5');
+
 						}
 						else 
 						{
+							
 							t.find("#login_username").value = "";
 							t.find("#login_password").value = "";
 								$("#errorMsgLgn").html("");
@@ -411,7 +367,10 @@ Template.templateForm.events({
 								$("#popupSignUp").removeClass('zigmaIn').fadeOut("slow");
 							 	$("#LoginBackgroundPopup").fadeOut("slow");
 							 	$("#LoginBackgroundPopup").fadeOut("slow");
-								$("#popupLogin").removeClass('zigmaIn').fadeOut("slow");
+								$("#popupLogin").removeClass('zigmaIn').fadeOut("slow"); 
+								 var counter = 0 ; 
+     							 counter = Notifications.find({ "recieverId":  Meteor.userId(), viewed : false}).count();
+    							 Session.set('notcounter', counter);
 
 							//$("#validUsername").addClass('glyphicon glyphicon-ok');
 							//$("#errorMsgLgn").html("no errors");

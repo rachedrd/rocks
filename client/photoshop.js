@@ -49,11 +49,15 @@ var myarg2 = { "ownerId": currentUserId,
  "time": timeStamp,
   "typ": "representation Request" , 
   "status" : "pending",
-  "viewed" : false }
-Meteor.call('addNotification', myarg2, function(error, result)
+  "viewed" : false };
+  if( Notifications.find({ "ownerId":  currentUserId , "recieverId":  this._id }).count() > 0 )
+ {   alert("you have already sent Request for " + this.username);
+ } else
+{ Meteor.call('addNotification', myarg2, function(error, result)
   {
     // pupoup bunner added notification
   });
+}
 //Users.upsert({"_id": currentUserId}, {$set : {"agent.name": "rachini2" }  });
   }
 });
@@ -68,7 +72,6 @@ Template.seeprofile.onCreated(function(){
 
 
 Template.homeIndex.onCreated(function(){
- alert('homeIndex');
  setTimeout(function(){
 $.getScript('../js/zzzrevolution.js');
 }, 2000);
@@ -210,8 +213,6 @@ $.getScript('../js/theme20.js');*/
 //$('head').append('<script type="text/javascript" src ="../js/abbCostume.js">');
 
 setTimeout(function(){
-  alert('adding images');
- 
  $('head').append('<script type="text/javascript" src ="../js/zwindows.js">');
 
   //$.getScript('../js/zwindows.js');
@@ -253,7 +254,7 @@ setTimeout(function(){
 });*/
 Template.notification.helpers({
   compareStatus: function(status, recieverId , notificationId, currentUserId){ 
-    if((recieverId ==  currentUserId ) && (status == "pending")) 
+    if((recieverId ==  currentUserId ) && (status == "pending") ) 
       { 
         return true ;
       }
@@ -264,13 +265,44 @@ Template.notification.helpers({
   formatdate: function(timeStamp)
   {
    myDate = new Date(timeStamp); 
-   year = myDate.getFullYear();
-   month = myDate.getMonth();
-   day = myDate.getDay();
-   return "" + day+ "-" +month + "-" +year +"";
+   myYear = myDate.getFullYear();
+   myMonth = ( myDate.getMonth() + 1 );
+   myDay = myDate.getDate();
+   return "" + myDay+ "-" +myMonth + "-" +myYear+"";
   },
+      notificationReciever : function (status , recieverId , notificationId, currentUserId)
+  {
+    if((recieverId ==  currentUserId ) && ( status == "accepted" || status == "rejected")) 
+    {
+      return true ;
+    } 
+    else {return false}
+    
+  },
+    notificationOwner : function (status , recieverId , notificationId, currentUserId)
+  {
+    if((recieverId ==  currentUserId ) && ( status == "accept" || status == "reject" )) 
+    {
+      return true ;
+    } 
+    else {return false}
+    
+  }
 });
 Template.notification.events({
+  'click .removenotif' :function(event, template)
+  { 
+   // alert('remove notification');
+    var id = $(event.currentTarget).attr('id');
+    setTimeout(function()
+    {
+      Meteor.call('removeNotification', id);
+    }, 500);
+    /*$("#notificationList").on('click' ,'.notification-close', function () {
+    $(this).parent().slideUp("slow");
+    return false;
+  });*/
+  },
   'click .accept': function(event, template)
   {
     var recieverId = $(event.currentTarget).attr("id");
@@ -295,17 +327,69 @@ var agent = { "artistId" : currentUserId , "agentId": recieverId,
 Meteor.call('addAgent' , agent);
     return;
   },
-  'mouseenter .overflow-h': function(event, template)
+    'click .reject': function(event, template)
+  {
+    var recieverId = $(event.currentTarget).attr("id");
+    var recieverName = $('.owner').attr('value');
+    var timeStamp = Math.floor(Date.now()); 
+    var Currentuser =  Users.findOne({"_id": currentUserId },  { fields: { username: 1 }});
+   var myarg2 = { "ownerId": currentUserId,
+  "ownerName": Currentuser.username,
+ "recieverId": recieverId,
+ "recieverName": recieverName,
+ "time": timeStamp,
+  "typ": "representation Request" ,
+  "status" :"rejected", 
+  "viewed" : false };
+Meteor.call('addNotification', myarg2, function(error, result)
+  {
+    // pupoup bunner added notification
+  });
+Meteor.call('rejectNotification', myarg2, function(error, result)
+  {
+    // pupoup bunner added notification
+  });
+/*var agent = { "artistId" : currentUserId , "agentId": recieverId,
+    "agentName": recieverName,
+ "time": timeStamp };*/
+Meteor.call('addAgent' , agent);
+    return;
+  },
+  'mouseenter .notification-box-one': function(event, template)
   {
     var notificationId = "";
     notificationId = $(event.currentTarget).attr('id');
     Meteor.call('viewedNotification', notificationId);
+    if($(".notificationcount").attr('value') === "0")
+      $(".notificationcount").hide();
   }
  
 });
 Template.homeProfile.helpers({
-    counter : function (){
-     return Notifications.find({recieverId:  currentUserId , viewed : false}).count();
+    emtyNotifcations : function()
+    {
+
+      if ( Notifications.find({recieverId:  currentUserId }).count() == 0 )
+      {
+           return true ;
+        
+      }
+      else { $(".emptynot").html(""); return false; }
+      
+    }, 
+    counter : function (){      
+      var counter = 0 ; 
+     counter =  Notifications.find({recieverId:  currentUserId , viewed : false}).count();
+     Session.set('notcounter', counter);
+     if(counter > 0 ) {
+      $(".notificationcount").show();
+     // $('.ullist > p').remove();  
+    }
+    else {
+      $(".notificationcount").hide();
+      $(".emptynot").html("there is no notifications");
+          }
+    return counter;
   },
   images: function() {
    //return Images.find({});

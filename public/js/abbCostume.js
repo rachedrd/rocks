@@ -1,5 +1,5 @@
 jQuery(window).load(function() {
-	jQuery(document).find('.loadingtt').fadeOut('normal', 'easeInOutExpo',function(){
+	jQuery(document).find('.loa0dingtt').fadeOut('normal', 'easeInOutExpo',function(){
 		jQuery(document).find('.loadingtt').remove();
 	});
 });
@@ -37,6 +37,40 @@ jQuery(document).ready(function ($) {
 	// Nice Scrollbar
 		$('html').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
 		$('[class^="scroll-"], [class*=" scroll-"]').niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
+			// nice scroll 
+			//$('#rachini').niceScroll({});
+			//$('#rachini2').niceScroll({});
+
+//$('.usernotifications').niceScroll({zindex:0,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+//$('#rachini').niceScroll({zindex:1000000, cursorborderradius:"2px", cursorcolor:"#121212", scrollspeed:100 }); 
+//$('.usernotifications').niceScroll('#rachini', {cursorcolor: "blue" , boxzoom: true });
+//$('.usernotifications').niceScroll('#rachini', {zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
+//$('#rachini').niceScroll('#rachini', {zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
+//$('.usernotifications').niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
+//$('#notificationsList').niceScroll({cursorborder:"",cursorborderradius:"2px",	cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
+$("#ullist").mouseover(function(){ $("#ullist").getNiceScroll().show();});
+$(".notificationsicon").click(function(){
+$("#notificationWrapper").toggle(); 
+$('.notificationsicon').toggleClass('togglenotification');
+	var x = 0 ;
+	if(x === 0 ) {
+  $("#notificationWrapper").css('visibility', 'visible');
+$("#ullist").getNiceScroll().show();
+$("#ullist").getNiceScroll().resize();
+
+
+x = 1; 
+    }
+    else 
+    {
+  $("#notificationWrapper").css('visibility', 'hidden');
+$("#ullist").getNiceScroll().remove();
+    }
+});
+$("#ullist").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+$("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
+
+
 	// Tabs
 	var tabs = jQuery('ul.tabs');
 	tabs.each(function (i) {
@@ -135,8 +169,23 @@ jQuery(document).ready(function ($) {
 			scrollTop: 0
 		}, 800);
 	});
-	// Notification
+	// close Notification
 	$(".notification-close").click(function () {
+		$(this).parent().slideUp("slow");
+		 if(parseInt($('#ullist').children().length ) == 0)
+      {
+            $('#ullist').append("<p class='emptynot'></p>");
+      }
+      else
+      {
+      	if(parseInt($('.ullist').children().length ) == 0)
+      {
+            $('.ullist > p').remove();
+      }
+      }
+		return false;
+	});
+	$("#notificationList").on('click' ,'.notification-close', function () {
 		$(this).parent().slideUp("slow");
 		return false;
 	});
@@ -193,6 +242,7 @@ jQuery(document).ready(function ($) {
 				}, 1800);
 		});
 	}
+	// add no notification paragraph 
 	// LoginIn Popup
 	var popupSignUpStatus = 0;
 	var popupRstPwdStts = 0; 
@@ -228,7 +278,7 @@ $("#popupLogin").on('click', '#login_username ', function(){
 
 $("#popupSignUp").on('click', '#signup_username ', function(){
      $("#errorMsgSgnUp").html("");
-     $("#errorMsgSgnUp").css({"margin-left" : "160px"});
+     //$("#errorMsgSgnUp").css({"margin-left" : "160px"});
      $("#validUsername_sgnUp").removeClass('glyphicon-remove');
 	 $("#validUsername_sgnUp").removeClass('glyphicon-asterisk');
 
@@ -258,7 +308,7 @@ $("#popupSignUp").on('click', '#signup_email ', function(){
 
 $("#popupSignUp").on('click', '#signup_password', function(){
     $("#errorMsgSgnUp").html("");
-	$("#errorMsgSgnUp").css({"margin-left": "160px"});
+	//$("#errorMsgSgnUp").css({"margin-left": "160px"});
     $("#validPasswd_sgnUp").removeClass('glyphicon-remove');
 	$("#validPasswd_sgnUp").removeClass('glyphicon-asterisk');
 	});
