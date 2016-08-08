@@ -7,8 +7,9 @@ import { Session } from 'meteor/session';
 
 //import { Tasks } from '../../../imports/api/tasks.js';
 //import { Images } from '../../../imports/api/images.js';
-
+Session.setDefault("rachini","co");
 Meteor.startup (function(){
+
 });
 Meteor.subscribe("USERS");
 /*Meteor.setInterval(function()
@@ -50,6 +51,10 @@ Template.myPicture.helpers({
 */
 Template.layout.onRendered(function(){
 $('head').append('<script type="text/javascript" src="js/jquery.min.js"></script>');
+$('head').append('<script type="text/javascript" src="js/calendar.js"></script>');
+$('head').append('<script type="text/javascript" src="js/datePicker.js"></script>');
+$('head').append('<script type="text/javascript" src="js/events.js"></script>');
+$('head').append('<script type="text/javascript" src="js/calendarcustom.js"></script>');
 $('head').append('<script type="text/javascript" src ="js/jquery.stapel.js">');
 $('head').append('<script type="text/javascript" src="js/theme20.js"></script>');
 $('head').append('<script type="text/javascript" src="js/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>');	
@@ -371,6 +376,15 @@ Template.templateForm.events({
 								 var counter = 0 ; 
      							 counter = Notifications.find({ "recieverId":  Meteor.userId(), viewed : false}).count();
     							 Session.set('notcounter', counter);
+
+    							// usertype 
+    							var rachini = '' ; 
+							    rachini = Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch();
+							   // alert(rachini);
+							   // alert('usertype : ' + rachini[0].profile.type);
+							    Session.set("rachini", rachini[0].profile.type);
+							   //  alert('rachini from login : ' +Session.get('rachini'));
+							   
 
 							//$("#validUsername").addClass('glyphicon glyphicon-ok');
 							//$("#errorMsgLgn").html("no errors");

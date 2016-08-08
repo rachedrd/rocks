@@ -16,7 +16,7 @@ Meteor.publish('notifications', function(){ return Notifications.find({},{_id: 1
 
 
 Meteor.publish('USERS', function(){ 
-    return Users.find({}, { fields: {_id:1, profile: 1, emails: 1, username: 1 , agent: 1} });
+    return Users.find({}, { fields: {_id:1, profile: 1 , emails: 1, username: 1 , agent: 1} });
 	//return Users.find({});
 
      });
@@ -30,6 +30,63 @@ addAgent: function(obj)
 //Users.upsert({"_id": obj.artistId}, {$set : { "agent.id": obj.agentId, "agent.name":obj.agentName, "agent.time":obj.time}    });
 Users.upsert({"_id": obj.artistId}, {$set : { agent: { "id" : obj.agentId, "name" : obj.agentName , "time" : obj.time}  }  });
 return ;
+},
+updateFirstname: function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : {"profile.firstname" : obj.firstname}   });
+ return ;
+},
+updatelastname:  function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.lastname" : obj.lastname }   });
+ return;
+},
+updatebandname:function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.bandName" : obj.bandname }   });
+ return;
+}
+,
+updatebirthdate: function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.birthdate" : obj.birthdate }   });
+ return;
+},
+updatephonenumber:function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.phoneNumber" : obj.phoneNumber }   });
+ return;
+},
+updategender:function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.gender" : obj.gender }   });
+ return;
+},
+updatebandtype:function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.bandtype" : obj.bandtype }   });
+ return true;
+}, 
+savebandmember: function(obj)
+{
+ //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
+ Users.update({"_id": obj.id}, {$push : { "profile.members" : {"name" : obj.membername, "role":  obj.memberrole} }   });
+ 
+ return true;
+}, 
+savehighlight:function(obj){
+ //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
+ Users.update({"_id": obj.id}, {$push : { "profile.highlights" : {"id" : obj.highlightId, "content":  obj.highlightcontent} }   });
+ 
+ return true;
+},
+removememeber: function(obj)
+{
+ Users.update({"_id": obj.id} , { $pull : { "profile.members" : {"name": obj.membername, "role" :obj.memberrole } } });
+},
+removeHighlight:  function(obj)
+{
+ Users.update({"_id": obj.id} , { $pull : { "profile.highlights" : {"id": obj.highlightId  } } });
 },
 addImage: function( obj){
 return Images.insert({

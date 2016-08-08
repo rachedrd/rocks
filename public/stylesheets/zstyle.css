@@ -76,19 +76,7 @@ max-height: 300px;
  visibility: hidden;
  margin-top: 15px;
 }
-/*#notificationWrapper:before {
-    content: "nnn";
-    width:12px;
-    border-bottom: 10px solid white;
-    border-right: 10px solid transparent;
-    border-left: 10px solid transparent;
-    position: relative;
-    top: -20px;
-    float: right;
-    right: 40px;
-    opacity: 0.5;
-    z-index: 10;
-}*/
+
 .usernotifications {
 	text-align: right;
     
@@ -128,6 +116,85 @@ max-height: 300px;
 	padding: 8px;
 }
 .closeNotif:hover, .closeNotif:active{background-color: transparent;}
+/*update inforamtion for regular user*/
+.userinforow{margin: 2px 0px ; height: 30px; }
+.highlightdiv, .songlistdiv, .piecesdiv, .memeberslist, .highlightslist {margin: 2px 0px ; height: auto; padding-bottom: 10px }
+
+.userinforow span.oldinfo{ 
+	width:200px ;
+	height: 20px;
+	margin-left: 3px;
+	    border-radius: 2px;
+	      position: relative;
+	  }
+.userinforow input[type="text"].oldinfo   { 
+	width:200px ;
+	height: 28px;
+	margin-left: 3px;
+	margin-left: 2px;
+	    border-radius: 2px;
+	    margin-bottom: 0px;
+	    display: none;
+	  }
+	  .userinforow i  {color: #001a4d; font-size: 17px; cursor: pointer;}
+	 .userinforow input[type="radio"].oldinfo{ display: none; margin: 0px;}
+.oldfemale, .oldmale, #firstnameinput , .bandtype {display: none; }	  
+.savefirstname,
+.savelastname
+.savebirthdate,
+.savegender, .savebandname,
+.savephonenumber, .savelastname, 
+.savebirthdate, .savebuildingnumber, 
+.savestreetname, .savecity, .savemember, .savehighlight, 
+.savepostecode, .savecountry, .savebandtype{
+	display: none;
+	 cursor: pointer;
+	 color: #001a4d}
+	 .userinforow #usernamespan:hover , .userinforow #emailspan:hover , .userinforow #statusspan:hover , .userinforow #pubcounterspan:hover , .userinforow #pubspan:hover, #salaryspan:hover { cursor: not-allowed }
+.userinforow span { margin-left: 5px ; padding: 5px 5px 5px 5px }
+.userinforow .bld{font-weight: bold; font-size: 12px;}
+.error{color:red; display: none;}
+#emtyfirstname i , #emtylastname i, #emtyphone i, #emtymember i , #emtyhighlight i, #emtybandname i{color: red; font-size: 12px ; font-weight: normal;} 
+ .userinforow #errors {display: inline; width: auto; }
+
+	 .savebandtype{margin: 0px; padding: 0px; }
+	 #bandtypespan{ height: 28px;}
+	 .bandtype{margin-bottom: 0px; margin-top: -2px}
+	/* .memebernamespan , .memeberrolespan {display: none;}*/
+	 .memeberlabel  {width: auto; float: left; margin: -2px  0px 0px 20px}
+	 .memeberdiv{width: 100%; height: auto; display: inline;}
+	 .memeberdiv span , .addmemeberform , .addhighlightform  { display: inline;}
+	 .addmemeberform  * , .addhighlightform *{float: left;  margin: 0px;}
+	 .addmemeberform span , .addhighlightform span{ 
+	 	width: auto;
+	 	 margin-left: 20px; margin-top: -3px;}
+	 .addmemeberform input , .addhighlightform input,  .memeberrolespan , .spanmemebername, .spanhighlight{
+	  display: none;
+	   margin-bottom: 0px ; }
+	 .addmemeberform input { height: 30px; border-radius: 2px;}
+	 .addhighlightform input {  width: 60%;  height: 30px; border-radius: 2px;}
+	 .memeberdiv span { float: none; }
+	   .addmember, .addhighlight {
+	   	color: green;
+	   	 font-size: 12px; 
+	   	cursor: pointer; 
+	   	/*padding-top:  0px 10px;*/
+	   	font-family: normal; /* margin-left: 20px*/ }
+	    .addmember  i, .addhighlight i { font-weight: normal; color: green;  font-size: 9px; margin : 5px 10px 0px 10px }
+	    .removeMumber i, .removeHighlight  i {font-weight: normal; color: red;  font-size: 12px;}
+ .mytitle{
+	border-bottom: 1px solid #ff6600;
+	color: #fff;
+	font-family: "Oswald", Tahoma, Arial;
+	font-weight: bold;
+	/*line-height: 1;*/
+	text-transform: uppercase;
+	 }
+	   /*.spanmemebername,
+	   .inputmemebername, 
+	   .memeberrolespan,
+	   .memeberoleinput  {display: none;}*/
+
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 959px) and (max-width: 1177px) {
@@ -181,10 +248,15 @@ max-height: 300px;
 	.wall{ background-color: blue; width: 100%; height: 500px;}
 .username{font-size : 0.5em ;}
 }
-
 /* #Mobile (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
+	.userinforow span {margin-left: 0px ; margin-right: 0px }
+	.userinforow input[type="text"].oldinfo{ width: 100px; margin-left: 0px;margin-right: 0px ; padding: 0px }
+      .userinforow input , .userinforow .bld { font-weight: bold; font-size: 11px}
+	/*.userinforow   { height: 50px; }*/
+	 .userinforow #errors { padding-top: 5px; width: auto; /*display: block; */  }
+
 	.usernotifications {
 	text-align: right;
     
@@ -236,6 +308,9 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 /*  #Mobile (Portrait) 320px
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 100px) and (max-width: 479px) {
+	.userinforow   { height: 50px; }
+	.userinforow input[type="text"].oldinfo{ width: 100px;}
+	 .userinforow #errors { padding-top: 0px; width: auto; display: block;   }
 	.notificationcount{margin-left: 5px; font-size: 10px;
  background-color: red ; padding: 0px 1px;
  position: absolute; color: white; z-index: 1;

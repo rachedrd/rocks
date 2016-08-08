@@ -4,6 +4,7 @@ import { Session } from 'meteor/session';
 
 var uploader = new ReactiveVar();
 var orientaion = 0;
+var typeofuser = new ReactiveVar()
 //var imageDetails = new Mongo.Collection('images');
 var currentUserId = Meteor.userId();
 /*Template.body.events({
@@ -190,11 +191,23 @@ blb.name=  document.getElementById('uploadFile').files[0].name;
              uploader.set(upload);
            }
        }); 
-
+Template.bandInformations.onCreated( function(){
+  this.subscribe("images");
+  this.subscribe("USERS");});
 Template.homeProfile.onRendered( function(){
   this.subscribe("images");
   this.subscribe("USERS");
   this.subscribe("notifications");
+ // var rached = "rach";
+ //   rached = Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch();
+//console.log(rached[0].profile.type);
+
+ //  var usertype = '' ; 
+ //usertype =  Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch();
+ //alert('usertype  onRendered  : ' + usertype[0].profile.type); 
+ //Session.set("rachini",  usertype[0].profile.type);
+  //console.log("rachini2 value : " + Session.get("rachini") );
+ 
 /*$.getScript('../js/modernizr.custom.63321.js');
 $.getScript('../js/jquery.stapel.js');
 $.getScript('../js/jquery.prettyPhoto.js');
@@ -289,6 +302,257 @@ Template.notification.helpers({
     
   }
 });
+Template.userInformations.helpers({
+
+   mybirthdate: function(timeStamp)
+  {
+   myDate = new Date(timeStamp); 
+   myYear = myDate.getFullYear();
+   myMonth = ( myDate.getMonth() + 1 );
+   myDay = myDate.getDate();
+   return "" + myDay+ "-" +myMonth + "-" +myYear+"";
+  }, 
+  myphonenumber: function(phonenumber)
+  {
+   // alert(phonenumber):
+    if(phonenumber === null || phonenumber === "")
+    {
+     return "**** *** ***";
+    }
+  else {
+   return phonenumber;
+   }
+  },
+  mygender: function(gender)
+  {
+    if(gender === null )
+    {
+     // $("#inputmale").att('checked', false);
+      //$("#inputfemale").att('checked', false);
+      return null;
+    }
+  if (gender === "male") {
+ $("#inputmale").attr('checked', true);
+    return "male";
+   }
+   if (gender === "female") {
+  $("#inputfemale").attr('checked', true);
+    return "female";
+   }
+  }
+
+});
+Template.bandInformations.helpers({
+  allmemebers: function(){
+    return  Users.findOne({"_id": Meteor.userId() } , { fields: { "profile": 1} });
+  },
+  incrementedindex: function(index)
+  {
+    return index + 1 ; 
+  },
+   highlights: function(){
+    return  Users.findOne({"_id": Meteor.userId() } , { fields: { "profile": 1} });
+  },
+  incrementHighlightindex: function(index)
+  {
+    return index + 1 ; 
+  },
+  mybandtype: function(bandtype)
+  {
+   if((bandtype !== "" ) && (bandtype !== null ))
+   {
+    return bandtype ; 
+  }
+    else 
+       {
+      return "not setted";
+   }
+  },
+   mybandname: function(user)
+  {
+        if( user.profile.hasOwnProperty('bandName') )
+        {
+          return user.profile.bandName; 
+        }
+        else {
+          return user.username; 
+
+        }
+       
+     
+  },
+  myphonenumber: function(phonenumber)
+  {
+   // alert(phonenumber):
+    if(phonenumber === null || phonenumber === "")
+    {
+     return "**** *** ***";
+    }
+  else {
+   return phonenumber;
+   }
+  }
+});
+Template.bandInformations.events({
+  'click .savebandname' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+          var bandname = t.find("#bandnameinput").value;
+          if((bandname !== "") &&( bandname !== null))
+          {
+          myobj = {"id": Meteor.userId(), "bandname": bandname };
+          Meteor.call('updatebandname', myobj);
+          }
+  },
+  'click .savebandtype' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+          var bandtype = t.find(".bandtype").value;
+          if((bandtype !== "") &&( bandtype !== null))
+          {
+          myobj = {"id": Meteor.userId(), "bandtype": bandtype };
+          Meteor.call('updatebandtype', myobj);
+          }
+  },
+  'click .savephonenumber' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+          var phoneNumber = t.find("#phoneinput").value;
+           if( (phoneNumber !== "") && ( phoneNumber !== null) && (phoneNumber !== "**** *** ***") )
+          {
+          myobj = {"id": Meteor.userId(), "phoneNumber": phoneNumber };
+          Meteor.call('updatephonenumber', myobj);
+        }
+  },
+  'click .savemember' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+          var membername = t.find(".inputmemebername").value;
+          var memberrole = t.find(".memeberoleinput").value;
+           if( (membername !== "") && ( membername !== null) && (memberrole !== "") && ( memberrole !== null)  )
+          {
+          myobj = {"id": Meteor.userId(), "membername": membername, "memberrole": memberrole };
+          Meteor.call('savebandmember', myobj);
+          setTimeout(function(){
+            t.find(".inputmemebername").value = "";
+          t.find(".memeberoleinput").value = "";
+          }, 500);
+        //  t.find(".inputmemebername").value = "";
+        //  t.find(".memeberoleinput").value = "";
+        }
+  },
+  'click .removeMumber' :function(event, t)
+  {
+   var myobj = {};
+    event.preventDefault();
+    var $li = $('.removeMumber').closest('li');
+    var name =   $li.children('.member').children('#name').html();
+    var role = $li.children('.member').children('#role').html();
+    //rmImgIndx = $li.parent().children().index($li);
+          myobj = {"id": Meteor.userId(), "membername": name, "memberrole": role };
+          Meteor.call('removememeber', myobj);
+  },
+  'click .removeHighlight': function(event, t)
+  { 
+   var myobj = {};
+    event.preventDefault();
+    var $li = $('.removeHighlight').closest('li');
+    var id = $li.children('.highlight').children('#content').attr("value");
+    //rmImgIndx = $li.parent().children().index($li);
+          myobj = {"id": Meteor.userId(), "highlightId": id };
+          Meteor.call('removeHighlight', myobj);
+  },
+'click .savehighlight':function(event, t)
+  { 
+    var highlightlength = $('.highlights').children().length  + 1 ;
+   var myobj = {};
+    event.preventDefault();
+    var higlightcontent  = t.find(".inputhighlight").value;
+     if( (higlightcontent !== "") && ( higlightcontent !== null) && (higlightcontent !== undefined)  )
+          {
+          myobj = {"id": Meteor.userId(), "highlightId": "" +highlightlength+"" , "highlightcontent": higlightcontent  };
+          Meteor.call('savehighlight', myobj);
+          setTimeout(function(){
+             t.find(".inputhighlight").value = "";
+          }, 500);
+        }
+  }
+});
+
+Template.userInformations.events({
+  'click .savefirstname' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+          var firstname = t.find("#firstnameinput").value;
+          if((firstname !== "") &&( firstname !== null))
+          {
+          myobj = {"id": Meteor.userId(), "firstname": firstname };
+          Meteor.call('updateFirstname', myobj);
+          }
+  },
+  'click .savelastname' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+
+          var lastname = t.find("#lastnameinput").value;
+          if((lastname !== "") &&( lastname !== null))
+          {
+          myobj = {"id": Meteor.userId(), "lastname": lastname };
+          Meteor.call('updatelastname', myobj);
+        }
+  },
+  'click .savebirthdate' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+          var birthdate = t.find("#birthinput").value;
+             myDate = new Date(birthdate);
+          myYear = myDate.getFullYear();
+   myMonth = ( myDate.getMonth() + 1 );
+   myDay = myDate.getDate();
+          myobj = {"id": Meteor.userId(), "birthdate": myDate };
+       
+
+          Meteor.call('updatebirthdate', myobj);
+  },  'click .savephonenumber' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+          var phoneNumber = t.find("#phoneinput").value;
+           if( (phoneNumber !== "") && ( phoneNumber !== null) && (phoneNumber !== "**** *** ***") )
+          {
+          myobj = {"id": Meteor.userId(), "phoneNumber": phoneNumber };
+          Meteor.call('updatephonenumber', myobj);
+        }
+  },
+   'click .savegender' :function(event, t)
+  {
+    var gender = t.find(".usergender:checked").value;
+    var myobj = {};
+    event.preventDefault();
+          if( gender  === "male"  || gender  == "male" ) 
+          {
+            myobj = {"id": Meteor.userId(), "gender": "male" };
+            Meteor.call('updategender', myobj);
+          }
+          if( gender === "female" ) 
+          {
+
+            myobj = {"id": Meteor.userId(), "gender": "female" };
+            Meteor.call('updategender', myobj);
+          }
+          
+          }
+          
+
+
+});
 Template.notification.events({
   'click .removenotif' :function(event, template)
   { 
@@ -365,7 +629,67 @@ Meteor.call('addAgent' , agent);
   }
  
 });
+Template.homeProfile.onCreated(function(){
+  Meteor.subscribe("USERS");
+/*  var rached = "rach";
+ rached = Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch();
+                  console.log(rached);
+                 // alert('usertype : ' + Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch(););
+               Session.set("rachini", rached);
+                                
+ */
+  //alert('usertype : ' + rav[0].profile.type) ;
+  //Session.set('rachini', rachini[0].profile.type);   
+  //console.log("rachini2 value : " + Session.get("rachini") );
+
+    }
+
+);
+
 Template.homeProfile.helpers({
+  myusername: function(user)
+  {
+
+    if(user.profile.type === "band")
+      {
+        if( user.profile.hasOwnProperty('bandName') )
+        {
+          return user.profile.bandName; 
+        }
+        else {
+          return user.username; 
+
+        }
+       
+      }
+      else 
+      {
+    return user.username;
+      }
+  },
+  bandprofile: function(usertype)
+  { 
+     if(usertype === "band")
+      {
+       return true; 
+      }
+      else 
+      {
+    return false;
+      }
+  },
+  userprofile: function(usertype)
+  { 
+     if(usertype === "costumer")
+      {
+       return true; 
+      }
+      else 
+      {
+   return false;
+      }      
+  }
+  ,
     emtyNotifcations : function()
     {
 
@@ -377,6 +701,7 @@ Template.homeProfile.helpers({
       else { $(".emptynot").html(""); return false; }
       
     }, 
+    
     counter : function (){      
       var counter = 0 ; 
      counter =  Notifications.find({recieverId:  currentUserId , viewed : false}).count();

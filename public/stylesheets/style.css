@@ -1043,7 +1043,7 @@ div.jp-seeking-bg {
 
 /** Track List **/
 .ttw-music-player .tracklist {
-	width: 48%;
+	width: 52%;
 	float: right;
 	padding: 10px 20px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .15), 0 1px 0 rgba(255, 255, 255, .04);
@@ -1303,7 +1303,7 @@ li.track:hover .buy, .playing .buy {
 	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .15), 0 1px 0 rgba(255, 255, 255, .04);
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.04);
 }
-.def-block h4 {
+.def-block h4 , #informationconatiner h6 {
 	padding: 0 0 10px;
 	margin: 0;
 	border-bottom: 1px solid #ff6600;
@@ -4899,10 +4899,10 @@ a.notification-close {
 	body {overflow-x: hidden}
 	.boxed, .boxed-margin {width: 1000px}
 	.row { width: 944px }
-	.ttw-music-player .tracklist {width: 47%}
+	.ttw-music-player .tracklist {width: 52%}
 	.ttw-music-player .player-controls {width: 236px}
 	.ttw-music-player .progress-wrapper {width: 150px}
-	.ttw-music-player .tracklist .title {width: 200px}
+	.ttw-music-player .tracklist .title {width: 180px}
 	.wide-mp3 .ttw-music-player .tracklist .title {width: 170px}
 	.wide-mp3 .ttw-music-player .track-info, .wide-mp3 .ttw-music-player .player-controls {width: 210px}
 	.wide-mp3 .ttw-music-player .progress-wrapper {width: 128px}

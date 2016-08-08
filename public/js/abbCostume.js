@@ -399,6 +399,350 @@ $("#popupLogin").on('click', '#login_password ', function(){
 			popupStatus = 1;
 		}
 	});
+	// update user informations
+	// update first name
+
+	$('.userinfocontent').on('click','.updatefirstname' , function(){
+		$('#firstnamespan').hide();
+		$('#firstnameinput').show();
+		$(this).hide();
+		$('.savefirstname').show();
+	});
+	$('.userinfocontent').on('click' , '.savefirstname', function(){
+		if(( $("#firstnameinput").val() === "" ) || ( $("#firstnameinput").val() === undefined ) )
+		{
+			$(this).hide();
+			$("#emtyfirstname").show();
+            $("#firstnameerr").html("first name is empty");
+            $("#firstnameerr").show();
+		} else
+		{
+			$(this).hide();
+		$('#firstnameinput').hide();
+		$('#firstnamespan').show();
+		$('.updatefirstname').show();
+		}
+		
+	});
+	// update last name
+	$('.userinfocontent').on('click', '.updatelastname' , function(){
+		$('#lastnamespan').hide();
+		$('#lastnameinput').show();
+		$(this).hide();
+		$('.savelastname').show();
+	});
+	$('.userinfocontent').on('click' , '.updatebandname' , function(){
+		$('#bandnamespan').hide();
+		$('#bandnameinput').show();
+		$(this).hide();
+		$('.savebandname').show();
+	});
+	// add  memeber  
+	$('.userinfocontent').on('click' , '.addmember' , function(){
+		$('.spanmemebername').show();
+		$('.inputmemebername').show();
+		$('.memeberrolespan').show();
+		$('.memeberoleinput').show();
+		$(this).hide();
+		$('.savemember').show();
+	});
+	// add  highlight  
+	$('.userinfocontent').on('click' , '.addhighlight' , function(){
+		$('.spanhighlight').show();
+		$('.inputhighlight').show();
+		$(this).hide();
+		$('.savehighlight').show();
+	});
+	$('.userinfocontent').on('click' , '.updatebandtype' , function(){
+		$('#bandtypespan').hide();
+		$('.bandtype').show();
+		$(this).hide();
+		$('.savebandtype').show();
+	});
+	// hide the highlight add form if mouse out of this form 
+	$('.userinfocontent').on('mouseenter', '#bandtypediv', function()
+		{
+          $('.savehighlight').hide();
+		$('.spanhighlight').hide();
+		//$('.inputhighlight').val("");
+		$('.inputhighlight').hide();
+		$('.addhighlight').show();
+		});
+	$('.userinfocontent').on('mouseenter', '#buildingnumberdiv', function()
+		{
+          $('.savehighlight').hide();
+		$('.spanhighlight').hide();
+		//$('.inputhighlight').val("");
+		$('.inputhighlight').hide();
+		$('.addhighlight').show();
+		});
+	// hide the members add form if mouse out of this form 
+	$('.userinfocontent').on('mouseenter', '#bandtypediv', function()
+		{
+          $('.savemember').hide();
+		$('.spanmemebername').hide();
+		//$('.inputhighlight').val("");
+		$('.inputmemebername').hide();
+		$('.memeberoleinput').hide();
+		$('.memeberrolespan').hide();
+
+		//$('.inputhighlight').val("");
+		$('.memeberoleinput').hide();
+		$('.memeberrolespan').hide();
+		$('.inputmemebername').hide();
+		$('.spanmemebername').hide();
+
+		$('.addmember').show();
+		});
+	$('.userinfocontent').on('mouseenter', '#buildingnumberdiv', function()
+		{
+          $('.savemember').hide();
+		$('.spanmemebername').hide();
+		//$('.inputhighlight').val("");
+		$('.inputmemebername').hide();
+		$('.memeberoleinput').hide();
+		$('.memeberrolespan').hide();
+
+		//$('.inputhighlight').val("");
+		$('.memeberoleinput').hide();
+		$('.memeberrolespan').hide();
+		$('.inputmemebername').hide();
+		$('.spanmemebername').hide();
+
+		$('.addmember').show();
+		});
+
+	$('.userinfocontent').on('click', '.savebandname' , function(){
+		if (( $("#bandnameinput").val() === "" ) || ( $("#bandnameinput").val() === undefined ) )
+		
+		{
+		$(this).hide();
+		$("#emtybandname").show();
+        $("#bandnameerr").html("band name is empty");
+        $("#bandnameerr").show();
+	  }
+	  else
+	  {
+	  	$(this).hide();
+		$('#bandnameinput').hide();
+		$('#bandnamespan').show();
+		$('.updatebandname').show();
+	  }
+	});
+	$('.userinfocontent').on('click', '.savemember' , function(){
+		if(( $(".inputmemebername").val() === "" ) || ( $(".inputmemebername").val() === undefined ) || 
+			( $(".memeberoleinput").val() === "" ) || ( $(".memeberoleinput").val() === undefined )
+			)
+		{
+			$(this).hide();
+			$("#emtymember").show();
+			if(($(".inputmemebername").val() === "" ) || ( $(".inputmemebername").val() === undefined ))
+            $("#bandmembereerr").html("member name is empty");
+            if(($(".memeberoleinput").val() === "" ) || ( $(".memeberoleinput").val() === undefined ))
+            $("#bandmembereerr").html("member role is empty");	
+            $("#bandmembereerr").show();
+		} else{
+		var listlength = $('.bandmembers').children().length + 1 ;
+		//$(".bandmembers").append('<li><span  class="bld member">'+listlength+': <span id="name">'+$('.inputmemebername').val()+'</span> - <span id="role"> '+$('.memeberoleinput').val()+'</span></span><span class="removeMumber"><i class="glyphicon glyphicon-remove"></i></span></li>');
+	  	$(this).hide();
+		$('.spanmemebername').hide();
+		$('.inputmemebername').hide();
+		//$('.inputmemebername').val("");
+		$('.memeberrolespan').hide();
+		$('.memeberoleinput').hide();
+		//$('.memeberoleinput').val("");
+		$('.addmember').show();
+		$("#bandmembereerr").hide();
+		$("#bandmembereerr").html("");
+		$("#emtymember").hide();
+
+
+
+		}
+
+	});
+
+	$('.userinfocontent').on('click' , '.savehighlight' , function(){
+		if(( $(".inputhighlight").val() === "" ) || ( $(".inputhighlight").val() === undefined ) )
+		{
+			$(this).hide();
+			$("#emtyhighlight").show();
+            $("#highlighteerr").show();
+            $("#highlighteerr").html("empty highlight");
+
+		} else{
+	//var highlightlength = $('.highlights').children().length + 1 ;
+		//$(".highlights").append('<li><span class="bld"> * '+$('.inputhighlight').val()+'</span><span class="removeHighlight"><i class="glyphicon glyphicon-remove"></i></span></li>');
+	  	$(this).hide();
+		$('.spanhighlight').hide();
+		//$('.inputhighlight').val("");
+		$('.inputhighlight').hide();
+		$('.addhighlight').show();
+	  }
+
+	});
+
+	$('.userinfocontent').on('click', '.removeMumber' , function(){
+		var $li = $(this).closest('li');
+		//rmImgIndx = $li.parent().children().index($li);
+		//$('.bandmembers').find('li').eq(rmImgIndx).remove();
+
+	});
+	/*$('.userinfocontent').on('click', '.removeHighlight' , function(){
+		var $li = $(this).closest('li');
+		    rmImgIndx = $li.parent().children().index($li);
+		$('.highlights').find('li').eq(rmImgIndx).remove();
+
+	});*/
+	
+    // save new memeber
+	$('.userinfocontent').on('click', '.savebandtype' , function(){
+	  	$(this).hide();
+		$('.bandtype').hide();
+		$('.updatebandtype').show();
+		$('#bandtypespan').show();
+	});
+	$('.userinfocontent').on('click', '.savelastname' , function(){
+		if(( $("#lastnameinput").val() === "" ) || ( $("#lastnameinput").val() === undefined ) )
+		
+		{
+		$(this).hide();
+		$("#emtylastname").show();
+        $("#lastnameerr").html("first name is empty");
+        $("#lastnameerr").show();
+	  }
+	  else
+	  {
+	  	$(this).hide();
+		$('#lastnameinput').hide();
+		$('#lastnamespan').show();
+		$('.updatelastname').show();
+	  }
+	});
+	// update birth date
+	$('.userinfocontent').on('click' , '.updatebirthdate', function(){
+		$('#birthspan').hide();
+		$('#birthinput').show();
+		$(this).hide();
+		$('.savebirthdate').show();
+	});
+	$('.userinfocontent').on('click' , '#birthinput', function(){
+      window.myDatePicker1 = new DatePicker('.userinfocontent #birthinput', options);     
+	});
+	$('.userinfocontent').on('click', '.savebirthdate', function(){
+		$(this).hide();
+		$('#birthinput').hide();
+		$('#birthspan').show();
+		$('.updatebirthdate').show();
+	});
+	// update gender 
+
+$('.userinfocontent').on('click' , '.updategender', function(){
+		$('#genderspan').hide();
+		$('.oldfemale').show();
+		$('.oldmale').show();
+		$('#inputfemale').show();
+		$('#inputmale').show();
+		$(this).hide();
+		$('.savegender').show();
+	});
+	$('.userinfocontent').on('click', '.savegender', function(){
+		$(this).hide();
+		$('.updategender').show();
+
+		$('#genderspan').show();
+		$('.oldfemale').hide();
+		$('.oldmale').hide();
+		$('#inputfemale').hide();
+		$('#inputmale').hide();
+	});/*
+	// update phone number 
+
+	
+	$('.userinfocontent').on('click', '.updatebandtype', function(){
+		
+		$('#bandnamespan').hide();
+		$('#bandnameinput').show();
+		$(this).hide();
+		$('.savebandname').show();
+	});*/
+$('.userinfocontent').on('click', '.updatephone', function(){
+
+		$('#phonesspan').hide();
+		$('#phoneinput').show();
+		$(this).hide();
+		$('.savephonenumber').show();
+	});
+	$('.userinfocontent').on('click', '.savephonenumber', function(){
+		if(( $("#phoneinput").val() === "" ) 
+			|| ( $("#phoneinput").val() === "**** *** ***" )  ||
+			( $("#phoneinput").val() === undefined ) )
+		{
+		$(this).hide();
+		$("#emtyphone").show();
+        $("#phoneerr").html("phone number is empty");
+        $("#phoneerr").show();
+	  }
+	  else
+	  {
+	  	$(this).hide();
+		$('#phoneinput').hide();
+		$('#phonesspan').show();
+		$('.savephonenumber').hide();
+		$('.updatephone').show();
+
+
+	  }
+	});
+	//
+	$('.userinfocontent').on('click' , '#firstnameinput', function(){
+    $("#emtyfirstname").hide();
+	$("#firstnameerr").hide();
+	$("#firstnameerr").html("");
+	$(".savefirstname").show();
+});
+	$('.userinfocontent').on('click' , '.inputhighlight', function(){
+	$("#emtyhighlight").hide();
+	$(".savehighlight").show();
+    $("#highlighteerr").hide();
+    $("#highlighteerr").html("");
+
+    });
+	$('.userinfocontent').on('click' , '#bandnameinput', function(){
+    $("#emtybandname").hide();
+	$("#bandnameerr").hide();
+	$("#bandnameerr").html("");
+	$(".savebandname").show();
+});
+
+	$('.userinfocontent').on('click' , '#lastnameinput', function(){
+    $("#emtylastname").hide();
+	$("#lastnameerr").hide();
+	$("#lastnameerr").html("");
+	$(".savelastname").show();
+
+	});
+
+	$('.userinfocontent').on('click', '#phoneinput', function(){
+    $("#emtyphone").hide();
+	$("#phoneerr").html("");
+	$("#phoneerr").hide();
+	$(".savephonenumber").show();
+	});
+	$('.userinfocontent').on('click', '.inputmemebername', function(){
+    $("#emtymember").hide();
+	$("#bandmembereerr").html("");
+	$("#bandmembereerr").hide();
+	$(".savemember").show();
+	});
+	$('.userinfocontent').on('click', '.memeberoleinput', function(){
+    $("#emtymember").hide();
+	$("#bandmembereerr").html("");
+	$("#bandmembereerr").hide();
+	$(".savemember").show();
+	});
+    
+	/*
 	/*$('.def-block').on('click', 'ul.tp-grid li.grid_3', function()
 	{
 		alert('onpening the pile ...');
@@ -873,6 +1217,15 @@ $("#popupLogin").on('click', '#login_password ', function(){
 	});
 	$('#popupResetPassword, #forgetPassword').click(function(e) {
 		e.stopPropagation();
+	});
+	// show representation request button 
+	$(".details").click(function(){
+		$('.reprequest').show();/*
+		$('.reprequest').attr('disabled', 'disabled').off('click');
+		$('.reprequest').attr("disabled", true);*/
+
+		//$('.reprequest').html("you have sent representaion request");
+
 	});
 	// Masonry
 	if ($("#masonry-container")[0]) {
