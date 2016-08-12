@@ -200,7 +200,6 @@
 	// and ranges and demonstrates the default possibilities of
 	// datePicker... (except extra features defined in default options)
 	// ------------------------------------------------------------ //
-	window.myDatePicker_1 = new DatePicker('.rachini2  .date-1', options);
 	window.myDatePicker_1 = new DatePicker('.userinfocontent  .date-1', options);
 
 		

@@ -50,6 +50,7 @@ Template.myPicture.helpers({
 });
 */
 Template.layout.onRendered(function(){
+
 $('head').append('<script type="text/javascript" src="js/jquery.min.js"></script>');
 $('head').append('<script type="text/javascript" src="js/calendar.js"></script>');
 $('head').append('<script type="text/javascript" src="js/datePicker.js"></script>');

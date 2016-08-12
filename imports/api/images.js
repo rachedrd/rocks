@@ -67,10 +67,22 @@ updatebandtype:function(obj)
  Users.update({"_id": obj.id}, {$set : { "profile.bandtype" : obj.bandtype }   });
  return true;
 }, 
+updatebandsets: function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.sets" : obj.bandsets }   });
+ return true;
+}, 
 savebandmember: function(obj)
 {
  //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
  Users.update({"_id": obj.id}, {$push : { "profile.members" : {"name" : obj.membername, "role":  obj.memberrole} }   });
+ 
+ return true;
+}, 
+saverepertoire: function(obj)
+{
+ //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
+ Users.update({"_id": obj.id}, {$push : { "profile.repertoire" : {"songname" : obj.songname, "singername":  obj.singername} }   });
  
  return true;
 }, 
@@ -80,9 +92,36 @@ savehighlight:function(obj){
  
  return true;
 },
+savepostecode: function(obj){
+ //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
+ Users.update({"_id": obj.id}, {$set : { "profile.address.postecode" : obj.postecode }   });
+ 
+ return true;
+},
+savecity: function(obj){
+ //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
+ Users.update({"_id": obj.id}, {$set : { "profile.address.city" : obj.city }   });
+ 
+ return true;
+},
+saveaddress:function(obj){
+ //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
+ Users.update({"_id": obj.id}, {$set : { "profile.address.address" : obj.address }   });
+ return true;
+},
+saveregion: function(obj){
+ //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
+ Users.update({"_id": obj.id}, {$set : { "profile.address.region" : obj.region }   });
+ 
+ return true;
+},
 removememeber: function(obj)
 {
  Users.update({"_id": obj.id} , { $pull : { "profile.members" : {"name": obj.membername, "role" :obj.memberrole } } });
+},
+removesonglist: function(obj)
+{
+ Users.update({"_id": obj.id} , { $pull : { "profile.repertoire" : {"songname": obj.songname, "singername" :obj.singername } } });
 },
 removeHighlight:  function(obj)
 {

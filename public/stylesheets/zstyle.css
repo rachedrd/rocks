@@ -118,7 +118,7 @@ max-height: 300px;
 .closeNotif:hover, .closeNotif:active{background-color: transparent;}
 /*update inforamtion for regular user*/
 .userinforow{margin: 2px 0px ; height: 30px; }
-.highlightdiv, .songlistdiv, .piecesdiv, .memeberslist, .highlightslist {margin: 2px 0px ; height: auto; padding-bottom: 10px }
+.highlightdiv, .songlistdiv, .piecesdiv, .memeberslist,.repertoirelist , .highlightslist {margin: 2px 0px ; height: auto; padding-bottom: 10px }
 
 .userinforow span.oldinfo{ 
 	width:200px ;
@@ -136,17 +136,18 @@ max-height: 300px;
 	    margin-bottom: 0px;
 	    display: none;
 	  }
+	  .userinforow div.suggest-holder , .userinforow div.address-holder {display: none}
 	  .userinforow i  {color: #001a4d; font-size: 17px; cursor: pointer;}
 	 .userinforow input[type="radio"].oldinfo{ display: none; margin: 0px;}
-.oldfemale, .oldmale, #firstnameinput , .bandtype {display: none; }	  
+.oldfemale, .oldmale, #firstnameinput , .bandtype , .bandsets{display: none; }	  
 .savefirstname,
 .savelastname
-.savebirthdate,
-.savegender, .savebandname,
+.savebirthdate, .saveaddress,
+.savegender, .savebandname, .saveregion,
 .savephonenumber, .savelastname, 
 .savebirthdate, .savebuildingnumber, 
-.savestreetname, .savecity, .savemember, .savehighlight, 
-.savepostecode, .savecountry, .savebandtype{
+.savestreetname, .savecity, .savemember, .savehighlight, .saverepertoire, 
+.savepostecode, .savecountry, .savebandtype, .savebandsets{
 	display: none;
 	 cursor: pointer;
 	 color: #001a4d}
@@ -154,34 +155,42 @@ max-height: 300px;
 .userinforow span { margin-left: 5px ; padding: 5px 5px 5px 5px }
 .userinforow .bld{font-weight: bold; font-size: 12px;}
 .error{color:red; display: none;}
-#emtyfirstname i , #emtylastname i, #emtyphone i, #emtymember i , #emtyhighlight i, #emtybandname i{color: red; font-size: 12px ; font-weight: normal;} 
+#emtyfirstname i ,#emptyaddress i ,  #emtylastname i, #emptycity i ,  #emptyregion i , #emptypostecode i,#emtyphone i, #emptyrepertoire i,#emtymember i , #emtyhighlight i, #emtybandname i{color: red; font-size: 12px ; font-weight: normal;} 
  .userinforow #errors {display: inline; width: auto; }
 
-	 .savebandtype{margin: 0px; padding: 0px; }
-	 #bandtypespan{ height: 28px;}
-	 .bandtype{margin-bottom: 0px; margin-top: -2px}
+	 .savebandtype, .savebandsets{margin: 0px; padding: 0px; }
+	 #bandtypespan, #bandsetsspan{ height: 28px;}
+	 .bandtype, .bandsets, .postecodeul{margin-bottom: 0px; margin-top: -2px}
+	 .postecodeul a span{margin: 0px; padding: 0px;}
 	/* .memebernamespan , .memeberrolespan {display: none;}*/
-	 .memeberlabel  {width: auto; float: left; margin: -2px  0px 0px 20px}
+	 .memeberlabel , .listsetlabel {width: auto; float: left; margin: -2px  0px 0px 20px}
 	 .memeberdiv{width: 100%; height: auto; display: inline;}
-	 .memeberdiv span , .addmemeberform , .addhighlightform  { display: inline;}
-	 .addmemeberform  * , .addhighlightform *{float: left;  margin: 0px;}
-	 .addmemeberform span , .addhighlightform span{ 
+	 .memeberdiv span , .addmemeberform , .address-holder, .suggest-holder, .addhighlightform , .addrepertoireform { 
+	 	display: inline;}
+	 .addmemeberform  * , .addhighlightform *, .addrepertoireform *{float: left;  margin: 0px;}
+	 .suggest-holder , .address-holder { margin-left: 20px;}
+	 .suggest-holder input , .address-holder input{  border-radius: 2px;
+	 	 /* margin: 0px; 
+	 	margin-left: 20px; 
+	 	margin-top: -3px; margin-bottom: 0px ;
+	 height: 30px; border-radius: 2px;*/}
+	 .addmemeberform span , .addhighlightform span, .addrepertoireform span{ 
 	 	width: auto;
 	 	 margin-left: 20px; margin-top: -3px;}
-	 .addmemeberform input , .addhighlightform input,  .memeberrolespan , .spanmemebername, .spanhighlight{
+	 .addmemeberform input , .addrepertoireform input, .addhighlightform input, .repertoiresongname, .repertoiresinger , .memeberrolespan , .spanmemebername, .spanhighlight{
 	  display: none;
 	   margin-bottom: 0px ; }
-	 .addmemeberform input { height: 30px; border-radius: 2px;}
+	 .addmemeberform input, .addrepertoireform input { height: 30px; border-radius: 2px;}
 	 .addhighlightform input {  width: 60%;  height: 30px; border-radius: 2px;}
 	 .memeberdiv span { float: none; }
-	   .addmember, .addhighlight {
+	   .addmember, .addhighlight , .addrepertoire {
 	   	color: green;
 	   	 font-size: 12px; 
 	   	cursor: pointer; 
 	   	/*padding-top:  0px 10px;*/
 	   	font-family: normal; /* margin-left: 20px*/ }
-	    .addmember  i, .addhighlight i { font-weight: normal; color: green;  font-size: 9px; margin : 5px 10px 0px 10px }
-	    .removeMumber i, .removeHighlight  i {font-weight: normal; color: red;  font-size: 12px;}
+	    .addmember  i, .addhighlight i, .addrepertoire i { font-weight: normal; color: green;  font-size: 9px; margin : 5px 10px 0px 10px }
+	    .removeMumber i, .removeHighlight  i, .removerepertoire i {font-weight: normal; color: red;  font-size: 12px;}
  .mytitle{
 	border-bottom: 1px solid #ff6600;
 	color: #fff;
@@ -194,7 +203,79 @@ max-height: 300px;
 	   .inputmemebername, 
 	   .memeberrolespan,
 	   .memeberoleinput  {display: none;}*/
+#selectpostcode{ height: auto; background-color: yellow; color: blue; }
+.postcodelabel{height: 100px; background-color: red}
+.postcodedatalist{height: 100px; background-color: yellow; overflow: auto}
+#spostecodeinput{color: red}
+#selectaddress{width: 100%}
+/*styling dropdown postecode*/
+.addpostecode, .addadress {height: 30px; display: inline; width: 400px ; }
+ 
+/*.addpostecode > div , .addpostecode > span  {display: inline; margin-right: 0px; padding-right: 0px}*/
 
+/*.addpostecode > span {margin-top: -20px ; margin-left: 20px}*/
+.suggest-holder {
+    width: 150px;
+    height: 28px;
+	float: left;
+	
+} 
+.address-holder{
+    width: 230px;
+    height: 28px;
+	float: left;
+	
+} 
+ .suggest-holder input {
+        width: 150px;
+        height: 28px;
+        border: 1px solid rgba(0,120,0,.6);
+		padding: 0px; 
+		margin: 0px 0px 1px 0px;
+		/*margin-bottom: 1px; */
+		border-radius: 5px;
+    }
+    .address-holder input {
+        width: 230px;
+        height: 28px;
+        border: 1px solid rgba(0,120,0,.6);
+		padding: 0px; 
+		margin: 0px 0px 1px 0px;
+		/*margin-bottom: 1px; */
+		border-radius: 5px;
+    }
+.suggest-holder ul , .address-holder ul{
+	    color: white;
+        display: none;
+        list-style: none;
+        margin: 0px;
+        padding: 0;
+        border: 1px solid rgba(0,0,0,1);
+        border-radius: 2px;
+     	height: 120px;
+		position: relative;
+		width: 150px;
+		background-color: rgba(0, 0 ,0 ,0.5);
+		z-index: 10;
+    }
+    .address-holder ul{width: 230px;}
+.suggest-prompt, .inputaddress{margin-bottom: 2px}
+ .suggest-holder li:hover , .address-holder li:hover {color: #ff6600; cursor: pointer;}
+        .suggest-holder li, .address-holder li {
+            padding: 5px;
+        }
+        .suggest-holder > li:hover,.suggest-holder > li.active , .address-holder > li:hover,.address-holder > li.active {
+            background: rgba(0,120,0, .2);
+        }
+            .suggest-name {
+                font-weight: bold;
+                display: block;
+                height: 15px;
+            }
+.addpostecode { padding-bottom: 20px; position: absolute;}
+.addadress { padding-bottom: 20px; position: absolute;}
+
+/*end styling dropdown postecode*/
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 959px) and (max-width: 1177px) {
@@ -215,7 +296,6 @@ max-height: 300px;
 	.wall{ background-color: red; width: 10%;}
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 25px ; cursor: pointer;}
 }
-
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 768px) and (max-width: 959px) {

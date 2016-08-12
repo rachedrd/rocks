@@ -33,3 +33,4 @@ percolate:synced-cron
 edgee:slingshot
 disable-oplog
 manuelschoebel:wait-on-lib
+http

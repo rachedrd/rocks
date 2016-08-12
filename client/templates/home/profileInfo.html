@@ -2,14 +2,14 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="profilecover">
- <img class = "coverImage" src="images/assets/alexander1.jpg" />
+ <img class = "coverImage" src="images/5.jpeg" />
   <div class="subcover">
     <div class="avatarContainer">
       <div class="changeAvatar">
         <br>
         <span>change avatar</span>
       </div>
-      <img class = "avatarImage" src="images/assets/breadcrumbs1.png" />
+      <img class = "avatarImage" src="images/avatarProfileM3.png" />
     </div>
     <div class="usercontainer">
       <div class="username">
@@ -122,7 +122,7 @@
     </ul>
     <ul class="tabs-content ">
       <li id="Latest" class="active">
-        <div class="video-grid userinfocontent">
+        <div class="userinfocontent">
           <!--<div class="rachini">
              <input type="text" id="birthinput" class=" date date-1" />
           </div>-->
@@ -427,16 +427,6 @@
             <span id="bandnameerr" class="oldinfo error"></span>
           </div>
         </div>
-        <div id="salarydiv" class="userinforow">
-          <span class="oldinfo bld">Salary: </span>
-          <span id="salaryspan" class="oldinfo bld" alt="set only by agent" title="set only by agent">
-            {{# if currentUser.profile.salary }} 
-              {{currentUser.profile.salary}} $
-            {{else}}
-                not setted
-            {{/if}}
-          </span>
-        </div>
         <div id="bandtypediv" class="userinforow">
           <span class="bandtypeslabel oldinfo bld">Band type: </span>
           <span id="bandtypespan" class="oldinfo bld">{{mybandtype currentUser.profile.bandtype}}</span>
@@ -461,6 +451,38 @@
            <span id="firstnameerr" class="error oldinfo"></span>
           </div>
         </div>
+        <div id="setsdiv" class="userinforow">
+          <span class="oldinfo bld">Acoustic Sets: </span>
+          <span id="bandsetsspan" class="oldinfo bld">{{bandsets currentUser.profile.sets}}</span>
+        <input type="text" id="bandsetsinput" class="oldinfo" value="{{bandsets currentUser.profile.sets}}"/>
+        <select class="bandsets">
+          <option value="1 X 1H.30 min">1 X 1H.30 min</option>
+          <option value="2 X 45 min">2 X 45 min</option>
+          <option value="3 X 30min">3 X 30min</option>
+          <option value="other">other</option>
+        </select>
+        <span class="updatebandsets oldinfo bld">
+            <i class="glyphicon glyphicon-pencil" alt="update band sets " title="update band sets"></i>
+          </span>
+          <span class="savebandsets bld oldinfo">save</span>
+        </div>
+        <div id="agentdiv" class="userinforow">
+          <span class="oldinfo bld">Agent: </span>
+          <span id="salaryspan" class="oldinfo bld" alt="set only by agent" title="set only by agent">
+              {{myagent currentUser }}
+          </span>
+        </div>
+        <div id="salarydiv" class="userinforow">
+          <span class="oldinfo bld">Salary: </span>
+          <span id="salaryspan" class="oldinfo bld" alt="set only by agent" title="set only by agent">
+            {{# if currentUser.profile.salary }} 
+              {{currentUser.profile.salary}} $
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+        </div>
+        
         <div id="emaildiv" class="userinforow">
           <span class="oldinfo bld">Email: </span>
           <span id="emailspan" class="oldinfo bld">{{currentUser.emails.[0].address}}</span>
@@ -554,6 +576,42 @@
             {{/each}}
           </ul>
         </div>
+        <div id="repertoirediv" class="userinforow ">
+          <span class="bld listsetlabel mytitle">List Sets </span>
+          <div class="addrepertoireform">
+            <span class=" bld repertoiresongname">Song title: </span>
+            <input type="text" class="inputrepertoirename" placeholder="song name"/>
+            <span class=" bld repertoiresinger">Singer: </span>
+            <input type="text"  class="repertoiresingerinput" placeholder="singer name" />
+            <span class="bld addrepertoire">
+             <i class="glyphicon glyphicon-plus" alt="update first name" title="update first name"></i> add new song
+            </span>
+            <span class=" saverepertoire bld">save</span>
+          </div>
+          <div id="errors">
+            <span id="emptyrepertoire" class="error  oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="repertoireerr" class="oldinfo error"></span>
+          </div>
+        </div>
+        <br>
+        <div class="userinforow  repertoirelist ">
+          <ul class="repertoireullist">
+            {{#each allmemebers.profile.repertoire}}
+            <li>
+              <span class="bld repertoire">+
+                <span id="singername">{{singername}}</span>-
+                <span id="songname">{{songname}}</span>
+                
+              </span>
+              <span class="removerepertoire">
+                <i class="glyphicon glyphicon-remove"></i>
+              </span>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
         <div id="pubcodediv" class="userinforow">
           <span class="oldinfo bld">publicity code: </span>
           <span id="pubspan" class="oldinfo bld">
@@ -567,13 +625,158 @@
           </span>
         </div>
         <div id="statusdiv" class="userinforow">
-            <span class="oldinfo bld">profile status: </span>
+          <span class="oldinfo bld">profile status: </span>
           <span id="statusspan" class="oldinfo bld">
               {{currentUser.profile.Status}}
           </span>
         </div>
-         <h6> Address </h6>
-         <div id="buildingnumberdiv" class="userinforow">
+        <h6> Address </h6>
+        <div id="countrydiv" class="userinforow">
+          <span class="oldinfo bld">country name: </span>
+          <span id="countryspan " class="oldinfo bld">Uk
+           <!-- {{# if currentUser.profile.country }}
+              {{currentUser.profile.country}}
+            {{else}}
+                not setted
+            {{/if}}   -->
+          </span>
+         <!-- <input type="text" id="countryinput" class="oldinfo"/>
+          <span class="updatecountry oldinfo">
+            <i class="glyphicon glyphicon-pencil" alt="update country" title="update country"></i>
+          </span>
+          <span class="savecountry bld">save</span>
+          <span id="countryerr" class="oldinfo error"></span>-->
+        </div>
+        <div id="postcodediv" class="userinforow">
+          <span class="oldinfo bld">post code: </span>
+          <span id="postecodespan" class="oldinfo bld">
+            {{# if currentUser.profile.address.postecode }}
+              {{ currentUser.profile.address.postecode}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+          <div class="addpostecode userinforow">
+          <div class='suggest-holder'>
+            <input type='text' class='suggest-prompt'>
+            <ul class="zonecodes">
+            </ul>
+          </div>
+          <span class="updatepostecode oldinfo">
+            <i class="glyphicon glyphicon-pencil" alt="update post code" title="update post code"></i>
+          </span>
+          <span class="savepostecode bld">save</span>
+          <div id="errors">
+            <span id="emptypostecode" class="error oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="emptypostecodeerr" class="error oldinfo"></span>
+          </div>
+        </div>
+      </div>
+      <!--
+      <div id="bandnamediv" class="userinforow">
+          <span class="oldinfo bld">Band name:</span>
+          <span id="bandnamespan" class="oldinfo bld">{{mybandname currentUser}}</span>
+          <input type="text" id="bandnameinput" class="oldinfo bld " value="{{mybandname currentUser}}"/>
+          <span id="updatebandname" class="updatebandnameoldinfo bld">
+            <i class="glyphicon glyphicon-pencil" alt="update band name" title="update band name"></i>
+          </span>
+          <span class="savebandname bld">save</span>
+          <div id="errors">
+            <span id="emtybandname" class="error  oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="bandnameerr" class="oldinfo error"></span>
+          </div>
+        </div>
+      -->
+        <div id="regiondiv" class="userinforow">
+          <span class="oldinfo bld ">Region: </span>
+          <span id="regionspan" class="oldinfo bld">
+            {{# if currentUser.profile.address.region }}
+              {{currentUser.profile.address.region}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+          <input type="text" id="regioninput" class="oldinfo bld" value="{{currentUser.profile.address.region}}"/>
+          <span class="updateregion bld">
+            <i class="glyphicon glyphicon-pencil" alt="update city name" title="update city name"></i>
+          </span>
+          <span class="saveregion bld">save</span>
+          <div id="errors">
+            <span id="emptyregion" class="error  oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="emptyregionerr" class="oldinfo error"></span>
+          </div>
+        </div>
+        <div id="citydiv" class="userinforow">
+          <span class="oldinfo bld ">city: </span>
+          <span id="cityspan" class="oldinfo bld">
+            {{# if currentUser.profile.address.city }}
+              {{currentUser.profile.address.city}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+          <input type="text" id="cityinput" class="oldinfo bld" value="{{currentUser.profile.address.city}}"/><!-- class="oldinfo"/>-->
+          <span class="updatecity bld">
+            <i class="glyphicon glyphicon-pencil" alt="update city name" title="update city name"></i>
+          </span>
+          <span class="savecity bld">save</span>
+          <div id="errors">
+            <span id="emptycity" class="error  oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="emptycityerr" class="oldinfo error"></span>
+          </div>
+        </div>
+        <div id="addressdiv" class="userinforow">
+          <span class="oldinfo bld">Address: </span>
+          <span id="addressspan" class="oldinfo bld">
+            {{# if currentUser.profile.address.address }}
+              {{ currentUser.profile.address.address}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+          <div class="addadress userinforow">
+          <div class='address-holder'>
+            <input type='text' class='inputaddress' value="{{ currentUser.profile.address.address}}">
+            <ul class="address" id="uladdress">
+            </ul>
+          </div>
+          <span class="updateaddress oldinfo">
+            <i class="glyphicon glyphicon-pencil" alt="update post code" title="update post code"></i>
+          </span>
+          <span class="saveaddress bld">save</span>
+          <div id="errors">
+            <span id="emptyaddress" class="error oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="emptyaddresserr" class="error oldinfo"></span>
+          </div>
+        </div>
+      </div>
+        <!--<div id="addressdiv" class="userinforow">
+          <span class="oldinfo bld">Address: </span>
+          <span id="addresspan" class="oldinfo bld">
+            {{# if currentUser.profile.address }}
+              {{currentUser.profile.address}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+          <input type="text" id="addressinput">
+          <span class="updateaddress oldinfo">
+            <i class="glyphicon glyphicon-pencil" alt="update ddress" title="update address "></i>
+          </span>
+          <span class="saveaddress bld">save</span>
+          <span id="saveaddresserr" class="oldinfo error"></span>
+        </div>-->    
+        <!--<div id="buildingnumberdiv" class="userinforow">
           <span class="oldinfo bld">Building number: </span>
           <span id="buildingnumberspan " class="oldinfo bld">
             {{# if currentUser.profile.buildingNumber }}
@@ -604,59 +807,16 @@
           </span>
           <span class="savestreetname bld">save</span>
           <span id="streetnameerr" class="oldinfo error"></span>
-        </div>
-        <div id="citydiv" class="userinforow">
-          <span class="oldinfo bld ">city: </span>
-          <span id="cityspan" class="oldinfo bld">
-            {{# if currentUser.profile.city }}
-              {{currentUser.profile.city}}
-            {{else}}
-                not setted
-            {{/if}}   
-          </span>
-          <input type="text" id="cityinput" class="oldinfo"/>
-          <span class="updatecity oldinfo">
-            <i class="glyphicon glyphicon-pencil" alt="update city name" title="update city name"></i>
-          </span>
-          <span class="savecity bld">save</span>
-          <span id="cityerr" class="oldinfo error"> </span>
-        </div>
-        <div id="postcodediv" class="userinforow">
-          <span class="oldinfo bld">post code: </span>
-          <span id="postcodespan" class="oldinfo bld">
-            {{# if currentUser.profile.postecode }}
-              {{currentUser.profile.postecode}}
-            {{else}}
-                not setted
-            {{/if}}   
-          </span>
-          <input type="text" id="postecodeinput" class="oldinfo"/>
-          <span class="updatepostecode oldinfo">
-            <i class="glyphicon glyphicon-pencil" alt="update post code" title="update post code"></i>
-          </span>
-          <span class="savepostecode bld">save</span>
-          <span id="cityerr" class="oldinfo error"></span>
-        </div>
-        <div id="countrydiv" class="userinforow">
-          <span class="oldinfo bld">country name: </span>
-          <span id="countryspan " class="oldinfo bld">
-            {{# if currentUser.profile.country }}
-              {{currentUser.profile.country}}
-            {{else}}
-                not setted
-            {{/if}}   
-          </span>
-          <input type="text" id="countryinput" class="oldinfo"/>
-          <span class="updatecountry oldinfo">
-            <i class="glyphicon glyphicon-pencil" alt="update country" title="update country"></i>
-          </span>
-          <span class="savecountry bld">save</span>
-          <span id="countryerr" class="oldinfo error"></span>
-        </div>           
+        </div>--> 
       </div>
+      <br>
+      <br>
+      <br>
+      <br>
+
 </template> 
 <template name="userInformations ">
-      <div id="informationconatiner" >
+      <div id="informationconat1ner" >
         <div id="usernamediv" class="userinforow">
           <span class="oldinfo bld">full name:</span>
           <span class="oldinfo bld" id="usernamespan" disabled="disabled">{{currentUser.profile.name}}</span>
