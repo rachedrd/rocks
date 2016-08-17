@@ -332,7 +332,6 @@ $("#popupSignUp").on('mouseenter', '#viewPasswd_sgnUp', function () {
 }).on('mouseleave', '#viewPasswd_sgnUp', function () {
     $('#signup_password').attr('type', 'password');
 });
-
 $("#popupSignUp").on('mouseenter', '#viewRePasswd_sgnUp', function () {
     $('#signup_retypePassword').attr('type', 'text');
 }).on('mouseleave', '#viewRePasswd_sgnUp', function () {
@@ -427,7 +426,7 @@ $("#popupLogin").on('click', '#login_password ', function(){
 	// update postecode 
 	$('.userinfocontent').on('click','.updatefirstname' , function(){
 		$('#firstnamespan').hide();
-		$('.firstnameinput').show();
+		$('#firstnameinput').show();
 		$(this).hide();
 		$('.savefirstname').show();
 	});
@@ -490,6 +489,7 @@ $("#popupLogin").on('click', '#login_password ', function(){
             $("#emptycityerr").show();
 		} else
 		{
+
 			$(this).hide();
 		$('#cityinput').hide();
 		$('#cityspan').show();
@@ -499,7 +499,8 @@ $("#popupLogin").on('click', '#login_password ', function(){
 	});
 	// save postecode 
 	$('.userinfocontent').on('click' , '.savepostecode', function(){
-		if(( $(".suggest-prompt").val() === "" ) || ( $(".suggest-prompt").val() === undefined ) )
+		var mypostecode = $(".suggest-prompt").val();
+		if(( mypostecode === "" ) || ( mypostecode === undefined ) )
 		{
 			$(this).hide();
 			$("#emptypostecode").show();
@@ -507,10 +508,19 @@ $("#popupLogin").on('click', '#login_password ', function(){
             $("#emptypostecodeerr").show();
 		} else
 		{
+			if(mypostecode.length !== 6 )
+			{
+  				$(this).hide();
+			$("#emptypostecode").show();
+            $("#emptypostecodeerr").html("postecode length must be 6");
+            $("#emptypostecodeerr").show();
+			}
+			else{
 			$(this).hide();
 		$('.suggest-holder').hide();
 		$('#postecodespan').show();
 		$('.updatepostecode').show();
+		}
 		}
 		
 	});
@@ -522,6 +532,7 @@ $("#popupLogin").on('click', '#login_password ', function(){
 			$("#emptyaddress").show();
             $("#emptyaddresserr").html("address is empty");
             $("#emptyaddresserr").show();
+            $('.address').hide();
 		} else
 		{
 			$(this).hide();
@@ -584,6 +595,25 @@ $("#popupLogin").on('click', '#login_password ', function(){
 		$('.savebandsets').show();
 	});
 	// hide the highlight add form if mouse out of this form 
+	$('.userinfocontent').on('mouseenter','.highlightslist ul li', function()
+	{
+		$(this).children('.removeHighlight').show();
+	}).on('mouseleave', '.highlightslist ul li', function () {
+    $(this).children('.removeHighlight').hide();
+});
+		$('.userinfocontent').on('mouseenter','.repertoirelist ul li', function()
+	{
+		$(this).children('.removerepertoire').show();
+	}).on('mouseleave', '.repertoirelist ul li', function () {
+    $(this).children('.removerepertoire').hide();
+});
+		$('.userinfocontent').on('mouseenter','.memeberslist ul li', function()
+	{
+		$(this).children('.removeMumber').show();
+	}).on('mouseleave', '.memeberslist ul li', function () {
+    $(this).children('.removeMumber').hide();
+});
+
 	$('.userinfocontent').on('mouseenter', '#bandtypediv', function()
 		{
           $('.savehighlight').hide();
@@ -591,6 +621,9 @@ $("#popupLogin").on('click', '#login_password ', function(){
 		//$('.inputhighlight').val("");
 		$('.inputhighlight').hide();
 		$('.addhighlight').show();
+		   $("#emtyhighlight").hide();
+		 $("#highlighteerr").hide();
+	
 		});
 	$('.userinfocontent').on('mouseenter', '#buildingnumberdiv', function()
 		{
@@ -609,8 +642,8 @@ $("#popupLogin").on('click', '#login_password ', function(){
 		$('.inputmemebername').hide();
 		$('.memeberoleinput').hide();
 		$('.memeberrolespan').hide();
-
-		//$('.inputhighlight').val("");
+         $("#emtymember").hide();
+		 $("#bandmembereerr").hide();
 		$('.memeberoleinput').hide();
 		$('.memeberrolespan').hide();
 		$('.inputmemebername').hide();
@@ -962,12 +995,40 @@ $('.userinfocontent').on('click', '.updatephone', function(){
 	});
 	/*postecode dynamic fill*/
 //	$(".suggest-holder ul").niceScroll();
-regions = ["AB","AL","B","BA","BB","BD","BH","BL","BN","BR","BS","BT","CA","CB","CF","CH","CM","CO","CR",
+/*regions = ["AB","AL","B","BA","BB","BD","BH","BL","BN","BR","BS","BT","CA","CB","CF","CH","CM","CO","CR",
 "CT","CV","CW","DA","DD","DE","DG","DH","DL","DN","DT","DY","E","EC","EH","EN","EX","FK","FY","G","GL","GU",
 "GY","HA","HD","HG","HP","HR","HS","HU","HX","IG","IM","IP","IV","JE","KA","KT","KW","KY","L","LA","LD","LE",
 "LL","LN","LS","LU","M","ME","MK","ML","N","NE","NG","NN","NP","NR","NW","OL","OX","PA","PE","PH","PL","PO",
 "PR","RG","RH","RM","S","SA","SE","SG","SK","SL","SM","SN","SO","SP","SR","SS","ST","SW","SY","TA","TD","TF",
-"TN","TQ","TR","TS","TW","UB","W","WA","WC","WD","WF","WN","WR","WS","WV","YO"];
+"TN","TQ","TR","TS","TW","UB","W","WA","WC","WD","WF","WN","WR","WS","WV","YO"];*/
+regions = [{"name":"AB","description":"Aberdeen"},{"name":"AL","description":"St"},
+{"name":"B","description":"Birmingham"},{"name":"BA","description":"Bath"},
+{"name":"BB","description":"Blackburn"},{"name":"BD","description":"Bradford"},
+{"name":"BH","description":"Bournemouth"},{"name":"BL","description":"Bolton"},{"name":"BN","description":"Brighton"},{"name":"BR","description":"Bromley"},{"name":"BS","description":"Bristol"},
+{"name":"BT","description":"Belfast"},{"name":"CA","description":"Carlisle"},{"name":"CB","description":"Cambridge"},{"name":"CF","description":"Cardiff"},
+{"name":"CH","description":"Chester"},{"name":"CM","description":"Chelmsford"},{"name":"CO","description":"Colchester"},{"name":"CR","description":"Croydon"},
+{"name":"CT","description":"Canterbury"},{"name":"CV","description":"Coventry"},{"name":"CW","description":"Crewe"},{"name":"DA","description":"Dartford"},{"name":"DD","description":"Dundee"},
+{"name":"DE","description":"Derby"},{"name":"DG","description":"Dumfries"},{"name":"DH","description":"Durham"},{"name":"DL","description":"Darlington"},{"name":"DN","description":"Doncaster"},
+{"name":"DT","description":"Dorchester"},{"name":"DY","description":"Dudley"},{"name":"E","description":"East"},{"name":"EC","description":"East"},{"name":"EH","description":"Edinburgh"},
+{"name":"EN","description":"Enfield"},{"name":"EX","description":"Exeter"},{"name":"FK","description":"Falkirk"},{"name":"FY","description":"Blackpool"},{"name":"G","description":"Glasgow"},
+{"name":"GL","description":"Gloucester"},{"name":"GU","description":"Guildford"},{"name":"GY","description":"Guernsey"},{"name":"HA","description":"Harrow"},{"name":"HD","description":"Huddersfield"},
+{"name":"HG","description":"Harrogate"},{"name":"HP","description":"Hemel"},{"name":"HR","description":"Hereford"},{"name":"HS","description":"Outer"},{"name":"HU","description":"Hull"},
+{"name":"HX","description":"Halifax"},{"name":"IG","description":"Ilford"},{"name":"IM","description":"Isle"},{"name":"IP","description":"Ipswich"},{"name":"IV","description":"Inverness"},
+{"name":"JE","description":"Jersey"},{"name":"KA","description":"Kilmarnock"},{"name":"KT","description":"Kingston"},{"name":"KW","description":"Kirkwall"},{"name":"KY","description":"Kirkcaldy"},
+{"name":"L","description":"Liverpool"},{"name":"LA","description":"Lancaster"},{"name":"LD","description":"Llandrindod"},{"name":"LE","description":"Leicester"},{"name":"LL","description":"Llandudno"},
+{"name":"LN","description":"Lincoln"},{"name":"LS","description":"Leeds"},{"name":"LU","description":"Luton"},{"name":"M","description":"Manchester"},{"name":"ME","description":"Rochester"},
+{"name":"MK","description":"Milton"},{"name":"ML","description":"Motherwell"},{"name":"N","description":"North"},{"name":"NE","description":"Newcastle"},{"name":"NG","description":"Nottingham"},
+{"name":"NN","description":"Northampton"},{"name":"NP","description":"Newport"},{"name":"NR","description":"Norwich"},{"name":"NW","description":"North"},{"name":"OL","description":"Oldham"},
+{"name":"OX","description":"Oxford"},{"name":"PA","description":"Paisley"},{"name":"PE","description":"Peterborough"},{"name":"PH","description":"Perth"},{"name":"PL","description":"Plymouth"},
+{"name":"PO","description":"Portsmouth"},{"name":"PR","description":"Preston"},{"name":"RG","description":"Reading"},{"name":"RH","description":"Redhill"},{"name":"RM","description":"Romford"},
+{"name":"S","description":"Sheffield"},{"name":"SA","description":"Swansea"},{"name":"SE","description":"South"},{"name":"SG","description":"Stevenage"},{"name":"SK","description":"Stockport"},
+{"name":"SL","description":"Slough"},{"name":"SM","description":"Sutton"},{"name":"SN","description":"Swindon"},{"name":"SO","description":"Southampton"},{"name":"SP","description":"Salisbury"},
+{"name":"SR","description":"Sunderland"},{"name":"SS","description":"Southend-on-Sea"},{"name":"ST","description":"Stoke-on-Trent"},{"name":"SW","description":"South"},{"name":"SY","description":"Shrewsbury"},
+{"name":"TA","description":"Taunton"},{"name":"TD","description":"Galashiels"},{"name":"TF","description":"Telford"},{"name":"TN","description":"Tonbridge"},{"name":"TQ","description":"Torquay"},
+{"name":"TR","description":"Truro"},{"name":"TS","description":"Cleveland"},{"name":"TW","description":"Twickenham"},{"name":"UB","description":"Southall"},{"name":"W","description":"West"},
+{"name":"WA","description":"Warrington"},{"name":"WC","description":"Western"},{"name":"WD","description":"Watford"},{"name":"WF","description":"Wakefield"},{"name":"WN","description":"Wigan"},{"name":"WR","description":"Worcester"},
+{"name":"WS","description":"Walsall"},{"name":"WV","description":"Wolverhampton"},{"name":"YO","description":"York"}]
+
 regionsnumbersab = ["AB10","AB11","AB12","AB15","AB16","AB21","AB22","AB23","AB24",
 "AB25","AB99","AB13","AB14","AB30","AB31","AB32","AB33","AB34","AB35","AB36","AB37",
 "AB38","AB39","AB41","AB42","AB43","AB44","AB45","AB51","AB52","AB53","AB54"]
@@ -1003,6 +1064,85 @@ regionsnumbersbt=["BT1","BT2","BT3","BT4","BT5","BT6","BT7","BT8","BT9","BT10","
 regionsnumbersca=["CA1","CA2","CA3","CA4","CA5","CA6","CA99","CA7","CA8","CA9","CA10","CA11",
 "CA12","CA13","CA14","CA95","CA15","CA16","CA17","CA18","CA19","CA20","CA21","CA22","CA23","CA24",
 "CA25","CA26"];
+regionsnumberscb=["CB1","CB2","CB3","CB4","CB5","CB21","CB22","CB23","CB24","CB25","CB6","CB7","CB8","CB9","CB10","CB11"];
+
+regionsnumbersab10=["AB101AA","AB101AB","AB101AF","AB101AG","AB101AH","AB101AJ","AB101AL","AB101AN","AB101AP",
+"AB101AQ","AB101AR","AB101AS","AB101AU","AB101AW","AB101AX","AB101BA","AB101BB","AB101BD","AB101BF",
+"AB101BH","AB101BR","AB101BS","AB101BU","AB101BW","AB101DB","AB101DG","AB101DQ","AB101DU","AB101EP",
+"AB101FE","AB101FF","AB101FG","AB101FL","AB101FQ","AB101FR","AB101FT","AB101FW","AB101FX","AB101FY",
+"AB101GE","AB101GF","AB101GS","AB101GZ","AB101HA","AB101HE","AB101HF","AB101HH","AB101HP","AB101HS",
+"AB101HT","AB101HW","AB101JB","AB101JD","AB101JE","AB101JF","AB101JG","AB101JH","AB101JJ","AB101JL",
+"AB101JN","AB101JP","AB101JQ","AB101JR","AB101JS","AB101JT","AB101JU","AB101JW","AB101JX","AB101JZ",
+"AB101LB","AB101LG","AB101LP","AB101LQ","AB101LU","AB101LX","AB101NG","AB101NJ","AB101NL","AB101NN",
+"AB101NP","AB101NT","AB101NW","AB101PA","AB101PD","AB101PE","AB101PF","AB101PG","AB101PN","AB101PP",
+"AB101PR","AB101PS","AB101PU","AB101PY","AB101QA","AB101QB","AB101QD","AB101QE","AB101QH","AB101QJ",
+"AB101QL","AB101QN","AB101QQ","AB101QR","AB101QS","AB101QT","AB101QU","AB101QW","AB101QX","AB101QZ",
+"AB101RA","AB101RB","AB101RD","AB101RE","AB101RG","AB101RH","AB101RJ","AB101RL","AB101RN","AB101RP",
+"AB101RQ","AB101RR","AB101RS","AB101RT","AB101RU","AB101RW","AB101RX","AB101RY","AB101RZ","AB101SA",
+"AB101SB","AB101SD","AB101SE","AB101SH","AB101SJ","AB101SL","AB101SN","AB101SP","AB101SQ","AB101SR",
+"AB101SS","AB101ST","AB101SU","AB101SY","AB101TA","AB101TB","AB101TD","AB101TE","AB101TF","AB101TH",
+"AB101TJ","AB101TL","AB101TN","AB101TP","AB101TQ","AB101TR","AB101TS","AB101TT","AB101TW","AB101TX",
+"AB101TY","AB101TZ","AB101UA","AB101UB","AB101UD","AB101UE","AB101UF","AB101UG","AB101UH","AB101UJ",
+"AB101UL","AB101UN","AB101UP","AB101UQ","AB101UR","AB101US","AB101UT","AB101UU","AB101UW","AB101UX",
+"AB101UY","AB101UZ","AB101WB","AB101WD","AB101WE","AB101WF","AB101WG","AB101WH","AB101WP","AB101WR",
+"AB101WS","AB101WT","AB101XA","AB101XB","AB101XD","AB101XE","AB101XF","AB101XG","AB101XH","AB101XL",
+"AB101XN","AB101XP","AB101XU","AB101XW","AB101XY","AB101XZ","AB101YA","AB101YB","AB101YD","AB101YE",
+"AB101YF","AB101YH","AB101YL","AB101YN","AB101YP","AB101YR","AB101YS","AB101YT","AB101ZA","AB101ZG",
+"AB101ZP","AB101ZT","AB101ZU","AB101ZX","AB106AA","AB106AB","AB106AD","AB106AE","AB106AG","AB106AH",
+"AB106AJ","AB106AL","AB106AN","AB106AP","AB106AQ","AB106AR","AB106AS","AB106AT","AB106AU","AB106AX",
+"AB106AY","AB106BA","AB106BB","AB106BE","AB106BF","AB106BJ","AB106BL","AB106BN","AB106BP","AB106BQ",
+"AB106BR","AB106BS","AB106BT","AB106BU","AB106BW","AB106BX","AB106BY","AB106BZ","AB106DA","AB106DB",
+"AB106DD","AB106DE","AB106DF","AB106DG","AB106DH","AB106DJ","AB106DL","AB106DS","AB106DT","AB106DU",
+"AB106ED","AB106EE","AB106EG","AB106EH","AB106EJ","AB106EL","AB106EN","AB106EP","AB106EQ","AB106ER",
+"AB106ES","AB106ET","AB106EU","AB106EW","AB106EX","AB106EY","AB106FA","AB106FB","AB106FL","AB106FN",
+"AB106FP","AB106GA","AB106HA","AB106HB","AB106HD","AB106HE","AB106HF","AB106HG","AB106HH","AB106HJ",
+"AB106HL","AB106HN","AB106HP","AB106HQ","AB106HR","AB106HS","AB106HT","AB106HU","AB106HW","AB106HX",
+"AB106HY","AB106JA","AB106JB","AB106JD","AB106JE","AB106JF","AB106JG","AB106JH","AB106JJ","AB106JL",
+"AB106JN","AB106JP","AB106JQ","AB106JR","AB106JU","AB106JW","AB106JY","AB106JZ","AB106LE","AB106LF",
+"AB106LG","AB106LH","AB106LP","AB106LQ","AB106LR","AB106LX","AB106LZ","AB106NA","AB106NB","AB106ND",
+"AB106NJ","AB106NL","AB106NN","AB106NP","AB106NQ","AB106NR","AB106NU","AB106NW","AB106NY","AB106NZ",
+"AB106PA","AB106PB","AB106PD","AB106PE","AB106PF","AB106PG","AB106PH","AB106PJ","AB106PL","AB106PN",
+"AB106PP","AB106PQ","AB106PR","AB106PS","AB106PT","AB106PU","AB106PW","AB106PX","AB106PY","AB106PZ",
+"AB106QA","AB106QB","AB106QD","AB106QE","AB106QF","AB106QG","AB106QH","AB106QJ","AB106QL","AB106QN",
+"AB106QP","AB106QQ","AB106QR","AB106QS","AB106QT","AB106QU","AB106QW","AB106QX","AB106QY","AB106QZ",
+"AB106RA","AB106RB","AB106RD","AB106RE","AB106RF","AB106RG","AB106RH","AB106RJ",
+"AB106RL","AB106RN","AB106RP","AB106RQ","AB106RR","AB106RS","AB106RT","AB106RU",
+"AB106RW","AB106RX","AB106RY","AB106RZ","AB106SA","AB106SB","AB106SD","AB106SE",
+"AB106SF","AB106SG","AB106SH","AB106SJ","AB106SL","AB106SN","AB106SP","AB106SQ",
+"AB106SR","AB106SS","AB106ST","AB106SU","AB106SW","AB106SX","AB106SY","AB106SZ",
+"AB106TA","AB106TB","AB106TD","AB106TE","AB106TF","AB106TG","AB106TJ","AB106TP",
+"AB106TQ","AB106TR","AB106TS","AB106UQ","AB106UR","AB106US","AB106UT","AB106UX",
+"AB106UZ","AB106WD","AB106WE","AB106WU","AB106XA","AB106XB","AB106XD","AB106XE",
+"AB106XF","AB106XH","AB106XJ","AB106XL","AB106XN","AB106XP","AB106XQ","AB106XR",
+"AB106XS","AB106XT","AB106XU","AB106XW","AB106XX","AB106YA","AB106YH","AB106YZ",
+"AB107AA","AB107AB","AB107AD","AB107AE","AB107AF","AB107AG","AB107AH","AB107AJ",
+"AB107AL","AB107AN","AB107AP","AB107AQ","AB107AR","AB107AS","AB107AT","AB107AU",
+"AB107AW","AB107AX","AB107AY","AB107AZ","AB107BA","AB107BB","AB107BD","AB107BE",
+"AB107BF","AB107BG","AB107BH","AB107BJ","AB107BL","AB107BN","AB107BP","AB107BQ",
+"AB107BR","AB107BS","AB107BT","AB107BU","AB107BW","AB107BX","AB107BY","AB107BZ",
+"AB107DA","AB107DB","AB107DD","AB107DE","AB107DF","AB107DG","AB107DH","AB107DJ",
+"AB107DL","AB107DN","AB107DP","AB107DQ","AB107DR","AB107DS","AB107DT","AB107DU",
+"AB107DX","AB107DY","AB107DZ","AB107EA","AB107EB","AB107ED","AB107EE","AB107EF","AB107EG","AB107EH",
+"AB107EJ","AB107EL","AB107EN","AB107EP","AB107EQ","AB107ER","AB107ES","AB107ET",
+"AB107EU","AB107EW","AB107EX","AB107EY","AB107EZ",
+"AB107FA","AB107FB","AB107FD","AB107FE","AB107FF","AB107FG","AB107FH","AB107FJ",
+"AB107FL","AB107FN","AB107FP","AB107FQ",
+"AB107FR","AB107FS","AB107FT","AB107FW","AB107FX","AB107FY","AB107FZ","AB107GA",
+"AB107GB","AB107GD","AB107GE","AB107GH","AB107GR","AB107GS","AB107GT","AB107GU",
+"AB107GW","AB107GX","AB107GY","AB107GZ","AB107HA","AB107HB","AB107HD","AB107HE",
+"AB107HF","AB107HG","AB107HH","AB107HJ","AB107HL","AB107HN","AB107HP","AB107HQ",
+"AB107HR","AB107HS","AB107HT","AB107HU","AB107HW","AB107HX","AB107HY","AB107HZ",
+"AB107JA","AB107JB","AB107JD","AB107JE","AB107JF","AB107JG","AB107JH","AB107JJ",
+"AB107JL","AB107JN","AB107JP","AB107JQ","AB107JR","AB107JS","AB107JT","AB107JU",
+"AB107JW","AB107JX","AB107JY","AB107JZ","AB107LA","AB107LB","AB107LD","AB107LE",
+"AB107LF","AB107LG","AB107LH","AB107LJ","AB107LL","AB107LN","AB107LP","AB107LQ",
+"AB107LR","AB107LS","AB107LT","AB107LU","AB107LW","AB107LX","AB107LY","AB107LZ",
+"AB107NA","AB107NB","AB107ND","AB107NE","AB107NF","AB107NG","AB107NH","AB107NJ",
+"AB107NL","AB107NN","AB107NP","AB107NQ","AB107NR","AB107NS","AB107NT","AB107NU",
+"AB107NW","AB107NX","AB107NY","AB107NZ","AB107PA","AB107PB","AB107PD","AB107PE",
+"AB107PF","AB107PG","AB107PH","AB107PL","AB107PN","AB107PP","AB107PQ","AB107PR",
+"AB107PS","AB107PT","AB107PU","AB107PW"]
+var regionsnumbersab11 = ["AB115AA","AB115AB","AB115AD","AB115AE","AB115AF","AB115AH","AB115AJ","AB115AL","AB115AN","AB115AP","AB115AQ","AB115AR","AB115AS","AB115AT","AB115AU","AB115AW","AB115AX","AB115AY","AB115AZ","AB115BA","AB115BB","AB115BD","AB115BE","AB115BF","AB115BG","AB115BH","AB115BJ","AB115BL","AB115BN","AB115BP","AB115BQ","AB115BR","AB115BS","AB115BT","AB115BU","AB115BW","AB115BX","AB115BY","AB115BZ","AB115DB","AB115DD","AB115DE","AB115DF","AB115DG","AB115DH","AB115DL","AB115DN","AB115DP","AB115DQ","AB115DR","AB115DS","AB115DT","AB115DU","AB115DW","AB115DX","AB115DY","AB115DZ","AB115EE","AB115EF","AB115EG","AB115EJ","AB115EL","AB115EP","AB115EQ","AB115ER","AB115EU","AB115EW","AB115EX","AB115EY","AB115EZ","AB115FB","AB115FE","AB115FJ","AB115FN","AB115FP","AB115FT","AB115FU","AB115FW","AB115GD","AB115GE","AB115GJ","AB115HB","AB115HP","AB115HR","AB115HS","AB115HU","AB115HW","AB115HX","AB115JH","AB115LY","AB115NP","AB115NS","AB115NT","AB115NX","AB115PA","AB115PB","AB115PD","AB115PF","AB115PG","AB115PH","AB115PJ","AB115PL","AB115PN","AB115PP","AB115PQ","AB115PS","AB115PT","AB115PU","AB115PW","AB115PX","AB115PY","AB115PZ","AB115QA","AB115QD","AB115QE","AB115QF","AB115QH","AB115QJ","AB115QL","AB115QN","AB115QP","AB115QR","AB115QT","AB115QW","AB115QX","AB115RA","AB115RB","AB115RD","AB115RE","AB115RF","AB115RG","AB115RH","AB115RJ","AB115RL","AB115RN","AB115RP","AB115RU","AB115RW","AB115SS","AB115TJ","AB115YD","AB115YL","AB115YU","AB115ZH","AB116AA","AB116AR","AB116AW","AB116AY","AB116AZ","AB116BA","AB116BB","AB116BD","AB116BE","AB116BG","AB116BH","AB116BJ","AB116BN","AB116BP","AB116BQ","AB116BR","AB116BS","AB116BT","AB116BX","AB116DA","AB116DB","AB116DD","AB116DE","AB116DF","AB116DH","AB116DJ","AB116DL","AB116DN","AB116DP","AB116DQ","AB116DR","AB116DS","AB116DT","AB116DU","AB116DX","AB116DY","AB116DZ","AB116EA","AB116EB","AB116ED","AB116EE","AB116EF","AB116EG","AB116EH","AB116EJ","AB116EL","AB116EN","AB116EP","AB116EQ","AB116ER","AB116ES","AB116ET","AB116EU","AB116EW","AB116EX","AB116EY","AB116EZ","AB116FB","AB116FD","AB116FF","AB116FG","AB116FH","AB116FJ","AB116FL","AB116FN","AB116FP","AB116FR","AB116FS","AB116FW","AB116GN","AB116GQ","AB116GR","AB116GY","AB116HA","AB116HB","AB116HD","AB116HE","AB116HF","AB116HG","AB116HH","AB116HJ","AB116HL","AB116HN","AB116HP","AB116HQ","AB116HR","AB116HS","AB116HT","AB116HU","AB116HW","AB116HX","AB116HY","AB116HZ","AB116JA","AB116JB","AB116JD","AB116JE","AB116JF","AB116JG","AB116JH","AB116JJ","AB116JL","AB116JN","AB116JR","AB116JS","AB116JU","AB116JW","AB116JX","AB116JY","AB116JZ","AB116LA","AB116LD","AB116LE","AB116LG","AB116LJ","AB116LL","AB116LN","AB116LP","AB116LQ","AB116LR","AB116LS","AB116LT","AB116LU","AB116LW","AB116LX","AB116LZ","AB116NA","AB116NB","AB116ND","AB116NE","AB116NF","AB116NJ","AB116NL","AB116NN","AB116NP","AB116NQ","AB116NR","AB116NT","AB116NU","AB116NW","AB116NY","AB116NZ","AB116PE","AB116PH","AB116PJ","AB116QA","AB116QD","AB116QF","AB116RG","AB116RR","AB116RT","AB116SL","AB116SQ","AB116SR","AB116SS","AB116SY","AB116SZ","AB116TA","AB116TB","AB116TD","AB116TE","AB116TF","AB116TG","AB116TH","AB116TJ","AB116TL","AB116TN","AB116TP","AB116TQ","AB116TR","AB116TS","AB116TT","AB116TX","AB116TZ","AB116UA","AB116UB","AB116UD","AB116UJ","AB116UL","AB116UN","AB116UP","AB116UQ","AB116US","AB116UT","AB116UU","AB116UW","AB116UX","AB116UY","AB116UZ","AB116WF","AB116WH","AB116WT","AB116XA","AB116XB","AB116XD","AB116XE","AB116XF","AB116XG","AB116XH","AB116XJ","AB116XL","AB116XN","AB116XP","AB116XQ","AB116XR","AB116XS","AB116XT","AB116XU","AB116XW","AB116XX","AB116XY","AB116XZ","AB116YA","AB116YB","AB116YD","AB116YG","AB116YH","AB116YL","AB116YP","AB116YQ","AB116YU","AB116YW","AB116ZB","AB116ZF","AB117BH","AB117DF","AB117DG","AB117LG","AB117LH","AB117RQ","AB117RS","AB117RT","AB117RX","AB117RY","AB117RZ","AB117SA","AB117SB","AB117SD","AB117SE","AB117SF","AB117SG","AB117SH","AB117SJ","AB117SL","AB117SP","AB117SQ","AB117SR","AB117ST","AB117SW","AB117SX","AB117SY","AB117SZ","AB117TA","AB117TB","AB117TD","AB117TE","AB117TF","AB117TH","AB117TJ","AB117TU","AB117TW","AB117TY","AB117TZ","AB117UE","AB117UF","AB117UG","AB117UH","AB117UR","AB117US","AB117UU","AB117UW","AB117WA","AB117WB","AB117WD","AB117WE","AB117WF","AB117WG","AB117XH","AB117XU","AB117XY","AB117XZ","AB117YZ","AB118AA","AB118BJ","AB118BL","AB118BN","AB118BP","AB118BQ","AB118BR","AB118BS","AB118BT","AB118BU","AB118BW","AB118BX","AB118BY","AB118DA","AB118DB","AB118DD","AB118DE","AB118DG","AB118DH","AB118DJ","AB118DL","AB118DN","AB118DP","AB118DQ","AB118DR","AB118DS","AB118DT","AB118DU","AB118DX","AB118DY","AB118DZ","AB118EA","AB118EB","AB118ED","AB118EE","AB118EG","AB118EH","AB118EJ","AB118EL","AB118EN","AB118EP","AB118EQ","AB118ER","AB118ES","AB118ET","AB118EU","AB118EW","AB118EX","AB118EY","AB118FA","AB118FB","AB118FD","AB118FJ","AB118FL","AB118FN","AB118FP","AB118FQ","AB118FR","AB118FS","AB118FT","AB118FX","AB118GA","AB118HA","AB118HB","AB118HD","AB118HE","AB118HF","AB118HH","AB118HJ","AB118HL","AB118HN","AB118HP","AB118HR","AB118HS","AB118HT","AB118HU","AB118HW","AB118HX","AB118HY","AB118JA","AB118JB","AB118JR","AB118JU","AB118JW","AB118LG","AB118LH","AB118LL","AB118LN","AB118LQ","AB118QX","AB118RE","AB118RG","AB118RH","AB118RJ","AB118RL","AB118RN","AB118RP","AB118RQ","AB118RR","AB118RS","AB118RT","AB118RU","AB118RX","AB118RY","AB118RZ","AB118SA","AB118SB","AB118SD","AB118SE","AB118SF","AB118SH","AB118SJ","AB118SL","AB118SN","AB118SP","AB118SQ","AB118SR","AB118SS","AB118ST","AB118SU","AB118SW","AB118SX","AB118SY","AB118TA","AB118TB","AB118TD","AB118TE","AB118TF","AB118TH","AB118TJ","AB118TL","AB118TN","AB118TP","AB118TQ","AB118TR","AB118TS","AB118TT","AB118TU","AB118TW","AB118TX","AB118TY","AB118TZ","AB119AA","AB119AB","AB119AD","AB119AE","AB119AH","AB119AJ","AB119AL","AB119AN","AB119AP","AB119AQ","AB119AR","AB119AS","AB119AT","AB119AU","AB119AX","AB119AY","AB119BA","AB119BB","AB119BD","AB119BE","AB119BG","AB119BH","AB119DA","AB119DB","AB119DR","AB119DS","AB119DT","AB119DU","AB119FJ","AB119HJ","AB119JD","AB119JE","AB119JH","AB119JJ","AB119JN","AB119JP","AB119JQ","AB119JS","AB119JT","AB119JX","AB119JY","AB119JZ","AB119LA","AB119LB","AB119LD","AB119LE","AB119LF","AB119LP","AB119LS","AB119LT","AB119LU","AB119LX","AB119LY","AB119NA","AB119NB","AB119ND","AB119NE","AB119NF","AB119NH","AB119NJ","AB119NL","AB119NN","AB119NP","AB119NQ","AB119NR","AB119NS","AB119NT","AB119NU","AB119NW","AB119NX","AB119NY","AB119PA","AB119PB","AB119PE","AB119PJ","AB119PL","AB119PN","AB119PP","AB119PR","AB119PS","AB119QA","AB119QB","AB119QD","AB119QE","AB119QF","AB119QG","AB119QH"]
  $('.userinfocontent').on('keyup','.suggest-prompt', function(){
  	var currenttext = ""; currenttext = $('.suggest-prompt').val();
  	$('.userinfocontent .zonecodes').empty();
@@ -1013,8 +1153,8 @@ $search = new RegExp($search.replace(/[^0-9a-z_]/i), 'i');
 	// Clear the ul
 if( currenttext.length <= 2){
 for(var i = 0 ; i < regions.length; i++){
-    if(regions[i].match($search)){
-        $('.userinfocontent .zonecodes').append($("<li><span class='suggest-name'>" + regions[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    if(regions[i].name.match($search)){
+        $('.userinfocontent .zonecodes').append($("<li><span class='suggest-name'>" + regions[i].name + "</span><span class='suggest-description'>" + regions[i].description + "</span></li>"));
     $('.userinfocontent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
 	
 	}
@@ -1119,16 +1259,42 @@ for(var i = 0 ; i < regionsnumbersbt.length; i++){
 	}
 }
 }
-
-/*if( currenttext.length <= 7 && currenttext.length >= 4 ){
-for(var i = 0 ; i < ab10region.length; i++){
-    if(ab10region[i].match($search)){
-        $('.suggest-holder ul').append($("<li><span class='suggest-name'>" + ab10region[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('CB')){
+for(var i = 0 ; i < regionsnumberscb.length; i++){
+    if(regionsnumberscb[i].match($search)){
+        $('.suggest-holder .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumberscb[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.suggest-holder .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('CA')){
+for(var i = 0 ; i < regionsnumbersca.length; i++){
+    if(regionsnumbersca[i].match($search)){
+        $('.suggest-holder .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersca[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.suggest-holder .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length <= 7 && currenttext.length >= 4 && currenttext.match('AB10') ){
+for(var i = 0 ; i < regionsnumbersab10.length; i++){
+    if(regionsnumbersab10[i].match($search)){
+        $('.suggest-holder ul').append($("<li><span class='suggest-name'>" + regionsnumbersab10[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
     $('.suggest-holder ul li span').eq(0).css({'text-decoration': 'underline'});
 	
 	}
 }
-}*/
+}
+if( currenttext.length <= 7 && currenttext.length >= 4 && currenttext.match('AB11') ){
+for(var i = 0 ; i < regionsnumbersab11.length; i++){
+    if(regionsnumbersab11[i].match($search)){
+        $('.suggest-holder ul').append($("<li><span class='suggest-name'>" + regionsnumbersab11[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.suggest-holder ul li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
 /*
 if( $search.length > 2 && $search.length <= 4 ){
 	$('.userinfocontent .suggest-holder ul').empty();
@@ -1155,7 +1321,8 @@ for(var i = 0 ; i < regionsnumbers.length; i++){
 $('.userinfocontent .suggest-holder ul').show();
 });
 $(".userinfocontent").on("click", ".zonecodes > li", function(){ 
-    $('.suggest-prompt').val($(this).text());  
+	var selected = $(this).find(".suggest-name").text();
+  $(".suggest-prompt").val(selected);  
 	$(".zonecodes").hide();
 
 });

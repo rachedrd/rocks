@@ -36,7 +36,7 @@
 						<h4> Bands </h4><span class="liner"></span>
 							<div class="products shop clearfix">
 							<div class="grid_14">
-								{{#each bands}}
+								{{#each artits}}
            							 {{> band}}
            						{{/each}} 
 							</div>
@@ -119,12 +119,18 @@
 										<h3> <a href="shop_product.html">{{profile.name}} </a> </h3>
 										<div class="clearfix">
 											<p class="price"> $789 </p>
-											<p class="rating"> <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i> </p>
+											<p class="rating">
+												<i class="icon-star"></i>
+												<i class="icon-star"></i>
+												<i class="icon-star"></i>
+												<i class="icon-star"></i>
+												<i class="icon-star"></i>
+											</p>
 										</div>
 									</div>
 									<div class="product_meta clearfix">
 										<a href="shop_product.html" class="f_btn add_c"><span><i class="glyphicon glyphicon-hand-right"></i> Hire</span></a>
-										<a href="/Artists/{{_id}}" class="f_btn"><span><i class="glyphicon glyphicon-user"></i> see Profile</span></a>
+										<a href="{{pathFor 'seeprofile'}}" class="f_btn"><span><i class="glyphicon glyphicon-user"></i> see Profile</span></a>
 									</div>
 								</div>
 

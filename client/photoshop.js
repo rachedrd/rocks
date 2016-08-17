@@ -63,11 +63,12 @@ var myarg2 = { "ownerId": currentUserId,
   }
 });
 Template.seeprofile.onCreated(function(){
+ Meteor.subscribe("USERS"); 
  Meteor.subscribe("images"); 
   Meteor.subscribe("notifications");
- setTimeout(function(){
+ /*setTimeout(function(){
   $.getScript('../js/zwindows.js');    
-},2000);
+},2000);*/
 
 });
 
@@ -78,13 +79,69 @@ $.getScript('../js/zzzrevolution.js');
 }, 2000);
 });
 
-
 Template.seeprofile.helpers({ 
+
   imgs: function(){
     return Images.find({uploadedBy : this._id});
-     } });
+     },
+    myusername: function(user)
+  {
+    if(user.profile.type === "band")
+      {
+        if( user.profile.hasOwnProperty('bandName') )
+        {
+          return user.profile.bandName; 
+        }
+        else {
+          return user.username; 
+
+        }
+       
+      }
+      else 
+      {
+    return user.username;
+      }
+  },
+   mybandname: function(user)
+  {
+        if( user.profile.hasOwnProperty('bandName') )
+        {
+          return user.profile.bandName; 
+        }
+        else {
+          return user.username; 
+
+        }
+       
+     
+  },
+  bandprofile: function(usertype)
+  { 
+     if(usertype === "band")
+      {
+       return true; 
+      }
+      else 
+      {
+    return false;
+      }
+  },
+  userprofile: function(usertype)
+  { 
+     if(usertype === "costumer")
+      {
+       return true; 
+      }
+      else 
+      {
+   return false;
+      }      
+  }
+
+      });
 Template.homeBands.helpers({
-bands: function() {
+artits: function() {
 return Users.find({
   $or:[
                      {"profile.type" : "band"},
@@ -342,14 +399,156 @@ Template.userInformations.helpers({
   }
 
 });
+Template.seeuserInformations.helpers({
+
+   mybirthdate: function(timeStamp)
+  {
+   myDate = new Date(timeStamp); 
+   myYear = myDate.getFullYear();
+   myMonth = ( myDate.getMonth() + 1 );
+   myDay = myDate.getDate();
+   return "" + myDay+ "-" +myMonth + "-" +myYear+"";
+  }, 
+  myphonenumber: function(phonenumber)
+  {
+   // alert(phonenumber):
+    if(phonenumber === null || phonenumber === "")
+    {
+     return "**** *** ***";
+    }
+  else {
+   return phonenumber;
+   }
+  },
+  mygender: function(gender)
+  {
+    if(gender === null )
+    {
+     // $("#inputmale").att('checked', false);
+      //$("#inputfemale").att('checked', false);
+      return null;
+    }
+  if (gender === "male") {
+ $("#inputmale").attr('checked', true);
+    return "male";
+   }
+   if (gender === "female") {
+  $("#inputfemale").attr('checked', true);
+    return "female";
+   }
+  }
+
+});
+
+Template.seebandInformations.helpers({
+  allmemebers: function(){
+    var user = Users.findOne({"_id": this._id } , { fields: { "profile": 1} });
+
+    if (user.profile.members.length > 0)
+    {
+        return  user;    
+    }
+    else 
+    {
+      return false;
+    }
+  },
+  incrementedindex: function(index)
+  {
+    return index + 1 ; 
+  },
+   highlights: function(){
+     var user = Users.findOne({"_id": this._id } , { fields: { "profile": 1} });
+     if (user.profile.highlights.length > 0)
+    {
+        return  user;    
+    }
+    else 
+    {
+      return false;
+    }
+    //return  Users.findOne({"_id": this._id } , { fields: { "profile": 1} });
+  },
+   repertoirs: function(){
+     var user = Users.findOne({"_id": this._id } , { fields: { "profile": 1} });
+     if (user.profile.repertoire.length > 0)
+    {
+        return  user;    
+    }
+    else 
+    {
+      return false;
+    }
+    //return  Users.findOne({"_id": this._id } , { fields: { "profile": 1} });
+  },
+  incrementHighlightindex: function(index)
+  {
+    return index + 1 ; 
+  },
+  mybandtype: function(profile)
+  {
+   if(profile.hasOwnProperty('bandtype')) 
+   {
+    return profile.bandtype ; 
+  }
+    else 
+       {
+      return "not setted";
+   }
+  },
+  bandsets: function(profile)
+  {
+   if(profile.hasOwnProperty('sets'))
+   {
+    return profile.sets ; 
+  }
+    else 
+       {
+      return "not setted";
+   }
+  },
+   mybandname: function(user)
+  {
+        if( user.profile.hasOwnProperty('bandName') )
+        {
+          return user.profile.bandName; 
+        }
+        else {
+          return user.username; 
+
+        }
+       
+     
+  },
+  myagent: function(user)
+  {
+        if( user.hasOwnProperty('agent') )
+        {
+          return user.agent.name; 
+        }
+        else 
+        {
+          return "UBMS Company"; 
+        }
+       
+     
+  },
+  myphonenumber: function(phonenumber)
+  {
+   // alert(phonenumber):
+    if(phonenumber === null || phonenumber === "")
+    {
+     return "**** *** ***";
+    }
+  else {
+   return phonenumber;
+   }
+  }
+});
 
 Template.bandInformations.helpers({
   allmemebers: function(){
     return  Users.findOne({"_id": Meteor.userId() } , { fields: { "profile": 1} });
-  },
-  postecodes: function(){
-    var genericpostcodes = ["AB101AA","AB101AB","AB101AF","AB101AG","AB101AH","AB101AJ","AB101AL","AB101AN","AB101AP","AB101AQ","AB101AR","AB101AS","AB101AU","AB101AW","AB101AX","AB101BA","AB101BB","AB101BD","AB101BF","AB101BH","AB101BR","AB101BS","AB101BU","AB101BW","AB101DB","AB101DG","AB101DQ","AB101DU","AB101EP","AB101FE","AB101FF","AB101FG","AB101FL","AB101FQ","AB101FR","AB101FT","AB101FW","AB101FX","AB101FY","AB101GE","AB101GF","AB101GS","AB101GZ","AB101HA","AB101HE","AB101HF","AB101HH","AB101HP","AB101HS","AB101HT","AB101HW","AB101JB","AB101JD","AB101JE","AB101JF","AB101JG","AB101JH","AB101JJ","AB101JL","AB101JN","AB101JP","AB101JQ","AB101JR","AB101JS","AB101JT","AB101JU","AB101JW","AB101JX","AB101JZ","AB101LB","AB101LG","AB101LP","AB101LQ","AB101LU","AB101LX","AB101NG","AB101NJ","AB101NL","AB101NN","AB101NP","AB101NT","AB101NW","AB101PA","AB101PD","AB101PE","AB101PF","AB101PG","AB101PN","AB101PP","AB101PR","AB101PS","AB101PU","AB101PY","AB101QA","AB101QB","AB101QD","AB101QE","AB101QH","AB101QJ","AB101QL","AB101QN","AB101QQ","AB101QR","AB101QS","AB101QT","AB101QU","AB101QW","AB101QX","AB101QZ","AB101RA","AB101RB","AB101RD","AB101RE","AB101RG","AB101RH","AB101RJ","AB101RL","AB101RN","AB101RP","AB101RQ","AB101RR","AB101RS","AB101RT","AB101RU","AB101RW","AB101RX","AB101RY","AB101RZ","AB101SA","AB101SB","AB101SD","AB101SE","AB101SH","AB101SJ","AB101SL","AB101SN","AB101SP","AB101SQ","AB101SR","AB101SS","AB101ST","AB101SU","AB101SY","AB101TA","AB101TB","AB101TD","AB101TE","AB101TF","AB101TH","AB101TJ","AB101TL","AB101TN","AB101TP","AB101TQ","AB101TR","AB101TS","AB101TT","AB101TW","AB101TX","AB101TY","AB101TZ","AB101UA","AB101UB","AB101UD","AB101UE","AB101UF","AB101UG","AB101UH","AB101UJ","AB101UL","AB101UN","AB101UP","AB101UQ","AB101UR","AB101US","AB101UT","AB101UU","AB101UW","AB101UX","AB101UY","AB101UZ","AB101WB","AB101WD","AB101WE","AB101WF","AB101WG","AB101WH","AB101WP","AB101WR","AB101WS","AB101WT","AB101XA","AB101XB","AB101XD","AB101XE","AB101XF","AB101XG","AB101XH","AB101XL","AB101XN","AB101XP","AB101XU","AB101XW","AB101XY","AB101XZ","AB101YA","AB101YB","AB101YD","AB101YE","AB101YF","AB101YH","AB101YL","AB101YN","AB101YP","AB101YR","AB101YS","AB101YT","AB101ZA","AB101ZG","AB101ZP","AB101ZT","AB101ZU","AB101ZX","AB106AA","AB106AB","AB106AD","AB106AE","AB106AG","AB106AH","AB106AJ","AB106AL","AB106AN","AB106AP","AB106AQ","AB106AR","AB106AS","AB106AT","AB106AU","AB106AX","AB106AY","AB106BA","AB106BB","AB106BE","AB106BF","AB106BJ","AB106BL","AB106BN","AB106BP","AB106BQ","AB106BR","AB106BS","AB106BT","AB106BU","AB106BW","AB106BX","AB106BY","AB106BZ","AB106DA","AB106DB","AB106DD","AB106DE","AB106DF","AB106DG","AB106DH","AB106DJ","AB106DL","AB106DS","AB106DT","AB106DU","AB106ED","AB106EE","AB106EG","AB106EH","AB106EJ","AB106EL","AB106EN","AB106EP","AB106EQ","AB106ER","AB106ES","AB106ET","AB106EU","AB106EW","AB106EX","AB106EY","AB106FA","AB106FB","AB106FL","AB106FN","AB106FP","AB106GA","AB106HA","AB106HB","AB106HD","AB106HE","AB106HF","AB106HG","AB106HH","AB106HJ","AB106HL","AB106HN","AB106HP","AB106HQ","AB106HR","AB106HS","AB106HT","AB106HU","AB106HW","AB106HX","AB106HY","AB106JA","AB106JB","AB106JD","AB106JE","AB106JF","AB106JG","AB106JH","AB106JJ","AB106JL","AB106JN","AB106JP","AB106JQ","AB106JR","AB106JU","AB106JW","AB106JY","AB106JZ","AB106LE","AB106LF","AB106LG","AB106LH","AB106LP","AB106LQ","AB106LR","AB106LX","AB106LZ","AB106NA","AB106NB","AB106ND","AB106NJ","AB106NL","AB106NN","AB106NP","AB106NQ","AB106NR","AB106NU","AB106NW","AB106NY","AB106NZ","AB106PA","AB106PB","AB106PD","AB106PE","AB106PF","AB106PG","AB106PH","AB106PJ","AB106PL","AB106PN","AB106PP","AB106PQ","AB106PR","AB106PS","AB106PT","AB106PU","AB106PW","AB106PX","AB106PY","AB106PZ","AB106QA","AB106QB","AB106QD","AB106QE","AB106QF","AB106QG","AB106QH","AB106QJ","AB106QL","AB106QN","AB106QP","AB106QQ","AB106QR","AB106QS","AB106QT","AB106QU","AB106QW","AB106QX","AB106QY","AB106QZ","AB106RA","AB106RB","AB106RD","AB106RE","AB106RF","AB106RG","AB106RH","AB106RJ","AB106RL","AB106RN","AB106RP","AB106RQ","AB106RR","AB106RS","AB106RT","AB106RU","AB106RW","AB106RX","AB106RY","AB106RZ","AB106SA","AB106SB","AB106SD","AB106SE","AB106SF","AB106SG","AB106SH","AB106SJ","AB106SL","AB106SN","AB106SP","AB106SQ","AB106SR","AB106SS","AB106ST","AB106SU","AB106SW","AB106SX","AB106SY","AB106SZ","AB106TA","AB106TB","AB106TD","AB106TE","AB106TF","AB106TG","AB106TJ","AB106TP","AB106TQ","AB106TR","AB106TS","AB106UQ","AB106UR","AB106US","AB106UT","AB106UX","AB106UZ","AB106WD","AB106WE","AB106WU","AB106XA","AB106XB","AB106XD","AB106XE","AB106XF","AB106XH","AB106XJ","AB106XL","AB106XN","AB106XP","AB106XQ","AB106XR","AB106XS","AB106XT","AB106XU","AB106XW","AB106XX","AB106YA","AB106YH","AB106YZ","AB107AA","AB107","AB","AB107AD","AB107AE","AB107AF","AB107AG","AB107AH","AB107AJ","AB107AL","AB107AN","AB107AP","AB107AQ","AB107AR","AB107AS","AB107AT","AB107AU","AB107AW","AB107AX","AB107AY","AB107AZ","AB107BA","AB107BB","AB107BD","AB107BE","AB107BF","AB107BG","AB107BH","AB107BJ","AB107BL","AB107BN","AB107BP","AB107BQ","AB107BR","AB107BS","AB107BT","AB107BU","AB107BW","AB107BX","AB107BY","AB107BZ","AB107DA","AB107DB","AB107DD","AB107DE","AB107DF","AB107DG","AB107DH","AB107DJ","AB107DL","AB107DN","AB107DP","AB107DQ","AB107DR","AB107DS","AB107DT","AB107DU","AB107DX","AB107DY","AB107DZ","AB107EA","AB107EB","AB107ED","AB107EE","AB107EF","AB107EG","AB107EH","AB107EJ","AB107EL","AB107EN","AB107EP","AB107EQ","AB107ER","AB107ES","AB107ET","AB107EU","AB107EW","AB107EX","AB107EY","AB107EZ","AB107FA","AB107FB","AB107FD","AB107FE","AB107FF","AB107FG","AB107FH","AB107FJ","AB107FL","AB107FN","AB107FP","AB107FQ","AB107FR","AB107FS","AB107FT","AB107FW","AB107FX","AB107FY","AB107FZ","AB107GA","AB107GB","AB107GD","AB107GE","AB107GH","AB107GR","AB107GS","AB107GT","AB107GU","AB107GW","AB107GX","AB107GY","AB107GZ","AB107HA","AB107HB","AB107HD","AB107HE","AB107HF","AB107HG","AB107HH","AB107HJ","AB107HL","AB107HN","AB107HP","AB107HQ","AB107HR","AB107HS","AB107HT","AB107HU","AB107HW","AB107HX","AB107HY","AB107HZ","AB107JA","AB107JB","AB107JD","AB107JE","AB107JF","AB107JG","AB107JH","AB107JJ","AB107JL","AB107JN","AB107JP","AB107JQ","AB107JR","AB107JS","AB107JT","AB107JU","AB107JW","AB107JX","AB107JY","AB107JZ","AB107LA","AB107LB","AB107LD","AB107LE","AB107LF","AB107LG","AB107LH","AB107LJ","AB107LL","AB107LN","AB107LP","AB107LQ","AB107LR","AB107LS","AB107LT","AB107LU","AB107LW","AB107LX","AB107LY","AB107LZ","AB107NA","AB107NB","AB107ND","AB107NE","AB107NF","AB107NG","AB107NH","AB107NJ","AB107NL","AB107NN","AB107NP","AB107NQ","AB107NR","AB107NS","AB107NT","AB107NU","AB107NW","AB107NX","AB107NY","AB107NZ","AB107PA","AB107PB","AB107PD","AB107PE","AB107PF","AB107PG","AB107PH","AB107PL","AB107PN","AB107PP","AB107PQ","AB107PR","AB107PS","AB107PT","AB107PU","AB107PW "];
-  return genericpostcodes;
   },
   incrementedindex: function(index)
   {
@@ -403,9 +602,9 @@ Template.bandInformations.helpers({
         {
           return user.agent.name; 
         }
-        else {
+        else 
+        {
           return user.profile.defaultAgent; 
-
         }
        
      
@@ -423,6 +622,10 @@ Template.bandInformations.helpers({
   }
 });
 Template.bandInformations.onRendered(function(){
+  $(".zonecodes").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+  $(".address").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+});
+Template.userInformations.onRendered(function(){
   $(".zonecodes").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
   $(".address").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
 });
@@ -591,9 +794,14 @@ Template.bandInformations.events({
   {
     var postecode ="";
     postecode = $('.suggest-prompt').val();
+    if(postecode !== undefined &&  postecode !== "" && postecode.length === 6) {
      Meteor.call('getplace', postecode ,  function(err, result){
       if(err) {
-        alert('there is an error '); alert('error' + err);
+            $('#emptypostecodeerr').html('postcode not covered');
+            $('#emptypostecodeerr').show();
+                myobj = {"id": Meteor.userId(), "postecode": "" +$('.suggest-prompt').val()+""   };
+                Meteor.call('savepostecode', myobj);
+      
               }
       else{
        var addressesRow = [] ; var values = [];
@@ -628,7 +836,9 @@ Template.bandInformations.events({
   Session.set("alladresses", values);
         $('.inputaddress').val(values[0]);
         $('.inputaddress').html(values[0]);
+
 });
+}
   }, 
   'keyup .inputaddress': function(e, t ){
     values = Session.get("alladresses");
@@ -714,7 +924,106 @@ Template.userInformations.events({
             Meteor.call('updategender', myobj);
           }
           
-          }
+          },'click .saveregion' : function(event, t )
+  {
+    //$('#regionspan').html("");
+    var region  = t.find("#regioninput").value;
+    if( (region !== "") && ( region !== null) && (region !== undefined)  )
+          {
+          myobj = {"id": Meteor.userId(), "region": region  };
+          Meteor.call('saveregion', myobj);
+         
+        }
+  },
+   'click .savecity' : function(event, t )
+  {
+    $('#cityspan').val("");
+    var city  = t.find("#cityinput").value;
+    if( (city !== "") && ( city !== null) && (city !== undefined)  )
+          {
+          myobj = {"id": Meteor.userId(), "city": "" +city+""   };
+          Meteor.call('savecity', myobj);
+         
+        }
+  },
+  'click .saveaddress' : function(event, t )
+  {
+    $('#addressspan').val("");
+    var address  = t.find(".inputaddress").value;
+    if( (address !== "") && ( address !== null) && (address !== undefined)  )
+          {
+          myobj = {"id": Meteor.userId(), "address": address  };
+          Meteor.call('saveaddress', myobj);
+         
+        }
+ },
+  'click .savepostecode' : function(event, t )
+  {
+    var postecode ="";
+    postecode = $('.suggest-prompt').val();
+     if(postecode !== undefined &&  postecode !== "" && postecode.length === 6) {
+     Meteor.call('getplace', postecode ,  function(err, result){
+      if(err) {
+                 $('#emptypostecodeerr').html('postcode error');
+                 $('#emptypostecodeerr').show();
+                  myobj = {"id": Meteor.userId(), "postecode": "" +$('.suggest-prompt').val()+""   };
+                  Meteor.call('savepostecode', myobj);
+      
+    
+              }
+      else{
+       var addressesRow = [] ; var values = [];
+       for (var i = 0 ; i <result.Addresses.length ; i++) {
+       addressesRow =  result.Addresses[i].split(",");
+       $('#regioninput').val(addressesRow[addressesRow.length - 1]);
+       $('#cityinput').val(addressesRow[addressesRow.length - 2]);
+       //$('#regionspan').html(addressesRow[addressesRow.length - 1]);
+       //$('#cityspan').html(addressesRow[addressesRow.length - 2]);
+       $('.inputaddress').html(addressesRow[0]);
+       //$('#addressspan').html(addressesRow[0]);
+       $('.address').empty();
+       for (var j = ( addressesRow.length - 3 ); j >= 0; j--)
+        {
+          if(addressesRow[j].length > 6)
+          {
+            values.push(addressesRow[j]);
+              $('.address').append("<li><span class='suggest-name'>" + values[i] + "</span>");//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+              $('.address ul li span').eq(0).css({'text-decoration': 'underline'});
+        };
+    };
+       
+    }
+    var postecode  = t.find(".suggest-prompt").value;
+    if( (postecode !== "") && ( postecode !== null) && (postecode !== undefined)  )
+          {
+          myobj = {"id": Meteor.userId(), "postecode": "" +postecode+""   };
+          Meteor.call('savepostecode', myobj);
+          
+        }
+  }
+  Session.set("alladresses", values);
+        $('.inputaddress').val(values[0]);
+        $('.inputaddress').html(values[0]);
+
+});
+}
+  }, 
+  'keyup .inputaddress': function(e, t ){
+    values = Session.get("alladresses");
+   search = $('.inputaddress').val();
+// Search regular expression
+  // Clear the ul
+  $('.address').empty();
+for(var i = 0 ; i < values.length; i++){
+  //$("#uladdress").append("<li><span> "+ values[i]+" </span>");
+  if(values[i].match(search)){
+//alert('much ... values i ' + values[i] + "search input " + search);
+    $('.address').append("<li><span class='suggest-name'>" + values[i] + "</span>");//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.address ul li span').eq(0).css({'text-decoration': 'underline'});
+  }
+}
+$(".address").show();
+}
           
 
 
@@ -815,7 +1124,6 @@ Template.homeProfile.onCreated(function(){
 Template.homeProfile.helpers({
   myusername: function(user)
   {
-   
     if(user.profile.type === "band")
       {
         if( user.profile.hasOwnProperty('bandName') )

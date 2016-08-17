@@ -1,6 +1,7 @@
+
 <template name="seeprofile">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<div class="cover2">
+<!--<div class="cover2">
     <div class="fb-profile">
         <img align="left" class="fb-image-lg" src="../../images/5.jpeg" alt="Profile image example"/>
         <img align="left" class="fb-image-profile thumbnail" src="../../images/avatarProfileM2.png" alt="Profile image example"/>
@@ -82,11 +83,175 @@
                   </table>
      
     </div>
+</div>-->
+<div class="profilecover">
+ <img class = "coverImage" src="images/5.jpeg" />
+  <div class="subcover">
+    <div class="avatarContainer">
+      <div class="changeAvatar">
+        <br>
+      </div>
+      <img class = "avatarImage" src="images/avatarProfileM3.png" />
+    </div>
+    <div class="usercontainer">
+      <div class="username">
+        <span class="usrPrflnm">{{ myusername this}}
+        </span>
+      </div>
+      <div class="usermessages dropdown" >
+        <span class="messagessicon  dropdown-toggle" data-toggle="dropdown" alt="send Message" title="send Message">
+          <i class="glyphicon glyphicon-envelope" alt="Send message" title="Send message"></i>
+        </span>
+        <ul class="dropdown-menu" id="messagesList" > 
+          <li>
+            <a href="{{pathFor 'homeProfile'}}">Messages 1
+              <span class="glyphicon glyphicon-cog pull-right">
+              </span>
+            </a>
+          </li>
+          <li class="nav-divider">
+          </li>
+          <li>
+            <a href="#">Stats
+              <span class="glyphicon glyphicon-stats pull-right">
+              </span>
+            </a>
+          </li>
+          <li class="nav-divider">
+          </li>
+          <li id="profileMessages">
+            <a href="#" >Messages 2
+              <span class="badge pull-right"> 42 
+              </span>
+            </a>
+          </li>
+          <li class="nav-divider">
+          </li>
+          <li>
+            <a href="#">Messages 3
+              <span class="glyphicon glyphicon-heart pull-right">
+              </span>
+            </a>
+          </li>
+          <li class="nav-divider">
+          </li>
+          <li>
+            <a href="#" id="logOut">Messages 4
+              <span class="glyphicon glyphicon-log-out pull-right">
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      {{# if bandprofile  profile.type }} 
+      <div class="ratingdiv">
+        <p>
+          <i class="icon-star"></i>
+          <i class="icon-star"></i>
+          <i class="icon-star"></i>
+          <i class="icon-star"></i>
+          <i class="icon-star"></i>
+        </p>
+      </div>
+      <br>
+      <div class="wishlist">
+        <span>
+          Add to wishlist
+        </span>
+      </div>
+     <!-- normal 
+      .ratingdiv p { position: relative; margin-left: 10px; margin-top: 5px;
+float: none; width: 100px ; display: inline; position: absolute; }
+.wishlist{
+ position: relative;
+ color: #ff6600 ; }
+ 1100
+ .wishlist span {margin-top: -8px ; white-space: nowrap; position: absolute; }
+ 480
+  .wishlist span {margin-top: -3px ; white-space: nowrap; position: absolute; }
+
+      320
+      .ratingdiv p{ font-size: 8px ; margin-top: -0.05px}
+
+    -->
+      {{/if}}
+      <div id="notificationWrapper">
+        <div id="notificationTitle"> 
+          <h4> NOTIFICATIONS </h4>
+          <span class="liner">
+          </span>
+        </div>
+        <div id="notificationList">
+          <ul id="ullist" class="ullist"> 
+            {{#if emtyNotifcations }}
+              <p class="emptynot"> there is no notifications</p>
+            {{/if}}                  
+            {{# each notifications}}
+              {{> notification}}
+            {{/each}}
+          </ul>
+        </div>  
+      </div>
+    </div> 
+  </div> 
+  <div class="changeCover">
+  </div>
 </div>
-      <br>
-      <br>
-      <br>
-      <div class="posts">
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="posts tabprofile">
+  <div class="def-block">
+    <div class="topbar">
+      <div id="close" class="tbutton small tback reprequest">
+        <span>Send representation request
+        </span>
+      </div>
+        <!--<span class="addAlbum">add new album</span><span class="liner"></span>-->
+    </div>
+    <ul class="tabs">
+      <li><a href="#Latest" class="active details"> Details </a></li>
+      <li><a href="#Featured"> Mp3 </a></li>
+      <li><a href="#Lightbox"> Photo gallery </a></li>
+      <li><a href="#Lightbox"> Video </a></li>
+      <li><a href="#Lightbox"> Events </a></li>
+      <li><a href="#Lightbox"> Calender </a></li>
+    </ul>
+    <ul class="tabs-content ">
+      <li id="Latest" class="active">
+        <div class="userinfocontent">
+          {{# if bandprofile  profile.type }}
+             {{> seebandInformations}}
+          {{/if}}
+         {{# if userprofile profile.type }}
+            {{> seeuserInformations}}
+          {{/if}}
+        </div>
+      </li>
+       <li id="Featured" >
+        <div class="video-grid">
+          <div class="row clearfix mbf">
+            <div class="music-player-list">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li id="Lightbox">
+        <div class="video-grid">
+          <!--<ul id="tp-grid" class="tp-grid">
+            {{#each images}}
+              {{> task}}
+            {{/each}}   
+          </ul>
+          {{> imageUploader}}-->
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+      <!--<div class="posts">
         <div class="def-block" style="min-height: 400px;">
           <div class="topbar">
             <div id="close" class="tbutton small tback"><span> Back to Albums</span></div>
@@ -102,7 +267,6 @@
       </div>  
       <br>
       <br>
-      mp3
       <div class="posts">
         <div class="def-block" style="min-height: 400px;">
           <div class="topbar">
@@ -116,19 +280,301 @@
           {{/each}}   
           </ul>
         </div>
-      </div>  
+      </div>  -->
 
  </template>  
-<template name="image">
-  <li data-pile="{{imageFolder}}" class="grid_3" id="{{imageFolder}}">
-    <div class="removeDiv">
-    <span class="removeImage">X</span>
-    </div>
-      <a href="{{imageurl}}" rel="prettyPhoto[{{imageFolder}}]">
-      <img  src="{{imageurl}}" alt="{{imageName}}" />
-    </a>
-   </li>
-   </template>
+<template name="seebandInformations">
+      <div id="informationconatiner" >
+        <div id="bandnamediv" class="userinforow">
+          <span class="oldinfo bld">Band name:</span>
+          <span id="bandnamespan" class="oldinfo bld">{{mybandname this}}</span>
+        </div>
+        <div id="bandtypediv" class="userinforow">
+          <span class="bandtypeslabel oldinfo bld">Band type: </span>
+          <span id="bandtypespan" class="oldinfo bld">{{mybandtype profile}}</span>
+        </div>
+        <div id="setsdiv" class="userinforow">
+          <span class="oldinfo bld">Acoustic Sets: </span>
+          <span id="bandsetsspan" class="oldinfo bld">{{bandsets profile}}</span>
+        </div>
+        <div id="agentdiv" class="userinforow">
+          <span class="oldinfo bld">Agent: </span>
+          <span id="salaryspan" class="oldinfo bld" alt="set only by agent" title="set only by agent">
+              {{myagent this }}
+          </span>
+        </div>
+        <div id="salarydiv" class="userinforow">
+          <span class="oldinfo bld">Salary: </span>
+          <span id="salaryspan" class="oldinfo bld" alt="set only by agent" title="set only by agent">
+            {{# if profile.salary }} 
+              {{ profile.salary}} $
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+        </div>
+        <div id="emaildiv" class="userinforow">
+          <span class="oldinfo bld">Email: </span>
+          <span id="emailspan" class="oldinfo bld">{{this.emails.[0].address}}</span>
+        </div>
+        <div id="phonediv" class="userinforow">
+          <span class="oldinfo bld">phone number: </span>
+          <span id="phonesspan" class="oldinfo bld">
+            {{# if profile.phoneNumber }}
+              {{profile.phoneNumber}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+        </div>
+        <div id="memeberdiv" class="userinforow ">
+          <span class="bld memeberlabel mytitle">Members </span>
+        </div>
+        <br>
+        <div class="userinforow memeberslist ">
+          <ul class="bandmembers">
+            {{ #if allmemebers.profile.members }}
+            {{#each allmemebers.profile.members}}
+            <li>
+              <span class="bld member">{{incrementedindex @index}} : 
+                <span id="name">{{name}}</span>-
+                <span id="role">{{role}}</span>
+              </span>
+            </li>
+            {{/each}}
+            {{else}}
+              <li>
+                <span class="bld member">no members registred</span>
+            </li>
+            {{/if}}
+          </ul>
+        </div>
+        <div id="highlitsdiv" class="userinforow ">
+          <span class="bld memeberlabel mytitle">Highlights </span>
+        </div>
+        <br>
+        <div class="userinforow highlightslist ">
+          <ul class="highlights">
+            {{ #if highlights.profile.highlights }}
+            {{#each highlights.profile.highlights}}
+              <li>
+              <span class="bld highlight">- 
+                <span id="content" value="{{id}}">{{content}}</span>
+              </span>
+            </li>
+            {{/each}}
+            {{else}}
+            <span class="bld highlight"> No highlights registred
+            </span>
+            {{/if}}
+          </ul>
+        </div>
+        <div id="repertoirediv" class="userinforow ">
+          <span class="bld listsetlabel mytitle">List Sets </span>
+        </div>
+        <br>
+        <div class="userinforow  repertoirelist ">
+          <ul class="repertoireullist">
+            {{#if repertoirs.profile.repertoire}}
+            {{#each repertoirs.profile.repertoire}}
+            <li>
+              <span class="bld repertoire">+
+                <span id="singername">{{singername}}</span>-
+                <span id="songname">{{songname}}</span>
+              </span>
+            </li>
+            {{/each}}
+            {{else}}
+             <span class="bld repertoire">List set is empty</span> 
+             {{/if}}
+          </ul>
+        </div>
+        <div id="pubcodediv" class="userinforow">
+          <span class="oldinfo bld">publicity code: </span>
+          <span id="pubspan" class="oldinfo bld">
+              {{ profile.publicityCode}}
+          </span>
+        </div>
+        <div id="pubcounterdiv" class="userinforow">
+          <span class="oldinfo bld">publicity counter: </span>
+          <span id="pubcounterspan" class="oldinfo bld">
+              {{ profile.publicityCounter}}
+          </span>
+        </div>
+        <div id="statusdiv" class="userinforow">
+          <span class="oldinfo bld">profile status: </span>
+          <span id="statusspan" class="oldinfo bld">
+              {{currentUser.profile.Status}}
+          </span>
+        </div>
+        <h6> Address </h6>
+        <div id="countrydiv" class="userinforow">
+          <span class="oldinfo bld">country name: </span>
+          <span id="countryspan " class="oldinfo bld">Uk
+          </span>
+        </div>
+        <div id="postcodediv" class="userinforow">
+          <span class="oldinfo bld">post code: </span>
+          <span id="postecodespan" class="oldinfo bld">
+            {{# if profile.address.postecode }}
+              {{ profile.address.postecode}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+      </div>
+        <div id="regiondiv" class="userinforow">
+          <span class="oldinfo bld ">Region: </span>
+          <span id="regionspan" class="oldinfo bld">
+            {{# if profile.address.region }}
+              {{ profile.address.region}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+          <input type="text" id="regioninput" class="oldinfo bld" value="{{currentUser.profile.address.region}}"/>
+        </div>
+        <div id="citydiv" class="userinforow">
+          <span class="oldinfo bld ">city: </span>
+          <span id="cityspan" class="oldinfo bld">
+            {{# if profile.address.city }}
+              {{ profile.address.city}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <div id="addressdiv" class="userinforow">
+          <span class="oldinfo bld">Address: </span>
+          <span id="addressspan" class="oldinfo bld">
+            {{# if  profile.address.address }}
+              {{    profile.address.address}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+      </div>
+      </div>
+
+</template> 
+<template name="seeuserInformations ">
+      <div id="informationconatiner" >
+        <div id="usernamediv" class="userinforow">
+          <span class="oldinfo bld">full name:</span>
+          <span class="oldinfo bld" id="usernamespan" disabled="disabled">{{ profile.name}}</span>
+        </div>  
+        <div id="firstnamediv" class="userinforow">
+          <span class="oldinfo bld">First name: </span>
+          <span id="firstnamespan" class="oldinfo bld">{{profile.firstname}}</span>
+        </div>
+        <div id="lastnamediv" class="userinforow">
+          <span class="oldinfo bld">Last name:</span>
+          <span id="lastnamespan" class="oldinfo bld">{{profile.lastname}}</span>
+        </div>
+        <div id="emaildiv" class="userinforow">
+          <span class="oldinfo bld">Email: </span>
+          <span id="emailspan" class="oldinfo bld">{{this.emails.[0].address}}</span>
+          <input type="text" id="emailinput" class="oldinfo" />
+        </div>
+        <div id="birthdiv" class="userinforow">
+          <span class="oldinfo bld">Birth date: </span>
+          <span id="birthspan" class="oldinfo bld">
+            {{# if profile.birthdate }}
+              {{mybirthdate profile.birthdate}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <div id="genderdiv" class="userinforow">
+          <span class="oldinfo bld">Gender: </span>
+          <span id="genderspan" class="oldinfo bld">
+            {{# if profile.gender }}
+              {{mygender profile.gender}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <div id="phonediv" class="userinforow">
+          <span class="oldinfo bld">phone number: </span>
+          <span id="phonesspan" class="oldinfo bld">
+            {{# if profile.phoneNumber }}
+              {{myphonenumber profile.phoneNumber}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <div id="pubcodediv" class="userinforow">
+          <span class="oldinfo bld">publicity code: </span>
+          <span id="pubspan" class="oldinfo bld">
+            {{ profile.publicityCode}}
+          </span>
+        </div>
+        <div id="pubcounterdiv" class="userinforow">
+          <span class="oldinfo bld">publicity counter: </span>
+          <span id="pubcounterspan" class="oldinfo bld">
+            {{ profile.publicityCounter}}
+          </span>
+        </div>
+        <div id="statusdiv" class="userinforow">
+          <span class="oldinfo bld">profile status: </span>
+          <span id="statusspan" class="oldinfo bld">
+            {{ profile.Status}}
+          </span>
+        </div>
+         <h6> Address </h6>
+        <div id="countrydiv" class="userinforow">
+          <span class="oldinfo bld">country name: </span>
+          <span id="countryspan " class="oldinfo bld">Uk
+          </span>
+         </div>
+        <div id="postcodediv" class="userinforow">
+          <span class="oldinfo bld">post code: </span>
+          <span id="postecodespan" class="oldinfo bld">
+            {{# if  profile.address.postecode }}
+              {{  profile.address.postecode}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+      </div>
+        <div id="regiondiv" class="userinforow">
+          <span class="oldinfo bld ">Region: </span>
+          <span id="regionspan" class="oldinfo bld">
+            {{# if profile.address.region }}
+              {{  profile.address.region}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <div id="citydiv" class="userinforow">
+          <span class="oldinfo bld ">city: </span>
+          <span id="cityspan" class="oldinfo bld">
+            {{# if profile.address.city }}
+              {{ profile.address.city}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <div id="addressdiv" class="userinforow">
+          <span class="oldinfo bld">Address: </span>
+          <span id="addressspan" class="oldinfo bld">
+            {{# if profile.address.address }}
+              {{ profile.address.address}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+      </div>
+      <br>
+      <br>
+      <br>
+      </div>
+</template>  
  <template name="represntationreq">
                         <a href="#" class="sendreqRep">
                         <div class="widget-content representsArtist">
