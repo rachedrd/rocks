@@ -70,11 +70,36 @@ $("#ullist").getNiceScroll().remove();
 $("#ullist").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
 $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
 	// Tabs
-	var tabs = jQuery('ul.tabs');
-	tabs.each(function (i) {
+	$('.full').on('click', ' ul.tabs li a', function(e){
+
+		var tabs = $('.full  ul.tabs');
+		var contentLocation = $(this).attr('href');
+		//$('.full  ul.tabs').children().each(function (i) {
+			//var tab =  $('.full  ul.tabs').find('li').eq(i).find('> a');
+			//alert(tab.html());
+		//});
+		//alert(tabs.html());
+		$('.full  ul.tabs').children().each(function (i) {
+		// get tabs
+		var tab = $('.full  ul.tabs').find('li').eq(i).find('> a');
+		if (contentLocation.charAt(0) === "#") {
+			e.preventDefault();
+		    tab.removeClass('active');
+				$(this).addClass('active');
+	$(contentLocation).fadeIn(500).addClass('active').siblings().hide().removeClass('active');
+		
+	    }
+		//alert(tab.find('> a').html());
+	});
+		
+				$(this).addClass('active');
+	});
+	var tabs = jQuery(' ul.tabs');
+	tabs.children().each(function (i) {
 		// get tabs
 		var tab = jQuery(this).find('> li > a');
 		tab.click(function (e) {
+	
 			// get tab's location
 			var contentLocation = jQuery(this).attr('href');
 			// Let go if not a hashed one
@@ -1810,9 +1835,9 @@ $(".userinfocontent").on("click", ".address > li", function(){
 	});
 	// show representation request button 
 	$(".details").click(function(){
-		$('.reprequest').show();/*
-		$('.reprequest').attr('disabled', 'disabled').off('click');
-		$('.reprequest').attr("disabled", true);*/
+		//$('.reprequest').show();/*
+		//$('.reprequest').attr('disabled', 'disabled').off('click');
+		//$('.reprequest').attr("disabled", true);
 
 		//$('.reprequest').html("you have sent representaion request");
 

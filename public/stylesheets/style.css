@@ -453,6 +453,21 @@ textarea {
 .tbutton:active span {
 	background: url(../images/button_bg.png) bottom repeat-x;
 }
+.tbutton.color10 {
+	
+ 	cursor:not-allowed;
+	background: url(../images/button_bg.png) bottom repeat-x;
+	color: white;
+	background: gray;
+}
+.tbutton.color10 span , .tbutton.color10:hover span , .tbutton.color10:focus span, .tbutton.color10:active span 
+{
+	background: url(../images/button_bg.png) bottom repeat-x;
+}
+.tbutton.color10:hover {
+	color: #fff;
+	background: gray;
+}
 .tbutton span {
 	padding: 0 10px;
 	line-height: 2.4em;

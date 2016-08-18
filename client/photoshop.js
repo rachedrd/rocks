@@ -35,7 +35,7 @@ Template.represntationreq.onCreated(
     Meteor.subscribe("notifications"); 
   }
   );
-Template.represntationreq.events({'click .sendreqRep': function(event, template) {
+/*Template.represntationreq.events({'click .sendreqRep': function(event, template) {
 //alert("userid" + currentUserId ) ;
 //Images.upsert({"_id": "xCdyzavCsuQbPLvLZ"}, {$set : { "agent": "rachini2" }   });
 //Images.upsert({"_id": "xCdyzavCsuQbPLvLZ"}, {$set : { "agent.name":"rachini2"}    });
@@ -61,7 +61,7 @@ var myarg2 = { "ownerId": currentUserId,
 }
 //Users.upsert({"_id": currentUserId}, {$set : {"agent.name": "rachini2" }  });
   }
-});
+});*/
 Template.seeprofile.onCreated(function(){
  Meteor.subscribe("USERS"); 
  Meteor.subscribe("images"); 
@@ -78,9 +78,42 @@ Template.homeIndex.onCreated(function(){
 $.getScript('../js/zzzrevolution.js');
 }, 2000);
 });
-
+Template.seeprofile.events({
+  'click .sendreqRep': function(event, template) {
+var timeStamp = Math.floor(Date.now()); 
+var Currentuser =  Users.findOne({"_id": currentUserId },  { fields: { username: 1 }});
+var myarg2 = { "ownerId": currentUserId,
+ "ownerName": Currentuser.username,
+ "recieverId": this._id,
+ "recieverName": this.username,
+ "time": timeStamp,
+  "typ": "representation Request" , 
+  "status" : "pending",
+  "viewed" : false };
+  if( Notifications.find({ "ownerId":  currentUserId , "recieverId":  this._id }).count() > 0 )
+ { 
+ } else
+{ Meteor.call('addNotification', myarg2, function(error, result)
+  {
+  });
+}
+},
+});
 Template.seeprofile.helpers({ 
 
+detectRequests : function(id)
+{
+
+    if( Notifications.find({ "ownerId":  id , "recieverId":  this._id }).count() > 0 )
+       return true ;
+        return false;  
+},
+   iamAgent : function(type)
+   {
+    if(type === "agent")
+      return true ;
+    return false;
+   },
   imgs: function(){
     return Images.find({uploadedBy : this._id});
      },
@@ -439,7 +472,110 @@ Template.seeuserInformations.helpers({
   }
 
 });
+Template.seebandInformations.onRendered(function(){
 
+ var myPlaylist = [
+  
+  {
+    mp3:'js/1.mp3',
+    title:'Track 1',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'1.jpg' 
+  },
+  {
+    mp3:'js/2.mp3',
+    title:'Track 2',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'js/2.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 3',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'js/1.jpg'  
+  },
+  {
+    mp3:'js/2.mp3',
+    title:'Track 4',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'js/2.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 5',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'js/1.jpg'  
+  },
+  {
+    mp3:'js/2.mp3',
+    title:'Track 6',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'music/2.jpg' 
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 7',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'js/1.jpg'  
+  },
+  {
+    mp3:'js/2.mp3',
+    title:'Track 8',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'',
+    duration:'2:51',
+    cover:'js/2.jpg'  
+  },
+];
+  $('.music-player-list').ttwMusicPlayer(myPlaylist, {
+    currencySymbol:'',
+    buyText:'Share',
+    tracksToShow:3,
+    autoplay:false,
+    ratingCallback:function(index, playlistItem, rating){
+      //some logic to process the rating, perhaps through an ajax call
+    },
+    jPlayer:{
+      swfPath: "http://www.jplayer.org/2.7.0/js/",
+      supplied: "mp3",
+      volume:  0.8,
+      wmode:"window",
+      solution: "html,flash",
+      errorAlerts: true,
+      warningAlerts: true
+    }
+  });
+});
 Template.seebandInformations.helpers({
   allmemebers: function(){
     var user = Users.findOne({"_id": this._id } , { fields: { "profile": 1} });

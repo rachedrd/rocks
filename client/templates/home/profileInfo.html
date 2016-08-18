@@ -102,10 +102,6 @@
 <div class="posts tabprofile">
   <div class="def-block">
     <div class="topbar">
-      <div id="close" class="tbutton small tback reprequest">
-        <span>Send representation request
-        </span>
-      </div>
       <div id="close" class="tbutton small tback">
         <span> Back to Albums
         </span>
@@ -114,11 +110,18 @@
     </div>
     <ul class="tabs">
       <li><a href="#Latest" class="active details"> Details </a></li>
-      <li><a href="#Featured"> Mp3 </a></li>
-      <li><a href="#Lightbox"> Photo gallery </a></li>
-      <li><a href="#Lightbox"> Video </a></li>
-      <li><a href="#Lightbox"> Events </a></li>
+       {{# if bandprofile  currentUser.profile.type }}
+      <li><a href="#Featured"> Songs </a></li>
+      <li><a href="#Lightbox">Gallery </a></li>
+      <li><a href="#Lightbox">Videos</a></li>
+      <li><a href="#Lightbox">Events</a></li>
       <li><a href="#Lightbox"> Calender </a></li>
+       {{/if}}
+          {{# if userprofile currentUser.profile.type }}
+       <li><a href="#Featured">Shared Songs</a></li>
+      <li><a href="#Lightbox">Gallery</a></li>    
+      <li><a href="#events">WhishList</a></li>
+      {{/if}}
     </ul>
     <ul class="tabs-content ">
       <li id="Latest" class="active">

@@ -155,25 +155,16 @@
       </div>
       <br>
       <div class="wishlist">
-        <span>
-          Add to wishlist
-        </span>
-      </div>
-     <!-- normal 
-      .ratingdiv p { position: relative; margin-left: 10px; margin-top: 5px;
-float: none; width: 100px ; display: inline; position: absolute; }
-.wishlist{
- position: relative;
- color: #ff6600 ; }
- 1100
- .wishlist span {margin-top: -8px ; white-space: nowrap; position: absolute; }
- 480
-  .wishlist span {margin-top: -3px ; white-space: nowrap; position: absolute; }
-
-      320
-      .ratingdiv p{ font-size: 8px ; margin-top: -0.05px}
-
-    -->
+      <span>
+        Add to wishlist
+      </span>
+    </div>
+    <br>
+    <div class="hire">
+      <span>
+        Book
+      </span>
+    </div>
       {{/if}}
       <div id="notificationWrapper">
         <div id="notificationTitle"> 
@@ -205,22 +196,41 @@ float: none; width: 100px ; display: inline; position: absolute; }
 <div class="posts tabprofile">
   <div class="def-block">
     <div class="topbar">
-      <div id="close" class="tbutton small tback reprequest">
-        <span>Send representation request
-        </span>
-      </div>
         <!--<span class="addAlbum">add new album</span><span class="liner"></span>-->
     </div>
-    <ul class="tabs">
-      <li><a href="#Latest" class="active details"> Details </a></li>
-      <li><a href="#Featured"> Mp3 </a></li>
-      <li><a href="#Lightbox"> Photo gallery </a></li>
-      <li><a href="#Lightbox"> Video </a></li>
-      <li><a href="#Lightbox"> Events </a></li>
-      <li><a href="#Lightbox"> Calender </a></li>
+    <ul class="tabs otherstab">
+      <li><a href="#details" class="active details">Details</a></li>
+      {{# if bandprofile  profile.type }}
+       <li><a href="#mp3">Songs</a></li>
+      <li><a href="#photogallery">Gallery </a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#calender">Calender</a></li>
+      <li>
+        {{#if iamAgent currentUser.profile.type}}
+          {{#if detectRequests currentUser._id}}
+      <div class="tbutton small color10 repRequest ">
+        <span class="sendreqRep" alt="representaion request already sent" title="send representaion request already sent" >
+          Representation request already sent
+        </span>
+      </div>
+      {{else}}
+        <div class="tbutton small color3 repRequest">
+        <span class="sendreqRep" alt="send representaion request" title="send representaion request" >
+          Representation request
+        </span>
+      </div>
+      {{/if}}
+      {{/if}}
+    </li>
+    {{/if}}
+      {{# if userprofile  profile.type }}
+       <li><a href="#mp3">Shared Songs</a></li>
+      <li><a href="#photogallery">Gallery </a></li>
+    {{/if}}
     </ul>
     <ul class="tabs-content ">
-      <li id="Latest" class="active">
+      <li id="details" class="active">
         <div class="userinfocontent">
           {{# if bandprofile  profile.type }}
              {{> seebandInformations}}
@@ -230,16 +240,17 @@ float: none; width: 100px ; display: inline; position: absolute; }
           {{/if}}
         </div>
       </li>
-       <li id="Featured" >
-        <div class="video-grid">
+     <li id="mp3">
+        <div class="video-grid"> 
           <div class="row clearfix mbf">
             <div class="music-player-list">
             </div>
           </div>
         </div>
       </li>
-      <li id="Lightbox">
+      <li id="photogallery">
         <div class="video-grid">
+          phhotos  ...
           <!--<ul id="tp-grid" class="tp-grid">
             {{#each images}}
               {{> task}}
@@ -248,6 +259,22 @@ float: none; width: 100px ; display: inline; position: absolute; }
           {{> imageUploader}}-->
         </div>
       </li>
+      <li id="videos">
+        <div class="video-grid">
+         videos ...
+        </div>
+      </li>
+      <li id="events">
+        <div class="video-grid">
+         events ...
+        </div>
+      </li>
+ <li id="calender">
+        <div class="video-grid">
+         calender ...
+        </div>
+      </li>
+
     </ul>
   </div>
 </div>

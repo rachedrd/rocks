@@ -1,5 +1,6 @@
 .profilecover{ width: 100%; height: 450px; position: relative; /*background-color: red;*/
   }
+
   .coverImage{width: 100% ; height: 100%}
 .subcover{ /*background-color: yellow;*/ width: 100%; height: 100px;  position : absolute ; bottom: -35px}
 .avatarContainer { width : 150px ;
@@ -99,7 +100,7 @@ max-height: 300px;
 {
 	background-color: black;
     padding-left: 12px; padding-right:  5px;
-    padding-top: 2px; padding-bottom:  20px;
+    padding-top: 2px; padding-bottom:  17px;
     opacity: 0.5;
     border-radius: 5px 5px 0px 0px;
 }
@@ -299,9 +300,18 @@ max-height: 300px;
 }
 .ratingdiv p { position: relative; margin-left: 10px; margin-top: 5px;
 float: none; width: 100px ; display: inline; position: absolute; }
-.wishlist{
+.wishlist, .hire{
  position: relative;
  color: #ff6600 ; }
+ .repRequest { display: inline; width: auto;  float: left; 
+ 	margin-top: 8px;  }
+ 	.repRequest{background-color: gray}
+ 	 .repRequest span{
+font-size: 12px;}
+
+.tabs li {display: inline;}
+
+
 /*end styling dropdown postecode*/
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
@@ -313,17 +323,19 @@ float: none; width: 100px ; display: inline; position: absolute; }
 .togglenotification{text-align: right;
     background-color: black;
     padding-left: 12px; padding-right:  5px;
-    padding-top: 2px; padding-bottom:  20px;
+    padding-top: 2px; padding-bottom:  17px;
     opacity: 0.5;
     border-radius: 5px 5px 0px 0px;}
 	.profilecover { height: 200px}
-	.usercontainer{margin-top: 68px}
+	.usercontainer{margin-top: 40px}
+	.subcover {margin-bottom: -30px}
 	.avatarContainer{height: 100px; width: 100px ; margin-top: 20px;}
 	.changeAvatar {width: 90px ; bottom: -15px}
 	.changeAvatar span {margin-right: 10px}
 	.wall{ background-color: red; width: 10%;}
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 25px ; cursor: pointer;}
 .removeHighlight {display: none;}
+.repRequest span{ font-size: 12px;}
 }
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
@@ -353,13 +365,14 @@ float: none; width: 100px ; display: inline; position: absolute; }
   }
 	.togglenotification{background-color: black;
     padding-left: 12px; padding-right:  5px;
-    padding-top: 1px; padding-bottom:  22px;
+    padding-top: 1px; padding-bottom:  21px;
     opacity: 0.5;
     border-radius: 5px 5px 0px 0px;}
     #notificationTitle h4{font-size: 12px; }
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 20px }
 	.profilecover { height: 350px}
-	.usercontainer{margin-top: 68px}
+	.usercontainer{margin-top: 40px}
+	.subcover {margin-bottom: -30px}
 	.changeAvatar  span{font-size: 10px}
 	.avatarContainer{height: 80px; width: 80px ; margin-top: 30px ; border: 5px solid white; border-radius: 3px }
 	.changeAvatar {width: 70px; bottom : -8px}
@@ -367,13 +380,16 @@ float: none; width: 100px ; display: inline; position: absolute; }
 .username{font-size : 0.5em ;}
 .addmemeberform span, #memeberdiv #errors span {padding: 5px 2px 5px 1px; margin-left: 5px}
 
-		.wishlist span {margin-top: -8px ; white-space: nowrap; position: absolute; }
+		.wishlist span { white-space: nowrap; position: absolute; }
+
+		.repRequest span { font-size: 12px;}
+		.hire span{margin-top: -5px ; position: absolute; }
 
 }
 /* #Mobile (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-		.wishlist span {margin-top: -3px ; white-space: nowrap; position: absolute; }
+		.wishlist span {margin-top: -5px ; white-space: nowrap; position: absolute; }
 
 	/*.ratingdiv {float: none; width: 100px; }*/
 	.ratingdiv p{margin-top:-1px;  font-size: 10px;}
@@ -439,14 +455,21 @@ float: none; width: 100px ; display: inline; position: absolute; }
 .ullist header p  {font-size: 12px ; }
 p.notcontent {font-size: 12px ;  width:100%; display: block;}
 #memeberdiv >  #errors{font-size: 12px}
-//*#ullist li a {display: block; float: none;width: 100%}*/
+.repRequest {margin-top: 0px}
+.tabs li a  {display: inline;  }
+.tabs li  {display: inline;  margin: 10px 10px 7px -5px}
+
+.repRequest span{ font-size: 10px;}
+.usercontainer{margin-top: 50px}
+	.subcover {margin-bottom: -20px}
+	.hire span {margin-top: -5px ; position: absolute;}
+/*#ullist li a {display: block; float: none;width: 100%}*/
 }
 
 /*  #Mobile (Portrait) 320px
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 100px) and (max-width: 479px) {
 		.wishlist span {margin-top: -10px ; white-space: nowrap; position: absolute; font-size: 11px; }
-
 	#memeberdiv > div , #highlitsdiv > div, #repertoirediv > div  {display: block;
 	 width: 100%; 
 	  float : left; }
@@ -482,8 +505,8 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
     border-radius: 5px 5px 0px 0px;
 }
 #notificationWrapper{float: none; 
-	width: 75% ; padding:9px;  margin-left: 85px;
-	margin-top: -5px;
+	width: 75% ; padding:9px;  margin-left: 90px;
+	margin-top: -22px;
 }
 .username{width: 100%; float: none; font-size : 0.5em ;}
 /*.usernotifications, .usermessages{width: 50%; float: left }*/
@@ -495,11 +518,13 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 .usrPrflnm , .notificationsicon, .messagessicon  {font-size: 12px }
 
 	.profilecover { height: 200px}
-	.usercontainer{margin-top: 65px}
-	
+	.usercontainer{margin-top: 53px}
+	.subcover {margin-bottom: -15px}
+	.hire span {margin-top: -17px ; position: absolute;}
+
 	.changeAvatar  span{font-size: 10px}
 	.changeAvatar span {display:none}
-	.avatarContainer{height: 60px ; width:60px ; margin-top: 40px;  border: 3px solid white; border-radius: 2px}
+	.avatarContainer{height: 60px ; width:60px ; margin-top: 45px;  border: 3px solid white; border-radius: 2px}
 	.changeAvatar {width: 60px}
 	.wall{font-size : 0.5em ; background-color: blue; width: 10%; height: 500px;}
 	#notificationWrapper #ullist > li > p.owner  {font-size: 12px }
@@ -528,6 +553,12 @@ p.notcontent {font-size: 11px}
 .suggest-holder {width: 145px}
 .suggest-holder input , .suggest-holder ul {width: 145px}
 .ratingdiv p{ font-size: 8px ; margin-top: -1px}
+.repRequest {margin-top: 0px}
+.tabs li a  {display: inline;  }
+.tabs li  {display: inline;  margin: 10px 10px 7px -5px}
+
+.repRequest span{ font-size: 9px;}
+
 }
 
  
