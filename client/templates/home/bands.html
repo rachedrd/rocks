@@ -3,26 +3,11 @@
  		<link rel="stylesheet" type="text/css" href="styles/shop.css" media="screen" />
     </head>
 	<!--about us -->
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	
+	<div class="under_header">
+		<img src="images/assets/breadcrumbs1.png">
+	</div>
 	<div class="page-content back_to_up">
-			<div class="row clearfix mb">
+			<div class="row clearfix mb"><!-- banscontent"-->
 				<div class="breadcrumbIn">
 					<ul>
 						<li><a href="index.html" class="toptip" original-title="Homepage"> <i class="icon-home"></i> </a></li>
@@ -30,51 +15,96 @@
 					</ul>
 				</div>
 			</div>
-			<div class="row row-fluid clearfix mbf">
-				<div class="span8 posts">
-					<div class="def-block">
-						<h4> Bands </h4><span class="liner"></span>
-							<div class="products shop clearfix">
-							<div class="grid_14">
-								{{#each artits}}
-           							 {{> band}}
-           						{{/each}} 
-							</div>
-							</div>
-							<div class="pagination-tt clearfix">
-								<ul>
-									<li><span class="deactive">1</span></li>
-									<li><a href="#" class="tbutton"><span>2</span></a></li>
-									<li><a href="#" class="tbutton"><span>3</span></a></li>
-									<li><span class="deactive">...</span></li>
-									<li><a href="#" class="tbutton"><span>8</span></a></li>
-								</ul>
-								<span class="pages">Page 1 of 8</span>
-							</div>
-
-					</div>
-				</div>
-				<div class="span4 sidebar">
+			<div class="row row-fluid clearfix mbf banscontent">
+				<div class="span4 sidebar searchside">
 					<div class="def-block widget">
-						<h4> Shopping Cart </h4><span class="liner"></span>
+						<h4> Search </h4><span class="liner"></span>
 						<div class="widget-content">
-							<p> <i class="icons-bag mid" style="font-size: 40px;vertical-align: middle;"></i> Your Shopping Cart is Empty </p>
+					        <div  class="userinforow bandtypesearch">
+						        <span class="oldinfo bld">Category: </span>
+						        <div class="bandtypecontainer userinforow">
+						          <div class='suggest-bandtype'>
+						            <input type='text' class='suggest-bandtypeinput'>
+						            <ul class="bandtypes">
+						            	<li value="Concert">Concert</li>
+								        <li value="Family">Family</li>
+								        <li value="Jazz">Jazz</li>
+								        <li value="Orchestra">Orchestra </li>
+								        <li value="Pope">Pope</li>
+								        <li value="Rock">Rock</li>
+								        <li value="School">School</li>
+								        <li value="Wedding">Wedding</li>
+						            </ul>
+						          </div>
+						        </div>
+						    </div>
+						    <div  class="userinforow bandtypesearch">
+						        <span class="oldinfo bld">Location: </span>
+						        <div class="bandtypecontainer userinforow">
+						          <div class='suggest-bandtype'>
+						            <input type='text' class='suggest-bandtlocation'>
+						          
+						          </div>
+						        </div>
+						    </div>
+						    <div  class="userinforow bandtypesearch">
+						        <span class="oldinfo bld">availability: </span>
+						        <div class="bandtypecontainer userinforow">
+						          <div class='suggest-bandtype'>
+						            <input type='text' class="suggest-availability date date-1" placeholder="DD-MM-YYYY HH:MM" data-timeformat="HH:MM PM">
+						            
+						          </div>
+						        </div>
+						    </div>
+						    <div class="salarydiv">
+						    	<span class="salarylabel">Salary:</span>
+						    	<label class="minsalary">$100</label>
+								<input id="ex2" type="text" class="span2" value="" data-slider-min="100" data-slider-max="5000" data-slider-step="100" data-slider-value="[100,5000]"/>
+								<span class="maxsalary">$5000</span>
+						    </div>
+						    <div id="bandnumbersdiv" >
+					          <span class="s bld">Band mumbers: </span>
+					          <input  type="text" class="oldinfo bandnumbersinputsearch" placeholder="4" />
+					          <span class="inputminnumber" alt="your last name" title="your last name">
+                				<i class="imaxnumber glyphicon glyphicon-triangle-top" alt="your last name" title="your last name"></i>
+								<i class="iminnumber glyphicon glyphicon-triangle-bottom" alt="your last name" title="your last name"></i>
+              				  </span>
+					        </div>
+						    
+						    <div class="sortby userinforow " >
+					          <span class="oldinfo bld " >Sort by:</span>
+					          <span>Feedback Rating
+					          	<div class="sorticons ratingsort">
+					          	<span class=" ratingsortasc glyphicon glyphicon-chevron-up "></span>
+					          	<span class="ratingsortdesc glyphicon glyphicon-chevron-down "></span>
+					          	</div>
+					          </span>
+					          <span>Salary
+					          	<div class="sorticons salarysort">
+					          	<span class=" salarysortasc glyphicon glyphicon-chevron-up "></span>
+					          	<span class=" salarysortdesc glyphicon glyphicon-chevron-down "></span>
+					          	</div>
+					          </span>
+						    </div>
+						    <div class="searchdiv">
+						    	<span class="searchlabel">Search</span>
+						    </div>	
 						</div>
 					</div>
-					<div class="def-block widget">
-						<h4> Products Categories </h4><span class="liner"></span>
+					<!--<div class="def-block widget">
+						<h4> Entertaiments types </h4><span class="liner"></span>
 						<div class="widget-content">
 							<ul class="list">
-								<li><a href="#"><i class="icon-caret-right"></i> T-shirts (7) </a></li>
-								<li><a href="#"><i class="icon-caret-right"></i> Bags (13)</a></li>
-								<li><a href="#"><i class="icon-caret-right"></i> VSTi (10)</a></li>
-								<li><a href="#"><i class="icon-caret-right"></i> Plugins (54)</a></li>
+								<li><a href="#"><i class="icon-caret-right"></i> bands (7) </a></li>
+								<li><a href="#"><i class="icon-caret-right"></i> singers (13)</a></li>
+								<li><a href="#"><i class="icon-caret-right"></i> harpists (10)</a></li>
+								<li><a href="#"><i class="icon-caret-right"></i> discos (54)</a></li>
 							</ul>
 						</div>
 					</div>
 
 					<div class="def-block widget">
-						<h4> Top Sales </h4><span class="liner"></span>
+						<h4> Hot acts </h4><span class="liner"></span>
 						<div class="widget-content">
 							<ul class="tab-content-items">
 								<li class="clearfix">
@@ -94,8 +124,8 @@
 								</li>
 							</ul>
 						</div>
-					</div>
-					<div class="def-block widget">
+					</div>-->
+					<!--<div class="def-block widget">
 						<h4> Tags </h4><span class="liner"></span>
 						<div class="widget-content tags">
 							<a href="#" class="toptip" original-title="17 Product"><i class="icon-tag"></i> T-shirt </a>
@@ -105,20 +135,49 @@
 							<a href="#" class="toptip" original-title="29 Product"><i class="icon-tag"></i> Sports </a>
 							<a href="#" class="toptip" original-title="2 Product"><i class="icon-tag"></i> premium </a>
 						</div>
+					</div>-->
+				</div>
+				<div class="span8 posts searchresult">
+					<div class="def-block">
+						<h4> Bands </h4><span class="liner"></span>
+							<div class="products shop clearfix">
+							<div class="grid_12">
+								{{#if artits}}
+								{{#each artits}}
+           							 {{> band}}
+           						{{/each}} 
+           						{{else}}
+           						<span class="emtyresult">No result match the query ! </span>
+           						{{/if}}
+							</div>
+							</div>
+							{{#if artits}}
+							<div class="pagination-tt clearfix">
+								<ul>
+									<li><span class="deactive">1</span></li>
+									<li><a href="#" class="tbutton"><span>2</span></a></li>
+									<li><a href="#" class="tbutton"><span>3</span></a></li>
+									<li><span class="deactive">...</span></li>
+									<li><a href="#" class="tbutton"><span>8</span></a></li>
+								</ul>
+								<span class="pages">Page 1 of 8</span>
+							</div>
+							{{/if }}
+
 					</div>
 				</div>
 			</div>
 		</div>
 </template>
 <template name="band">
-	<div class="product grid_3">
+	<div class="product grid_6">
 									<img class="product_img" src="images/assets/shop/1.jpg" alt="">
 									<img class="product_img_hover" src="images/assets/shop/1.jpg" alt="">
 									<div class="sale"><i class="icon-thumbs-up"></i></div>
 									<div class="product_inner">
 										<h3> <a href="shop_product.html">{{profile.name}} </a> </h3>
 										<div class="clearfix">
-											<p class="price"> $789 </p>
+											<p class="price"> ${{profile.salary}} </p>
 											<p class="rating">
 												<i class="icon-star"></i>
 												<i class="icon-star"></i>
@@ -129,8 +188,8 @@
 										</div>
 									</div>
 									<div class="product_meta clearfix">
-										<a href="shop_product.html" class="f_btn add_c"><span><i class="glyphicon glyphicon-hand-right"></i> Hire</span></a>
-										<a href="{{pathFor 'seeprofile'}}" class="f_btn"><span><i class="glyphicon glyphicon-user"></i> see Profile</span></a>
+										<a href="shop_product.html" class="f_btn add_c"><span><!--<i class="glyphicon glyphicon-hand-right"></i>--> Book</span></a>
+										<a href="{{pathFor 'seeprofile'}}" class="f_btn"><span><!--<i class="glyphicon glyphicon-user"></i>--> Add to wishlist</span></a>
 									</div>
 								</div>
 

@@ -876,6 +876,39 @@ $("#popupLogin").on('click', '#login_password ', function(){
 	$('.userinfocontent').on('click' , '#birthinput', function(){
       window.myDatePicker1 = new DatePicker('.userinfocontent #birthinput', options);     
 	});
+	$('.banscontent').on('click' , '.suggest-availability', function(){
+      window.myDatePicker1 = new DatePicker('.banscontent .suggest-availability', options);     
+	});
+$('.imaxnumber').click(function(){
+	if($('.bandnumbersinputsearch').val() === "")
+		{ 
+		$('.bandnumbersinputsearch').val(0);
+        }
+        else{
+        	 var bandnumbers = parseInt($('.bandnumbersinputsearch').val());	
+          if( bandnumbers <10 )
+          {
+           $('.bandnumbersinputsearch').val(bandnumbers + 1);
+          }
+	  
+        }
+
+});
+$('.iminnumber').click(function(){
+	if($('.bandnumbersinputsearch').val() === "")
+		{ 
+		$('.bandnumbersinputsearch').val(10);
+        }
+        else{
+        	 var bandnumbers = parseInt($('.bandnumbersinputsearch').val());	
+          if( bandnumbers >0 )
+          {
+           $('.bandnumbersinputsearch').val(bandnumbers - 1);
+          }
+	  
+        }
+});
+
 	$('.userinfocontent').on('click', '.savebirthdate', function(){
 		$(this).hide();
 		$('#birthinput').hide();
@@ -1018,8 +1051,16 @@ $('.userinfocontent').on('click', '.updatephone', function(){
 	$("#repertoireerr").hide();
 	$(".saverepertoire").show();
 	});
+	/*slider range*/
+	
+// Without JQuery
+//var slider = new Slider('#ex2', {});
+/*$(".slider").click(function(){
+var value = $('#ex2').slider('getValue');
+alert(value);
+});*/
 	/*postecode dynamic fill*/
-//	$(".suggest-holder ul").niceScroll();
+
 /*regions = ["AB","AL","B","BA","BB","BD","BH","BL","BN","BR","BS","BT","CA","CB","CF","CH","CM","CO","CR",
 "CT","CV","CW","DA","DD","DE","DG","DH","DL","DN","DT","DY","E","EC","EH","EN","EX","FK","FY","G","GL","GU",
 "GY","HA","HD","HG","HP","HR","HS","HU","HX","IG","IM","IP","IV","JE","KA","KT","KW","KY","L","LA","LD","LE",
@@ -1167,7 +1208,21 @@ regionsnumbersab10=["AB101AA","AB101AB","AB101AF","AB101AG","AB101AH","AB101AJ",
 "AB107NW","AB107NX","AB107NY","AB107NZ","AB107PA","AB107PB","AB107PD","AB107PE",
 "AB107PF","AB107PG","AB107PH","AB107PL","AB107PN","AB107PP","AB107PQ","AB107PR",
 "AB107PS","AB107PT","AB107PU","AB107PW"]
+var alltypes = ["concert","family","jazz","orchestra","pope","rock","school","wedding"];
 var regionsnumbersab11 = ["AB115AA","AB115AB","AB115AD","AB115AE","AB115AF","AB115AH","AB115AJ","AB115AL","AB115AN","AB115AP","AB115AQ","AB115AR","AB115AS","AB115AT","AB115AU","AB115AW","AB115AX","AB115AY","AB115AZ","AB115BA","AB115BB","AB115BD","AB115BE","AB115BF","AB115BG","AB115BH","AB115BJ","AB115BL","AB115BN","AB115BP","AB115BQ","AB115BR","AB115BS","AB115BT","AB115BU","AB115BW","AB115BX","AB115BY","AB115BZ","AB115DB","AB115DD","AB115DE","AB115DF","AB115DG","AB115DH","AB115DL","AB115DN","AB115DP","AB115DQ","AB115DR","AB115DS","AB115DT","AB115DU","AB115DW","AB115DX","AB115DY","AB115DZ","AB115EE","AB115EF","AB115EG","AB115EJ","AB115EL","AB115EP","AB115EQ","AB115ER","AB115EU","AB115EW","AB115EX","AB115EY","AB115EZ","AB115FB","AB115FE","AB115FJ","AB115FN","AB115FP","AB115FT","AB115FU","AB115FW","AB115GD","AB115GE","AB115GJ","AB115HB","AB115HP","AB115HR","AB115HS","AB115HU","AB115HW","AB115HX","AB115JH","AB115LY","AB115NP","AB115NS","AB115NT","AB115NX","AB115PA","AB115PB","AB115PD","AB115PF","AB115PG","AB115PH","AB115PJ","AB115PL","AB115PN","AB115PP","AB115PQ","AB115PS","AB115PT","AB115PU","AB115PW","AB115PX","AB115PY","AB115PZ","AB115QA","AB115QD","AB115QE","AB115QF","AB115QH","AB115QJ","AB115QL","AB115QN","AB115QP","AB115QR","AB115QT","AB115QW","AB115QX","AB115RA","AB115RB","AB115RD","AB115RE","AB115RF","AB115RG","AB115RH","AB115RJ","AB115RL","AB115RN","AB115RP","AB115RU","AB115RW","AB115SS","AB115TJ","AB115YD","AB115YL","AB115YU","AB115ZH","AB116AA","AB116AR","AB116AW","AB116AY","AB116AZ","AB116BA","AB116BB","AB116BD","AB116BE","AB116BG","AB116BH","AB116BJ","AB116BN","AB116BP","AB116BQ","AB116BR","AB116BS","AB116BT","AB116BX","AB116DA","AB116DB","AB116DD","AB116DE","AB116DF","AB116DH","AB116DJ","AB116DL","AB116DN","AB116DP","AB116DQ","AB116DR","AB116DS","AB116DT","AB116DU","AB116DX","AB116DY","AB116DZ","AB116EA","AB116EB","AB116ED","AB116EE","AB116EF","AB116EG","AB116EH","AB116EJ","AB116EL","AB116EN","AB116EP","AB116EQ","AB116ER","AB116ES","AB116ET","AB116EU","AB116EW","AB116EX","AB116EY","AB116EZ","AB116FB","AB116FD","AB116FF","AB116FG","AB116FH","AB116FJ","AB116FL","AB116FN","AB116FP","AB116FR","AB116FS","AB116FW","AB116GN","AB116GQ","AB116GR","AB116GY","AB116HA","AB116HB","AB116HD","AB116HE","AB116HF","AB116HG","AB116HH","AB116HJ","AB116HL","AB116HN","AB116HP","AB116HQ","AB116HR","AB116HS","AB116HT","AB116HU","AB116HW","AB116HX","AB116HY","AB116HZ","AB116JA","AB116JB","AB116JD","AB116JE","AB116JF","AB116JG","AB116JH","AB116JJ","AB116JL","AB116JN","AB116JR","AB116JS","AB116JU","AB116JW","AB116JX","AB116JY","AB116JZ","AB116LA","AB116LD","AB116LE","AB116LG","AB116LJ","AB116LL","AB116LN","AB116LP","AB116LQ","AB116LR","AB116LS","AB116LT","AB116LU","AB116LW","AB116LX","AB116LZ","AB116NA","AB116NB","AB116ND","AB116NE","AB116NF","AB116NJ","AB116NL","AB116NN","AB116NP","AB116NQ","AB116NR","AB116NT","AB116NU","AB116NW","AB116NY","AB116NZ","AB116PE","AB116PH","AB116PJ","AB116QA","AB116QD","AB116QF","AB116RG","AB116RR","AB116RT","AB116SL","AB116SQ","AB116SR","AB116SS","AB116SY","AB116SZ","AB116TA","AB116TB","AB116TD","AB116TE","AB116TF","AB116TG","AB116TH","AB116TJ","AB116TL","AB116TN","AB116TP","AB116TQ","AB116TR","AB116TS","AB116TT","AB116TX","AB116TZ","AB116UA","AB116UB","AB116UD","AB116UJ","AB116UL","AB116UN","AB116UP","AB116UQ","AB116US","AB116UT","AB116UU","AB116UW","AB116UX","AB116UY","AB116UZ","AB116WF","AB116WH","AB116WT","AB116XA","AB116XB","AB116XD","AB116XE","AB116XF","AB116XG","AB116XH","AB116XJ","AB116XL","AB116XN","AB116XP","AB116XQ","AB116XR","AB116XS","AB116XT","AB116XU","AB116XW","AB116XX","AB116XY","AB116XZ","AB116YA","AB116YB","AB116YD","AB116YG","AB116YH","AB116YL","AB116YP","AB116YQ","AB116YU","AB116YW","AB116ZB","AB116ZF","AB117BH","AB117DF","AB117DG","AB117LG","AB117LH","AB117RQ","AB117RS","AB117RT","AB117RX","AB117RY","AB117RZ","AB117SA","AB117SB","AB117SD","AB117SE","AB117SF","AB117SG","AB117SH","AB117SJ","AB117SL","AB117SP","AB117SQ","AB117SR","AB117ST","AB117SW","AB117SX","AB117SY","AB117SZ","AB117TA","AB117TB","AB117TD","AB117TE","AB117TF","AB117TH","AB117TJ","AB117TU","AB117TW","AB117TY","AB117TZ","AB117UE","AB117UF","AB117UG","AB117UH","AB117UR","AB117US","AB117UU","AB117UW","AB117WA","AB117WB","AB117WD","AB117WE","AB117WF","AB117WG","AB117XH","AB117XU","AB117XY","AB117XZ","AB117YZ","AB118AA","AB118BJ","AB118BL","AB118BN","AB118BP","AB118BQ","AB118BR","AB118BS","AB118BT","AB118BU","AB118BW","AB118BX","AB118BY","AB118DA","AB118DB","AB118DD","AB118DE","AB118DG","AB118DH","AB118DJ","AB118DL","AB118DN","AB118DP","AB118DQ","AB118DR","AB118DS","AB118DT","AB118DU","AB118DX","AB118DY","AB118DZ","AB118EA","AB118EB","AB118ED","AB118EE","AB118EG","AB118EH","AB118EJ","AB118EL","AB118EN","AB118EP","AB118EQ","AB118ER","AB118ES","AB118ET","AB118EU","AB118EW","AB118EX","AB118EY","AB118FA","AB118FB","AB118FD","AB118FJ","AB118FL","AB118FN","AB118FP","AB118FQ","AB118FR","AB118FS","AB118FT","AB118FX","AB118GA","AB118HA","AB118HB","AB118HD","AB118HE","AB118HF","AB118HH","AB118HJ","AB118HL","AB118HN","AB118HP","AB118HR","AB118HS","AB118HT","AB118HU","AB118HW","AB118HX","AB118HY","AB118JA","AB118JB","AB118JR","AB118JU","AB118JW","AB118LG","AB118LH","AB118LL","AB118LN","AB118LQ","AB118QX","AB118RE","AB118RG","AB118RH","AB118RJ","AB118RL","AB118RN","AB118RP","AB118RQ","AB118RR","AB118RS","AB118RT","AB118RU","AB118RX","AB118RY","AB118RZ","AB118SA","AB118SB","AB118SD","AB118SE","AB118SF","AB118SH","AB118SJ","AB118SL","AB118SN","AB118SP","AB118SQ","AB118SR","AB118SS","AB118ST","AB118SU","AB118SW","AB118SX","AB118SY","AB118TA","AB118TB","AB118TD","AB118TE","AB118TF","AB118TH","AB118TJ","AB118TL","AB118TN","AB118TP","AB118TQ","AB118TR","AB118TS","AB118TT","AB118TU","AB118TW","AB118TX","AB118TY","AB118TZ","AB119AA","AB119AB","AB119AD","AB119AE","AB119AH","AB119AJ","AB119AL","AB119AN","AB119AP","AB119AQ","AB119AR","AB119AS","AB119AT","AB119AU","AB119AX","AB119AY","AB119BA","AB119BB","AB119BD","AB119BE","AB119BG","AB119BH","AB119DA","AB119DB","AB119DR","AB119DS","AB119DT","AB119DU","AB119FJ","AB119HJ","AB119JD","AB119JE","AB119JH","AB119JJ","AB119JN","AB119JP","AB119JQ","AB119JS","AB119JT","AB119JX","AB119JY","AB119JZ","AB119LA","AB119LB","AB119LD","AB119LE","AB119LF","AB119LP","AB119LS","AB119LT","AB119LU","AB119LX","AB119LY","AB119NA","AB119NB","AB119ND","AB119NE","AB119NF","AB119NH","AB119NJ","AB119NL","AB119NN","AB119NP","AB119NQ","AB119NR","AB119NS","AB119NT","AB119NU","AB119NW","AB119NX","AB119NY","AB119PA","AB119PB","AB119PE","AB119PJ","AB119PL","AB119PN","AB119PP","AB119PR","AB119PS","AB119QA","AB119QB","AB119QD","AB119QE","AB119QF","AB119QG","AB119QH"]
+$('.full').on('keyup' , '.suggest-bandtypeinput', function(){
+	var currenttext = $('.suggest-bandtypeinput').val();
+	currenttext = currenttext.toLowerCase();
+$('.full .bandtypes').empty();
+for(var i = 0 ; i < alltypes.length; i++){
+    if(alltypes[i].match(currenttext )) {
+        $('.full .bandtypes').append($("<li><span class='suggest-name'>" + alltypes[i] + "</span></li>"));
+    $('.full .bandtypes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+$('.full .bandtypes').show();
+});
  $('.userinfocontent').on('keyup','.suggest-prompt', function(){
  	var currenttext = ""; currenttext = $('.suggest-prompt').val();
  	$('.userinfocontent .zonecodes').empty();
@@ -1354,6 +1409,11 @@ $(".userinfocontent").on("click", ".zonecodes > li", function(){
 $(".userinfocontent").on("click", ".address > li", function(){ 
     $('.inputaddress').val($(this).text());  
 	$(".address").hide();
+
+});
+$(".full").on("click", ".bandtypes > li", function(){ 
+    $('.suggest-bandtypeinput').val($(this).text());  
+	$(".bandtypes").hide();
 
 });
 	/*end postecode dynamic fill*/

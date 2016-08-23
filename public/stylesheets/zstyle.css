@@ -96,6 +96,7 @@ max-height: 300px;
 	text-align: right;
     
 }
+.emtyresult{font-size: 12px ; font-weight: bold; color: #ff6600}
 .togglenotification
 {
 	background-color: black;
@@ -143,7 +144,7 @@ max-height: 300px;
 	      position: relative;
 	  }
 
-.userinforow input[type="text"].oldinfo ,  .bandsets , .bandtype  { 
+.userinforow input[type="text"].oldinfo:not(.searchspan),  .bandsets , .bandtype  { 
 	width:200px ;
 	height: 28px;
 	margin-left: 3px;
@@ -152,6 +153,7 @@ max-height: 300px;
 	    margin-bottom: 0px;
 	    display: none;
 	  }
+	  .ccccc { display: inline; background-color: red;}
 	  .userinforow div.suggest-holder , .userinforow div.address-holder {display: none}
 	  .userinforow i  {color: #001a4d; font-size: 17px; cursor: pointer;}
 	 .userinforow input[type="radio"].oldinfo{ display: none; margin: 0px;}
@@ -163,12 +165,19 @@ max-height: 300px;
 .savephonenumber, .savelastname, 
 .savebirthdate, .savebuildingnumber, 
 .savestreetname, .savecity, .savemember, .savehighlight, .saverepertoire, 
-.savepostecode, .savecountry, .savebandtype, .savebandsets{
+.savepostecode, .savecountry, .savebandtype, .savebandsets
+{
 	display: none;
 	 cursor: pointer;
 	 color: #001a4d}
+	 .searchdiv span
+	 {
+	position: relative;
+	float: right;
+	 cursor: pointer;
+	 color: #ff6600}
 	 .userinforow #usernamespan:hover , .userinforow #emailspan:hover , .userinforow #statusspan:hover , .userinforow #pubcounterspan:hover , .userinforow #pubspan:hover, #salaryspan:hover { cursor: not-allowed }
-.userinforow span:not(.suggest-description) { margin-left: 5px ; padding: 5px 5px 5px 5px }
+.userinforow span:not(.suggest-description, .uprecommend, .downrecommend) { margin-left: 5px ; padding: 5px 5px 5px 5px }
 .userinforow .bld{font-weight: bold; font-size: 12px;}
 .error{color:red; display: none;}
 #emtyfirstname i ,#emptyaddress i ,  #emtylastname i, #emptycity i ,  #emptyregion i , #emptypostecode i,#emtyphone i, #emptyrepertoire i,#emtymember i , #emtyhighlight i, #emtybandname i{color: red; font-size: 12px ; font-weight: normal;} 
@@ -181,11 +190,11 @@ max-height: 300px;
 	/* .memebernamespan , .memeberrolespan {display: none;}*/
 	 .memeberlabel , .listsetlabel {width: auto; float: left; margin: -2px  0px 0px 20px}
 	 .memeberdiv{width: 100%; height: auto; display: inline;}
-	 .memeberdiv span , .addmemeberform , .address-holder, .suggest-holder, .addhighlightform , .addrepertoireform { 
+	 .memeberdiv span , .addmemeberform ,.suggest-bandtype , .address-holder, .suggest-holder, .addhighlightform , .addrepertoireform { 
 	 	display: inline;}
 	 .addmemeberform  * , .addhighlightform *, .addrepertoireform *{float: left;  margin: 0px;}
 	 .suggest-holder , .address-holder { margin-left: 20px;}
-	 .suggest-holder input , .address-holder input{  border-radius: 2px;
+	 .suggest-holder input, .suggest-bandtype input , .address-holder input{  border-radius: 2px;
 	 	 /* margin: 0px; 
 	 	margin-left: 20px; 
 	 	margin-top: -3px; margin-bottom: 0px ;
@@ -216,6 +225,7 @@ max-height: 300px;
 	/*line-height: 1;*/
 	text-transform: uppercase;
 	 }
+	.uprecommend , .downrecommend ,  .uprecommend i , .downrecommend i {padding: 0px ; margin: 0px ; }
 	   /*.spanmemebername,
 	   .inputmemebername, 
 	   .memeberrolespan,
@@ -226,8 +236,8 @@ max-height: 300px;
 #spostecodeinput{color: red}
 #selectaddress{width: 100%}
 /*styling dropdown postecode*/
-.addpostecode, .addadress {height: 30px; display: inline; width: auto ; }
- 
+.addpostecode, .addadress , .bandtypesearch .bandtypecontainer{height: 30px; display: inline; width: auto ; }
+.bandtypesearch .bandtypecontainer{width: 100%}
 /*.addpostecode > div , .addpostecode > span  {display: inline; margin-right: 0px; padding-right: 0px}*/
 
 /*.addpostecode > span {margin-top: -20px ; margin-left: 20px}*/
@@ -261,6 +271,15 @@ max-height: 300px;
 		/*margin-bottom: 1px; */
 		border-radius: 5px;
     }
+    .suggest-bandtype  input {
+    	width: 70%;
+        height: 28px;
+        border: 1px solid rgba(0,120,0,.6);
+		padding: 0px 0px 0px 10px; 
+		margin: 0px 0px 1px 0px;
+		/*margin-bottom: 1px; */
+		border-radius: 5px;
+    }
 .suggest-holder ul , .address-holder ul{
 	    color: white;
         display: none;
@@ -274,15 +293,32 @@ max-height: 300px;
 		width: 150px;
 		background-color: rgba(0, 0 ,0 ,0.5);
 		z-index: 10;
-		overflow-x: hidden: 
+		overflow-x: hidden;
     }
-    .address-holder ul{width: 230px;}
-.suggest-prompt, .inputaddress{margin-bottom: 2px}
- .suggest-holder li:hover , .address-holder li:hover {color: #ff6600; cursor: pointer;}
-        .suggest-holder li, .address-holder li {
+    .suggest-bandtype ul 
+    {
+ color: white;
+        display: none;
+        list-style: none;
+        margin: 0px;
+        padding: 0;
+        border: 1px solid rgba(0,0,0,1);
+        border-radius: 2px;
+     	height: 120px;
+		position: relative;
+		width: 70%;
+		background-color: rgba(0, 0 ,0 ,0.5);
+		z-index: 10;
+		overflow-x: hidden;
+    }
+    .address-holder ul  {width: 230px;}
+.suggest-prompt, .suggest-bandtypeinput , .inputaddress{margin-bottom: 2px}
+.suggest-bandtypeinput {padding-left: 5px}
+ .suggest-holder li:hover , .suggest-bandtype li:hover , .address-holder li:hover {color: #ff6600; cursor: pointer;}
+        .suggest-holder li, .suggest-bandtype li , .address-holder li {
             padding: 5px;
         }
-        .suggest-holder > li:hover,.suggest-holder > li.active , .address-holder > li:hover,.address-holder > li.active {
+        .suggest-holder > li:hover, .bandtype li:hover,  .bandtype li:active ,.suggest-holder > li.active , .address-holder > li:hover,.address-holder > li.active {
             background: rgba(0,120,0, .2);
         }
             .suggest-name {
@@ -290,7 +326,8 @@ max-height: 300px;
                 display: block;
                 height: 15px;
             }
-.addpostecode { padding-bottom: 20px; position: absolute;}
+
+.addpostecode , .bandtypecontainer { padding-bottom: 20px; position: absolute;}
 .addadress { padding-bottom: 20px; position: absolute;}
 
 .highlightslist ul li:hover{cursor: pointer ;}
@@ -310,15 +347,89 @@ float: none; width: 100px ; display: inline; position: absolute; }
 font-size: 12px;}
 
 .tabs li {display: inline;}
+#UserConnected navbar-nav > li > .dropdown-menu:hover { background-color: #FF0000; }
+#toggedfirst .dropdown-menu li a {
+  background: white;
+  box-shadow: none;
+  color: gray;
+}
 
+#toggedfirst .dropdown-menu li a:hover{
+  background: white;
+  box-shadow: black;
+  color: #ff6600;
+}
+.tooltip-inner {background-color: white ; color: #ff6600}
+.tooltip.top .tooltip-arrow {border-top-color: white}
 
-/*end styling dropdown postecode*/
+.profileMessages a  {background-color: #ff6600}
+.badge:hover {display : none ; background-color: #ff6600}
+/*end styling dropdown postecode*/ 
+/*search section styling*/
+#bandnamesearch, .bandtypesearch , .salarydiv, .sortby{width: 100%; height: auto; margin: 10px 0px}
+
+.salarylabel{width: auto; ; display: inline; font-size: 12px ; font-weight: bold;}
+.searchdiv {width:  100% ; margin: 0px ; position: relative;}
+.searchlabel{float: right ; cursor: pointer; padding: 0px ; font-size: 12px; font-weight: bold; position: relative;}
+.bandtypecontainer {margin-left: 13px ;}
+#bandnamesearch input {
+	display: inline; 
+	width: 70% ;
+	 border-radius: 3px; 
+	 margin-left: 5px;}
+	 .sorticons span:hover{color: #ff6600; }
+	 .sorticons {width: 50px ; cursor: pointer}
+.searchdiv span {
+	display: inline; 
+	width: auto; float: right; }	 
+.sortby span , .sortby div {display: inline;} 
+/*end search section styling*/
+/*salary range slide */
+.slider-selection {
+	background: #BABABA;
+	height:10px;
+	display:relative;
+}
+.slider-handle {
+  background-color: #ff6600;
+  color: #ff6600;
+  background-image: none;
+  width: 15px ; 
+  height: 15px;
+  
+  }
+  .slider.slider-horizontal .slider-track {
+    height: 3px;
+    margin-top: -4px;
+    padding: 0px 10px;
+    top: 50%;
+    left: 0;
+}
+.banscontent .searchside{width: 35%}
+.banscontent .searchresult{width: 62%}
+
+.slider.slider-horizontal { width: 52%; }
+.maxsalary{padding-left: 8px ; width: auto; display:  inline;}
+.minsalary{padding-right: 8px;  width: auto; display:  inline;}
+#bandnumbersdiv{width: 100% ; height: auto; font-size: 12px; font-weight: bold;}
+#bandnumbersdiv input{width: 50px ; height: 30px; margin-bottom: 0px}
+
+.inputminnumber{position: absolute; margin-left: -20px;  margin-top: 2px}
+.iminnumber { transform: rotate (50deg) ; 
+ -ms-transform: rotate (50deg) ; 
+ -webkit-transform: rotate (50deg) ; 
+
+}
+.imaxnumber {display: block; cursor: pointer;}
+.iminnumber{display: block; cursor: pointer;}
+/*end salary range slider */
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 959px) and (max-width: 1177px) {
-	.usernotifications {
-	
-}
+/*
+.banscontent .searchside{width: 35%}
+.banscontent .searchresult{width: 65%}
+*/
 .ratingdiv p {  margin-top: -0.5px;}
 .togglenotification{text-align: right;
     background-color: black;
@@ -558,6 +669,8 @@ p.notcontent {font-size: 11px}
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
 
 .repRequest span{ font-size: 9px;}
+.bandnameinputsearch{display: inline; text-align: left;}
+.bandtypesearch {display: inline;}
 
 }
 

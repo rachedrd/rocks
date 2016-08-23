@@ -90,21 +90,23 @@ var myarg2 = { "ownerId": currentUserId,
   "typ": "representation Request" , 
   "status" : "pending",
   "viewed" : false };
-  if( Notifications.find({ "ownerId":  currentUserId , "recieverId":  this._id }).count() > 0 )
+  if( Notifications.find({ "ownerId":  currentUserId , "recieverId":  this._id }).count() > 0 
+  || this.agent.id === currentUserId )
  { 
+  return "";
  } else
 { Meteor.call('addNotification', myarg2, function(error, result)
   {
   });
 }
+return "";
 },
 });
 Template.seeprofile.helpers({ 
 
 detectRequests : function(id)
 {
-
-    if( Notifications.find({ "ownerId":  id , "recieverId":  this._id }).count() > 0 )
+    if( Notifications.find({ "ownerId":  id , "recieverId":  this._id }).count() > 0  || this.agent.id === id )
        return true ;
         return false;  
 },
@@ -162,7 +164,7 @@ detectRequests : function(id)
   },
   userprofile: function(usertype)
   { 
-     if(usertype === "costumer")
+     if(usertype === "costumer" || usertype === "agent")
       {
        return true; 
       }
@@ -173,14 +175,117 @@ detectRequests : function(id)
   }
 
       });
+Template.homeBands.events({
+'click .searchlabel':function()
+{
+  //Session.set("salaryasc", -1);
+  var value = "";
+  value = $('#ex2').slider('getValue').toString() ;
+  Session.set("salarymax",parseInt(value.slice(value.lastIndexOf(",") + 1)));
+  Session.set("salarymin",parseInt(value.slice(0, value.lastIndexOf(","))));
+if($(".suggest-bandtypeinput").val().length > 0 )
+  Session.set("bandtype", $(".suggest-bandtypeinput").val());
+else
+  Session.set("bandtype", undefined);
+//alert($(".bandnumbersinputsearch").val());
+if(parseInt($(".bandnumbersinputsearch").val()) > 0)
+  Session.set("bandnumbers" , parseInt($(".bandnumbersinputsearch").val()));
+else
+  Session.set("bandnumbers" , undefined);
+}, 
+'click .ratingsortasc':function()
+{
+
+   Session.set("ratingasc", 1);
+}, 
+'click .ratingsortdesc':function()
+{
+Session.set("ratingasc", -1);
+},
+'click .salarysortasc':function()
+{
+   Session.set("salaryasc", -1);
+  // alert("asc : " + Session.get("salaryasc"));
+}, 
+'click .salarysortdesc':function()
+{
+Session.set("salaryasc", 1);
+
+  // alert("desc : " + Session.get("salaryasc"));
+},
+});
+Template.homeBands.onRendered(function(){
+$(".bandtypes").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+$("#ex2").slider({tooltip: 'show'});
+});
 Template.homeBands.helpers({
 artits: function() {
-return Users.find({
-  $or:[
-                     {"profile.type" : "band"},
-                     {"profile.type" : "artist"},
-                    ]
-                  });
+  //alert(Session.get("bandtype"));
+var query = { $and : [] };
+var minmaxsalary = { "profile.salary" : {$lt: 5000  , $gt : 100 } };
+var bandtype = {"profile.bandtype" : /./ };
+if(Session.get("bandtype")  !== undefined  )
+{
+  //alert("undefined session");
+  //bandtype = {"profile.bandtype" : /./ }
+    bandtype = {"profile.bandtype" : { $regex: "" + Session.get("bandtype")+ "" } };
+    query.$and.push(bandtype)
+
+ // var bandtype = { "profile.bandtype" : Session.get("bandtype") } ;
+//query = query + '"profile.bandtype": "'+Session.get("bandtype")+'"' ; //+Session.get("bandtype")+"  }";
+}
+if(Session.get("bandnumbers")  !== undefined  )
+{
+  //   alert(Session.get("bandnumbers") + "not undefined"); 
+     var mumbers = {"profile.members": { $size : Session.get("bandnumbers") } }; 
+     query.$and.push(mumbers);
+  }
+if(Session.get("salarymax")  !== undefined)
+ {
+ // alert('max ...'); 
+//query = query + ', "profile.salary": { $lt:'+2000/*Session.get("salarymax")+*/'}';//'+(Session.get("salarymax")+'' ; //+Session.get("bandtype")+"  }";
+}
+//alert("salarymax : " + Session.get("salarymax") + "  minsalary : " + Session.get("salarymin"));
+if(Session.get("salarymin")  === undefined && Session.get("salarymax")  !== undefined )
+{
+  minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax"))  , $gt : 100  } };
+}
+if(Session.get("salarymin")  !== undefined && Session.get("salarymax")  === undefined )
+{
+  minmaxsalary = { "profile.salary" : { $lt: 5000 , $gt : parseInt(Session.get("salarymin"))  } };
+}
+if(Session.get("salarymin")  !== undefined && Session.get("salarymax")  !== undefined )
+{
+  minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax")) , $gt : parseInt(Session.get("salarymin"))  } };
+}
+query.$and.push(minmaxsalary);
+//query = {$and : [minmaxsalary /*, bandtype*/ ]} ;
+// query = query + ' "profile.salary" : { $lt : '+2000+'}}';
+//  alert(query);
+  //query{ "profile.salary" : { $lt : Session.get("salarymax"), $gt : Session.get("salarymin") } });
+  //query.push({"profile.bandtype" : Session.get("bandtype")});
+  //console.log(JSON.parse(query));
+   //query = "{\"" + profile.salary + "\":"+ Session.get("salarymax") + "}";
+
+ /* Session.set("salarymax",parseInt(value.slice(value.lastIndexOf(",") + 1)));
+  Session.set("salarymin",parseInt(value.slice(0, value.lastIndexOf(","))));
+  Session.set("bandtype", $(".suggest-bandtypeinput").val());
+  Session.set("bandnumbers" , parseInt($(".bandnameinputsearch").val()));*/
+//var query = query +'"profile.salary" : { $lt: '+Session.get("salarymax")+' }';
+//    db.users.find({ "profile.salary" : { $lt: 320  , $gt :295 } }, {"username" : 1, "profile.salary" : 1 }).sort({"profile.salary" : 1});
+var result =  Users.find( 
+                 /*JSON.parse(bandtype)*/
+                    /*{query.slice(1, query.length - 1 )}
+                     {"profile.type" : "band"}/*,*/
+                     //{"profile.salary" : 300}
+                   // {"profile.bandtype" : /jazz/}
+                   query
+                     , { sort : {"profile.salary" : parseInt(Session.get("salaryasc")) } });
+                 // ).sort({"profile.salary" : -1});
+if (result.count() > 0 )
+  return result ;
+return false;
+
 //  return Session.get('bandsList');
   //return Meteor.call('displayBands');
    //return Images.find({});
@@ -1290,7 +1395,11 @@ Template.homeProfile.helpers({
   },
   userprofile: function(usertype)
   { 
-     if(usertype === "costumer")
+    if(usertype === undefined);
+    {
+     // Meteor.call('updatetype', Meteor.userId());
+    }
+     if(usertype === "costumer" || usertype === "agent" )
       {
        return true; 
       }

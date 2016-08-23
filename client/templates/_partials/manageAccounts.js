@@ -54,6 +54,7 @@ Template.layout.onRendered(function(){
 $('head').append('<script type="text/javascript" src="js/jquery.min.js"></script>');
 $('head').append('<script type="text/javascript" src="js/calendar.js"></script>');
 $('head').append('<script type="text/javascript" src="js/datePicker.js"></script>');
+$('head').append('<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>');
 $('head').append('<script type="text/javascript" src="js/events.js"></script>');
 $('head').append('<script type="text/javascript" src="js/calendarcustom.js"></script>');
 $('head').append('<script type="text/javascript" src ="js/jquery.stapel.js">');

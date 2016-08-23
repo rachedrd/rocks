@@ -62,6 +62,11 @@ updategender:function(obj)
  Users.update({"_id": obj.id}, {$set : { "profile.gender" : obj.gender }   });
  return;
 },
+updatetype:function(id)
+{
+ Users.update({"_id": id}, {$set : { "profile.type" : "costumer" }   });
+ return;
+},
 updatebandtype:function(obj)
 {
  Users.update({"_id": obj.id}, {$set : { "profile.bandtype" : obj.bandtype }   });
