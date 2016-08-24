@@ -37,7 +37,6 @@
 .changeAvatar span{float: right ; margin-right: 4px;}
 .changeCover{  position: absolute ; bottom: 10px ; width: 100%; }
 .changeCover span {float: left; margin-right: 10px;}
-.usernotifications{ }
 .usrPrflnm{line-height: 24px;
 	font-family: "Oswald", Tahoma, Arial;
 	font-weight: bold;
@@ -95,8 +94,7 @@ max-height: 300px;
 .usernotifications {
 	text-align: right;
     
-}
-.emtyresult{font-size: 12px ; font-weight: bold; color: #ff6600}
+}/*.emtyresult{font-size: 12px ; font-weight: bold; color: #ff6600}*/
 .togglenotification
 {
 	background-color: black;
@@ -142,9 +140,10 @@ max-height: 300px;
 	margin-left: 3px;
 	    border-radius: 2px;
 	      position: relative;
+	      margin-bottom: 0px
 	  }
 
-.userinforow input[type="text"].oldinfo:not(.searchspan),  .bandsets , .bandtype  { 
+.userinforow input[type="text"].oldinfo/*:not(.searchspan)*/,  .bandsets , .bandtype  { 
 	width:200px ;
 	height: 28px;
 	margin-left: 3px;
@@ -201,7 +200,7 @@ max-height: 300px;
 	 height: 30px; border-radius: 2px;*/}
 	 .addmemeberform span , .addhighlightform span, .addrepertoireform span{ 
 	 	width: auto;
-	 	 margin-left: 20px; margin-top: -3px;}
+	 	 margin-left: 20px; /*margin-top: -3px;*/}
 	 .addmemeberform input , .addrepertoireform input, .addhighlightform input, .repertoiresongname, .repertoiresinger , .memeberrolespan , .spanmemebername, .spanhighlight{
 	  display: none;
 	   margin-bottom: 0px ; }
@@ -237,7 +236,7 @@ max-height: 300px;
 #selectaddress{width: 100%}
 /*styling dropdown postecode*/
 .addpostecode, .addadress , .bandtypesearch .bandtypecontainer{height: 30px; display: inline; width: auto ; }
-.bandtypesearch .bandtypecontainer{width: 100%}
+.bandtypesearch .bandtypecontainer{width: 85%}
 /*.addpostecode > div , .addpostecode > span  {display: inline; margin-right: 0px; padding-right: 0px}*/
 
 /*.addpostecode > span {margin-top: -20px ; margin-left: 20px}*/
@@ -256,30 +255,31 @@ max-height: 300px;
  .suggest-holder input {
         width: 150px;
         height: 28px;
-        border: 1px solid rgba(0,120,0,.6);
 		padding: 0px; 
 		margin: 0px 0px 1px 0px;
 		/*margin-bottom: 1px; */
-		border-radius: 5px;
+		border-radius: 3px;
     }
     .address-holder input {
         width: 230px;
         height: 28px;
-        border: 1px solid rgba(0,120,0,.6);
 		padding: 0px; 
 		margin: 0px 0px 1px 0px;
 		/*margin-bottom: 1px; */
-		border-radius: 5px;
+		border-radius: 3px;
     }
     .suggest-bandtype  input {
     	width: 70%;
         height: 28px;
         border: 1px solid rgba(0,120,0,.6);
 		padding: 0px 0px 0px 10px; 
-		margin: 0px 0px 1px 0px;
+		/*margin: 0px 0px 1px 10px;*/
+		margin-bottom: 0px;
 		/*margin-bottom: 1px; */
 		border-radius: 5px;
     }
+    .suggest-bandtlocation {margin-left: 17px}
+.suggest-bandtypeinput{margin-left: 15px}
 .suggest-holder ul , .address-holder ul{
 	    color: white;
         display: none;
@@ -300,7 +300,7 @@ max-height: 300px;
  color: white;
         display: none;
         list-style: none;
-        margin: 0px;
+        margin: 0px 0px 0px 12px;
         padding: 0;
         border: 1px solid rgba(0,0,0,1);
         border-radius: 2px;
@@ -405,6 +405,7 @@ font-size: 12px;}
     top: 50%;
     left: 0;
 }
+.banscontent{width: 100% ; padding-left: 10px ; padding-right: 10px}
 .banscontent .searchside{width: 35%}
 .banscontent .searchresult{width: 62%}
 
@@ -422,6 +423,11 @@ font-size: 12px;}
 }
 .imaxnumber {display: block; cursor: pointer;}
 .iminnumber{display: block; cursor: pointer;}
+.savepostecode , .saveaddress {margin-left: 5px}
+#regioninput {margin-left: 25px}
+#cityinput {margin-left: 45px}
+.addpostecode .suggest-holder {margin-left: 15px}
+
 /*end salary range slider */
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
@@ -447,14 +453,24 @@ font-size: 12px;}
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 25px ; cursor: pointer;}
 .removeHighlight {display: none;}
 .repRequest span{ font-size: 12px;}
+.product_inner p.price{ font-size: 15px ; margin-right: 10px}
+.product_inner p.rating{ float: left }
+
 }
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 768px) and (max-width: 959px) {
+	.product_meta a.f_btn {float: left; }
+	.product_inner p.rating , .product_inner p.price{float: left ; font-size: 12px}
+	.product_inner p.price{margin-right: 10px;}
+	.sortby span {display: inline-block;}
+	.sortlabel{width: 100%; display: block; float: none;}
+	.feedbacksort , .salarysort  {width: 100%; }
+	.feedbacksort i, .salarysort i  , .sorticons{display: inline;}
+
 	.ratingdiv p {  margin-top: -1px; display: inline; position: absolute; }
 	#memeberdiv >  #errors, #repertoirediv >  #errors {font-size: 12px}
 	.addmemeberform input , .addrepertoireform input  {width: 145px;}
-
 
 	/*#memeberdiv > div {display: block;
 	 width: 100%; 
@@ -481,7 +497,7 @@ font-size: 12px;}
     border-radius: 5px 5px 0px 0px;}
     #notificationTitle h4{font-size: 12px; }
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 20px }
-	.profilecover { height: 350px}
+	.profilecover { height: 350px }
 	.usercontainer{margin-top: 40px}
 	.subcover {margin-bottom: -30px}
 	.changeAvatar  span{font-size: 10px}
@@ -490,7 +506,7 @@ font-size: 12px;}
 	.wall{ background-color: blue; width: 100%; height: 500px;}
 .username{font-size : 0.5em ;}
 .addmemeberform span, #memeberdiv #errors span {padding: 5px 2px 5px 1px; margin-left: 5px}
-
+.addmemeberform span{padding-top: 0px ; margin-left: 15px}
 		.wishlist span { white-space: nowrap; position: absolute; }
 
 		.repRequest span { font-size: 12px;}
@@ -502,9 +518,10 @@ font-size: 12px;}
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 		.wishlist span {margin-top: -5px ; white-space: nowrap; position: absolute; }
 
+.banscontent{width: 80% ; padding-left: 40px ; padding-right: 40px}
 	/*.ratingdiv {float: none; width: 100px; }*/
 	.ratingdiv p{margin-top:-1px;  font-size: 10px;}
-1	#memeberdiv , #highlitsdiv , #repertoirediv {height: auto; padding-bottom: 68px}
+	#memeberdiv , #highlitsdiv , #repertoirediv {height: auto; padding-bottom: 68px}
 	#memeberdiv div , #highlitsdiv div{display: block;}
 	.addhighlightform{margin-top: 2px}
 	#memeberdiv > div, #highlitsdiv  > div , #repertoirediv  > div{display: block;
@@ -574,12 +591,19 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 .usercontainer{margin-top: 50px}
 	.subcover {margin-bottom: -20px}
 	.hire span {margin-top: -5px ; position: absolute;}
+	.addrepertoireform span , .addmemeberform span , .addhighlightform span {padding: 0px 7px}
+	#regioninput {margin-left: 25px}
+#cityinput{margin-left: 45px}
+
+.addpostecode .suggest-holder {margin-left: 10px}
 /*#ullist li a {display: block; float: none;width: 100%}*/
 }
 
 /*  #Mobile (Portrait) 320px
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 100px) and (max-width: 479px) {
+
+.banscontent{width: 100% ; padding-left: 10px ; padding-right: 10px}
 		.wishlist span {margin-top: -10px ; white-space: nowrap; position: absolute; font-size: 11px; }
 	#memeberdiv > div , #highlitsdiv > div, #repertoirediv > div  {display: block;
 	 width: 100%; 
@@ -642,17 +666,18 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 	#notificationWrapper #ullist li > p > a.owner  {display: block;float: none; width: 100% ; font-size: 12px}
 .ullist header p  {font-size: 11px}
 p.notcontent {font-size: 11px}
- .addmemeberform  {padding-right: 9%  }
   .addrepertoireform {padding-right: 10%  }
 
 
- .addmemeberform span:not(.addmember) {padding-right: 9%; font-size: 11px  }
- .addrepertoireform span:not(.addrepertoire){padding-right: 9%; font-size: 11px ; white-space: nowrap; }
- .addmemeberform input,.addmemeberform span:not(.addmember) , .addmember div { 
- 	display: none; float: none; width: 50%; margin-bottom: 5px; }
+ .addmemeberform span { font-size: 11px  }
+ .addrepertoireform span:not(.addrepertoire){ font-size: 11px ; white-space: nowrap; }
+ .addmemeberform input,.addmemeberform span:not(.addmember ):not(.savemember ) , .addmember div { 
+ 	display: none; float: none; white-space: nowrap; width: 55%; margin-bottom: 5px; }
+ 	.savemember {width: 100% ; display: block;}
 .addrepertoireform input,   .addrepertoireform span:not(.addrepertoire) { 
  	display: none; float: none; width: 51%; margin-bottom: 5px; }
-
+.addrepertoireform input , .addrepertoireform span:not(.saverepertoire) {width: 55% } 
+.addrepertoireform span.saverepertoire , .addmemeberform span.savemember {width: 100% ; float: left;}
 #memeberdiv #errors , #highlitsdiv #errors , #repertoirediv #errors {width: 100%}
 #postcodediv #errors {margin-left: -70px}
 /*.highlightslist {width: 100% ; margin-top: 50px; float: none;}*/
@@ -667,11 +692,13 @@ p.notcontent {font-size: 11px}
 .repRequest {margin-top: 0px}
 .tabs li a  {display: inline;  }
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
-
+.suggest-holder {margin-left: 10px}
+#regioninput {margin-left: 25px}
+#cityinput{margin-left: 45px}
 .repRequest span{ font-size: 9px;}
 .bandnameinputsearch{display: inline; text-align: left;}
-.bandtypesearch {display: inline;}
-
+.bandtypesearch {display: block; margin: -10px 0px}
+.savemember{display: none;}
 }
 
  

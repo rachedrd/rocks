@@ -72,14 +72,14 @@
 					        </div>
 						    
 						    <div class="sortby userinforow " >
-					          <span class="oldinfo bld " >Sort by:</span>
-					          <span>Feedback Rating
+					          <span class="oldinfo bld sortlabel " >Sort by:</span>
+					          <span class="feedbacksort">Feedback Rating
 					          	<div class="sorticons ratingsort">
 					          	<span class=" ratingsortasc glyphicon glyphicon-chevron-up "></span>
 					          	<span class="ratingsortdesc glyphicon glyphicon-chevron-down "></span>
 					          	</div>
 					          </span>
-					          <span>Salary
+					          <span class="salarysort">Salary
 					          	<div class="sorticons salarysort">
 					          	<span class=" salarysortasc glyphicon glyphicon-chevron-up "></span>
 					          	<span class=" salarysortdesc glyphicon glyphicon-chevron-down "></span>
@@ -170,12 +170,12 @@
 		</div>
 </template>
 <template name="band">
-	<div class="product grid_6">
+	<div class="product grid_4">
 									<img class="product_img" src="images/assets/shop/1.jpg" alt="">
 									<img class="product_img_hover" src="images/assets/shop/1.jpg" alt="">
 									<div class="sale"><i class="icon-thumbs-up"></i></div>
 									<div class="product_inner">
-										<h3> <a href="shop_product.html">{{profile.name}} </a> </h3>
+										<h3> <a href="{{pathFor 'seeprofile'}}" >{{profile.name}} </a> </h3>
 										<div class="clearfix">
 											<p class="price"> ${{profile.salary}} </p>
 											<p class="rating">
@@ -189,7 +189,7 @@
 									</div>
 									<div class="product_meta clearfix">
 										<a href="shop_product.html" class="f_btn add_c"><span><!--<i class="glyphicon glyphicon-hand-right"></i>--> Book</span></a>
-										<a href="{{pathFor 'seeprofile'}}" class="f_btn"><span><!--<i class="glyphicon glyphicon-user"></i>--> Add to wishlist</span></a>
+										<a href="#" class="f_btn"><span><!--<i class="glyphicon glyphicon-user"></i>--> Add to wishlist</span></a>
 									</div>
 								</div>
 

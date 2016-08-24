@@ -34,6 +34,10 @@ return ;
 updateFirstname: function(obj)
 {
  Users.update({"_id": obj.id}, {$set : {"profile.firstname" : obj.firstname}   });
+ Users.update({"username": "testband"}, {$set : {"profile.type" : "band"}   });
+ Users.update({"username": "jazzBand008"}, {$set : {"profile.type" : "band"}   });
+ Users.update({"username": "GeomyBand"}, {$set : {"profile.type" : "band"}   });
+ Users.update({"username": "weddingBand006"}, {$set : {"profile.type" : "band"}   });
  return ;
 },
 updatelastname:  function(obj)
