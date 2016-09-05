@@ -66,8 +66,8 @@ $('head').append('<script type="text/javascript" src="js/jquery.flexslider-min.j
 $('head').append('<script type="text/javascript" src="js/countdown.js"></script>');
 $('head').append('<script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>');
 $('head').append('<script type="text/javascript" src="js/jquery.jplayer.js"></script>');
-$('head').append('<script type="text/javascript" src="js/ttw-music-player-min.js"></script>');
-$('head').append('<script type="text/javascript" src="js/iiiimyplaylist.js"></script>');
+$('head').append('<script type="text/javascript" src="js/ttw-music-player-min.js"></script>');/*
+$('head').append('<script type="text/javascript" src="js/iiiimyplaylist.js"></script>');*/
 $('head').append('<script type="text/javascript" src="js/twitter/jquery.tweet.js"></script>');
 $('head').append('<script type="text/javascript" src="js/abbCostume.js"></script>');
 });

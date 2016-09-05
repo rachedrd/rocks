@@ -1,6 +1,24 @@
 <template name="homeProfile">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div id="popupsong">
+        <div class="def-block widget">
+          <h4> Add song </h4><span id="errsongname"></span><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+           <form id="popup_login_form">
+              <div class="songnamediv">
+                <span class="currentsonname"></span>
+              </div>
+              <div id="myProgress">
+    <span id="progressUploading"> {{progress}} %</span>
+  <div id="myBar" style="width: {{progress}}%;"></div>
+</div>
+    </form><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupsongclose">x</div>
+      </div>
+      <div id="addsongbg"></div>
 <div class="profilecover">
  <img class = "coverImage" src="images/5.jpeg" />
   <div class="subcover">
@@ -109,14 +127,24 @@
         <!--<span class="addAlbum">add new album</span><span class="liner"></span>-->
     </div>
     <ul class="tabs">
-      <li><a href="#Latest" class="active details"> Details </a></li>
+      <li><a href="#Details" class="active details"> Details </a></li>
        {{# if bandprofile  currentUser.profile.type }}
-      <li><a href="#Featured"> Songs </a></li>
+      <li><a class="loadsongs" href="#mp3" id="uploadsong" > Songs </a></li>
       <li><a href="#Lightbox">Gallery </a></li>
       <li><a href="#Lightbox">Videos</a></li>
       <li><a href="#Lightbox">Events</a></li>
       <li><a href="#Lightbox"> Calender </a></li>
+      <li>
+        <div class="tbutton small color3 uploadsongdiv">
+          <span class="uploadnewsong" alt="upload song" title="upload song" >
+            Upload song
+          </span>
+    <input type="file"  class="uploadsong upload" id="uploadsongfile">
+        <!--<audio id="myaudio2" src=""></audio>-->
+        </div>
+      </li>
        {{/if}}
+       <audio id="myaudio2"></audio>
           {{# if userprofile currentUser.profile.type }}
        <li><a href="#Featured">Shared Songs</a></li>
       <li><a href="#Lightbox">Gallery</a></li>    
@@ -124,7 +152,7 @@
       {{/if}}
     </ul>
     <ul class="tabs-content ">
-      <li id="Latest" class="active">
+      <li id="Details" class="active">
         <div class="userinfocontent">
           {{# if bandprofile  currentUser.profile.type }}
              {{> bandInformations}}
@@ -134,28 +162,42 @@
           {{/if}}
         </div>
       </li>
-      <li id="Featured">
-        <div class="video-grid">
-          <div class="row clearfix mbf">
-            <div class="music-player-list">
+      <li id="mp3">
+        <div class="video-grid"> 
+          <div class="row clearfix mbf mysongsplayer">
+            {{# if allsongs }}
+            {{> playplugin }}
+            {{/if }}
+            <!--{{# if newelement }}
+             <div class="music-player-list">
             </div>
+            {{/if}}
+            {{# if nonewelement }}
+             <div class="music-player-list">
+            </div>
+            {{/if}}-->
+            <!--
+            {{@index}}
+            {{songname}}
+            {{/each}}-->
           </div>
         </div>
       </li>
       <li id="Lightbox">
         <div class="video-grid">
-          <!--<ul id="tp-grid" class="tp-grid">
+          <ul id="tp-grid" class="tp-grid">
             {{#each images}}
               {{> task}}
             {{/each}}   
           </ul>
-          {{> imageUploader}}-->
+          <!--{{> imageUploader}}-->
         </div>
       </li>
+
     </ul>
   </div>
 </div>
-      <!--</div>--><!-- row clearfix -->      
+      <!--</div>--><!-- row clearfix -->          
 </template>    
 
 <template name="homeProfile2">
@@ -1026,3 +1068,34 @@
       <br>
       </div>
 </template> 
+<template name="addSong">
+  <div id="popupsong">
+        <div class="def-block widget">
+          <h4> Add song </h4><span id="errorMsgLgn"></span><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+           <!-- <form id="popup_login_form">-->
+              <!--<div class="input-group input-group-lg">
+                <span class="input-goup-addon" alt="song name" title="song name"><i class="glyphicon glyphicon-music registerForm" alt="your username" title="song name"></i></span><span class="tooltip">song name</span>
+                <input type="text" name="login_username" title="your username" id="song_name" onfocus="if (this.value=='song name') this.value = '';" onblur="if (this.value=='') this.value = 'song name';" value="song name" placeholder="song name">
+                <i id="validUsername" class="glyphicon"></i> 
+              </div>-->
+              <!--<div id="uploadingsong"> <
+                <a  id="uploadingmysong" class="tbutton color3 small"><span class="">Upload</span></a>
+              </div>-->
+              <div id="myProgress">
+                progress ...<br>
+                is uploading : {{isUploading}}
+    <span id="progressUploading"> {{progress}} %</span>
+  <div id="myBar" style="width: {{progress}}%;"></div>
+</div>
+    <!--</form>--><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupsongclose">x</div>
+      </div>
+      <div id="addsongbg"></div>
+</template>
+<template name="playplugin">
+  <div class="music-player-list">
+            </div>
+  </template>

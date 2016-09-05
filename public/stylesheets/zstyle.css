@@ -1,6 +1,5 @@
 .profilecover{ width: 100%; height: 450px; position: relative; /*background-color: red;*/
   }
-
   .coverImage{width: 100% ; height: 100%}
 .subcover{ /*background-color: yellow;*/ width: 100%; height: 100px;  position : absolute ; bottom: -35px}
 .avatarContainer { width : 150px ;
@@ -11,6 +10,26 @@
 .usercontainer div {width : 33.3333%; 
 	/*background-color: orange; */
 	display: inline; margin-left: 10px}
+/*upload song section */
+.uploadsongdiv{
+padding: 0px;
+	position: relative;  width:auto;  cursor: pointer; 
+background-color: red;}
+.uploadsongdiv input.upload {
+	position: absolute; cursor: pointer;
+	 margin-top: -25px;
+	
+	width: 100%;
+	height: 100%;
+	padding: 0px; 
+	opacity: 0;
+
+}
+.songnamediv{margin-bottom: 10px}
+.songnamediv span.songnamespanlabel{display: inline; width: auto;}
+.songnamespanlabel{font-size: 12px; font-weight: bold;width: auto; padding-right: 5px }
+/*#uploadsongfile{ width:100% ; height: 100%; }*/
+/*end upload song section*/
 
 .avatarImage { width: 100% ; height: 100% ;  }
 .notificationcount{margin-left: 15px; font-size: 10px;
@@ -340,10 +359,10 @@ float: none; width: 100px ; display: inline; position: absolute; }
 .wishlist, .hire{
  position: relative;
  color: #ff6600 ; }
- .repRequest { display: inline; width: auto;  float: left; 
+ .repRequest, .uploadsongdiv { display: none; width: auto;  float: left; 
  	margin-top: 8px;  }
  	.repRequest{background-color: gray}
- 	 .repRequest span{
+ 	 .repRequest span , .uploadsongdiv span{
 font-size: 12px;}
 
 .tabs li {display: inline;}
@@ -427,7 +446,9 @@ font-size: 12px;}
 #regioninput {margin-left: 25px}
 #cityinput {margin-left: 45px}
 .addpostecode .suggest-holder {margin-left: 15px}
-
+#myaudio2 {display: none; width: 0px ; height: 0px ; padding: 0px; margin: 0px}
+.songuploadbox { position: fixed; margin: 0px; bottom: 10px ; visibility: hidden; z-index: 10000; float: left ;  padding: 10px 20px}
+.songuploadbox a {margin-right: -10px ; margin-top: -22px}
 /*end salary range slider */
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
@@ -436,6 +457,8 @@ font-size: 12px;}
 .banscontent .searchside{width: 35%}
 .banscontent .searchresult{width: 65%}
 */
+
+.songnamespanlabel{font-size: 12px; font-weight: bold;width: auto; padding-right: 5px }
 .ratingdiv p {  margin-top: -0.5px;}
 .togglenotification{text-align: right;
     background-color: black;
@@ -452,7 +475,7 @@ font-size: 12px;}
 	.wall{ background-color: red; width: 10%;}
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 25px ; cursor: pointer;}
 .removeHighlight {display: none;}
-.repRequest span{ font-size: 12px;}
+.repRequest span, .uploadsongdiv span{ font-size: 12px;}
 .product_inner p.price{ font-size: 15px ; margin-right: 10px}
 .product_inner p.rating{ float: left }
 
@@ -460,6 +483,10 @@ font-size: 12px;}
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 768px) and (max-width: 959px) {
+
+.songnamespanlabel{font-size: 12px; font-weight: bold;width: auto; padding-right: 5px }
+	.salarylabel {display: block;}
+	 .suggest-bandtype .suggest-availability{font-size: 11px}
 	.product_meta a.f_btn {float: left; }
 	.product_inner p.rating , .product_inner p.price{float: left ; font-size: 12px}
 	.product_inner p.price{margin-right: 10px;}
@@ -509,13 +536,19 @@ font-size: 12px;}
 .addmemeberform span{padding-top: 0px ; margin-left: 15px}
 		.wishlist span { white-space: nowrap; position: absolute; }
 
-		.repRequest span { font-size: 12px;}
+		.repRequest span , .uploadsongdiv span { font-size: 12px;}
 		.hire span{margin-top: -5px ; position: absolute; }
 
 }
 /* #Mobile (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
+
+.songnamespanlabel{font-size: 12px; font-weight: bold;width: auto; padding-right: 5px }
+	.minsalary {padding-right: 8px ; font-size: 11px }
+	.maxsalary {padding-left: 3px  ; font-size: 11px}
+
+.slider.slider-horizontal { width: 51%; }
 		.wishlist span {margin-top: -5px ; white-space: nowrap; position: absolute; }
 
 .banscontent{width: 80% ; padding-left: 40px ; padding-right: 40px}
@@ -583,11 +616,11 @@ font-size: 12px;}
 .ullist header p  {font-size: 12px ; }
 p.notcontent {font-size: 12px ;  width:100%; display: block;}
 #memeberdiv >  #errors{font-size: 12px}
-.repRequest {margin-top: 0px}
+.repRequest , .uploadsongdiv{margin-top: 0px}
 .tabs li a  {display: inline;  }
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
 
-.repRequest span{ font-size: 10px;}
+.repRequest span, .uploadsongdiv span{ font-size: 10px;}
 .usercontainer{margin-top: 50px}
 	.subcover {margin-bottom: -20px}
 	.hire span {margin-top: -5px ; position: absolute;}
@@ -603,7 +636,9 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 100px) and (max-width: 479px) {
 
+.songnamediv span.songnamespanlabel{font-size: 11px; font-weight: bold;width: auto; display: inline; padding-right: 5px }
 .banscontent{width: 100% ; padding-left: 10px ; padding-right: 10px}
+.currentsonname{font-size: 11px}
 		.wishlist span {margin-top: -10px ; white-space: nowrap; position: absolute; font-size: 11px; }
 	#memeberdiv > div , #highlitsdiv > div, #repertoirediv > div  {display: block;
 	 width: 100%; 
@@ -689,13 +724,14 @@ p.notcontent {font-size: 11px}
 .suggest-holder {width: 145px}
 .suggest-holder input , .suggest-holder ul {width: 145px}
 .ratingdiv p{ font-size: 8px ; margin-top: -1px}
-.repRequest {margin-top: 0px}
+.repRequest , .uploadsongdiv {margin-top: 0px}
+.uploadsongdiv {margin-top: 2px}
 .tabs li a  {display: inline;  }
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
 .suggest-holder {margin-left: 10px}
 #regioninput {margin-left: 25px}
 #cityinput{margin-left: 45px}
-.repRequest span{ font-size: 9px;}
+.repRequest span , .uploadsongdiv span{ font-size: 9px;}
 .bandnameinputsearch{display: inline; text-align: left;}
 .bandtypesearch {display: block; margin: -10px 0px}
 .savemember{display: none;}

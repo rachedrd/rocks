@@ -286,6 +286,7 @@ var existingAlbum = 0;
 	$("#popupnewalbbum").removeClass('zigmaIn').hide();
 	newalbm = 1 ;
    $('.upload').trigger('click');
+   alert('trigger click ...')
 	}
   });
 if ( parseInt($('.notification-count').attr('value')) > 0 )
@@ -322,7 +323,8 @@ $('.def-block').on('click' , '.addAlbum', function() {
 			$("#popupnewalbbum").addClass('zigmaIn').fadeIn("slow");
 	});
 		$(".fileUpload").on('change', '.upload', function (evt) {
-			 // 	alert('albumname  :  ' + albumname);
+      alert('albumname  :  ');
+			 //alert('albumname  :  ' + albumname);
           evt.preventDefault();
     	evt.stopPropagation();
 			liLength = parseInt($grid.children().length );
@@ -376,6 +378,7 @@ canvasContext.drawImage(imgObj, 0, 0, $('#image').get(0).naturalWidth,
 $("#rac").attr("src", document.getElementById("myCanvas").toDataURL("image/jpeg"));
 lastOne.find('> a img').attr("src", $("#rac").attr("src"));
 $( ".uploading" ).trigger( "click" );
+alert('trigger click ...');
    }
 img.src = $('#image').attr('src');
           lastOne.find('> a').attr("href",e.target.result);

@@ -4,6 +4,8 @@ import { Mongo } from 'meteor/mongo';
 
 //export const Tasks =  new Mongo.Collection('tasks');//Accounts.users;
  Images = new Mongo.Collection('images');
+ songs = new Mongo.Collection('songs');
+
  Notifications = new Mongo.Collection('notifications');
 
  Users =  Meteor.users;
@@ -11,6 +13,8 @@ import { Mongo } from 'meteor/mongo';
 	return Images.find({}, 
 		{ fields: {_id:1, imageurl:1, time: 1, uploadedBy: 1,imageName: 1, imageFolder: 1 } } ); });*/
 Meteor.publish('images', function(){ return Images.find({}); });
+Meteor.publish('songs', function(){ return songs.find({}); });
+
 Meteor.publish('notifications', function(){ return Notifications.find({},{_id: 1, owner: 1, reciever: 1 , type: 1, status :1 ,time :1}); });
 
 
@@ -34,10 +38,9 @@ return ;
 updateFirstname: function(obj)
 {
  Users.update({"_id": obj.id}, {$set : {"profile.firstname" : obj.firstname}   });
- Users.update({"username": "testband"}, {$set : {"profile.type" : "band"}   });
- Users.update({"username": "jazzBand008"}, {$set : {"profile.type" : "band"}   });
- Users.update({"username": "GeomyBand"}, {$set : {"profile.type" : "band"}   });
- Users.update({"username": "weddingBand006"}, {$set : {"profile.type" : "band"}   });
+ Users.update({"username": "jazzBand008"}, {$set : {"profile.salary" : 100}   });
+ Users.update({"username": "GeomyBand"}, {$set : {"profile.salary" : 100}   });
+ Users.update({"username": "weddingBand006"}, {$set : {"profile.salary" : 100}   });
  return ;
 },
 updatelastname:  function(obj)
@@ -143,6 +146,17 @@ return Images.insert({
  timeStamp: obj.timeStamp,
   imageName: obj.imageName , 
   imageFolder : obj.imageFolder,
+ });
+return "inserted";
+//Users.upsert({"_id": "hnCoTgyqB84894uCz"}, {$set : { "agent.name":name}    });
+},
+addSong: function( obj){
+return songs.insert({
+  songurl: obj.songurl,
+   uploadedBy: obj.uploadedBy,
+ timeStamp: obj.timeStamp,
+  songname: obj.songname , 
+  duration : obj.duration
  });
 return "inserted";
 //Users.upsert({"_id": "hnCoTgyqB84894uCz"}, {$set : { "agent.name":name}    });

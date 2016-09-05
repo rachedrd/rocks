@@ -66,6 +66,8 @@ Template.seeprofile.onCreated(function(){
  Meteor.subscribe("USERS"); 
  Meteor.subscribe("images"); 
   Meteor.subscribe("notifications");
+  Meteor.subscribe("songs");
+
  /*setTimeout(function(){
   $.getScript('../js/zwindows.js');    
 },2000);*/
@@ -79,6 +81,22 @@ $.getScript('../js/zzzrevolution.js');
 }, 2000);
 });
 Template.seeprofile.events({
+   'click .seeloadsongs' : function(e, t ){
+    alert('see all sons ..');
+   e.preventDefault();
+ if($('.mysongsplayer .music-player-list').children().length > 0)
+   $('.mysongsplayer .music-player-list').empty();
+$('.music-player-list').ttwMusicPlayer( Session.get("myPlaylist") , {
+    currencySymbol:'$',
+    artist:'rached',
+    buyText:'Share',
+    tracksToShow:3,
+    autoplay:false,
+    ratingCallback:function(index, playlistItem, rating){
+      //some logic to process the rating, perhaps through an ajax call
+    }
+  });
+},
   'click .sendreqRep': function(event, template) {
 var timeStamp = Math.floor(Date.now()); 
 var Currentuser =  Users.findOne({"_id": currentUserId },  { fields: { username: 1 }});
@@ -103,7 +121,34 @@ return "";
 },
 });
 Template.seeprofile.helpers({ 
+seeallsongs : function()
+{
+  var band = Users.findOne({"_id": this._id});
+  var pllist = [];
+  var mysongs = [] ; 
+  mysongs =  songs.find({/*"uploadedBy": this._id*/ }).fetch();
+  if(mysongs.length > 0)
+  {
+mysongs.forEach(function(song){
+pllist.push({"id":song._id,
+ "title" : song.songname ,
+'cover':'1.jpg' ,
+ "duration" : song.duration, 
+  'rating':5,
+   'mp3': song.songurl,
+    'buy':'javascript:void(0)',
+ 'artist': band.profile.bandName});
+});
+Session.set("myPlaylist", pllist);
+console.log("myPlaylist session get from allsongs : " + Session.get("myPlaylist"));
+return Session.get("myPlaylist")
+}
+else {
+   Session.set("myPlaylist", null);
+return Session.get("myPlaylist")
 
+}
+},
 detectRequests : function(id)
 {
     if( Notifications.find({ "ownerId":  id , "recieverId":  this._id }).count() > 0  || this.agent.id === id )
@@ -180,7 +225,8 @@ Template.homeBands.events({
 {
   //Session.set("salaryasc", -1);
   var value = "";
-  value = $('#ex2').slider('getValue').toString() ;
+  value = $('#ex2').slider('getValue').toString();
+  alert(value[2]);
   Session.set("salarymax",parseInt(value.slice(value.lastIndexOf(",") + 1)));
   Session.set("salarymin",parseInt(value.slice(0, value.lastIndexOf(","))));
 if($(".suggest-bandtypeinput").val().length > 0 )
@@ -216,13 +262,15 @@ Session.set("salaryasc", 1);
 });
 Template.homeBands.onRendered(function(){
 $(".bandtypes").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+setTimeout(function(){
 $("#ex2").slider({tooltip: 'show'});
+}, 0);
 });
 Template.homeBands.helpers({
 artits: function() {
   //alert(Session.get("bandtype"));
 var query = { $and : [] };
-var minmaxsalary = { "profile.salary" : {$lt: 5000  , $gt : 100 } };
+var minmaxsalary = { "profile.salary" : {$lt: 5000  , $gte : 100 } };
 var bandtype = {"profile.bandtype" : /./ };
 if(Session.get("bandtype")  !== undefined  )
 {
@@ -248,15 +296,18 @@ if(Session.get("salarymax")  !== undefined)
 //alert("salarymax : " + Session.get("salarymax") + "  minsalary : " + Session.get("salarymin"));
 if(Session.get("salarymin")  === undefined && Session.get("salarymax")  !== undefined )
 {
-  minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax"))  , $gt : 100  } };
+
+  minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax"))  , $gte : 100  } };
 }
 if(Session.get("salarymin")  !== undefined && Session.get("salarymax")  === undefined )
 {
-  minmaxsalary = { "profile.salary" : { $lt: 5000 , $gt : parseInt(Session.get("salarymin"))  } };
+
+  minmaxsalary = { "profile.salary" : { $lt: 5000 , $gte : parseInt(Session.get("salarymin"))  } };
 }
 if(Session.get("salarymin")  !== undefined && Session.get("salarymax")  !== undefined )
 {
-  minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax")) , $gt : parseInt(Session.get("salarymin"))  } };
+
+  minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax")) , $gte : parseInt(Session.get("salarymin"))  } };
 }
 query.$and.push(minmaxsalary);
 //query = {$and : [minmaxsalary /*, bandtype*/ ]} ;
@@ -296,6 +347,7 @@ return false;
   imgs: function () {alert(Images.find().count()); return Images.find({}).count(); }
 });
 Template.imageUploader.onRendered(function(){this.subscribe("images"); });
+
 Template.imageUploader.events({'click .uploading': function(event, template) {
   function dataURLtoBlob(dataurl) {
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
@@ -390,9 +442,64 @@ Template.bandInformations.onCreated( function(){
   this.subscribe("images");
   this.subscribe("USERS");});
 Template.homeProfile.onRendered( function(){
-  this.subscribe("images");
-  this.subscribe("USERS");
-  this.subscribe("notifications");
+
+  //this.autorun(function(){
+//alert('homeProfile onRendered remove music-player-list ...');
+   // $('.music-player-list').remove();
+    
+    //$('.mysongsplayer').append('<div class="music-player-list"></div>');
+    //$('.mysongsplayer').empty();
+    //$('.mysongsplayer').append('<div class="music-player-list"></div>');
+ //    alert($('.mysongsplayer .music-player-list').children().length);
+     //$('.mysongsplayer .music-player-list').find('> div:not(:last)').remove();
+
+  if($('.mysongsplayer .music-player-list').children().length > 0)
+    $('.mysongsplayer .music-player-list').empty();
+   // {
+ //     alert('remove one ...');
+    //  $('.mysongsplayer .music-player-list').find('> .ttw-music-player:not(:last)').remove();
+    //  $('.music-player-list').find('> div:not(:last-child)').remove();
+
+    //$('.mysongsplayer .music-player-list').children('.ttw-music-player:not(:last-child)').remove();  
+    // } 
+  //  this.afterFlush(function(){
+    //  alert('tracker afterFlush times one ...'  );
+      if(Session.get("myPlaylist") !== null)
+
+{
+  //setTimeout(function(){  
+  //   $('.mysongsplayer .music-player-list').find('> .ttw-music-player:not(:last)').remove();
+    //  $('.mysongsplayer .music-player-list').find('> .ttw-music-player:not(:last)').remove();
+ /*$('.music-player-list').ttwMusicPlayer( Session.get("myPlaylist") , {
+    currencySymbol:'$',
+    buyText:'BUY',
+    tracksToShow:3,
+    autoplay:false,
+    ratingCallback:function(index, playlistItem, rating){
+      //some logic to process the rating, perhaps through an ajax call
+    }
+  });*/
+console.log("myPlaylist from onRendered");
+console.log(Session.get("myPlaylist"));
+
+//},2000);
+}
+//});
+ // });
+  //this.subscribe("songs");
+/*songs.forEach( function(song){
+myPlaylist.push({"id":song._id,
+ "title" : song.songname ,
+cover:'1.jpg' ,
+ "duration" : song.duration, 
+  rating:5,
+   mp3: song.songurl,
+    buy:'#',
+ artist:'Alexandra',});
+console.log(song._id);
+console.log(song.songname);
+console.log(song.songurl);
+});*/
  // var rached = "rach";
  //   rached = Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch();
 //console.log(rached[0].profile.type);
@@ -420,8 +527,8 @@ $.getScript('../js/theme20.js');*/
 //$('head').append('<script type="text/javascript" src ="../js/theme20.js">');
 //$('head').append('<script type="text/javascript" src ="../js/abbCostume.js">');
 
-setTimeout(function(){
- $('head').append('<script type="text/javascript" src ="../js/zwindows.js">');
+//setTimeout(function(){
+ //$('head').append('<script type="text/javascript" src ="../js/zwindows.js">');
 
   //$.getScript('../js/zwindows.js');
   /*$grid.children().each(function() {
@@ -430,8 +537,187 @@ setTimeout(function(){
         }
       });*/
             
-},3000);
+//},3000);
+
 });
+Template.playplugin.onRendered(function(){
+  /*var myPlaylist = [
+  
+  {
+    mp3:'js/1.mp3',
+    title:'Track 1',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'1.jpg' 
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 2',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'js/2.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 3',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'js/1.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 4',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'js/2.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 5',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'js/1.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 6',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'music/2.jpg' 
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 7',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'js/1.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 8',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'js/2.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 1',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'1.jpg' 
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 2',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'js/2.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 3',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'js/1.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 4',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'js/2.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 5',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'js/1.jpg'  
+  },
+  {
+    mp3:'js/1.mp3',
+    title:'Track 6',
+    artist:'BlueFoxMusic',
+    rating:4,
+    buy:'#',
+    price:'17',
+    duration:'2:51',
+    cover:'music/2.jpg' 
+  }];*/
+  /*setTimeout(function(){
+  $('.music-player-list').ttwMusicPlayer(Session.get("myPlaylist"), {
+    currencySymbol:'$',
+    buyText:'BUY',
+    tracksToShow:3,
+    autoplay:false,
+    ratingCallback:function(index, playlistItem, rating){
+      //some logic to process the rating, perhaps through an ajax call
+    },
+    jPlayer:{
+      swfPath: "http://www.jplayer.org/2.7.0/js/",
+      supplied: "mp3",
+      volume:  0.8,
+      wmode:"window",
+      solution: "html,flash",
+      errorAlerts: true,
+      warningAlerts: true
+    }
+  });
+}, 3000);*/
+  this.autorun( function(){
+if($('.mysongsplayer .music-player-list').children().length > 0)
+   $('.mysongsplayer .music-player-list').empty();
+$('.music-player-list').ttwMusicPlayer( Session.get("myPlaylist") , {
+    currencySymbol:'$',
+    artist:'rached',
+    buyText:'Remove',
+    tracksToShow:3,
+    autoplay:false,
+    ratingCallback:function(index, playlistItem, rating){
+      //some logic to process the rating, perhaps through an ajax call
+    }
+  });
+});
+  });
 /*Template.newAlbum.events({
 
   'click #createAlbum' : function(evt, t) 
@@ -662,7 +948,7 @@ Template.seebandInformations.onRendered(function(){
     cover:'js/2.jpg'  
   },
 ];
-  $('.music-player-list').ttwMusicPlayer(myPlaylist, {
+  /*$('.music-player-list').ttwMusicPlayer(myPlaylist, {
     currencySymbol:'',
     buyText:'Share',
     tracksToShow:3,
@@ -679,7 +965,7 @@ Template.seebandInformations.onRendered(function(){
       errorAlerts: true,
       warningAlerts: true
     }
-  });
+  });*/
 });
 Template.seebandInformations.helpers({
   allmemebers: function(){
@@ -1347,6 +1633,8 @@ Meteor.call('addAgent' , agent);
 });
 Template.homeProfile.onCreated(function(){
   Meteor.subscribe("USERS");
+  Session.set("myPlaylist", null);
+  Meteor.subscribe("songs");
 /*  var rached = "rach";
  rached = Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch();
                   console.log(rached);
@@ -1361,10 +1649,208 @@ Template.homeProfile.onCreated(function(){
     }
 
 );
+Template.homeProfile.events({
+  'click .loadsongs' : function(e, t ){
+   e.preventDefault();
+ if($('.mysongsplayer .music-player-list').children().length > 0)
+   $('.mysongsplayer .music-player-list').empty();
+$('.music-player-list').ttwMusicPlayer( Session.get("myPlaylist") , {
+    currencySymbol:'$',
+    artist:'rached',
+    buyText:'Remove',
+    tracksToShow:3,
+    autoplay:false,
+    ratingCallback:function(index, playlistItem, rating){
+      //some logic to process the rating, perhaps through an ajax call
+    }
+  });},
+ /* 'click #uploadingmysong' : function()
+  {
+    alert('upload on google cloud ...');
+    console.log(Session.get("obj"));
+    alert(Session.get("obj").songname);
+
+  }, */
+  'change .uploadsong' :function(e, t)
+  {
+  var file = null;
+  var myfile = {};
+  e.stopImmediatePropagation();
+  /*event.stopPropagation();*/
+  e.preventDefault();
+    var reader = null;
+file = t.find('.uploadsong').files[0];
+myfile.name  = file.name;
+if(file.name.indexOf(".mp3") > 0 || file.name.indexOf(".ogg") > 0) 
+ {
+ reader = new FileReader();
+reader.onload = function(evt)
+{
+  myfile = {};
+ $("#myaudio2").attr('src', evt.target.result);
+ myfile.name = file.name;
+ //return false;
+}
+$("#myaudio2").on("canplaythrough", function(evt){
+/*event.preventDefault();
+event.stopPropagation();*/
+  //event.stopImmediatePropagation();
+ // myfile.name = file.name ;
+  var duration = evt.currentTarget.duration;
+  var min = new Number();
+   var sec = new Number();
+   var hours = new Number();
+  sec = Math.floor(duration);
+  min = Math.floor(sec / 60);
+  hours = Math.floor(min / 60);
+  min = min >= 10 ? min : '0' + min;
+  hours = hours >= 10 ? hours : '0' + hours;
+   sec = Math.floor(sec % 60 );
+  sec = sec >= 10 ? sec : '0' + sec ;
+  myfile.duration = hours +":"+ min + ":" + sec;
+  myfile.name = t.find('.uploadsong').files[0].name;
+ var upload = new Slingshot.Upload("mySongUploads");
+             var timeStamp = Math.floor(Date.now());               
+         upload.send(document.getElementById('uploadsongfile').files[0], function (error, downloadUrl) {
+             uploader.set();
+             console.log("uploader is : " + uploader.get());
+             if (error) {
+               console.error('Error uploading');
+               alert (error);
+             }
+             else{
+               console.log('uploaded file available here: '+downloadUrl);
+               var obj = {songname: document.getElementById('uploadsongfile').files[0].name,
+                   duration: myfile.duration,
+                   time: timeStamp,
+                   songurl :downloadUrl,
+                   timeStamp :timeStamp,
+                   uploadedBy: currentUserId};
+               Meteor.call('addSong', obj, function(error, result){
+    // pupoup bunner added notification
+  });
+            
+             }
+});
+         uploader.set(upload);
+         //return false;
+         evt.stopImmediatePropagation();
+});
+reader.readAsDataURL(file);
+//return false;
+} 
+else
+{
+$("#errsongname").html("only MP3 & OGG supported");
+$("#errsongname").show();
+
+}
+    var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupsong").height();
+    var popupWidth = $("#popupsong").width();
+    // Centering
+    $("#popupsong").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    var mysongname = file.name; 
+    $(".currentsonname").html(mysongname);
+    var mysongname =  mysongname.slice(0, mysongname.lastIndexOf(".mp3"));
+    $('#song_name').val(mysongname);
+    // Aligning bg
+    $("#addsongbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#addsongbg").css({"opacity": "0.7"});
+      $("#addsongbg").fadeIn("slow");
+      $("#popupsong").addClass('zigmaIn').fadeIn("slow");
+      
+  }
+});
 
 Template.homeProfile.helpers({
+     isUploading: function () {
+        return Boolean(uploader.get());
+    },
+
+    progress: function () {
+    var upload = uploader.get();
+    if (upload)
+    {
+$("#myProgress").show();
+      if(Math.round(upload.progress()*100) === 100)
+      {
+        /*$("#processingImage").show();
+        $("#process").show();
+        $("#processbg").show();
+       $("#myProgress").css('visibility', 'hidden');*/
+       $("#addsongbg").fadeOut("slow");
+    $("#popupsong").removeClass('zigmaIn').fadeOut("slow");
+    $(".songuploadbox").css({"visibility":"visible"});
+    setTimeout(function(){
+      $(".songuploadbox").css({"visibility":"hidden"});
+    }, 2000);
+      }
+    return Math.round(upload.progress() * 100);
+  }
+    },
+allsongs : function()
+{
+  var band = Users.findOne({"_id": Meteor.userId()});
+  console.log(band.profile.bandName);
+  var pllist = [];
+  var mysongs = [] ; 
+  mysongs =  songs.find({"uploadedBy": Meteor.userId()}).fetch();
+  if(mysongs.length > 0)
+  {
+mysongs.forEach(function(song){
+pllist.push({"id":song._id,
+ "title" : song.songname ,
+'cover':'1.jpg' ,
+ "duration" : song.duration, 
+  'rating':5,
+   'mp3': song.songurl,
+    'buy':'javascript:void(0)',
+ 'artist': band.profile.bandName});
+});
+Session.set("myPlaylist", pllist);
+console.log("myPlaylist session get from allsongs : " + Session.get("myPlaylist"));
+return Session.get("myPlaylist")
+}
+else {
+   Session.set("myPlaylist", null);
+return Session.get("myPlaylist")
+
+}
+},
   myusername: function(user)
   {
+/*var mysongs = songs.find({});
+mysongs.forEach(function(song){
+myPlaylist.push({"id":song._id,
+ "title" : song.songname ,
+cover:'1.jpg' ,
+ "duration" : song.duration, 
+  rating:5,
+   mp3: song.songurl,
+    buy:'#',
+ artist:'Alexandra'});
+console.log(song._id);
+console.log(song.songname);
+console.log(song.songurl);
+});*/
+/*
+{
+    mp3:'js/1.mp3',
+    title:'Track 7',
+    artist:'Alexandra',
+    rating:5,
+    buy:'#',
+    price:'17',
+    duration:'0:38',
+    cover:'js/1.jpg'  
+  },*/
+
     if(user.profile.type === "band")
       {
         if( user.profile.hasOwnProperty('bandName') )

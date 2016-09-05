@@ -71,9 +71,10 @@ $("#ullist").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorbord
 $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
 	// Tabs
 	$('.full').on('click', ' ul.tabs li a', function(e){
-
-		var tabs = $('.full  ul.tabs');
+       var tabs = $('.full  ul.tabs');
 		var contentLocation = $(this).attr('href');
+		if( $(this).attr("id") === "uploadsong")
+			{$(".uploadsongdiv").show(); }
 		//$('.full  ul.tabs').children().each(function (i) {
 			//var tab =  $('.full  ul.tabs').find('li').eq(i).find('> a');
 			//alert(tab.html());
@@ -431,6 +432,27 @@ $("#popupLogin").on('click', '#login_password ', function(){
 			$("#popupLogin").addClass('zigmaIn').fadeIn("slow");
 			popupStatus = 1;
 		}
+	});
+	// show the upload music form 
+		$(".tabs").on('click', '.uploadnewsong', function() {
+		//Aligning our box in the middle
+		var windowWidth = document.documentElement.clientWidth;
+		var windowHeight = document.documentElement.clientHeight;
+		var popupHeight = $("#popupsong").height();
+		var popupWidth = $("#popupsong").width();
+		// Centering
+		$("#popupsong").css({
+			"top": windowHeight / 2 - popupHeight / 2,
+			"left": windowWidth / 2 - popupWidth / 2
+		});
+		// Aligning bg
+		$("#addsongbg").css({"height": windowHeight});
+	
+		// Pop up the div and Bg
+			$("#addsongbg").css({"opacity": "0.7"});
+			$("#addsongbg").fadeIn("slow");
+			$("#popupsong").addClass('zigmaIn').fadeIn("slow");
+
 	});
 	// update user informations
 	// update first name
@@ -876,9 +898,12 @@ $("#popupLogin").on('click', '#login_password ', function(){
 	$('.userinfocontent').on('click' , '#birthinput', function(){
       window.myDatePicker1 = new DatePicker('.userinfocontent #birthinput', options);     
 	});
-	$('.banscontent').on('click' , '.suggest-availability', function(){
-      window.myDatePicker1 = new DatePicker('.banscontent .suggest-availability', options);     
-	});
+	/*$('.bandtypesearch').on('click' , '.suggest-availability', function(){
+		alert('click ...');
+      //window.myDatePicker1 = new DatePicker('.banscontent .suggest-availability', options);     
+      window.myDatePicker2 = new DatePicker('.bandtypesearch .suggest-availability', options);     
+
+	});*/
 $('.imaxnumber').click(function(){
 	if($('.bandnumbersinputsearch').val() === "")
 		{ 
@@ -1416,6 +1441,18 @@ $(".full").on("click", ".bandtypes > li", function(){
 	$(".bandtypes").hide();
 
 });
+/*$('.full').on('change', '.upload', function (evt) {
+		evt.preventDefault();
+	alert("evt.target");
+	/*alert(e.target.result);
+
+	var myaudio = $('<audio id="myaudio"></audio>');
+	myaudio.src= audio.attr("src",e.target.result);
+    $("#myaudio").on("canplaythrough", function(evt){
+	var seconds = evt.currentTarget.duration;
+	alert(seconds);
+	});*/
+/*});*/
 	/*end postecode dynamic fill*/
 	/*
 	/*$('.def-block').on('click', 'ul.tp-grid li.grid_3', function()
@@ -1750,6 +1787,14 @@ $(".full").on("click", ".bandtypes > li", function(){
 			$("#LoginBackgroundPopup").fadeOut("slow");
 			$("#popupLogin").removeClass('zigmaIn').fadeOut("slow");
 			popupStatus = 0;
+		}
+	});
+	//close popup song upload
+	$("#popupsongclose").click(function() {
+		if ($("#errsongname").html() !== "") {
+			$("#addsongbg").fadeOut("slow");
+			$("#popupsong").removeClass('zigmaIn').fadeOut("slow");
+			$("#errsongname").html("");
 		}
 	});
 	// Close reset password

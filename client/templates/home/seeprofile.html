@@ -201,7 +201,7 @@
     <ul class="tabs otherstab">
       <li><a href="#details" class="active details">Details</a></li>
       {{# if bandprofile  profile.type }}
-       <li><a href="#mp3">Songs</a></li>
+       <li><a class="seeloadsongs" href="#mp3">Songs</a></li>
       <li><a href="#photogallery">Gallery </a></li>
       <li><a href="#videos">Videos</a></li>
       <li><a href="#events">Events</a></li>
@@ -243,8 +243,10 @@
      <li id="mp3">
         <div class="video-grid"> 
           <div class="row clearfix mbf">
+            {{ # if seeallsongs}}
             <div class="music-player-list">
             </div>
+            {{/if }}
           </div>
         </div>
       </li>

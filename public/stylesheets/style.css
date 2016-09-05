@@ -1099,7 +1099,7 @@ div.jp-seeking-bg {
 	background: transparent url(../images/player/tracklist-item-bg.png) repeat-x bottom left scroll;
 }
 .ttw-music-player .tracklist .title {
-	width: 240px;
+	width: 200px;
 	display: inline-block;
 	padding: 0 0 0 14px;
 	cursor: pointer;
@@ -2371,7 +2371,7 @@ html[xmlns] .slides {display: block;}
 .flex-control-thumbs img {width: 100%; display: block; opacity: .7; cursor: pointer;}
 .flex-control-thumbs img:hover {opacity: 1;}
 .flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
-
+#errsongname{margin-top: -5px ; position: absolute;}
 @media screen and (max-width: 860px) {
 	.chngavatr{bottom: 85px ; left: 15px}
 	.changeavatar{bottom: 70px;}
@@ -3401,7 +3401,7 @@ a.notification-close {
 
 /*	Popup SignIn
 ----------------------------------------------------------------------*/
-#LoginBackgroundPopup {  
+#LoginBackgroundPopup , #addsongbg{  
 	display:none;
 	position:fixed;
 	height:100%;
@@ -3411,7 +3411,7 @@ a.notification-close {
 	background:#000;
 	z-index: 99999997;
 } 
-#popupLogin {  
+#popupLogin , #popupsong{  
 	display:none;
 	position:fixed;
 	width:360px;
@@ -3429,7 +3429,7 @@ a.notification-close {
 	z-index: 99999998;
 	margin-left: 0;
 }
-#popupLogin .def-block
+#popupLogin .def-block , #popupsong .def-block 
  {  
 	background: #000;
 	background: rgba(0, 0, 0, 0.9) !important;
@@ -3442,7 +3442,7 @@ a.notification-close {
 	box-shadow: none;
 	border: 2px solid #1F1F1F;
 }
-#popupLoginClose {
+#popupLoginClose , #popupsongclose {
 	position: absolute;
 	top: 25px;
 	right: 33px;
@@ -3452,10 +3452,10 @@ a.notification-close {
 	-webkit-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
-#popupLoginClose:hover {
+#popupLoginClose:hover , #popupsongclose:hover {
 	color: #fff
 }
-#login_username, #login_password, #signup_username, #signup_firstname,
+#login_username, #login_password, #song_name  ,  #signup_username, #signup_firstname,
 #signup_lastname, #signup_email, #signup_retypePassword, #signup_password {
 	display: block !important;
 	width: 100% !important;
@@ -4707,8 +4707,8 @@ a.notification-close {
 
 /*	IE7 & IE8 & IE9 Hacks
 ----------------------------------------------------------------------*/
-.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup,
-.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup {
+.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup, .ie8 #addsongbg,
+.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup , .ie7 #addsongbg {
 	background: transparent url(../images/ie_000_80.png) repeat;
 }
 .ie8 .footer-last, .ie8 .ttw-music-player .player-controls, .ie8 .def-block, .ie8 .ttw-music-player .tracklist, .ie8 .breadcrumbIn,
@@ -4723,17 +4723,17 @@ a.notification-close {
 .ie7 li.track:hover .buy, .ie7 .playing .buy {
 	background: #ff6600
 }
-.ie8 #login_username, .ie8 #login_password, 
+.ie8 #login_username, .ie8 #song_name,  .ie8 #login_password, 
 .ie8 #signup_username, .ie8 #signup_firstname,
 .ie8 #signup_lastname,.ie8  #signup_email,
 .ie8 #signup_retypePassword, .ie8  #signup_password,
 .ie9 #signup_username, .ie9 #signup_firstname,
-.ie9 #signup_lastname, .ie9  #signup_email,
+.ie9 #signup_lastname, .ie9  #signup_email, .ie9 #song_name,
 .ie9 #signup_retypePassword, .ie9  #signup_password,
 .ie9 #login_username, .ie9 #login_password {
 	padding: 4px 10px 22px;
 }
-.ie7 #login_username, .ie7 #login_password, .ie7 #signup_username, .ie7 #signup_firstname,
+.ie7 #login_username, .ie7 #song_name , .ie7 #login_password, .ie7 #signup_username, .ie7 #signup_firstname,
 .ie7 #signup_lastname, .ie7  #signup_email,
 .ie7 #signup_retypePassword, .ie7  #signup_password
  {
@@ -4917,7 +4917,7 @@ a.notification-close {
 	.ttw-music-player .tracklist {width: 52%}
 	.ttw-music-player .player-controls {width: 236px}
 	.ttw-music-player .progress-wrapper {width: 150px}
-	.ttw-music-player .tracklist .title {width: 180px}
+	.ttw-music-player .tracklist .title {width: 160px}
 	.wide-mp3 .ttw-music-player .tracklist .title {width: 170px}
 	.wide-mp3 .ttw-music-player .track-info, .wide-mp3 .ttw-music-player .player-controls {width: 210px}
 	.wide-mp3 .ttw-music-player .progress-wrapper {width: 128px}
@@ -4959,7 +4959,7 @@ a.notification-close {
 	.ttw-music-player .track-info, .ttw-music-player .player-controls {width: 69%}
 	.ttw-music-player .tracklist {width: 94%;margin-top: 20px;}
 	.ttw-music-player .progress-wrapper {width: 82%}
-	.ttw-music-player .tracklist .title {width: 62%}
+	.ttw-music-player .tracklist .title {width: 48%}
 	.wide-mp3 .ttw-music-player .track-info, .wide-mp3 .ttw-music-player .player-controls {width: 67%}
 	.music-single .ttw-music-player .track-info, .music-single .ttw-music-player .player-controls {width: 47%}
 	.music-single .player-controls div {width: 55%}
@@ -5101,12 +5101,13 @@ a.notification-close {
 	.fb-profile .cover a.changeavatar { visibility: hidden; width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
 	.fb-profile .cover a.changecover { width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
 	
-		#errorMsgLgn {float: right; margin: -33px 20px 0px 0px;}
+		#errorMsgLgn  {float: right; margin: -33px 20px 0px 0px;}
+		#errsongname { margin-top: -4px ; font-size: 11px }
 		#errorMsgSgnUp {float: right; margin: -5px 20px 0px 0px;}
 
 		/*#errorMsgSgnUp {width: 100%}*/
 
-	#loginRegister a:last-child {margin-right: 20px; float: right;}
+	#loginRegister a:last-child, #loginRegister a:last-child{margin-right: 20px; float: right;}
 		#tempwrap{
 		width: 100%;
 		position: relative;
@@ -5206,7 +5207,7 @@ a.notification-close {
 	ul.showcomments li.child {margin: 0 0px 32px 2px}
 	.topbar h2, .topbar h3 { text-align: left; padding: 0; display: block;}
 	.tback {top: 40px}
-	#popupLogin { width: 310px}
+	#popupLogin , #popupsong { width: 310px}
 	  #popupSignUp { width: 310px ; margin-top: 0px}
 	.ajde_evcal_calendar .calendar_header p {font-size: 26px}
 	.forum .search-forum {position: relative;width: 100%}
@@ -5246,7 +5247,7 @@ a.notification-close {
     z-index: 9;
 }
 /*login form styling */
-#popupLogin .input-group {
+#popupLogin .input-group , #popupsong .input-group{
 display: block !important;
 width: 100% !important;
 }
@@ -5307,17 +5308,18 @@ width: 100% !important;
 	   padding : 0%;
 	    margin-top: 5px;
 	}
-#loginRegister{ width: 100% background-color: red;}
+#loginRegister { width: 100% ;}
 #loginRegister a:first-child {margin-left: 20px;}
 #loginRegister a:last-child {margin-left: 70px;}
 
 #validUsername, #validPassword, #validFisrtName_sgnUp,#viewPasswd_sgnUp, #viewRePasswd_sgnUp, #validLastName_sgnUp, #validRePsswd_sgnUp, #validEmail_sgnUp, #validPasswd_sgnUp,#validAlmName, #validUsername_sgnUp{color: red; position: absolute;float: right; margin-left: 93%;margin-top: 4%;}
 #viewPasswd_sgnUp, #viewRePasswd_sgnUp{margin-left: 85%; color: gray; cursor:pointer;}
-#errorMsgLgn,
+#errorMsgLgn, #errsongname,
  #errorMsgSgnUp,
   #errorMsgAlb
   { color: red;}
-  #popupLogin h4 {margin-right: 45%;}
+  #popupLogin h4  {margin-right: 45%;}
+  #popupsong h4 {margin-right: 7%; margin-top: -10px; position: relative;}
    #popupSignUp h4 {margin-right: 24%;}
 /*#errorMsgSgnUp{ margin-left: 160px;}*/
 #errorMsgAlb{margin-left: 60px;}
@@ -5441,7 +5443,8 @@ width: 100% !important;
     width: 100%;
     height: 1px;
     background-color: gray;
-    visibility: hidden;
+    /*visibility: hidden;*/
+    display: none;
 }
 #myBar {
     position: absolute;
