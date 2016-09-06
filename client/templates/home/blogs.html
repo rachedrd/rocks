@@ -1,0 +1,75 @@
+<template name="homeBlogs">
+	<head>
+ 		<link rel="stylesheet" type="text/css" href="styles/shop.css" media="screen" />
+    </head>
+	<div class="under_header">
+		<img src="images/assets/breadcrumbs1.png">
+	</div>
+	<div class="page-content back_to_up">
+			<div class="row clearfix mb">
+				<div class="breadcrumbIn">
+					<ul>
+						<li><a href="index.html" class="toptip" title="Homepage"> <i class="icon-home"></i> </a></li>
+						<li> Blog </li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="row row-fluid clearfix mbf">
+				<div class="posts blogslist">
+					<div class="def-block">
+						<div class="post row-fluid clearfix">
+						    <a href="#" class="Rmore tbutton small color3 createblog"><span>Create Blog</span></a>
+						    <div class="clearfix createblogform">
+							<h4> Create Blog</h4><span class="liner"></span>
+							<form action="#" method="post" id="commentform">
+								<div class="clearfix">
+									<div class="grid_4 alpha mb "><input name="title" type="text" value="" placeholder="Blog Title" class="blgtitle"></div>
+								</div>
+								<div class="clearfix">
+									<div class="grid_4 mb">
+									<div class="tbutton small color3 uploadsongimgdiv">
+                                       <span class="uploadnewsong" alt="upload song" title="upload song" >Upload song
+                                       </span>
+                                       <input type="file"  class="uploadsong upload" id="uploadsongfile">
+                                       <!--<audio id="myaudio2" src=""></audio>-->
+                                    </div>
+								    </div>
+								</div>
+								<textarea name="comment" class="blogcontent" rows="15" placeholder="Blog content" required=""></textarea>
+								<p>
+								  <input name="submit" type="submit" class="postblog send-message color2" value="Post Blog">
+									<input type="hidden" name="comment_post_ID" value="6" id="comment_post_ID">
+									<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+								</p>
+							</form>
+						</div>
+						</div>    
+                        {{#each blogs}}
+                        <div class="post row-fluid clearfix">
+							<img src="images/assets/post1-big.jpg" alt="#">
+							<h3 class="post-title"> <i class="icon-headphones"></i><a href="blog-single_half.html">{{title}}</a> </h3>
+							<p>{{content}}</p>
+							<div class="meta">
+								<span> <i class="icon-user mi"></i> {{author}} </span>
+								<span> <i class="icon-time mi"></i>{{formatdate time}} </span>
+								<span> <a href="{{pathFor 'singelblog'}}"><i class="icon-comments-alt"></i> {{blogscomments _id}} Comments</a> </span>
+							</div>
+							<a href="{{pathFor 'singelblog'}}" class="Rmore tbutton small color3"><span>Read More</span></a>
+						</div>
+						{{/each}}
+						<div class="pagination-tt clearfix">
+							<ul>
+								<li><span class="deactive">1</span></li>
+								<li><a href="#" class="tbutton"><span>2</span></a></li>
+								<li><a href="#" class="tbutton"><span>3</span></a></li>
+								<li><span class="deactive">...</span></li>
+								<li><a href="#" class="tbutton"><span>8</span></a></li>
+							</ul>
+							<span class="pages">Page 1 of 8</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</template>

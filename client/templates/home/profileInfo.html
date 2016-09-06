@@ -120,17 +120,17 @@
 <div class="posts tabprofile">
   <div class="def-block">
     <div class="topbar">
-      <div id="close" class="tbutton small tback">
+      <!--<div id="close" class="tbutton small color3 tback  uploadimgdiv">
         <span> Back to Albums
         </span>
-      </div>
+      </div>-->
         <!--<span class="addAlbum">add new album</span><span class="liner"></span>-->
     </div>
     <ul class="tabs">
       <li><a href="#Details" class="active details"> Details </a></li>
        {{# if bandprofile  currentUser.profile.type }}
       <li><a class="loadsongs" href="#mp3" id="uploadsong" > Songs </a></li>
-      <li><a href="#Lightbox">Gallery </a></li>
+      <li><a href="#Lightbox" id="uploadimage" >Gallery </a></li>
       <li><a href="#Lightbox">Videos</a></li>
       <li><a href="#Lightbox">Events</a></li>
       <li><a href="#Lightbox"> Calender </a></li>
@@ -142,6 +142,9 @@
     <input type="file"  class="uploadsong upload" id="uploadsongfile">
         <!--<audio id="myaudio2" src=""></audio>-->
         </div>
+      </li>
+      <li>
+        <div id="close" class="tbutton small color3 tback uploadimgdiv"><span>&gt; Back to Albums</span></div>
       </li>
        {{/if}}
        <audio id="myaudio2"></audio>
@@ -188,7 +191,7 @@
           <ul id="tp-grid" class="tp-grid">
             {{#each images}}
               {{> task}}
-            {{/each}}   
+            {{/each}}
           </ul>
           <!--{{> imageUploader}}-->
         </div>
@@ -308,7 +311,7 @@
       <div class="posts">
         <div class="def-block" style="min-height: 400px;">
           <div class="topbar">
-            <div id="close" class="tbutton small tback"><span> Back to Albums</span></div>
+            <div id="close" class="tbutton small tback"><span>&gt; Back to Albums</span></div>
             <h4 id="name">Photo Gallery</h4>
             <span class="addAlbum">add new album</span><span class="liner"></span>
           </div>
@@ -355,18 +358,14 @@
  </template>    
 <template name="task">
   <li data-pile="{{imageFolder}}" class="grid_3" id="{{imageFolder}}">
-    <div class="removeDiv">
+    <!--<div class="removeDiv">
     <span class="removeImage">X</span>
-    </div>
+    </div>-->
       <a href="{{imageurl}}" rel="prettyPhoto[{{imageFolder}}]">
       <img  src="{{imageurl}}" alt="{{imageName}}" />
     </a>
    </li>
-   <br>
-   <br>
-   <br>
-   <img src="{{imageurl}}" alt="{{imageurl}}" caption="{{imageName}}" /> 
-   <br>  
+   <!--<img src="{{imageurl}}" alt="{{imageurl}}" caption="{{imageName}}" /> --> 
    </template>
 <template name="newAlbum">    
   <div id="popupnewalbbum">

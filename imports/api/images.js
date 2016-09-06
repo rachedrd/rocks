@@ -5,6 +5,7 @@ import { Mongo } from 'meteor/mongo';
 //export const Tasks =  new Mongo.Collection('tasks');//Accounts.users;
  Images = new Mongo.Collection('images');
  songs = new Mongo.Collection('songs');
+ blogs = new Mongo.Collection('blogs');
 
  Notifications = new Mongo.Collection('notifications');
 
@@ -14,6 +15,8 @@ import { Mongo } from 'meteor/mongo';
 		{ fields: {_id:1, imageurl:1, time: 1, uploadedBy: 1,imageName: 1, imageFolder: 1 } } ); });*/
 Meteor.publish('images', function(){ return Images.find({}); });
 Meteor.publish('songs', function(){ return songs.find({}); });
+Meteor.publish('blogs', function(){ return blogs.find({}); });
+
 
 Meteor.publish('notifications', function(){ return Notifications.find({},{_id: 1, owner: 1, reciever: 1 , type: 1, status :1 ,time :1}); });
 
@@ -90,6 +93,14 @@ savebandmember: function(obj)
  Users.update({"_id": obj.id}, {$push : { "profile.members" : {"name" : obj.membername, "role":  obj.memberrole} }   });
  
  return true;
+},
+addComment: function(obj)
+{
+  var blog = blogs.findOne({"_id": obj.id});
+  var id = 0;
+  if(blog.comments !== undefined)
+ id = blog.comments.length;
+blogs.update({"_id": obj.id}, {$push : { "comments" : {"id": id, "author" : obj.author, "content":  obj.content, "time" :obj.timeStamp} }   });
 }, 
 saverepertoire: function(obj)
 {
@@ -131,6 +142,12 @@ removememeber: function(obj)
 {
  Users.update({"_id": obj.id} , { $pull : { "profile.members" : {"name": obj.membername, "role" :obj.memberrole } } });
 },
+removecomment: function(obj)
+{
+  console.log(obj.blogid + "  comment id " + obj.commentid);
+  blogs.update({"_id": obj.blogid} , { $pull : { "comments" : {"id":  parseInt(obj.commentid)  } } });
+
+},          
 removesonglist: function(obj)
 {
  Users.update({"_id": obj.id} , { $pull : { "profile.repertoire" : {"songname": obj.songname, "singername" :obj.singername } } });
@@ -138,6 +155,17 @@ removesonglist: function(obj)
 removeHighlight:  function(obj)
 {
  Users.update({"_id": obj.id} , { $pull : { "profile.highlights" : {"id": obj.highlightId  } } });
+},
+addBlog: function( obj){
+return blogs.insert({
+  title: obj.title,
+   content: obj.content,
+ time: obj.timeStamp,
+  author: obj.author /*, 
+  file : obj.file,*/
+ });
+return "inserted";
+//Users.upsert({"_id": "hnCoTgyqB84894uCz"}, {$set : { "agent.name":name}    });
 },
 addImage: function( obj){
 return Images.insert({

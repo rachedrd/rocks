@@ -10,12 +10,13 @@
 .usercontainer div {width : 33.3333%; 
 	/*background-color: orange; */
 	display: inline; margin-left: 10px}
+	.blogcommentslist{display: none;}
 /*upload song section */
-.uploadsongdiv{
+.uploadsongdiv, .uploadimgdiv, .uploadsongimgdiv{
 padding: 0px;
 	position: relative;  width:auto;  cursor: pointer; 
 background-color: red;}
-.uploadsongdiv input.upload {
+.uploadsongdiv input.upload , .uploadsongimgdiv input.upload{
 	position: absolute; cursor: pointer;
 	 margin-top: -25px;
 	
@@ -109,11 +110,12 @@ max-height: 300px;
  visibility: hidden;
  margin-top: 15px;
 }
-
+#ex2{display: none;}
 .usernotifications {
 	text-align: right;
-    
-}/*.emtyresult{font-size: 12px ; font-weight: bold; color: #ff6600}*/
+   
+}
+.emtyresult{font-size: 12px ; font-weight: bold; color: #ff6600; display: none;}
 .togglenotification
 {
 	background-color: black;
@@ -359,12 +361,13 @@ float: none; width: 100px ; display: inline; position: absolute; }
 .wishlist, .hire{
  position: relative;
  color: #ff6600 ; }
- .repRequest, .uploadsongdiv { display: none; width: auto;  float: left; 
+ .repRequest, .uploadsongdiv, .uploadimgdiv { display: none; width: auto;  float: left; 
  	margin-top: 8px;  }
+ 	.uploadsongimgdiv{width: auto; float: left; margin-top: 8px}
  	.repRequest{background-color: gray}
- 	 .repRequest span , .uploadsongdiv span{
+ 	 .repRequest span , .uploadsongdiv span, .uploadimgdiv span, .uploadsongimgdiv span{
 font-size: 12px;}
-
+ 
 .tabs li {display: inline;}
 #UserConnected navbar-nav > li > .dropdown-menu:hover { background-color: #FF0000; }
 #toggedfirst .dropdown-menu li a {
@@ -378,6 +381,7 @@ font-size: 12px;}
   box-shadow: black;
   color: #ff6600;
 }
+.createblogform{display: none;}
 .tooltip-inner {background-color: white ; color: #ff6600}
 .tooltip.top .tooltip-arrow {border-top-color: white}
 
@@ -475,7 +479,7 @@ font-size: 12px;}
 	.wall{ background-color: red; width: 10%;}
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 25px ; cursor: pointer;}
 .removeHighlight {display: none;}
-.repRequest span, .uploadsongdiv span{ font-size: 12px;}
+.repRequest span, .uploadsongdiv span, .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
 .product_inner p.price{ font-size: 15px ; margin-right: 10px}
 .product_inner p.rating{ float: left }
 
@@ -536,7 +540,7 @@ font-size: 12px;}
 .addmemeberform span{padding-top: 0px ; margin-left: 15px}
 		.wishlist span { white-space: nowrap; position: absolute; }
 
-		.repRequest span , .uploadsongdiv span { font-size: 12px;}
+		.repRequest span , .uploadsongdiv span , .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
 		.hire span{margin-top: -5px ; position: absolute; }
 
 }
@@ -616,11 +620,11 @@ font-size: 12px;}
 .ullist header p  {font-size: 12px ; }
 p.notcontent {font-size: 12px ;  width:100%; display: block;}
 #memeberdiv >  #errors{font-size: 12px}
-.repRequest , .uploadsongdiv{margin-top: 0px}
+.repRequest , .uploadsongdiv, .uploadimgdiv {margin-top: 0px}
 .tabs li a  {display: inline;  }
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
 
-.repRequest span, .uploadsongdiv span{ font-size: 10px;}
+.repRequest span, .uploadsongdiv span, .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 10px;}
 .usercontainer{margin-top: 50px}
 	.subcover {margin-bottom: -20px}
 	.hire span {margin-top: -5px ; position: absolute;}
@@ -724,14 +728,14 @@ p.notcontent {font-size: 11px}
 .suggest-holder {width: 145px}
 .suggest-holder input , .suggest-holder ul {width: 145px}
 .ratingdiv p{ font-size: 8px ; margin-top: -1px}
-.repRequest , .uploadsongdiv {margin-top: 0px}
-.uploadsongdiv {margin-top: 2px}
+.repRequest , .uploadsongdiv , .uploadimgdiv{margin-top: 0px}
+.uploadsongdiv , .uploadimgdiv{margin-top: 2px}
 .tabs li a  {display: inline;  }
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
 .suggest-holder {margin-left: 10px}
 #regioninput {margin-left: 25px}
 #cityinput{margin-left: 45px}
-.repRequest span , .uploadsongdiv span{ font-size: 9px;}
+.repRequest span , .uploadsongdiv span, .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 9px;}
 .bandnameinputsearch{display: inline; text-align: left;}
 .bandtypesearch {display: block; margin: -10px 0px}
 .savemember{display: none;}

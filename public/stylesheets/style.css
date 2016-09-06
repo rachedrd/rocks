@@ -1592,7 +1592,8 @@ ul.showcomments .social {
 	transition: all 0.2s ease;
 }
 #commentform .send-message:hover {
-	background:#8e0545
+	background:#ff6600 ;
+	opacity: 0.8;
 }
 #commentform .send-message:focus {
 	background:#333
@@ -2146,7 +2147,7 @@ div.blockquote.right {
 .tback {
 	position: absolute;
 	right: 0;
-	top: -4px;
+	/*top: -4px;*/
 	cursor: pointer;
 	display: none;
 	-webkit-touch-callout: none;

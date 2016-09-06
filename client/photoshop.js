@@ -4,7 +4,7 @@ import { Session } from 'meteor/session';
 
 var uploader = new ReactiveVar();
 var orientaion = 0;
-var typeofuser = new ReactiveVar()
+var typeofuser = new ReactiveVar();
 //var imageDetails = new Mongo.Collection('images');
 var currentUserId = Meteor.userId();
 /*Template.body.events({
@@ -67,22 +67,243 @@ Template.seeprofile.onCreated(function(){
  Meteor.subscribe("images"); 
   Meteor.subscribe("notifications");
   Meteor.subscribe("songs");
-
  /*setTimeout(function(){
   $.getScript('../js/zwindows.js');    
 },2000);*/
-
 });
+Template.homeBlogs.onCreated(function(){
+ Meteor.subscribe("USERS"); 
+ Meteor.subscribe("blogs"); 
+ });
+Template.singelblog.onCreated(function(){
+ Meteor.subscribe("USERS"); 
+ Meteor.subscribe("blogs"); 
+ });
+Template.homeBlogs.onRendered(function(){
+ $('html').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1});     
+$('.blogcontent').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"black",cursoropacitymin:.1}); 
+ });
+Template.singelblog.onRendered(function(){
+ $('html').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1});     
+$('.commentcontent').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"black",cursoropacitymin:.1}); 
+ });
+Template.homeBlogs.helpers({
+blogs: function () {
+ return blogs.find({}).fetch(); 
+},
+blogscomments: function(id){
+    var blog = blogs.findOne({"_id": id } , { fields: { "comments": 1} });
+    if (blog.comments.length > 0)
+    {
+        return  blog.comments.length;    
 
+    }
+    else 
+    {
+      return false;
+    }
+  }
+,
+formatdate: function(timeStamp)
+  {
+   myDate = new Date(timeStamp); 
+   myYear = myDate.getFullYear();
+   myMonth = ( myDate.getMonth() + 1 );
+   myDay = myDate.getDate();
+   return "" + myDay+ "-" +myMonth + "-" +myYear+"";
+  }
+ });
+Template.singelblog.helpers({
+blog: function () {
+ return blogs.findOne({"_id":this._id}); 
+},
+formatdate: function(timeStamp)
+  {
+   myDate = new Date(timeStamp); 
+   myYear = myDate.getFullYear();
+   myMonth = ( myDate.getMonth() + 1 );
+   myDay = myDate.getDate();
+   return "" + myDay+ "-" +myMonth + "-" +myYear+"";
+  },
+  allcomments: function(){
+    var blog = blogs.findOne({"_id": this._id } , { fields: { "comments": 1} });
+    if (blog.comments.length > 0)
+    {
+        return  blog.comments;    
+    }
+    else 
+    {
+      return false;
+    }
+  },
+ });
+Template.singelblog.events({
+  'click .postComment': function(e, t)
+  {
+    e.preventDefault();
+   var myobj = {};
+    event.preventDefault();
+          var content = t.find(".commentcontent").value;
+          var author = Users.findOne({"_id": Meteor.userId() },  { fields: { username: 1 }});
+          var timeStamp = Math.floor(Date.now()); 
+         //  if( (membername !== "") && ( membername !== null) && (memberrole !== "") && ( memberrole !== null)  )
+         // {
+          myobj = {"id": this._id ,"author": author.username ,  "content": content , "timeStamp" : timeStamp};
+          Meteor.call('addComment', myobj);
+          setTimeout(function(){
+          t.find(".commentcontent").value = "";
+          }, 500);
+        //  t.find(".inputmemebername").value = "";
+        //  t.find(".memeberoleinput").value = "";
+//}
+  },
+    'click .editComment': function(e, t)
+  {
+    e.preventDefault();
 
+    event.preventDefault();
+   var myobj = {};
+    event.preventDefault();
+          var title = t.find(".blgtitle").value;
+          var content = t.find(".blogcontent").value;
+          var author = Users.findOne({"_id": Meteor.userId() },  { fields: { username: 1 }});
+          var timeStamp = Math.floor(Date.now()); 
+         //  if( (membername !== "") && ( membername !== null) && (memberrole !== "") && ( memberrole !== null)  )
+         // {
+          myobj = {"author": author.username , "title": title, "content": content , "timeStamp" : timeStamp};
+          Meteor.call('addBlog', myobj);
+          setTimeout(function(){
+            t.find(".blgtitle").value = "";
+          t.find(".blogcontent").value = "";
+          $('.createblogform').slideToggle();
+          }, 500);
+        //  t.find(".inputmemebername").value = "";
+        //  t.find(".memeberoleinput").value = "";
+//}
+  },
+    'click .removecomment': function(e, t)
+  {
+    e.preventDefault();
+    var commentid =   $(e.currentTarget).attr('id');
+          myobj = {"commentid": commentid  , "blogid": $('.showcomments').attr('id') };
+          Meteor.call('removecomment', myobj);  
+  }
+ 
+ });
+Template.homeBlogs.events({
+  'click .postblog': function(e, t)
+  {
+    e.preventDefault();
+   var myobj = {};
+    event.preventDefault();
+          var title = t.find(".blgtitle").value;
+          var content = t.find(".blogcontent").value;
+          var author = Users.findOne({"_id": Meteor.userId() },  { fields: { username: 1 }});
+          var timeStamp = Math.floor(Date.now()); 
+         //  if( (membername !== "") && ( membername !== null) && (memberrole !== "") && ( memberrole !== null)  )
+         // {
+          myobj = {"author": author.username , "title": title, "content": content , "timeStamp" : timeStamp};
+          Meteor.call('addBlog', myobj);
+          setTimeout(function(){
+            t.find(".blgtitle").value = "";
+          t.find(".blogcontent").value = "";
+          $('.createblogform').slideToggle();
+          }, 500);
+        //  t.find(".inputmemebername").value = "";
+        //  t.find(".memeberoleinput").value = "";
+//}
+  },
+ 
+ });
 Template.homeIndex.onCreated(function(){
  setTimeout(function(){
 $.getScript('../js/zzzrevolution.js');
 }, 2000);
 });
 Template.seeprofile.events({
+  'click .seegallery': function(e, t)
+  {
+if ($("#tp-grid")[0]) {
+  var $grid = $( '#tp-grid' ),
+  $name = $( '#name' ),
+  $close = $( '#close' ),
+  $loader = $( '<div class="loader"><i></i><i></i><i></i><i></i><i></i><i></i><span>Loading...</span></div>' ).insertBefore( $grid ),
+  stapel = $grid.stapel( {
+    randomAngle : false,
+    delay : 100,
+    gutter : 0,
+    pileAngles : 0,
+    onLoad : function() {
+      $('.addAlbum').hide();
+      $('.removeAlbum').css('visibility', 'hidden');
+      $loader.remove();
+              },
+    onBeforeOpen : function( pileName ) {
+      $name.html( pileName );
+      $('.removeAlbum').hide();
+      $('.addAlbum').hide();
+      $('.removeAlbum').css('visibility', 'hidden');
+                      },
+    onAfterOpen : function( pileName ) {
+      showDelte = 1;
+      $('.addAlbum').hide();
+      $('.removeAlbum').css('visibility', 'hidden');
+      $('.removeAlbum').hide();
+      $('.def-block').on('mouseenter', 'ul.tp-grid li ', function(){
+        if(showDelte === 1)
+          {
+          $(this).find('> div.removeDiv').show();
+          }
+      }).on('mouseleave', 'ul.tp-grid li', function () {
+        $(".removeDiv").hide();
+                              });
+      $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+      $close.show();
+                      }
+    });
+    $close.on( 'click', function() {
+      $('.addAlbum').hide();
+      $(this).hide();
+      $("a[rel^='prettyPhoto']").prettyPhoto().unbind();
+      $(".removeDiv").hide();
+      $name.empty().html('Photo Gallery');
+      stapel.closePile();
+      stapel = $grid.stapel( {
+        randomAngle : false,
+        delay : 100,
+        gutter : 0,
+        pileAngles : 0,
+        onLoad : function() {
+          $('.addAlbum').hide();
+          $loader.remove();},
+        onBeforeOpen : function( pileName ) {
+        $('.addAlbum').hide();
+        $name.html( pileName );
+      },
+      onAfterOpen : function( pileName ) {
+        showDelte = 1;
+        $('.addAlbum').hide();
+            $('.def-block').on('mouseenter', 'ul.tp-grid li ', function()
+    {
+      if(showDelte === 1)
+      {
+      $(this).find('> div.removeDiv').show();
+      }
+    }).on('mouseleave', 'ul.tp-grid li', function () {
+      $(".removeDiv").hide();
+});
+        $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+        $close.show();
+      }
+    });
+    });
+  }
+  // prettyPhoto
+  if ($("a[rel^='prettyPhoto']")[0]) {
+    $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+  }
+  },
    'click .seeloadsongs' : function(e, t ){
-    alert('see all sons ..');
    e.preventDefault();
  if($('.mysongsplayer .music-player-list').children().length > 0)
    $('.mysongsplayer .music-player-list').empty();
@@ -132,7 +353,7 @@ seeallsongs : function()
 mysongs.forEach(function(song){
 pllist.push({"id":song._id,
  "title" : song.songname ,
-'cover':'1.jpg' ,
+/*'cover':'../images/5.jpeg' ,*/
  "duration" : song.duration, 
   'rating':5,
    'mp3': song.songurl,
@@ -226,7 +447,6 @@ Template.homeBands.events({
   //Session.set("salaryasc", -1);
   var value = "";
   value = $('#ex2').slider('getValue').toString();
-  alert(value[2]);
   Session.set("salarymax",parseInt(value.slice(value.lastIndexOf(",") + 1)));
   Session.set("salarymin",parseInt(value.slice(0, value.lastIndexOf(","))));
 if($(".suggest-bandtypeinput").val().length > 0 )
@@ -265,6 +485,7 @@ $(".bandtypes").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorb
 setTimeout(function(){
 $("#ex2").slider({tooltip: 'show'});
 }, 0);
+$("#ex2").show();
 });
 Template.homeBands.helpers({
 artits: function() {
@@ -333,9 +554,17 @@ var result =  Users.find(
                    query
                      , { sort : {"profile.salary" : parseInt(Session.get("salaryasc")) } });
                  // ).sort({"profile.salary" : -1});
+
 if (result.count() > 0 )
+{
+  $('.emtyresult').hide();
   return result ;
-return false;
+  }
+if(result.count() === 0 )
+{
+  $('.emtyresult').show();
+  return false;
+}
 
 //  return Session.get('bandsList');
   //return Meteor.call('displayBands');
@@ -442,7 +671,88 @@ Template.bandInformations.onCreated( function(){
   this.subscribe("images");
   this.subscribe("USERS");});
 Template.homeProfile.onRendered( function(){
-
+  setTimeout(function(){
+  //alert('$(tp-grid)[0]' + $("#tp-grid")[0]);
+if ($("#tp-grid")[0]) {
+  var $grid = $( '#tp-grid' ),
+  $name = $( '#name' ),
+  $close = $( '#close' ),
+  $loader = $( '<div class="loader"><i></i><i></i><i></i><i></i><i></i><i></i><span>Loading...</span></div>' ).insertBefore( $grid ),
+  stapel = $grid.stapel( {
+    randomAngle : false,
+    delay : 100,
+    gutter : 0,
+    pileAngles : 0,
+    onLoad : function() {
+      $('.addAlbum').hide();
+      $('.removeAlbum').css('visibility', 'hidden');
+      $loader.remove();
+              },
+    onBeforeOpen : function( pileName ) {
+      $name.html( pileName );
+      $('.removeAlbum').hide();
+      $('.addAlbum').hide();
+      $('.removeAlbum').css('visibility', 'hidden');
+                      },
+    onAfterOpen : function( pileName ) {
+      showDelte = 1;
+      $('.addAlbum').hide();
+      $('.removeAlbum').css('visibility', 'hidden');
+      $('.removeAlbum').hide();
+      $('.def-block').on('mouseenter', 'ul.tp-grid li ', function(){
+        if(showDelte === 1)
+          {
+          $(this).find('> div.removeDiv').show();
+          }
+      }).on('mouseleave', 'ul.tp-grid li', function () {
+        $(".removeDiv").hide();
+                              });
+      $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+      $close.show();
+                      }
+    });
+    $close.on( 'click', function() {
+      $('.addAlbum').hide();
+      $(this).hide();
+      $("a[rel^='prettyPhoto']").prettyPhoto().unbind();
+      $(".removeDiv").hide();
+      $name.empty().html('Photo Gallery');
+      stapel.closePile();
+      stapel = $grid.stapel( {
+        randomAngle : false,
+        delay : 100,
+        gutter : 0,
+        pileAngles : 0,
+        onLoad : function() {
+          $('.addAlbum').hide();
+          $loader.remove();},
+        onBeforeOpen : function( pileName ) {
+        $('.addAlbum').hide();
+        $name.html( pileName );
+      },
+      onAfterOpen : function( pileName ) {
+        showDelte = 1;
+        $('.addAlbum').hide();
+            $('.def-block').on('mouseenter', 'ul.tp-grid li ', function()
+    {
+      if(showDelte === 1)
+      {
+      $(this).find('> div.removeDiv').show();
+      }
+    }).on('mouseleave', 'ul.tp-grid li', function () {
+      $(".removeDiv").hide();
+});
+        $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+        $close.show();
+      }
+    });
+    });
+  }
+  // prettyPhoto
+  if ($("a[rel^='prettyPhoto']")[0]) {
+    $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+  }
+},10000);
   //this.autorun(function(){
 //alert('homeProfile onRendered remove music-player-list ...');
    // $('.music-player-list').remove();
@@ -1635,6 +1945,7 @@ Template.homeProfile.onCreated(function(){
   Meteor.subscribe("USERS");
   Session.set("myPlaylist", null);
   Meteor.subscribe("songs");
+  Meteor.subscribe("images"); 
 /*  var rached = "rach";
  rached = Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch();
                   console.log(rached);
@@ -1806,7 +2117,7 @@ allsongs : function()
 mysongs.forEach(function(song){
 pllist.push({"id":song._id,
  "title" : song.songname ,
-'cover':'1.jpg' ,
+/*'cover':'1.jpg' ,*/
  "duration" : song.duration, 
   'rating':5,
    'mp3': song.songurl,

@@ -1,0 +1,86 @@
+
+<template name="singelblog">
+	<head>
+ 		<link rel="stylesheet" type="text/css" href="styles/shop.css" media="screen" />
+    </head>
+	<div class="under_header">
+		<img src="images/assets/breadcrumbs1.png">
+	</div>
+	<div class="page-content back_to_up">
+			<div class="row clearfix mb">
+				<div class="breadcrumbIn">
+					<ul>
+						<li><a href="index.html" class="toptip" title="Homepage"> <i class="icon-home"></i> </a></li>
+						<li> Blog </li>
+					</ul>
+				</div><!-- breadcrumb -->
+			</div><!-- row -->
+			<div class="row row-fluid clearfix mbf">
+				<div class="posts">
+					<div class="def-block">  
+						<div class="post row-fluid clearfix">
+							<img src="images/assets/post1-big.jpg" alt="#">
+							<h3 class="post-title"> <i class="icon-headphones"></i><a href="blog-single_half.html">{{blog.title}}</a> </h3>
+							<p>{{blog.content}}</p>
+							<div class="meta">
+								<span> <i class="icon-user mi"></i> {{blog.author}} </span>
+								<span> <i class="icon-time mi"></i>{{formatdate blog.time}} </span>
+								<span> <a href="#" class="showmecomments"><i class="icon-comments-alt"></i> {{allcomments.length}} Comments</a> </span>
+							</div>
+						</div>
+						<div class="user-comments mbs blogcommentslist"> 
+							<h4> Comments {{allcomments.length}} </h4><span class="liner"></span>
+							<ul class="showcomments clearfix" id="{{blog._id}}">
+							    {{#each allcomments}}					
+								<li class="clearfix">
+									<div class="thumb">
+										<a href="#"><img src="images/assets/user1.jpg" alt="#"></a>
+										<div class="reply"><a class="removecomment" id="{{id}}" href="#">Remove Comment</a></div>
+									</div>
+									<h5 class="entry-title"><a href="#" class="title">{{author}}</a><i>said:</i> <span class="date">{{formatdate time}}</span></h5>
+									<p>{{content}}</p>
+								</li>
+								{{/each}}
+							</ul>
+						</div><!-- User comments -->
+						<div class="clearfix">
+							<h4> Post Comment</h4><span class="liner"></span>
+							<form action="#" method="post" id="commentform">
+								<textarea name="comment" rows="8" class="commentcontent" placeholder="your comment *" required=""></textarea>
+								<p>
+									<input name="submit" type="submit" class="send-message postComment" value="Post Comment">
+									<input type="hidden" name="comment_post_ID" value="6" id="comment_post_ID">
+									<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+								</p>
+							</form>
+						</div><!-- Form clearfix -->
+						<!--
+                        {{#each blogs}}
+                        <div class="post row-fluid clearfix">
+							<iframe height="167" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F2304944"></iframe>
+							<h3 class="post-title"> <i class="icon-headphones"></i><a href="blog-single_half.html">{{title}}</a> </h3>
+							<p>{{content}}</p>
+							<div class="meta">
+								<span> <i class="icon-user mi"></i> {{author}} </span>
+								<span> <i class="icon-time mi"></i>{{formatdate time}} </span>
+								<span> <a href="#"><i class="icon-comments-alt"></i> 4 Comments</a> </span>
+							</div>
+							<a href="news_single.html" class="Rmore tbutton small color3"><span>Read More</span></a>
+						</div>
+						{{/each}}-->
+						<!--<div class="post row-fluid clearfix">
+							<a href="blog-single_half.html"><img src="images/assets/post1-big.jpg" alt="#"></a>
+							<h3 class="post-title"> <i class="icon-pencil"></i><a href="blog-single_half.html">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet</a> </h3>
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus...</p>
+							<div class="meta">
+								<span> <i class="icon-user mi"></i> Admin </span>
+								<span> <i class="icon-time mi"></i>August 20, 2013 2:00 AM </span>
+								<span> <a href="#"><i class="icon-comments-alt"></i> 4 Comments</a> </span>
+							</div>
+							<a href="news_single.html" class="Rmore tbutton small color3"><span>Read More</span></a>
+						</div>-->
+					</div><!-- def block -->
+				</div><!-- posts -->
+			</div><!-- row clearfix -->
+		</div><!-- end page content -->
+</template>	

@@ -70,11 +70,23 @@ $("#ullist").getNiceScroll().remove();
 $("#ullist").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
 $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
 	// Tabs
+	//show blog comments 
+	$('.full').on('click' ,'.showmecomments' ,function(e)
+	{
+		$('.blogcommentslist').slideToggle();
+		e.stopPropagation();
+		e.preventDefault();
+	});
 	$('.full').on('click', ' ul.tabs li a', function(e){
        var tabs = $('.full  ul.tabs');
 		var contentLocation = $(this).attr('href');
 		if( $(this).attr("id") === "uploadsong")
 			{$(".uploadsongdiv").show(); }
+		if($(this).attr("id") === "uploadimage")
+		{
+			/*$(".uploadimgdiv").show();*/
+			$(".uploadsongdiv").hide();
+        }
 		//$('.full  ul.tabs').children().each(function (i) {
 			//var tab =  $('.full  ul.tabs').find('li').eq(i).find('> a');
 			//alert(tab.html());
@@ -394,7 +406,9 @@ $("#popupLogin").on('click', '#login_password ', function(){
   $('#divToggleType .dropdown-menu ').css("background","white");
 });*/
 
-
+$('.full').on('click' ,'.createblog' ,function () {
+	$('.createblogform').slideToggle();
+})
 	$(".exampleHeader").on('mouseenter', '.dropdown-menu #profileMessages', function() {
 	$('#toggedfirst .dropdown-menu #profileMessages a span').css("background","#f92388");
 });

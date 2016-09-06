@@ -57,7 +57,8 @@ $('head').append('<script type="text/javascript" src="js/datePicker.js"></script
 $('head').append('<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>');
 $('head').append('<script type="text/javascript" src="js/events.js"></script>');
 $('head').append('<script type="text/javascript" src="js/calendarcustom.js"></script>');
-$('head').append('<script type="text/javascript" src ="js/jquery.stapel.js">');
+$('head').append('<script type="text/javascript" src="js/modernizr.custom.63321.js"></script>');
+//$('head').append('<script type="text/javascript" src ="js/jquery.stapel.js">');
 $('head').append('<script type="text/javascript" src="js/theme20.js"></script>');
 $('head').append('<script type="text/javascript" src="js/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>');	
 $('head').append('<script type="text/javascript" src="js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>');
@@ -69,6 +70,7 @@ $('head').append('<script type="text/javascript" src="js/jquery.jplayer.js"></sc
 $('head').append('<script type="text/javascript" src="js/ttw-music-player-min.js"></script>');/*
 $('head').append('<script type="text/javascript" src="js/iiiimyplaylist.js"></script>');*/
 $('head').append('<script type="text/javascript" src="js/twitter/jquery.tweet.js"></script>');
+$('head').append('<script type="text/javascript" src ="js/jquery.stapel.js">');
 $('head').append('<script type="text/javascript" src="js/abbCostume.js"></script>');
 });
 Template.count.helpers({

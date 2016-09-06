@@ -202,7 +202,7 @@
       <li><a href="#details" class="active details">Details</a></li>
       {{# if bandprofile  profile.type }}
        <li><a class="seeloadsongs" href="#mp3">Songs</a></li>
-      <li><a href="#photogallery">Gallery </a></li>
+      <li><a href="#photogallery" class="seegallery">Gallery </a></li>
       <li><a href="#videos">Videos</a></li>
       <li><a href="#events">Events</a></li>
       <li><a href="#calender">Calender</a></li>
@@ -222,6 +222,9 @@
       </div>
       {{/if}}
       {{/if}}
+    </li>
+    <li>
+        <div id="close" class="tbutton small color3 tback uploadimgdiv"><span>&gt; Back to Albums</span></div>
     </li>
     {{/if}}
       {{# if userprofile  profile.type }}
@@ -252,13 +255,12 @@
       </li>
       <li id="photogallery">
         <div class="video-grid">
-          phhotos  ...
-          <!--<ul id="tp-grid" class="tp-grid">
-            {{#each images}}
+          <ul id="tp-grid" class="tp-grid">
+            {{#each imgs}}
               {{> task}}
             {{/each}}   
           </ul>
-          {{> imageUploader}}-->
+         <!-- {{> imageUploader}}-->
         </div>
       </li>
       <li id="videos">
