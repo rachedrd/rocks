@@ -1,0 +1,433 @@
+<template name="manageProfile">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div class="profilecover">
+ <img class = "coverImage" src="images/5.jpeg" />
+  <div class="subcover">
+    <div class="avatarContainer">
+      <img class = "avatarImage" src="images/avatarProfileM3.png" />
+    </div>
+    <div class="usercontainer">
+      <div class="username">
+        <span class="usrPrflnm">{{ myusername this}}
+        </span>
+      </div>
+      <div class="usermessages dropdown" >
+        <span class="messagessicon  dropdown-toggle" data-toggle="dropdown" alt="send Message" title="send Message">
+          <i class="glyphicon glyphicon-envelope" alt="Send message" title="Send message"></i>
+        </span>
+      </div>
+    </div> 
+  </div> 
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="posts tabprofile ">
+  <div class="def-block">
+    <div class="topbar">
+    </div>
+    <ul class="tabs">
+      <li><a href="#Details" class="active details"> Manage informations </a></li>
+       <!--{{# if bandprofile  this.profile.type }}
+      <li><a class="loadsongs" href="#mp3" id="uploadsong" > Songs </a></li>
+      <li><a href="#Lightbox" id="uploadimage" >Gallery </a></li>
+      <li><a href="#Lightbox">Videos</a></li>
+      <li><a href="#Lightbox">Events</a></li>
+      <li><a href="#Lightbox"> Calender </a></li>
+      <li>
+        <div id="close" class="tbutton small color3 tback uploadimgdiv"><span>&gt; Back to Albums</span></div>
+      </li>
+       {{/if}}-->
+       <!--{{# if userprofile this.profile.type }}
+       <li><a href="#Featured">Shared Songs</a></li>
+      <li><a href="#Lightbox">Gallery</a></li>    
+      <li><a href="#events">WhishList</a></li>
+      {{/if}}
+      {{# if adminprofile this.profile.type }}
+       <li><a href="#seeusers">details</a></li>
+      {{/if}}-->
+    </ul>
+    <ul class="tabs-content ">
+      <li id="Details" class="active">
+        <div class="userinfocontent ">
+          {{# if bandprofile  this.profile.type }}
+             {{> managebandInformations}}
+          {{/if}}
+          {{# if userprofile this.profile.type }}
+            {{> manageuserInformations}}
+          {{/if}}
+           <div id="pubcodediv" class="userinforow">
+          <span class="oldinfo bld">publicity code: </span>
+          <span id="pubspan" class="oldinfo bld">
+              {{this._id}}
+          </span>
+        </div>
+        <div id="pubcounterdiv" class="userinforow">
+          <span class="oldinfo bld">publicity counter: </span>
+          <span id="pubcounterspan" class="oldinfo bld">
+              {{this.profile.publicityCounter}}
+          </span>
+        </div>
+        <div id="phonediv" class="userinforow">
+          <span class="oldinfo bld">phone number: </span>
+          <span id="phonesspan" class="oldinfo bld">
+            {{# if this.profile.phoneNumber }}
+              {{myphonenumber this.profile.phoneNumber}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+        </div>
+          <div id="accountstatusdiv" class="userinforow">
+          <span class="oldinfo bld">Account status: </span>
+          <span id="accountstatusspan" class="oldinfo bld">
+              {{ this.profile.Status }}   
+          </span>
+          <span class="oldinfo oldinactive bld"> Active:</span>
+          <input id="inputaccountstatusactive" type="radio" class="oldinfo userstatus" name="acountstatus" value="active" />
+          <span class="oldinfo oldactive bld">Inactive:</span>
+          <input  id="inputaccountstatusinactive" type="radio" class="oldinfo userstatus" name="acountstatus" value="inactive"  />
+          <span class="updateaccountstatus oldinfo bld">
+            <i class="glyphicon glyphicon-pencil" alt="manage account status" title="manage account status"></i>
+          </span>
+          <span class="saveaccountstatus bld">save</span>
+        </div>
+        <div id="chatdiv" class="userinforow">
+          <span class="oldinfo bld">Chat: </span>
+          <span id="chatfuncspan" class="oldinfo bld">
+              {{ this.profile.chatFunctionnality }}   
+          </span>
+          <span class="oldinfo oldchatactive bld"> allowed:</span>
+          <input id="inputchatactive" type="radio" class="oldinfo userchat" name="chat" value="allowed" />
+          <span class="oldinfo oldchatinactive bld">not allowed:</span>
+          <input  id="inputchatinactive" type="radio" class="oldinfo userchat" name="chat" value="not allowed"  />
+          <span class="updatechatfunc oldinfo bld">
+            <i class="glyphicon glyphicon-pencil" alt="manage account status" title="manage account status"></i>
+          </span>
+          <span class="savechatfunc bld">save</span>
+        </div>
+        <h6> Address </h6>
+        <div id="countrydiv" class="userinforow">
+          <span class="oldinfo bld">country name: </span>
+          <span id="countryspan " class="oldinfo bld">Uk
+          </span>
+        </div>
+        <div id="postcodediv" class="userinforow">
+          <span class="oldinfo bld">post code: </span>
+          <span id="postecodespan" class="oldinfo bld">
+            {{# if this.profile.address.postecode }}
+              {{ this.profile.address.postecode}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+      </div>
+        <div id="regiondiv" class="userinforow">
+          <span class="oldinfo bld ">Region: </span>
+          <span id="regionspan" class="oldinfo bld">
+            {{# if this.profile.address.region }}
+              {{this.profile.address.region}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <div id="citydiv" class="userinforow">
+          <span class="oldinfo bld ">city: </span>
+          <span id="cityspan" class="oldinfo bld">
+            {{# if this.profile.address.city }}
+              {{this.profile.address.city}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <div id="addressdiv" class="userinforow">
+          <span class="oldinfo bld">Address: </span>
+          <span id="addressspan" class="oldinfo bld">
+            {{# if this.profile.address.address }}
+              {{ this.profile.address.address}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+      </div>
+        </div>
+      </li>
+      <li id="mp3">
+        <div class="video-grid"> 
+          <div class="row clearfix mbf mysongsplayer">
+            {{# if allsongs }}
+            {{> playplugin }}
+            {{/if }}
+          </div>
+        </div>
+      </li>
+      <li id="Lightbox">
+        <div class="video-grid">
+          <ul id="tp-grid" class="tp-grid">
+            {{#each images}}
+              {{> task}}
+            {{/each}}
+          </ul>
+          <!--{{> imageUploader}}-->
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+</template>       
+<template name="managebandInformations">
+      <div id="informationconatiner" >
+        <div id="usernamediv" class="userinforow">
+          <span class="oldinfo bld">username:</span><span class="oldinfo bld" id="usernamespan" disabled="disabled">{{this.username}}</span>
+        </div>
+        <div id="bandnamediv" class="userinforow">
+          <span class="oldinfo bld">Band name:</span>
+          <span id="bandnamespan" class="oldinfo bld">{{mybandname this}}</span>
+        </div>
+        <div id="bandtypediv" class="userinforow">
+          <span class="bandtypeslabel oldinfo bld">Band type: </span>
+          <span id="bandtypespan" class="oldinfo bld">{{mybandtype this.profile.bandtype}}</span>
+        </div>
+        <div id="emaildiv" class="userinforow">
+          <span class="oldinfo bld">Email: </span>
+          <span id="emailspan" class="oldinfo bld">{{this.emails.[0].address}}</span>
+        </div>
+         <div id="agentdiv" class="userinforow">
+          <span class="oldinfo bld">Agent: </span>
+          <span id="salaryspan" class="oldinfo bld" alt="set only by agent" title="set only by agent">
+              {{myagent this }}
+          </span>
+        </div>
+        <div id="oprationaldiv" class="userinforow">
+          <span class="oldinfo bld">Operational: </span>
+          <span id="oprationalspan" class="oldinfo bld">
+              {{ this.profile.oprational }}   
+          </span>
+          <span class="oldinfo oldoperyes bld"> yes:</span>
+          <input id="inputoprationalyes" type="radio" class="oldinfo bandoperational" name="operational" value="yes" />
+          <span class="oldinfo oldoperno bld">no:</span>
+          <input  id="inputoprationalno" type="radio" class="oldinfo bandoperational" name="operational" value="no"  />
+          <span class="updateoprational oldinfo bld">
+            <i class="glyphicon glyphicon-pencil" alt="oprational band" title="manage account status"></i>
+          </span>
+          <span class="saveoprational bld">save</span>
+        </div>
+        <!--<div id="accountstatusdiv" class="userinforow">
+          <span class="oldinfo bld">Account status: </span>
+          <span id="accountstatusspan" class="oldinfo bld">
+              {{ this.profile.Status }}   
+          </span>
+          <span class="oldinfo oldinactive bld"> Active:</span>
+          <input id="inputaccountstatusactive" type="radio" class="oldinfo usergender" name="acountstatus" value="active" />
+          <span class="oldinfo oldactive bld">Inactive:</span>
+          <input  id="inputaccountstatusinactive" type="radio" class="oldinfo usergender" name="acountstatus" value="inactive"  />
+          <span class="updateaccountstatus oldinfo bld">
+            <i class="glyphicon glyphicon-pencil" alt="manage account status" title="manage account status"></i>
+          </span>
+          <span class="saveaccountstatus bld">save</span>
+        </div>
+        <div id="chatdiv" class="userinforow">
+          <span class="oldinfo bld">Chat: </span>
+          <span id="chatfuncspan" class="oldinfo bld">
+              {{ this.profile.chatFunctionnality }}   
+          </span>
+          <span class="oldinfo oldchatactive bld"> allowed:</span>
+          <input id="inputchatactive" type="radio" class="oldinfo usergender" name="chat" value="allowed" />
+          <span class="oldinfo oldchatinactive bld">not allowed:</span>
+          <input  id="inputchatinactive" type="radio" class="oldinfo usergender" name="chat" value="not allowed"  />
+          <span class="updatechatfunc oldinfo bld">
+            <i class="glyphicon glyphicon-pencil" alt="manage account status" title="manage account status"></i>
+          </span>
+          <span class="savechatfunc bld">save</span>
+        </div>-->
+        <div id="salarydiv" class="userinforow">
+          <span class="oldinfo bld">Salary: </span>
+          <span id="managesalaryspan" class="oldinfo bld" alt="set only by agent" title="set only by agent">
+            {{# if this.profile.salary }} 
+              {{this.profile.salary}} $
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+           <input type="text" id="managesalaryinput" placeholder="500" class="oldinfo" value="{{this.profile.salary}}"/>
+          <span class="managesalaryupdate oldinfo bld">
+            <i class="glyphicon glyphicon-pencil" alt="update salary" title="update salary"></i>
+          </span>
+          <span class="savesalarymanage bld oldinfo">save</span>
+          <div id="errors">
+            <span id="emtysalarymanage" class="error  oldinfo">
+              <i  class=" glyphicon glyphicon-asterisk "></i>
+            </span>
+            <span id="salarymanageerr" class="error oldinfo"></span>
+          </div>
+        </div> 
+      </div>
+</template> 
+<template name="manageuserInformations ">
+      <div id="informationcontainer" >
+        <div id="usernamediv" class="userinforow">
+          <span class="oldinfo bld">full name:</span>
+          <span class="oldinfo bld" id="usernamespan" disabled="disabled">{{this.profile.name}}</span>
+        </div>  
+        <div id="firstnamediv" class="userinforow">
+          <span class="oldinfo bld">First name: </span>
+          <span id="firstnamespan" class="oldinfo bld">{{this.profile.firstname}}</span>
+        </div>
+        <div id="lastnamediv" class="userinforow">
+          <span class="oldinfo bld">Last name:</span>
+          <span id="lastnamespan" class="oldinfo bld">{{this.profile.lastname}}</span>
+        </div>
+        <div id="emaildiv" class="userinforow">
+          <span class="oldinfo bld">Email: </span>
+          <span id="emailspan" class="oldinfo bld">{{this.emails.[0].address}}</span>
+        </div>
+        <div id="birthdiv" class="userinforow">
+          <span class="oldinfo bld">Birth date: </span>
+          <span id="birthspan" class="oldinfo bld">
+            {{# if this.profile.birthdate }}
+              {{mybirthdate this.profile.birthdate}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <div id="genderdiv" class="userinforow">
+          <span class="oldinfo bld">Gender: </span>
+          <span id="genderspan" class="oldinfo bld">
+            {{# if this.profile.gender }}
+              {{this.profile.gender}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+        </div>
+        <!--
+        <div id="pubcodediv" class="userinforow">
+          <span class="oldinfo bld">publicity code: </span>
+          <span id="pubspan" class="oldinfo bld">
+            {{this.profile.publicityCode}}
+          </span>
+        </div>
+        <div id="pubcounterdiv" class="userinforow">
+          <span class="oldinfo bld">publicity counter: </span>
+          <span id="pubcounterspan" class="oldinfo bld">
+            {{this.profile.publicityCounter}}
+          </span>
+        </div>
+        <div id="statusdiv" class="userinforow">
+          <span class="oldinfo bld">profile status: </span>
+          <span id="statusspan" class="oldinfo bld">
+            {{this.profile.Status}}
+          </span>
+        </div>
+         <h6> Address </h6>
+        <div id="countrydiv" class="userinforow">
+          <span class="oldinfo bld">country name: </span>
+          <span id="countryspan " class="oldinfo bld">Uk
+          </span>
+         </div>
+        <div id="postcodediv" class="userinforow">
+          <span class="oldinfo bld">post code: </span>
+          <span id="postecodespan" class="oldinfo bld">
+            {{# if this.profile.address.postecode }}
+              {{ this.profile.address.postecode}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+          <div class="addpostecode userinforow">
+          <div class='suggest-holder'>
+            <input type='text' class='suggest-prompt'>
+            <ul class="zonecodes">
+            </ul>
+          </div>
+          <span class="updatepostecode oldinfo">
+            <i class="glyphicon glyphicon-pencil" alt="update post code" title="update post code"></i>
+          </span>
+          <span class="savepostecode bld">save</span>
+          <div id="errors">
+            <span id="emptypostecode" class="error oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="emptypostecodeerr" class="error oldinfo"></span>
+          </div>
+        </div>
+      </div>
+        <div id="regiondiv" class="userinforow">
+          <span class="oldinfo bld ">Region: </span>
+          <span id="regionspan" class="oldinfo bld">
+            {{# if this.profile.address.region }}
+              {{this.profile.address.region}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+          <input type="text" id="regioninput" class="oldinfo bld" value="{{this.profile.address.region}}"/>
+          <span class="updateregion bld">
+            <i class="glyphicon glyphicon-pencil" alt="update city name" title="update city name"></i>
+          </span>
+          <span class="saveregion bld">save</span>
+          <div id="errors">
+            <span id="emptyregion" class="error  oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="emptyregionerr" class="oldinfo error"></span>
+          </div>
+        </div>
+        <div id="citydiv" class="userinforow">
+          <span class="oldinfo bld ">city: </span>
+          <span id="cityspan" class="oldinfo bld">
+            {{# if this.profile.address.city }}
+              {{this.profile.address.city}}
+            {{else}}
+                not setted
+            {{/if}}   
+          </span>
+          <span class="updatecity bld">
+            <i class="glyphicon glyphicon-pencil" alt="update city name" title="update city name"></i>
+          </span>
+          <span class="savecity bld">save</span>
+          <div id="errors">
+            <span id="emptycity" class="error  oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="emptycityerr" class="oldinfo error"></span>
+          </div>
+        </div>
+        <div id="addressdiv" class="userinforow">
+          <span class="oldinfo bld">Address: </span>
+          <span id="addressspan" class="oldinfo bld">
+            {{# if this.profile.address.address }}
+              {{ this.profile.address.address}}
+            {{else}}
+                not setted
+            {{/if}}
+          </span>
+          <span class="updateaddress oldinfo">
+            <i class="glyphicon glyphicon-pencil" alt="update post code" title="update post code"></i>
+          </span>
+          <div class="addadress userinforow">
+          <div class='address-holder'>
+            <input type='text' class='inputaddress' value="{{ this.profile.address.address}}">
+            <ul class="address" id="uladdress">
+            </ul>
+          </div>
+          <span class="saveaddress bld">save</span>
+          <div id="errors">
+            <span id="emptyaddress" class="error oldinfo">
+              <i class=" glyphicon glyphicon-asterisk"></i>
+            </span>
+            <span id="emptyaddresserr" class="error oldinfo"></span>
+          </div>
+        </div>
+      </div>  
+      <br>
+      <br>
+      <br>-->
+      </div>
+</template> 

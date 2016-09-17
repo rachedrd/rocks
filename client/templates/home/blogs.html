@@ -2,6 +2,24 @@
 	<head>
  		<link rel="stylesheet" type="text/css" href="styles/shop.css" media="screen" />
     </head>
+    <div id="popupblogimage">
+        <div class="def-block widget">
+          <h4> Upload Blog image </h4><span id="errsongname"></span><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+           <form id="popup_login_form">
+              <div class="songnamediv">
+                <span class="currentsonname"></span>
+              </div>
+              <div id="myProgress" class="imageblogprogress">
+    <span id="progressUploading"> {{progress}} %</span>
+  <div id="myBar" style="width: {{progress}}%;"></div>
+</div>
+    </form><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupblogimageclose">x</div>
+      </div>
+      <div id="addblogimagebg"></div>
 	<div class="under_header">
 		<img src="images/assets/breadcrumbs1.png">
 	</div>
@@ -29,9 +47,9 @@
 								<div class="clearfix">
 									<div class="grid_4 mb">
 									<div class="tbutton small color3 uploadsongimgdiv">
-                                       <span class="uploadnewsong" alt="upload song" title="upload song" >Upload song
+                                       <span class="upload uploadedblogimage" alt="upload image or song" title="upload image or song" >Upload image
                                        </span>
-                                       <input type="file"  class="uploadsong upload" id="uploadsongfile">
+                                       <input type="file"  class="uploadblogimage upload" id="uploadblogimage">
                                        <!--<audio id="myaudio2" src=""></audio>-->
                                     </div>
 								    </div>
@@ -47,7 +65,7 @@
 						</div>    
                         {{#each blogs}}
                         <div class="post row-fluid clearfix">
-							<img src="images/assets/post1-big.jpg" alt="#">
+							<img src="{{imageurl}}" alt="#">
 							<h3 class="post-title"> <i class="icon-headphones"></i><a href="blog-single_half.html">{{title}}</a> </h3>
 							<p>{{content}}</p>
 							<div class="meta">

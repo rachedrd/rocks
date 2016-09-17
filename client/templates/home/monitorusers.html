@@ -1,0 +1,136 @@
+<template name="monitorusers">
+<div class="under_header">
+</div>
+
+		<div class="page-content back_to_up">
+			<div class="row clearfix mb">
+				<div class="breadcrumbIn">
+					<ul>
+						<li><a href="index.html" class="toptip" title="Homepage"> <i class="icon-home"></i> </a></li>
+						<li><a href="support_forum.html"> Manage users </a></li>
+						<!--<li> FAQ KNOWLEDGEBASE </li>-->
+					</ul>
+				</div><!-- breadcrumb -->
+			</div><!-- row -->
+			<div class="row row-fluid forum clearfix mbf banscontent">
+
+				<div class="span3 sidebar searchusers">
+					<div class="def-block widget">
+						<h4>advanced search </h4><span class="liner"></span>
+						<div class="widget-content clearfix">
+							<form method="post" id="loginform" action="#">
+								<div  class="userinforow usertypesearch">
+						        <span class="oldinfo bld">username: </span>
+						        <div class="usertypecontainer userinforow">
+						          <div class='suggest-username'>
+						            <input type='text' class='suggest-usernameinput'>
+						            <ul class="usernames">
+						            	{{#each getAllUsers}}
+						            	<li><span class='suggest-name'>{{username}}</span></li>
+						            	{{/each}}
+						            </ul>
+						          </div>
+						        </div>
+						    </div>
+								<!--<input type="text" name="Name" id="input-i" placeholder="username" required="">
+								<input type="text" name="Password" id="input-i" placeholder="usertype" required="">
+								<input type="submit" id="login-button" name="submit" value="Search">-->
+							<div  class="userinforow usertypesearch">
+						        <span class="oldinfo bld">Category:&nbsp;</span>
+						        <div class="usertypecontainer userinforow">
+						          <div class='suggest-usertype'>
+						            <input type='text' class='suggest-usertypeinput'>
+						            <ul class="usertypes">
+						            </ul>
+						          </div>
+						        </div>
+						    </div>
+						    <input type="submit" id="login-button" class="color3 searchusersmonitor" name="submit" value="Search">	
+							</form>
+
+						</div><!-- widget content -->
+
+					</div><!-- def block widget Login -->
+
+					<div class="def-block widget">
+						<h4> Create new admin </h4><span class="liner"></span>
+						<div class="widget-content clearfix">
+							<form method="post" id="loginform" action="#">
+								<input type="text" name="Name" id="input-i" placeholder="adminname" required="">
+								<input type="password" name="Password" id="input-i" placeholder="******" required="">
+								<input type="password" name="Password" id="input-i" placeholder="email" required="">
+								<input type="submit" id="login-button" name="submit" value="Create">
+								<!--<div class="login-links">
+									<a href="#" title="Register" class="register-link">Register</a>
+									<a href="#" title="Lost Password" class="lostpass-link">Lost Password</a>
+								</div>-->
+							</form>
+						</div><!-- widget content -->
+					</div><!-- def block widget text -->
+
+				</div><!-- span3 sidebar -->
+				<div class="span9 posts">
+					<div class="def-block clearfix">
+						<div class="mbf clearfix userstablecontainer">
+							<table class="table userstable">
+								<thead>
+									<tr>
+										<th scope="col"><!--<i class="up glyphicon glyphicon-chevron-up" style="font-size:8px ; font-weight: normal"></i>&nbsp;-->Username<!--&nbsp;<i class="glyphicon glyphicon-chevron-down down" style="font-size:8px ; font-weight: normal"></i>--></th>
+										<th scope="col">user type</th>
+										<th scope="col">account status</th>
+										<th scope="col">publicity counter</th>
+										<th scope="col">operational</th>
+										<th scope="col">events</th>
+										<th scope="col">booking</th>
+
+
+
+
+
+									</tr>
+								</thead>
+								<tbody>
+									{{#each allusers}}
+									<tr class="topic-sticky">
+										<td><!--<i class="icon-paper-clip mr"></i>--><a href="{{pathFor 'manageProfile'}}" alt="click to manage profile" title="edit informations" class="tabusername" value='{{profile.name}}'>{{profile.name}}</a></td>
+										<td><!--<img alt="" src="http://0.gravatar.com/avatar/a56c3cecb6ff7c3072bbfbe7b8a953a7?s=14&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar" height="20" width="20">&nbsp;--><a href="{{pathFor 'seeprofile'}}" title="click to manage profile" rel="nofollow">{{profile.type}}</a></td>
+										<td>{{profile.Status}}</td>
+										<td><!--<img alt="" src="http://0.gravatar.com/avatar/a56c3ce" class="avatar" height="20" width="20">&nbsp;--><a href="{{pathFor 'seeprofile'}}" title="click to manage profile" rel="nofollow">{{profile.publicityCounter}}</a></td>
+
+										<td><!--<img alt="" src="http://0.gravatar.com/avatar/a56c3ce" class="avatar" height="20" width="20">&nbsp;-->
+											<a href="{{pathFor 'seeprofile'}}" title="click to manage profile" rel="nofollow">
+												{{profile.oprational}}
+											<!--{{# if operational profile.oprational}}
+											  <i class="glyphicon glyphicon-ok mr" style="color:green"></i>
+											{{else}}
+											    <i class="glyphicon glyphicon-remove mr" style="color:red"></i>
+											
+											{{/if}}-->  
+										    </a>
+										</td>
+										<td><!--<img alt="" src="http://0.gravatar.com/avatar/a56c3ce" class="avatar" height="20" width="20">&nbsp;--><a href="{{pathFor 'seeprofile'}}" title="click to manage profile" rel="nofollow">0</a></td>
+										<td><!--<img alt="" src="http://0.gravatar.com/avatar/a56c3ce" class="avatar" height="20" width="20">&nbsp;--><a href="{{pathFor 'seeprofile'}}" title="click to manage profile" rel="nofollow">0</a></td>
+									</tr>
+									{{/each}}
+								</tbody>
+								<tfoot><tr><td colspan="8">Total : {{totalusers}}</td></tr></tfoot>
+							</table>
+						</div>
+						<div class="pagination-tt clearfix">
+								<ul>
+                                  {{# each pagination}}
+									<!--<li><span class="deactive">1</span></li>-->
+									<li><a href="#" id="{{number}}" class="tbutton color3 userspaginationitem"><span>{{number }}</span></a></li>
+									{{/each}}
+									<!--<li><a href="#" class="tbutton"><span>2</span></a></li>
+									<li><a href="#" class="tbutton"><span>3</span></a></li>
+									<li><span class="deactive">...</span></li>
+									<li><a href="#" class="tbutton"><span>8</span></a></li>-->
+								</ul>
+								<span class="pages">Page {{currentPage}} of {{pagination.length}}</span>
+							</div>
+					</div><!-- def block -->
+				</div><!-- span9 posts -->
+			</div><!-- row clearfix -->
+		</div><!-- end page content -->
+</template>

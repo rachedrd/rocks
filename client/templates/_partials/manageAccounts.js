@@ -12,6 +12,18 @@ Meteor.startup (function(){
 
 });
 Meteor.subscribe("USERS");
+Template.nav.helpers({
+	mycurrentuser: function(user)
+	{
+		if(user && user.profile)
+		{
+		if(user.profile.Status == "active")
+			return true;
+		else
+			return false;
+		}
+	}
+});
 /*Meteor.setInterval(function()
 	{
 Meteor.Users.forEach( function(USR){
@@ -81,6 +93,7 @@ mycounter: function (){
 	return false; 
 }
 });
+
 Template.body.helpers({
   /*tasks() {
    return Tasks.find({});
@@ -366,7 +379,6 @@ Template.templateForm.events({
 						}
 						else 
 						{
-							
 							t.find("#login_username").value = "";
 							t.find("#login_password").value = "";
 								$("#errorMsgLgn").html("");
@@ -381,12 +393,22 @@ Template.templateForm.events({
      							 counter = Notifications.find({ "recieverId":  Meteor.userId(), viewed : false}).count();
     							 Session.set('notcounter', counter);
 
+
     							// usertype 
     							var rachini = '' ; 
-							    rachini = Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch();
+							    rachini = Users.findOne({"_id":  Meteor.userId() }, { fields: { profile : 1} });
+							    if(rachini.profile.Status === 'inactive')
+							    {
+							    	alert('username is active');
+							    }
+							    else
+							    {
+							    	alert('contact admin your profile has been disabled');
+							    	//Router.go('/');
+							    }
 							   // alert(rachini);
 							   // alert('usertype : ' + rachini[0].profile.type);
-							    Session.set("rachini", rachini[0].profile.type);
+							    Session.set("rachini", rachini.profile.type);
 							   //  alert('rachini from login : ' +Session.get('rachini'));
 							   
 

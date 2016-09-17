@@ -1,7 +1,6 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Mongo } from 'meteor/mongo';
 import { Session } from 'meteor/session';
-
 var uploader = new ReactiveVar();
 var orientaion = 0;
 var typeofuser = new ReactiveVar();
@@ -30,6 +29,417 @@ alert('removing from db ' + this._id);
 Images.remove(this._id );     
   }
 });*/
+Template.monitorusers.onCreated(function(){
+  Session.setDefault("skipusers", 0);
+  Session.setDefault('currentPage', 1);
+  Session.setDefault("getAllusers", 0);
+  Session.setDefault("theusertype",null);
+  //Session.setDefault("theusername", null);
+});
+Template.monitorusers.onRendered(function(){
+  $('.usernames').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1});     
+  $('.usertypes').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1});     
+
+$('.userstablecontainer').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1});     
+});
+Template.monitorusers.events({
+  'click .usertypes li' : function(e, t)
+  {
+    Session.setDefault("skipusers", 0);
+    //console.log('click change allusers ...');
+    //alert($(this).html());
+   // alert($(e.currentTarget).find('> span').text());
+    var usertype = $(e.currentTarget).find('> span').text().toString();
+Session.set("theusertype", usertype);
+  },
+  'click .usernames li':function(e , t)
+  {
+    var username = $(e.currentTarget).find('> span').text().toString();
+    for(var i = 0 ; i < $('.userstable tbody').children().length ; i ++)
+{
+  //alert($('.userstable tbody').children().eq(i).children().find('.username').val());
+  if($('.userstable tbody').children().eq(i).children().find('.tabusername').text().indexOf(username) !== 0)
+  {
+    //alert($('.userstable tbody').children().eq(i).find('> td a').val() + "  " + currenttext );
+    $('.userstable tbody').children().eq(i).hide();
+  }
+}
+  },
+  'click .userspaginationitem' : function(e, t)
+  {
+    var counter = parseInt($(e.currentTarget).attr('id')  );
+    if(counter === 1) 
+    {
+
+  Session.set('currentPage', counter);
+       counter -- ;  
+    }
+   
+    else
+      {
+        Session.set('currentPage', counter);
+        counter = (counter -  1) * 10;
+       }
+    Session.set("skipusers", counter);
+  },
+  'keyup .suggest-usernameinput':function(){
+    Session.setDefault("skipusers", 0);
+    $('.userstable tbody').children().show();
+  //  alert('keyup');
+  //$('.usernames').show();
+  var currenttext = $('.suggest-usernameinput').val().toLowerCase();
+  if(currenttext === "")
+  {
+    $('.userstable tbody').children().show();
+    //Session.set("theusername", "");
+  }
+  currenttext = currenttext.toLowerCase();
+$('.usernames').empty();
+if(Session.get("getAllusers").length > 0){
+for(var i = 0 ; i < Session.get("getAllusers").length; i++){
+    if(Session.get("getAllusers")[i].username.toLowerCase().match(currenttext )) {
+        $('.usernames').append($("<li><span class='suggest-name'>" + Session.get("getAllusers")[i].username + "</span></li>"));
+    $('.usernames li span').eq(0).css({'text-decoration': 'underline'});
+  }
+}
+}
+
+for(var i = 0 ; i < $('.userstable tbody').children().length ; i ++)
+{
+  //alert($('.userstable tbody').children().eq(i).children().find('.username').val());
+  if($('.userstable tbody').children().eq(i).children().find('.tabusername').text().toLowerCase().indexOf(currenttext) !== 0)
+  {
+    //alert($('.userstable tbody').children().eq(i).find('> td a').val() + "  " + currenttext );
+    $('.userstable tbody').children().eq(i).hide();
+  }
+  else{
+ //   alert('inde 0 ');
+  }
+}
+$('.usernames').show();
+     },
+'click .searchusersmonitor':function()
+{
+  Session.set("skipusers", 0);
+ /* if($('.suggest-usernameinput').val() !== null && $('.suggest-usernameinput').val() !== undefined )
+  {
+  Session.set("theusername",$(".suggest-usernameinput").val());
+  }
+  else{
+    //alert('null on undefined');
+  //Session.
+  Session.set("theusername", "");
+}*/
+/*
+if($('.suggest-usernameinput').val() !== undefined && $('.suggest-usernameinput').val() !== "")
+{
+  orquery.$and.push({"username": $('.suggest-usernameinput').val()});
+}
+if($('.suggest-usernameinput').val() === "")
+{
+  if(orquery.$and !== undefined)
+   orquery.$and.length = 0;
+}*/
+  //alert("username :  " +$('.suggest-usernameinput').val());
+  if($(".suggest-usertypeinput").val() !== null && $(".suggest-usertypeinput").val() !== undefined &&
+  $(".suggest-usertypeinput").val().length >= 3  )
+  {
+  Session.set("theusertype",$(".suggest-usertypeinput").val());
+  }
+  else{
+    //alert('null on undefined');
+  //Session.
+  Session.set("theusertype", "all users");
+}
+  //alert(Session.get("theusertype"));
+}    
+});
+Template.monitorusers.helpers({
+  operational: function(operational)
+  {
+  if (operational === "yes")
+    return true; 
+    return false;
+  },
+  currentPage : function(){
+
+    return Session.get('currentPage');
+  },
+  pagination : function()
+  {
+    var paginationarray = [];
+    if (Session.get("totalusers") > 10 )
+    {
+     $('.pages').show();
+     var length = Session.get("totalusers") / 10;
+    for (var i = 1 ; i < length + 1 ; i++) 
+    {
+      paginationarray.push({"number": i });
+      //i = i + 5 ;
+    } 
+    }
+    else{$('.pages').hide();}
+    return paginationarray;
+  },
+  getAllUsers :function()
+  {
+ return Session.get("getAllusers");
+  },  
+  totalusers : function() {
+  /*  var result =  Users.find();
+
+if (result.count() > 0 )
+  return result.count() ;
+  return 0;
+  */
+  if(Session.get("totalusers") > 0)
+    return Session.get("totalusers");
+     return 0; 
+     },
+  allusers: function() {
+   // Session.set("skipusers", 0);
+    var query = { };
+  //alert(Session.get("bandtype"));
+query = { $and : [] };
+orquery = { $or : [] };
+/*
+if($('.suggest-usernameinput').val() !== undefined && $('.suggest-usernameinput').val() !== "")
+{
+  orquery.$and.push({"username": $('.suggest-usernameinput').val()});
+}
+if($('.suggest-usernameinput').val() === "")
+{
+  if(orquery.$and !== undefined)
+   orquery.$and.length = 0;
+}*/
+if( Session.get("theusertype") === undefined || Session.get("theusertype") === null
+|| Session.get("theusertype").toString() === "" ||
+ Session.get("theusertype").toLowerCase() === "all users" )
+{
+ costumer = {"profile.type" :  "costumer"  };
+ agent = {"profile.type" :  "agent"  };
+ admin = {"profile.type" :  "admin"  };
+    band = {"profile.type" :  "band"  };
+    orquery.$or.push(costumer);
+    orquery.$or.push(admin);
+orquery.$or.push(band);
+orquery.$or.push(agent);
+
+} else
+{
+if( Session.get("theusertype").toLowerCase() === "agent" || Session.get("theusertype").toLowerCase() === "band" 
+  || Session.get("theusertype").toLowerCase() === "costumer" || Session.get("theusertype").toLowerCase() === "admin" ) 
+{
+  orquery.$or.length = 0;
+     band = {"profile.type" : Session.get("theusertype").toLowerCase()};
+orquery.$or.push(band);
+}
+}
+//alert(Session.get("theusername"));    
+// and query add username field
+/*if( Session.get("theusername") === undefined || Session.get("theusername") === null
+|| Session.get("theusername").toString() === "" )
+{
+  query.$and.length = 0;
+}
+ else
+{
+  query.$and.length = 0;
+     username = {"profile.name" : Session.get("theusername")};
+query.$and.push(username);
+}*/
+query.$and.push(orquery); 
+/*var minmaxsalary = { "profile.salary" : {$lt: 5000  , $gte : 100 } };
+var bandtype = {"profile.bandtype" : /./ };
+if(Session.get("bandtype")  !== undefined  )
+{
+    bandtype = {"profile.bandtype" : { $regex: "" + Session.get("bandtype")+ "" } };
+    query.$and.push(bandtype)
+}
+if(Session.get("bandnumbers")  !== undefined  )
+{
+     var mumbers = {"profile.members": { $size : Session.get("bandnumbers") } }; 
+     query.$and.push(mumbers);
+  }
+if(Session.get("salarymax")  !== undefined)
+ {
+}
+if(Session.get("salarymin")  === undefined && Session.get("salarymax")  !== undefined )
+{
+  minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax"))  , $gte : 100  } };
+}
+if(Session.get("salarymin")  !== undefined && Session.get("salarymax")  === undefined )
+{
+  minmaxsalary = { "profile.salary" : { $lt: 5000 , $gte : parseInt(Session.get("salarymin"))  } };
+}
+if(Session.get("salarymin")  !== undefined && Session.get("salarymax")  !== undefined )
+{
+  minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax")) , $gte : parseInt(Session.get("salarymin"))  } };
+}
+query.$and.push(minmaxsalary);
+*/
+var result =  Users.find( 
+                   query
+                     );
+
+if (result.count() > 0 )
+{
+  Session.set("totalusers" , result.count() );
+  Session.set("getAllusers", result.fetch());
+  console.log(Session.get("getAllusers"));
+ // $('.emtyresult').hide();
+ result =  Users.find( 
+                   query, {limit : 10 , skip : Session.get("skipusers") });
+  return result ;
+  }
+if(result.count() === 0 )
+{ 
+   Session.set("totalusers" ,0);
+   Session.set("getAllusers", []);
+ // $('.emtyresult').show();
+  return false;
+}
+  },
+});
+Template.manageProfile.events({
+  'click .savesalarymanage' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+          var salary = t.find("#managesalaryinput").value;
+          if((salary !== "") &&( salary !== null))
+          {
+          myobj = {"id": this._id, "salary": salary };
+          Meteor.call('updatesalary', myobj);
+        }
+  },
+     'click .saveaccountstatus' :function(event, t)
+  {
+    var status = t.find(".userstatus:checked").value;
+    var myobj = {};
+    event.preventDefault();
+          if( status  === "active"  ) 
+          {
+            myobj = {"id": this._id, "status": "active" };
+            Meteor.call('updatestatus', myobj);
+          }
+          if( status === "inactive" ) 
+          {
+
+            myobj = {"id": this._id, "status": "inactive" };
+            Meteor.call('updatestatus', myobj);
+          }
+          
+          }
+          ,
+          'click .savechatfunc' :function(event, t)
+  {
+    var chat = t.find(".userchat:checked").value;
+    var myobj = {};
+    event.preventDefault();
+          if( chat  === "allowed"  ) 
+          {
+            myobj = {"id": this._id, "chat": "allowed" };
+            Meteor.call('updateallowchat', myobj);
+          }
+          if( chat === "not allowed" ) 
+          {
+
+            myobj = {"id": this._id, "chat": "not allowed" };
+            Meteor.call('updateallowchat', myobj);
+          }
+          
+          }
+});
+Template.manageProfile.helpers({
+  myphonenumber: function(phonenumber)
+  {
+   // alert(phonenumber):
+    if(phonenumber === null || phonenumber === "")
+    {
+     return "**** *** ***";
+    }
+  else {
+   return phonenumber;
+   }
+  },
+  myusername: function(user)
+  {
+  if(!user )
+  {
+    console.log('user is undefined ...');
+}
+   else
+    {
+       console.log('user is not undefined ' + user.username);
+      if( user && user.profile )
+      {
+      if(user.profile.type === "band")
+       {
+        if( user.profile.hasOwnProperty('bandName') )
+        {
+          return user.profile.bandName; 
+        }
+        else {
+          return user.username; 
+
+        }
+       
+      }
+      else 
+      {
+    return user.username;
+      }
+    }
+  }    
+  },
+  bandprofile: function(usertype)
+  { 
+     if(usertype === "band")
+      {
+       return true; 
+      }
+      else 
+      {
+    return false;
+      }
+  },
+  userprofile: function(usertype)
+  { 
+    if(usertype === undefined);
+    {
+     // Meteor.call('updatetype', Meteor.userId());
+    }
+     if(usertype === "costumer" || usertype === "agent" )
+      {
+       return true; 
+      }
+      else 
+      {
+   return false;
+      }      
+  },
+   adminprofile: function(usertype)
+  { 
+     if(usertype === "admin" )
+      {
+       return true; 
+      }
+      else 
+      {
+   return false;
+      }      
+  }
+  ,
+});
+Template.monitor.helpers({
+admin: function (user){
+  if(user.profile.type === "admin")
+  return true;
+  else
+  return false; 
+}
+});
 Template.represntationreq.onCreated(
   function(){
     Meteor.subscribe("notifications"); 
@@ -112,6 +522,29 @@ formatdate: function(timeStamp)
    myDay = myDate.getDate();
    return "" + myDay+ "-" +myMonth + "-" +myYear+"";
   }
+  ,
+   isUploading: function () {
+        return Boolean(uploader.get());
+    },
+    progress: function () {
+    var upload = uploader.get();
+    console.log(upload);
+    if (upload)
+    {
+$(".imageblogprogress").show();
+      if(Math.round(upload.progress()*100) === 100)
+      {
+       $("#addblogimagebg").fadeOut("slow");
+    $("#popupblogimage").removeClass('zigmaIn').fadeOut("slow");
+    $(".songuploadbox").css({"visibility":"visible"});
+    $('.songuploadbox').fadeOut(8000);
+    /*setTimeout(function(){
+      $(".songuploadbox").css({"visibility":"hidden"});
+    }, 2000);*/
+      }
+    return Math.round(upload.progress() * 100);
+  }
+    }
  });
 Template.singelblog.helpers({
 blog: function () {
@@ -135,20 +568,50 @@ formatdate: function(timeStamp)
     {
       return false;
     }
-  },
+  }
  });
 Template.singelblog.events({
+  'mouseenter .showcomments li':function(e, t)
+  {
+   var blog = blogs.findOne({"_id": $('.showcomments').attr('id')});
+   var author = "";
+   var liId = parseInt($(e.currentTarget).attr('id'));
+   console.log($(e.currentTarget).attr('id'));
+   var user = Users.findOne({"_id" : Meteor.userId() });
+   var username = "";
+   if(user.profile.type == "band")
+     username = user.profile.bandName;
+   else
+    username = user.username;
+   for (var i =  0 ; i < blog.comments.length ; i++) {
+    author = String(blog.comments[i].author.toString());
+
+  if( author === username  )
+  {
+   $('.showcomments').children('li').eq(i).children().find(' > .reply').css({'opacity' : 1});
+  }
+  else
+  {
+   $('.showcomments').children('li').eq(i).children().find(' > .reply').css({'opacity' : 0});
+  }
+}
+    e.preventDefault();
+  },
   'click .postComment': function(e, t)
   {
     e.preventDefault();
    var myobj = {};
     event.preventDefault();
           var content = t.find(".commentcontent").value;
-          var author = Users.findOne({"_id": Meteor.userId() },  { fields: { username: 1 }});
+          var author = Users.findOne({"_id": Meteor.userId() },  { fields: { profile: 1 , username : 1}});
           var timeStamp = Math.floor(Date.now()); 
-         //  if( (membername !== "") && ( membername !== null) && (memberrole !== "") && ( memberrole !== null)  )
-         // {
-          myobj = {"id": this._id ,"author": author.username ,  "content": content , "timeStamp" : timeStamp};
+          var username = "";
+          if(author.profile.type == "band")
+            username = author.profile.bandName;
+          else
+            username = author.username;
+          myobj = {"id": this._id ,"author": username ,  "content": content , "timeStamp" : timeStamp};
+        
           Meteor.call('addComment', myobj);
           setTimeout(function(){
           t.find(".commentcontent").value = "";
@@ -183,16 +646,125 @@ Template.singelblog.events({
   },
     'click .removecomment': function(e, t)
   {
+
+/*
+var blog = blogs.findOne({"_id": $('.showcomments').attr('id')});
+   var author = "";
+   var liId = parseInt($(e.currentTarget).attr('id'));
+   console.log($(e.currentTarget).attr('id'));
+   var user = Users.findOne({"_id" : Meteor.userId() });
+    author = String(blog.comments[liId].author.toString());
+  if( author === user.profile.bandName)
+  {
+   $('.showcomments').children('li').eq(liId).children().find(' > .reply').css({'opacity' : 1});
+  }
     e.preventDefault();
+  
+*/
+var blog = blogs.findOne({"_id": $('.showcomments').attr('id')});
+   var author = "";
+  var user = Users.findOne({"_id" : Meteor.userId() });
+  var username = "";
+  if(user.profile.type == "band")
+    username = user.profile.bandName;
+  else
+    username = user.username;
+   /* author = String(blog.comments[parseInt($(e.currentTarget).attr('id'))].author.toString());
+    alert(author + "comment number " + $(e.currentTarget).attr('id') );
+    alert($(e.currentTarget).parent().html());*/
+
+ /*var blog = blogs.findOne({"_id": $('.showcomments').attr('id')});
+   var author = "";
+   var liId = parseInt($(e.currentTarget).attr('id'));
+   console.log($(e.currentTarget).attr('id'));
+   var user = Users.findOne({"_id" : Meteor.userId() });
+   for (var i =  0 ; i < blog.comments.length ; i++) {
+    author = String(blog.comments[i].author.toString());
+  if( author === user.profile.bandName  )
+  {
+   $('.showcomments').children('li').eq(i).children().find(' > .reply').css({'opacity' : 1});
+  }
+}*/
+
+    e.preventDefault();
+    for (var i = 0 ; i < blog.comments.length; i++) {
+   // alert($(e.currentTarget).attr('id') + " " + blog.comments[i].id);
+    if(blog.comments[i].id.toString() == $(e.currentTarget).attr('id').toString() && blog.comments[i].author === username)
+    {
+    //  alert('removing');
     var commentid =   $(e.currentTarget).attr('id');
           myobj = {"commentid": commentid  , "blogid": $('.showcomments').attr('id') };
-          Meteor.call('removecomment', myobj);  
+          Meteor.call('removecomment', myobj); 
+          }
+    }
   }
- 
  });
 Template.homeBlogs.events({
   'click .postblog': function(e, t)
-  {
+  {   
+  var file = null;
+  e.preventDefault();
+    var reader = null;
+file = t.find('.uploadblogimage').files[0];
+//if(file.name.indexOf(".jpeg") > 0 || file.name.indexOf(".jpg") > 0 || file.name.indexOf(".png") > 0) 
+ reader = new FileReader();
+ var upload = new Slingshot.Upload("myblogImageUploads");              
+         upload.send(document.getElementById('uploadblogimage').files[0], function (error, downloadUrl) {
+             uploader.set();
+             console.log("uploader is : " + uploader.get());
+             if (error) {
+               //console.error('Error uploading');
+               alert(error);
+               console.log(error);
+             }
+             else{
+               console.log('uploaded file available here: '+downloadUrl);
+              /* var obj = {imageName: document.getElementById('uploadblogimage').files[0].name,
+                   imageurl :downloadUrl
+                    };*/
+          var title = t.find(".blgtitle").value;
+          var content = t.find(".blogcontent").value;
+          var author = Users.findOne({"_id": Meteor.userId() },  { fields: { username: 1 }});
+          var timeStamp = Math.floor(Date.now()); 
+         //  if( (membername !== "") && ( membername !== null) && (memberrole !== "") && ( memberrole !== null)  )
+         // {
+          myobj = {"author": author.username , "title": title, "imageurl":downloadUrl , "content": content , "timeStamp" : timeStamp};
+          Meteor.call('addBlog', myobj);
+          setTimeout(function(){
+            t.find(".blgtitle").value = "";
+          t.find(".blogcontent").value = "";
+          $('.createblogform').slideToggle();
+          }, 500);
+        //  t.find(".inputmemebername").value = "";
+        //  t.find(".memeberoleinput").value = "";
+                  }
+              // Meteor.call('uploadimage', obj, function(error, result){
+  });                      
+         uploader.set(upload);
+reader.readAsDataURL(file);
+
+var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupblogimage").height();
+    var popupWidth = $("#popupblogimage").width();
+    // Centering
+    $("#popupblogimage").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    var mysongname = file.name; 
+    $(".currentsonname").html(mysongname);
+    var mysongname =  mysongname.slice(0, mysongname.lastIndexOf(".mp3"));
+    $('#song_name').val(mysongname);
+    // Aligning bg
+    $("#addblogimagebg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#addblogimagebg").css({"opacity": "0.7"});
+      $("#addblogimagebg").fadeIn("slow");
+      $("#popupblogimage").addClass('zigmaIn').fadeIn("slow");
+
+//return false;
+    /*
     e.preventDefault();
    var myobj = {};
     event.preventDefault();
@@ -212,7 +784,13 @@ Template.homeBlogs.events({
         //  t.find(".inputmemebername").value = "";
         //  t.find(".memeberoleinput").value = "";
 //}
+*/
   },
+  'change .uploadblogimage':function(e)
+  {
+    e.preventDefault();
+    $('.uploadedblogimage').html(document.getElementById('uploadblogimage').files[0].name); 
+  }
  
  });
 Template.homeIndex.onCreated(function(){
@@ -489,18 +1067,17 @@ $("#ex2").show();
 });
 Template.homeBands.helpers({
 artits: function() {
-  //alert(Session.get("bandtype"));
+//alert(Session.get("bandtype"));
 var query = { $and : [] };
-var minmaxsalary = { "profile.salary" : {$lt: 5000  , $gte : 100 } };
+var minmaxsalary = { "profile.salary" : {$lt: 5001  , $gte : 0 } };
 var bandtype = {"profile.bandtype" : /./ };
 if(Session.get("bandtype")  !== undefined  )
 {
   //alert("undefined session");
   //bandtype = {"profile.bandtype" : /./ }
     bandtype = {"profile.bandtype" : { $regex: "" + Session.get("bandtype")+ "" } };
-    query.$and.push(bandtype)
-
- // var bandtype = { "profile.bandtype" : Session.get("bandtype") } ;
+    query.$and.push(bandtype);
+// var bandtype = { "profile.bandtype" : Session.get("bandtype") } ;
 //query = query + '"profile.bandtype": "'+Session.get("bandtype")+'"' ; //+Session.get("bandtype")+"  }";
 }
 if(Session.get("bandnumbers")  !== undefined  )
@@ -508,9 +1085,12 @@ if(Session.get("bandnumbers")  !== undefined  )
   //   alert(Session.get("bandnumbers") + "not undefined"); 
      var mumbers = {"profile.members": { $size : Session.get("bandnumbers") } }; 
      query.$and.push(mumbers);
-  }
-if(Session.get("salarymax")  !== undefined)
+}
+if(Session.get("salarymax")  === undefined && Session.get("salarymin")  === undefined)
  {
+  minmaxsalary = { "profile.salary" : {$lt: 5000  , $gte : 0 } };
+    //minmaxsalary = { "profile.salary" : { $lt: 5000 , $gte : 0  } };
+
  // alert('max ...'); 
 //query = query + ', "profile.salary": { $lt:'+2000/*Session.get("salarymax")+*/'}';//'+(Session.get("salarymax")+'' ; //+Session.get("bandtype")+"  }";
 }
@@ -531,6 +1111,8 @@ if(Session.get("salarymin")  !== undefined && Session.get("salarymax")  !== unde
   minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax")) , $gte : parseInt(Session.get("salarymin"))  } };
 }
 query.$and.push(minmaxsalary);
+ var type = {"profile.type" : "band"};
+ query.$and.push(type);
 //query = {$and : [minmaxsalary /*, bandtype*/ ]} ;
 // query = query + ' "profile.salary" : { $lt : '+2000+'}}';
 //  alert(query);
@@ -552,7 +1134,7 @@ var result =  Users.find(
                      //{"profile.salary" : 300}
                    // {"profile.bandtype" : /jazz/}
                    query
-                     , { sort : {"profile.salary" : parseInt(Session.get("salaryasc")) } });
+                     , { sort : {"profile.salary" : parseInt(Session.get("salaryasc")) } } );
                  // ).sort({"profile.salary" : -1});
 
 if (result.count() > 0 )
@@ -668,6 +1250,9 @@ blb.name=  document.getElementById('uploadFile').files[0].name;
            }
        }); 
 Template.bandInformations.onCreated( function(){
+  this.subscribe("images");
+  this.subscribe("USERS");});
+Template.managebandInformations.onCreated( function(){
   this.subscribe("images");
   this.subscribe("USERS");});
 Template.homeProfile.onRendered( function(){
@@ -1093,6 +1678,16 @@ Template.notification.helpers({
     
   }
 });
+Template.manageuserInformations.helpers({
+   mybirthdate: function(timeStamp)
+  {
+   myDate = new Date(timeStamp); 
+   myYear = myDate.getFullYear();
+   myMonth = ( myDate.getMonth() + 1 );
+   myDay = myDate.getDate();
+   return "" + myDay+ "-" +myMonth + "-" +myYear+"";
+  },
+});
 Template.userInformations.helpers({
 
    mybirthdate: function(timeStamp)
@@ -1131,7 +1726,45 @@ Template.userInformations.helpers({
     return "female";
    }
   }
+});
+Template.adminInformations.helpers({
 
+   mybirthdate: function(timeStamp)
+  {
+   myDate = new Date(timeStamp); 
+   myYear = myDate.getFullYear();
+   myMonth = ( myDate.getMonth() + 1 );
+   myDay = myDate.getDate();
+   return "" + myDay+ "-" +myMonth + "-" +myYear+"";
+  }, 
+  myphonenumber: function(phonenumber)
+  {
+   // alert(phonenumber):
+    if(phonenumber === null || phonenumber === "")
+    {
+     return "**** *** ***";
+    }
+  else {
+   return phonenumber;
+   }
+  },
+  mygender: function(gender)
+  {
+    if(gender === null )
+    {
+     // $("#inputmale").att('checked', false);
+      //$("#inputfemale").att('checked', false);
+      return null;
+    }
+  if (gender === "male") {
+ $("#inputmale").attr('checked', true);
+    return "male";
+   }
+   if (gender === "female") {
+  $("#inputfemale").attr('checked', true);
+    return "female";
+   }
+  }
 });
 Template.seeuserInformations.helpers({
 
@@ -1382,6 +2015,65 @@ Template.seebandInformations.helpers({
    }
   }
 });
+Template.managebandInformations.events({
+          'click .saveoprational' :function(event, t)
+  {
+    var operational = t.find(".bandoperational:checked").value;
+    var myobj = {};
+    event.preventDefault();
+          if( operational  === "yes"  ) 
+          {
+            myobj = {"id": this._id, "operational": "yes" };
+            Meteor.call('updateoprational', myobj);
+          }
+          if( operational === "no" ) 
+          {
+
+            myobj = {"id": this._id, "operational": "no" };
+            Meteor.call('updateoprational', myobj);
+          }
+          
+          }
+});
+Template.managebandInformations.helpers({
+  mybandtype: function(bandtype)
+  {
+   if((bandtype !== "" ) && (bandtype !== null ))
+   {
+    return bandtype ; 
+  }
+    else 
+       {
+      return "not setted";
+   }
+  },
+   mybandname: function(user)
+  {
+        if( user.profile.hasOwnProperty('bandName') )
+        {
+          return user.profile.bandName; 
+        }
+        else {
+          return user.username; 
+
+        }
+       
+     
+  },
+  myagent: function(user)
+  {
+        if( user.hasOwnProperty('agent') )
+        {
+          return user.agent.name; 
+        }
+        else 
+        {
+          return user.profile.defaultAgent; 
+        }
+       
+     
+  }
+});
 
 Template.bandInformations.helpers({
   allmemebers: function(){
@@ -1398,26 +2090,32 @@ Template.bandInformations.helpers({
   {
     return index + 1 ; 
   },
-  mybandtype: function(bandtype)
+  mybandtype: function(profile)
   {
-   if((bandtype !== "" ) && (bandtype !== null ))
+    if(profile)
+    {
+   if(profile.hasOwnProperty('bandtype')) 
    {
-    return bandtype ; 
+    return profile.bandtype ; 
   }
     else 
        {
       return "not setted";
    }
+   }
   },
-  bandsets: function(sets)
+  bandsets: function(profile)
   {
-   if((sets !== "" ) && (sets !== null ))
+   if(profile)
+    {
+   if(profile.hasOwnProperty('sets')) 
    {
-    return sets ; 
+    return profile.sets ; 
   }
     else 
        {
       return "not setted";
+   }
    }
   },
    mybandname: function(user)
@@ -1467,6 +2165,19 @@ Template.userInformations.onRendered(function(){
   $(".address").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
 });
 Template.bandInformations.events({
+  'click .savesocialpage' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+
+          var socialpage = t.find("#socialpageinput").value;
+         // alert('savesocialpage' + socialpage);
+          if((socialpage !== "") &&( socialpage !== null))
+          {
+          myobj = {"id": Meteor.userId(), "socialpage": socialpage };
+          Meteor.call('updatesocialpage', myobj);
+        }
+  },
   'click .savebandname' :function(event, t)
   {
     var myobj = {};
@@ -1485,7 +2196,7 @@ Template.bandInformations.events({
           var bandtype = t.find(".bandtype").value;
           if((bandtype !== "") &&( bandtype !== null))
           {
-          myobj = {"id": Meteor.userId(), "bandtype": bandtype };
+          myobj = {"id": Meteor.userId(), "bandtype": bandtype.toLowerCase() };
           Meteor.call('updatebandtype', myobj);
           }
   },
@@ -1697,6 +2408,19 @@ $(".address").show();
 });
 
 Template.userInformations.events({
+  'click .savesocialpageuser' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+
+          var socialpage = t.find("#socialpageuserinput").value;
+         // alert('savesocialpage' + socialpage);
+          if((socialpage !== "") &&( socialpage !== null))
+          {
+          myobj = {"id": Meteor.userId(), "socialpage": socialpage };
+          Meteor.call('updatesocialpage', myobj);
+        }
+  },
   'click .savefirstname' :function(event, t)
   {
     var myobj = {};
@@ -2108,7 +2832,9 @@ $("#myProgress").show();
 allsongs : function()
 {
   var band = Users.findOne({"_id": Meteor.userId()});
-  console.log(band.profile.bandName);
+  if(band !== undefined  && band.profile !== undefined )
+{
+  //console.log(band.profile.bandName);
   var pllist = [];
   var mysongs = [] ; 
   mysongs =  songs.find({"uploadedBy": Meteor.userId()}).fetch();
@@ -2131,37 +2857,13 @@ return Session.get("myPlaylist")
 else {
    Session.set("myPlaylist", null);
 return Session.get("myPlaylist")
-
+}
 }
 },
   myusername: function(user)
   {
-/*var mysongs = songs.find({});
-mysongs.forEach(function(song){
-myPlaylist.push({"id":song._id,
- "title" : song.songname ,
-cover:'1.jpg' ,
- "duration" : song.duration, 
-  rating:5,
-   mp3: song.songurl,
-    buy:'#',
- artist:'Alexandra'});
-console.log(song._id);
-console.log(song.songname);
-console.log(song.songurl);
-});*/
-/*
-{
-    mp3:'js/1.mp3',
-    title:'Track 7',
-    artist:'Alexandra',
-    rating:5,
-    buy:'#',
-    price:'17',
-    duration:'0:38',
-    cover:'js/1.jpg'  
-  },*/
-
+    if(user !== null && user !== undefined && user.profile !== undefined){
+   
     if(user.profile.type === "band")
       {
         if( user.profile.hasOwnProperty('bandName') )
@@ -2178,6 +2880,7 @@ console.log(song.songurl);
       {
     return user.username;
       }
+    }
   },
   bandprofile: function(usertype)
   { 
@@ -2197,6 +2900,17 @@ console.log(song.songurl);
      // Meteor.call('updatetype', Meteor.userId());
     }
      if(usertype === "costumer" || usertype === "agent" )
+      {
+       return true; 
+      }
+      else 
+      {
+   return false;
+      }      
+  },
+   adminprofile: function(usertype)
+  { 
+     if(usertype === "admin" )
       {
        return true; 
       }

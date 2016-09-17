@@ -358,6 +358,15 @@
             {{/if}}
           </span>
         </div>
+        <div id="socialpagediv" class="userinforow">
+          <span class="oldinfo bld">social page: </span>
+          <span id="socialspan" class="oldinfo bld">
+          {{# if profile.socialpage }} 
+              <a href="{{profile.socialpage}}">{{profile.socialpage}}</a>
+            {{else}}
+                not setted
+            {{/if}}</span>
+        </div>
         <div id="memeberdiv" class="userinforow ">
           <span class="bld memeberlabel mytitle">Members </span>
         </div>
@@ -536,6 +545,15 @@
                 not setted
             {{/if}}   
           </span>
+        </div>
+        <div id="socialpagediv" class="userinforow">
+          <span class="oldinfo bld">social page: </span>
+          <span id="socialspan" class="oldinfo bld">
+          {{# if profile.socialpage }} 
+              <a href="{{profile.socialpage}}">{{profile.socialpage}}</a>
+            {{else}}
+                not setted
+            {{/if}}</span>
         </div>
         <div id="pubcodediv" class="userinforow">
           <span class="oldinfo bld">publicity code: </span>

@@ -51,6 +51,31 @@ updatelastname:  function(obj)
  Users.update({"_id": obj.id}, {$set : { "profile.lastname" : obj.lastname }   });
  return;
 },
+updatestatus:  function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.Status" : obj.status }   });
+ return;
+},
+updateallowchat:  function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.chatFunctionnality" : obj.chat }   });
+ return;
+},
+updateoprational:function(obj) {
+ Users.update({"_id": obj.id}, {$set : { "profile.oprational" : obj.operational }   });
+ return;
+},
+updatesalary:  function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.salary" : obj.salary }   });
+ return;
+},
+updatesocialpage: function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.socialpage" : obj.socialpage }   });
+ console.log('socialpage :' + obj.socialpage);
+ return;
+},
 updatebandname:function(obj)
 {
  Users.update({"_id": obj.id}, {$set : { "profile.bandName" : obj.bandname }   });
@@ -98,8 +123,9 @@ addComment: function(obj)
 {
   var blog = blogs.findOne({"_id": obj.id});
   var id = 0;
-  if(blog.comments !== undefined)
- id = blog.comments.length;
+
+  if( blog.comments.length > 0)
+ id = blog.comments[blog.comments.length - 1].id + 1 ;
 blogs.update({"_id": obj.id}, {$push : { "comments" : {"id": id, "author" : obj.author, "content":  obj.content, "time" :obj.timeStamp} }   });
 }, 
 saverepertoire: function(obj)
@@ -160,6 +186,7 @@ addBlog: function( obj){
 return blogs.insert({
   title: obj.title,
    content: obj.content,
+   imageurl: obj.imageurl,
  time: obj.timeStamp,
   author: obj.author /*, 
   file : obj.file,*/

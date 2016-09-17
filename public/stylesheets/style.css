@@ -1318,7 +1318,7 @@ li.track:hover .buy, .playing .buy {
 	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .15), 0 1px 0 rgba(255, 255, 255, .04);
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.04);
 }
-.def-block h4 , #informationconatiner h6 {
+.def-block h4 , #informationconatiner h6, .userinfocontent h6 {
 	padding: 0 0 10px;
 	margin: 0;
 	border-bottom: 1px solid #ff6600;
@@ -1468,6 +1468,7 @@ ul.showcomments .reply {
 	font-size: 10px;
 	text-align: center;
 	font-style: italic;
+	opacity: 0;
 }
 ul.showcomments .reply a {
 	background: #1C1C1C;
@@ -3030,7 +3031,7 @@ html[xmlns] .slides {display: block;}
 	transition: all 0.2s ease;
 }
 #loginform #login-button:hover {
-	background:#8e0545
+	background:#ff6600
 }
 .login-links {
 	margin: 10px 0 0 0;
@@ -3402,7 +3403,7 @@ a.notification-close {
 
 /*	Popup SignIn
 ----------------------------------------------------------------------*/
-#LoginBackgroundPopup , #addsongbg{  
+#LoginBackgroundPopup , #addsongbg, #addblogimagebg{  
 	display:none;
 	position:fixed;
 	height:100%;
@@ -3412,7 +3413,7 @@ a.notification-close {
 	background:#000;
 	z-index: 99999997;
 } 
-#popupLogin , #popupsong{  
+#popupLogin , #popupsong, #popupblogimage{  
 	display:none;
 	position:fixed;
 	width:360px;
@@ -3430,7 +3431,7 @@ a.notification-close {
 	z-index: 99999998;
 	margin-left: 0;
 }
-#popupLogin .def-block , #popupsong .def-block 
+#popupLogin .def-block , #popupsong .def-block , #popupblogimage .def-block
  {  
 	background: #000;
 	background: rgba(0, 0, 0, 0.9) !important;
@@ -3443,7 +3444,7 @@ a.notification-close {
 	box-shadow: none;
 	border: 2px solid #1F1F1F;
 }
-#popupLoginClose , #popupsongclose {
+#popupLoginClose , #popupsongclose ,#popupblogimageclose {
 	position: absolute;
 	top: 25px;
 	right: 33px;
@@ -3453,7 +3454,7 @@ a.notification-close {
 	-webkit-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
-#popupLoginClose:hover , #popupsongclose:hover {
+#popupLoginClose:hover , #popupsongclose:hover ,#popupblogimageclose:hover {
 	color: #fff
 }
 #login_username, #login_password, #song_name  ,  #signup_username, #signup_firstname,
@@ -4708,8 +4709,8 @@ a.notification-close {
 
 /*	IE7 & IE8 & IE9 Hacks
 ----------------------------------------------------------------------*/
-.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup, .ie8 #addsongbg,
-.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup , .ie7 #addsongbg {
+.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup, .ie8 #addsongbg, .ie8  #addblogimagebg,
+.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup , .ie7 #addsongbg , .ie7  #addblogimagebg{
 	background: transparent url(../images/ie_000_80.png) repeat;
 }
 .ie8 .footer-last, .ie8 .ttw-music-player .player-controls, .ie8 .def-block, .ie8 .ttw-music-player .tracklist, .ie8 .breadcrumbIn,
@@ -5208,7 +5209,7 @@ a.notification-close {
 	ul.showcomments li.child {margin: 0 0px 32px 2px}
 	.topbar h2, .topbar h3 { text-align: left; padding: 0; display: block;}
 	.tback {top: 40px}
-	#popupLogin , #popupsong { width: 310px}
+	#popupLogin , #popupsong, #popupblogimage { width: 310px}
 	  #popupSignUp { width: 310px ; margin-top: 0px}
 	.ajde_evcal_calendar .calendar_header p {font-size: 26px}
 	.forum .search-forum {position: relative;width: 100%}
@@ -5248,7 +5249,7 @@ a.notification-close {
     z-index: 9;
 }
 /*login form styling */
-#popupLogin .input-group , #popupsong .input-group{
+#popupLogin .input-group , #popupsong .input-group, #popupblogimage .input-group {
 display: block !important;
 width: 100% !important;
 }
@@ -5320,7 +5321,7 @@ width: 100% !important;
   #errorMsgAlb
   { color: red;}
   #popupLogin h4  {margin-right: 45%;}
-  #popupsong h4 {margin-right: 7%; margin-top: -10px; position: relative;}
+  #popupsong h4 ,#popupblogimage h4{margin-right: 7%; margin-top: -10px; position: relative;}
    #popupSignUp h4 {margin-right: 24%;}
 /*#errorMsgSgnUp{ margin-left: 160px;}*/
 #errorMsgAlb{margin-left: 60px;}

@@ -19,7 +19,7 @@
 				<div class="posts">
 					<div class="def-block">  
 						<div class="post row-fluid clearfix">
-							<img src="images/assets/post1-big.jpg" alt="#">
+							<img src="{{blog.imageurl}}" alt="#">
 							<h3 class="post-title"> <i class="icon-headphones"></i><a href="blog-single_half.html">{{blog.title}}</a> </h3>
 							<p>{{blog.content}}</p>
 							<div class="meta">
@@ -32,7 +32,7 @@
 							<h4> Comments {{allcomments.length}} </h4><span class="liner"></span>
 							<ul class="showcomments clearfix" id="{{blog._id}}">
 							    {{#each allcomments}}					
-								<li class="clearfix">
+								<li class="clearfix" id="{{id}}">
 									<div class="thumb">
 										<a href="#"><img src="images/assets/user1.jpg" alt="#"></a>
 										<div class="reply"><a class="removecomment" id="{{id}}" href="#">Remove Comment</a></div>

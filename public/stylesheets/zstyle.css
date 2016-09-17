@@ -1,16 +1,19 @@
 .profilecover{ width: 100%; height: 450px; position: relative; /*background-color: red;*/
   }
+  /*.userstable tfoot, .userstable tfoot tr, .userstable tfoot tr td {width: 100%}*/
   .coverImage{width: 100% ; height: 100%}
 .subcover{ /*background-color: yellow;*/ width: 100%; height: 100px;  position : absolute ; bottom: -35px}
 .avatarContainer { width : 150px ;
  height : 150px; margin-left: 5% ;
   /*background-color: blue;*/ float: left ;
   border: 8px solid white; border-radius: 5px }
+  .userstablecontainer{overflow-x: auto;}
 .usercontainer { /*width : 80% ;*/ height : 20%; color: gray; /*background-color: white ;*/ float: left ; margin-top: 68px; }
 .usercontainer div {width : 33.3333%; 
 	/*background-color: orange; */
 	display: inline; margin-left: 10px}
 	.blogcommentslist{display: none;}
+	.pages{display: none;}
 /*upload song section */
 .uploadsongdiv, .uploadimgdiv, .uploadsongimgdiv{
 padding: 0px;
@@ -25,6 +28,13 @@ background-color: red;}
 	padding: 0px; 
 	opacity: 0;
 
+}
+.userstable  td, .userstable  th {padding: 10px 0px 10px 0px}
+.userstable tbody tr.topic-sticky:hover {
+     background: #222;
+	/*background: #1A1A1A;*/
+	-webkit-transition:all .2s;
+	transition:all .2s;
 }
 .songnamediv{margin-bottom: 10px}
 .songnamediv span.songnamespanlabel{display: inline; width: auto;}
@@ -177,13 +187,13 @@ max-height: 300px;
 	  .userinforow div.suggest-holder , .userinforow div.address-holder {display: none}
 	  .userinforow i  {color: #001a4d; font-size: 17px; cursor: pointer;}
 	 .userinforow input[type="radio"].oldinfo{ display: none; margin: 0px;}
-.oldfemale, .oldmale, #firstnameinput , .bandtype , .bandsets{display: none; }	  
-.savefirstname,
-.savelastname
+.oldfemale, .oldmale, .oldchatactive,.oldchatinactive , .oldoperyes,.oldinactive ,.oldactive , .oldoperno, #firstnameinput , .bandtype , .bandsets{display: none; }	  
+.savefirstname,.savesalarymanage  ,.saveaccountstatus , .saveoprational , .savechatfunc ,
+.savelastname, .savesocialpage, .savesocialpageuser,
 .savebirthdate, .saveaddress,
 .savegender, .savebandname, .saveregion,
 .savephonenumber, .savelastname, 
-.savebirthdate, .savebuildingnumber, 
+.savebirthdate, .savebuildingnumber, #managesalaryinput,
 .savestreetname, .savecity, .savemember, .savehighlight, .saverepertoire, 
 .savepostecode, .savecountry, .savebandtype, .savebandsets
 {
@@ -200,7 +210,7 @@ max-height: 300px;
 .userinforow span:not(.suggest-description, .uprecommend, .downrecommend) { margin-left: 5px ; padding: 5px 5px 5px 5px }
 .userinforow .bld{font-weight: bold; font-size: 12px;}
 .error{color:red; display: none;}
-#emtyfirstname i ,#emptyaddress i ,  #emtylastname i, #emptycity i ,  #emptyregion i , #emptypostecode i,#emtyphone i, #emptyrepertoire i,#emtymember i , #emtyhighlight i, #emtybandname i{color: red; font-size: 12px ; font-weight: normal;} 
+#emtyfirstname i ,#emtysalarymanage i ,#emptyaddress i , #emtysocialpage i,#emtysocialpageuser i,   #emtylastname i, #emptycity i ,  #emptyregion i , #emptypostecode i,#emtyphone i, #emptyrepertoire i,#emtymember i , #emtyhighlight i, #emtybandname i{color: red; font-size: 12px ; font-weight: normal;} 
  .userinforow #errors {display: inline; width: auto; }
 
 	 .savebandtype, .savebandsets{margin: 0px; padding: 0px; }
@@ -210,11 +220,11 @@ max-height: 300px;
 	/* .memebernamespan , .memeberrolespan {display: none;}*/
 	 .memeberlabel , .listsetlabel {width: auto; float: left; margin: -2px  0px 0px 20px}
 	 .memeberdiv{width: 100%; height: auto; display: inline;}
-	 .memeberdiv span , .addmemeberform ,.suggest-bandtype , .address-holder, .suggest-holder, .addhighlightform , .addrepertoireform { 
+	 .memeberdiv span , .addmemeberform ,.suggest-bandtype , .suggest-username,  .suggest-usertype, .address-holder, .suggest-holder, .addhighlightform , .addrepertoireform { 
 	 	display: inline;}
 	 .addmemeberform  * , .addhighlightform *, .addrepertoireform *{float: left;  margin: 0px;}
 	 .suggest-holder , .address-holder { margin-left: 20px;}
-	 .suggest-holder input, .suggest-bandtype input , .address-holder input{  border-radius: 2px;
+	 .suggest-holder input,.suggest-username input , .suggest-usertype input, .suggest-bandtype input , .address-holder input{  border-radius: 2px;
 	 	 /* margin: 0px; 
 	 	margin-left: 20px; 
 	 	margin-top: -3px; margin-bottom: 0px ;
@@ -256,8 +266,9 @@ max-height: 300px;
 #spostecodeinput{color: red}
 #selectaddress{width: 100%}
 /*styling dropdown postecode*/
-.addpostecode, .addadress , .bandtypesearch .bandtypecontainer{height: 30px; display: inline; width: auto ; }
+.addpostecode, .addadress , .bandtypesearch .bandtypecontainer, .usertypecontainer{height: 30px; display: inline; width: auto ; }
 .bandtypesearch .bandtypecontainer{width: 85%}
+.usertypecontainer{width: 90%}
 /*.addpostecode > div , .addpostecode > span  {display: inline; margin-right: 0px; padding-right: 0px}*/
 
 /*.addpostecode > span {margin-top: -20px ; margin-left: 20px}*/
@@ -299,9 +310,19 @@ max-height: 300px;
 		/*margin-bottom: 1px; */
 		border-radius: 5px;
     }
+    .suggest-usertype  input , .suggest-username input{
+    	width: 70%;
+        height: 28px;
+        border: 1px solid rgba(0,120,0,.6);
+		padding: 0px 0px 0px 10px; 
+		/*margin: 0px 0px 1px 10px;*/
+		margin-bottom: 0px;
+		margin-left: 17px;
+		border-radius: 5px;
+    }
     .suggest-bandtlocation {margin-left: 17px}
-.suggest-bandtypeinput{margin-left: 15px}
-.suggest-holder ul , .address-holder ul{
+.suggest-bandtypeinput, .suggest-usernameinput{margin-left: 15px}
+.suggest-holder ul , .address-holder ul {
 	    color: white;
         display: none;
         list-style: none;
@@ -316,9 +337,9 @@ max-height: 300px;
 		z-index: 10;
 		overflow-x: hidden;
     }
-    .suggest-bandtype ul 
+    .suggest-bandtype ul , .suggest-usertype ul , .suggest-username ul
     {
- color: white;
+       color: white;
         display: none;
         list-style: none;
         margin: 0px 0px 0px 12px;
@@ -332,11 +353,12 @@ max-height: 300px;
 		z-index: 10;
 		overflow-x: hidden;
     }
+    .suggest-usertype ul , .suggest-username ul{margin-left: 17px}
     .address-holder ul  {width: 230px;}
-.suggest-prompt, .suggest-bandtypeinput , .inputaddress{margin-bottom: 2px}
+.suggest-prompt, .suggest-bandtypeinput , .inputaddress , .suggest-usertype , .suggest-username{margin-bottom: 2px}
 .suggest-bandtypeinput {padding-left: 5px}
- .suggest-holder li:hover , .suggest-bandtype li:hover , .address-holder li:hover {color: #ff6600; cursor: pointer;}
-        .suggest-holder li, .suggest-bandtype li , .address-holder li {
+ .suggest-holder li:hover ,.suggest-usertype li:hover ,.suggest-username li:hover , .suggest-bandtype li:hover , .address-holder li:hover {color: #ff6600; cursor: pointer;}
+        .suggest-holder li, .suggest-bandtype li ,.suggest-username li , .address-holder li , .suggest-usertype li {
             padding: 5px;
         }
         .suggest-holder > li:hover, .bandtype li:hover,  .bandtype li:active ,.suggest-holder > li.active , .address-holder > li:hover,.address-holder > li.active {
@@ -348,7 +370,7 @@ max-height: 300px;
                 height: 15px;
             }
 
-.addpostecode , .bandtypecontainer { padding-bottom: 20px; position: absolute;}
+.addpostecode , .bandtypecontainer , .usertypecontainer{ padding-bottom: 20px; position: absolute;}
 .addadress { padding-bottom: 20px; position: absolute;}
 
 .highlightslist ul li:hover{cursor: pointer ;}
@@ -453,6 +475,10 @@ font-size: 12px;}
 #myaudio2 {display: none; width: 0px ; height: 0px ; padding: 0px; margin: 0px}
 .songuploadbox { position: fixed; margin: 0px; bottom: 10px ; visibility: hidden; z-index: 10000; float: left ;  padding: 10px 20px}
 .songuploadbox a {margin-right: -10px ; margin-top: -22px}
+.searchusers > .def-block {padding-left:  20px; padding-right:  20px}
+
+#socialpageinput, #socialpageuserinput{width: 300px; }
+
 /*end salary range slider */
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
@@ -487,7 +513,11 @@ font-size: 12px;}
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 768px) and (max-width: 959px) {
+.usertypecontainer{display: block; position: relative; height: auto; padding-bottom: 0px}
+.suggest-usertype input, .suggest-usertype ul{margin-left: 0px ; width: 100% }
+.suggest-username input, .suggest-username ul{margin-left: 0px ; width: 100% }
 
+.usertypesearch {height: auto;}
 .songnamespanlabel{font-size: 12px; font-weight: bold;width: auto; padding-right: 5px }
 	.salarylabel {display: block;}
 	 .suggest-bandtype .suggest-availability{font-size: 11px}
@@ -542,12 +572,21 @@ font-size: 12px;}
 
 		.repRequest span , .uploadsongdiv span , .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
 		.hire span{margin-top: -5px ; position: absolute; }
-
+ 
+ .userstable tbody tr td:nth-child(7),
+ .userstable thead tr th:nth-child(7)
+  {display: none;}
 }
 /* #Mobile (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-
+	.userstable{font-size: 12px}
+ .userstable tbody tr td:nth-child(7),
+ .userstable thead tr th:nth-child(7)/*,
+ .userstable tbody tr td:nth-child(4),
+ .userstable thead tr th:nth-child(5),
+ .userstable thead tr th:nth-child(4),*/
+  {display: none;}
 .songnamespanlabel{font-size: 12px; font-weight: bold;width: auto; padding-right: 5px }
 	.minsalary {padding-right: 8px ; font-size: 11px }
 	.maxsalary {padding-left: 3px  ; font-size: 11px}
@@ -633,13 +672,23 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 #cityinput{margin-left: 45px}
 
 .addpostecode .suggest-holder {margin-left: 10px}
+#sociallinkdiv {height: auto; padding-bottom: 5px}
+#socialpagediv{height: auto; padding-bottom: 20px}
+.sociallabel{display: block}
+#socialpageinput, #socialpageuserinput{width: 100%; float: none; font-size: 11px}
 /*#ullist li a {display: block; float: none;width: 100%}*/
 }
 
 /*  #Mobile (Portrait) 320px
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 100px) and (max-width: 479px) {
-
+.userstable tbody tr td:nth-child(7),
+ .userstable thead tr th:nth-child(7),
+ .userstable tbody tr td:nth-child(6),
+ .userstable thead tr th:nth-child(6),
+ .userstable tbody tr td:nth-child(5),
+ .userstable thead tr th:nth-child(5)
+  {display: none;}
 .songnamediv span.songnamespanlabel{font-size: 11px; font-weight: bold;width: auto; display: inline; padding-right: 5px }
 .banscontent{width: 100% ; padding-left: 10px ; padding-right: 10px}
 .currentsonname{font-size: 11px}
@@ -739,6 +788,12 @@ p.notcontent {font-size: 11px}
 .bandnameinputsearch{display: inline; text-align: left;}
 .bandtypesearch {display: block; margin: -10px 0px}
 .savemember{display: none;}
+#socialpageinput, #socialpageuserinput{width: 100%; float: none; font-size: 11px}
+/*#socialpagespan a{width: 100%; float: none; font-size: 11px}
+#socialspan {width: 100%; float: none; font-size: 11px}*/
+#sociallinkdiv{height: auto; padding-bottom: 5px}
+#socialpagediv{height: auto; padding-bottom: 20px}
+.sociallabel{display: block}
 }
 
  
