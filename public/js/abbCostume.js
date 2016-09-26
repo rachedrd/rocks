@@ -87,6 +87,11 @@ $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px"
 			/*$(".uploadimgdiv").show();*/
 			$(".uploadsongdiv").hide();
         }
+        if($(this).attr("id") === "uploadvideo")
+		{
+			/*$(".uploadimgdiv").show();*/
+			$(".uploadvideodiv").show();
+        }
 		//$('.full  ul.tabs').children().each(function (i) {
 			//var tab =  $('.full  ul.tabs').find('li').eq(i).find('> a');
 			//alert(tab.html());
@@ -345,7 +350,11 @@ $("#popupSignUp").on('click', '#signup_firstname ', function(){
 	 $("#validFisrtName_sgnUp").removeClass('glyphicon-asterisk');
 
 	});
-
+$("#popupvideo").on('click', '.youtubeurlinput', function(){
+     $("#erryoutubeurl").html("");
+     //$("#erryoutubeurl").hide();
+   
+	});
 $("#popupSignUp").on('click', '#signup_email ', function(){
      $("#errorMsgSgnUp").html("");
      $("#validEmail_sgnUp").removeClass('glyphicon-remove');
@@ -468,6 +477,27 @@ $('.full').on('click' ,'.createblog' ,function () {
 			$("#popupsong").addClass('zigmaIn').fadeIn("slow");
 
 	});
+	// show the edit youtube video form 
+		$(".tabs").on('click', '.uploadvideodiv', function() {
+		//Aligning our box in the middle
+		var windowWidth = document.documentElement.clientWidth;
+		var windowHeight = document.documentElement.clientHeight;
+		var popupHeight = $("#popupvideo").height();
+		var popupWidth = $("#popupvideo").width();
+		// Centering
+		$("#popupvideo").css({
+			"top": windowHeight / 2 - popupHeight / 2,
+			"left": windowWidth / 2 - popupWidth / 2
+		});
+		// Aligning bg
+		$("#addyoutubebg").css({"height": windowHeight});
+	
+		// Pop up the div and Bg
+			$("#addyoutubebg").css({"opacity": "0.7"});
+			$("#addyoutubebg").fadeIn("slow");
+			$("#popupvideo").addClass('zigmaIn').fadeIn("slow");
+
+	});	
 	// update user informations
 	// update first name
      
@@ -2006,6 +2036,15 @@ $('.full .usertypes').show();
 			$("#popupsong").removeClass('zigmaIn').fadeOut("slow");
 			$("#errsongname").html("");
 		}
+	});
+	// close youtube video url
+	//close popup song upload
+	$("#popupvideoclose").click(function() {
+		if ($("#erryoutubeurl").html() !== "")
+			$("#erryoutubeurl").html("");
+			$("#addyoutubebg").fadeOut("slow");
+			$("#popupvideo").removeClass('zigmaIn').fadeOut("slow");
+			
 	});
 	// Close reset password
     //popupLoginClose // LoginBackgroundPopup popupSignUpStatus

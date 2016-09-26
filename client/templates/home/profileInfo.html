@@ -19,6 +19,23 @@
         <div id="popupsongclose">x</div>
       </div>
       <div id="addsongbg"></div>
+<!--popup edit youtube video url-->
+<div id="popupvideo">
+        <div class="def-block widget">
+          <h4>Youtube video url </h4><span id="erryoutubeurl"><!--invalid video url empty video url--></span><span class="liner"></span>
+          <div class="widget-content row-fluid">
+           <form id="loginform"><!--popup_login_form"-->
+              <div class="youtubenamediv">
+                <input type="text" class="youtubeurlinput" name="Name" id="input-i" placeholder="https://www.youtube.com/watch?v=LdH1hSWGFGU" >
+                <a  id="youtube_video" class="tbutton small color3"><span>Edit</span></a>
+              </div>
+            </form><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupvideoclose">x</div>
+      </div>
+      <div id="addyoutubebg"></div>    
+<!--end edit youtube video url-->  
 <div class="profilecover">
  <img class = "coverImage" src="images/5.jpeg" />
   <div class="subcover">
@@ -129,11 +146,11 @@
     <ul class="tabs">
       <li><a href="#Details" class="active details"> Details </a></li>
        {{# if bandprofile  currentUser.profile.type }}
-      <li><a class="loadsongs" href="#mp3" id="uploadsong" > Songs </a></li>
-      <li><a href="#Lightbox" id="uploadimage" >Gallery </a></li>
-      <li><a href="#Lightbox">Videos</a></li>
-      <li><a href="#Lightbox">Events</a></li>
-      <li><a href="#Lightbox"> Calender </a></li>
+      <li><a class="loadsongs" href="#mp3" id="uploadsong"> Songs </a></li>
+      <li><a href="#gallery" class="loadgellery" id="uploadimage">Gallery</a></li>
+      <li><a  href="#videos" id="uploadvideo" >Videos</a></li>
+      <li><a href="#events" class="events">Events</a></li>
+      <li><a href="#calender" class="calender"> Calender </a></li>
       <li>
         <div class="tbutton small color3 uploadsongdiv">
           <span class="uploadnewsong" alt="upload song" title="upload song" >
@@ -146,12 +163,15 @@
       <li>
         <div id="close" class="tbutton small color3 tback uploadimgdiv"><span>&gt; Back to Albums</span></div>
       </li>
+      <li>
+        <div id="close" class="tbutton small color3 tback uploadvideodiv"><span> edit youtube video url</span></div>
+      </li>
        {{/if}}
        <audio id="myaudio2"></audio>
           {{# if userprofile currentUser.profile.type }}
        <li><a href="#Featured">Shared Songs</a></li>
       <li><a href="#Lightbox">Gallery</a></li>    
-      <li><a href="#events">WhishList</a></li>
+      <li><a href="#whishlist">WishList</a></li>
       {{/if}}
       <!--{{# if adminprofile currentUser.profile.type }}
        <li><a href="#seeusers">details</a></li>
@@ -192,7 +212,7 @@
           </div>
         </div>
       </li>
-      <li id="Lightbox">
+      <li id="gallery">
         <div class="video-grid">
           <ul id="tp-grid" class="tp-grid">
             {{#each images}}
@@ -202,7 +222,50 @@
           <!--{{> imageUploader}}-->
         </div>
       </li>
-
+      <li id="videos">
+        <!--<div class="video-grid">-->
+        {{#if youtubeurl}}
+          <div id="player"></div>
+        {{/if}}
+        <!--</div>-->
+      </li>
+      <li id="events">
+        <div class="video-grid">
+         events ...
+          <div id="player"></div>
+        </div>
+      </li>
+      <li id="calender">
+        <div class="video-grid">
+         <!--{{ > mycalender }}-->
+        </div>
+      </li>
+      {{# if userprofile currentUser.profile.type }}
+      <li id="whishlist">
+        <div class="def-block widget wishlistdiv">
+            <div class="widget-content ">
+              {{# if whishlist currentUser}}
+              <ul class="list">
+              {{#each whishlist currentUser}}
+            <li id="{{@index}}">
+              <a href="{{pathFor 'seeprofile'}}">
+                <i class="icon-caret-right"></i>
+                {{username}}
+              </a>
+              <i class="icon-remove removewhishlistitem" alt="remove from whishlist" title="remove from whishlist" id="{{_id}}">
+              </i>
+            </li>
+            {{/each}}
+              </ul>
+            {{else}}
+            <span class="emptywhishlist">
+             your wishlist is empty
+            </span> 
+            {{/if}}   
+            </div><!-- widget content -->
+          </div><!-- def block widget categories -->
+      </li>
+      {{/ if }}
     </ul>
   </div>
 </div>
@@ -1347,3 +1410,6 @@
   <div class="music-player-list">
             </div>
   </template>
+  <!--<template name="mycalender">
+        {{ > ReactiveFullcalendar options=calendarOptions }}
+    </template>-->

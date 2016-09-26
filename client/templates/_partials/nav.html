@@ -37,12 +37,14 @@
         <div class="row clearfix">
           <div class="logo bottomtip" title="Best and Most Popular Musics">
             <a href="{{pathFor 'homeIndex'}}">
-              <img src="images/logo5.png" alt="Best and Most Popular Musics">
+              <img src="images/logo_300_png.png"  alt="Best and Most Popular Musics">
+              <!--<img src="images/logo5.png"  alt="Best and Most Popular Musics">-->
+
             </a>
           </div><!-- end logo -->
 
           <nav>
-            <ul class="sf-menu">
+            <ul class="sf-menu" id="mymenu">
               <li class="current selectedLava"><a href="index.html">Talen Directory<span class="sub">start here</span></a>
                 <ul>
                   <li><a href="{{pathFor 'homeBands'}}">Bands</a></li>
@@ -53,7 +55,7 @@
               </li>
               <li><a href="index.html">Hot acts<span class="sub">Hot acts</span></a>
                 <ul>
-                  <li><a href="#">events</a>
+                  <li><a href="{{pathFor 'homeEvents'}}">events</a>
                     <ul>
                       <li><a href="shortcode_accordion.html">Accordion</a></li>
                       <li><a href="shortcode_buttons.html">Buttons</a></li>

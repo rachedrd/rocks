@@ -497,6 +497,186 @@ Template.singelblog.onRendered(function(){
  $('html').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1});     
 $('.commentcontent').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"black",cursoropacitymin:.1}); 
  });
+/*Template.homeEvents.helpers({
+
+currentMonth: function()
+{
+  return Session.get("monthName");
+},
+currentYear: function()
+{
+  return Session.get("currentYear");
+}
+});*/
+/*Template.mycalender.helpers({
+        calendarOptions: {
+            // Standard fullcalendar options
+            height: 700,
+            hiddenDays: [ 0 ],
+            slotDuration: '01:00:00',
+            minTime: '08:00:00',
+            maxTime: '19:00:00',
+            lang: 'eng',
+            // Function providing events reactive computation for fullcalendar plugin
+            events: function(start, end, timezone, callback) {
+                //console.log(start);
+                //console.log(end);
+                //console.log(timezone);
+                var events = [];
+                // Get only events from one document of the Calendars collection
+                // events is a field of the Calendars collection document
+                var calendar = Calendars.findOne(
+                    { "_id":"myCalendarId" },
+                    { "fields": { 'events': 1 } }
+                );
+                // events need to be an array of subDocuments:
+                // each event field named as fullcalendar Event Object property is automatically used by fullcalendar
+                if (calendar && calendar.events) {
+                    calendar.events.forEach(function (event) {
+                        eventDetails = {};
+                        for(key in event)
+                            eventDetails[key] = event[key];
+                        events.push(eventDetails);
+                    });
+                }
+                callback(events);
+            },
+            // Optional: id of the calendar
+            id: "calendar2",
+            // Optional: Additional classes to apply to the calendar
+            addedClasses: "col-md-8",
+            // Optional: Additional functions to apply after each reactive events computation
+            autoruns: [
+                function () {
+                    console.log("user defined autorun function executed!");
+                }
+            ]
+        },
+    });*/
+/* Template.homeEvents.onRendered(function(){
+setCal();
+function getTime() {
+// initialize time-related variables with current time settings
+var now = new Date()
+var hour = now.getHours()
+var minute = now.getMinutes()
+now = null
+var ampm = "" 
+
+// validate hour values and set value of ampm
+if (hour >= 12) {
+hour -= 12
+ampm = "PM"
+} else
+ampm = "AM"
+hour = (hour == 0) ? 12 : hour
+
+// add zero digit to a one digit minute
+if (minute < 10)
+minute = "0" + minute // do not parse this number!
+
+// return time string
+return hour + ":" + minute + " " + ampm
+}
+
+function leapYear(year) {
+if (year % 4 == 0) // basic rule
+return true // is leap year
+ // else not needed when statement is "return"
+return false // is not leap year
+}
+
+function getDays(month, year) {
+// create array to hold number of days in each month
+var ar = new Array(12)
+ar[0] = 31 // January
+ar[1] = (leapYear(year)) ? 29 : 28 // February
+ar[2] = 31 // March
+ar[3] = 30 // April
+ar[4] = 31 // May
+ar[5] = 30 // June
+ar[6] = 31 // July
+ar[7] = 31 // August
+ar[8] = 30 // September
+ar[9] = 31 // October
+ar[10] = 30 // November
+ar[11] = 31 // December
+
+// return number of days in the specified month (parameter)
+return ar[month]
+}
+
+function getMonthName(month) {
+// create array to hold name of each month
+var ar = new Array(12)
+ar[0] = "January"
+ar[1] = "February"
+ar[2] = "March"
+ar[3] = "April"
+ar[4] = "May"
+ar[5] = "June"
+ar[6] = "July"
+ar[7] = "August"
+ar[8] = "September"
+ar[9] = "October"
+ar[10] = "November"
+ar[11] = "December"
+
+// return name of specified month (parameter)
+return ar[month]
+}
+function setCal() {
+// standard time attributes
+var now = new Date()
+var year = now.getYear();
+Session.set("currentYear", now.getFullYear());
+if (year < 1000)
+year+=1900
+var month = now.getMonth()
+var monthName = getMonthName(month)
+Session.set("monthName", monthName);
+var date = now.getDate()
+now = null
+
+// create instance of first day of month, and extract the day on which it occurs
+var firstDayInstance = new Date(year, month, 1)
+var firstDay = firstDayInstance.getDay()
+firstDayInstance = null
+
+// number of days in current month
+var days = getDays(month, year)
+
+// call function to draw calendar
+drawCal(firstDay + 1, days, date, monthName, year)
+}
+
+function drawCal(firstDay, lastDate, date, monthName, year) {
+var text = "" // initialize accumulative variable to empty string
+
+// declaration and initialization of two variables to help with tables
+var digit = 1
+var curCell = 1
+
+for (var row = 1; row <= Math.ceil((lastDate + firstDay - 1) ); ++row) {
+//text += '<div class="eventon_fc_days">'
+//for (var col = 1; col <= 7; ++col) {
+if (digit > lastDate)
+break
+if (curCell < firstDay) {
+text += '<p class="evo_fc_day"></p>';
+curCell++
+} else {
+text += '<p class="evo_fc_day">' + digit + '</p>'
+digit++
+}
+//}
+//text += '</div>'
+}
+ $(".eventon_fullcal").append(text);
+ $(".eventon_fullcal").append('<div class="clear"></div>');
+
+}
+ });*/
 Template.homeBlogs.helpers({
 blogs: function () {
  return blogs.find({}).fetch(); 
@@ -799,6 +979,51 @@ $.getScript('../js/zzzrevolution.js');
 }, 2000);
 });
 Template.seeprofile.events({
+  'click .addwishlist' :function(event, t)
+  {
+    var myobj = {};
+    event.preventDefault();
+     var user = Users.findOne({"_id" :Meteor.userId() });
+      if (user.whishlist.length > 0 )
+    {
+      for (var i = 0 ; i < user.whishlist.length ;  i++) {
+        if(user.whishlist[i].id === this._id)
+        {
+          i = user.whishlist.length;
+        }
+        else
+        { 
+          if(i === user.whishlist.length -1 && user.whishlist[i].id !== this._id)
+        {
+         myobj = {"id": Meteor.userId(), "itemid": this._id, "itemname": this.username };
+         Meteor.call('savewhishlistitem', myobj);
+       }
+     
+        }
+      };
+    }
+    else 
+    {
+      myobj = {"id": Meteor.userId(), "itemid": this._id, "itemname": this.username };
+      Meteor.call('savewhishlistitem', myobj);
+      
+    }
+          //myobj = {"id": Meteor.userId(), "itemid": this._id, "itemname": this.username };
+        //  Meteor.call('savewhishlistitem', myobj);
+    /*
+          var membername = t.find(".inputmemebername").value;
+          var memberrole = t.find(".memeberoleinput").value;
+           if( (membername !== "") && ( membername !== null) && (memberrole !== "") && ( memberrole !== null)  )
+          {
+          myobj = {"id": Meteor.userId(), "membername": membername, "memberrole": memberrole };
+          Meteor.call('savewhishlistitem', myobj);
+          setTimeout(function(){
+            t.find(".inputmemebername").value = "";
+          t.find(".memeberoleinput").value = "";
+          }, 500);*/
+        //  t.find(".inputmemebername").value = "";
+        //  t.find(".memeberoleinput").value = "";
+  },
   'click .seegallery': function(e, t)
   {
 if ($("#tp-grid")[0]) {
@@ -1256,7 +1481,26 @@ Template.managebandInformations.onCreated( function(){
   this.subscribe("images");
   this.subscribe("USERS");});
 Template.homeProfile.onRendered( function(){
-  setTimeout(function(){
+  /**/
+      //player = new YT.Player("player", {height: "400", width: "600", videoId:  Session.get("videoId")/*"LdH1hSWGFGU"*/, 
+ 
+    onYouTubeIframeAPIReady = function () {
+     player = new YT.Player("player", {height: "400", width: "600", videoId:  Session.get("videoId"), 
+    
+            // Events like ready, state change, 
+            events: {
+                onReady: function (event) {
+                  event.target.loadVideoById(Session.get("videoId"));
+                 // player.loadVideoById(Session.get("videoId"))
+                    // Play video when player ready.
+                    event.target.stopVideo();
+                }
+            }
+        });
+    };
+    YT.load();
+  /*end of video plugin*/
+  /*setTimeout(function(){
   //alert('$(tp-grid)[0]' + $("#tp-grid")[0]);
 if ($("#tp-grid")[0]) {
   var $grid = $( '#tp-grid' ),
@@ -1338,6 +1582,7 @@ if ($("#tp-grid")[0]) {
     $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
   }
 },10000);
+*/
   //this.autorun(function(){
 //alert('homeProfile onRendered remove music-player-list ...');
    // $('.music-player-list').remove();
@@ -1689,7 +1934,6 @@ Template.manageuserInformations.helpers({
   },
 });
 Template.userInformations.helpers({
-
    mybirthdate: function(timeStamp)
   {
    myDate = new Date(timeStamp); 
@@ -2667,6 +2911,8 @@ Meteor.call('addAgent' , agent);
 });
 Template.homeProfile.onCreated(function(){
   Meteor.subscribe("USERS");
+  Meteor.subscribe('Calendars');
+  Session.setDefault("videoId", "LdH1hSWGFGU");
   Session.set("myPlaylist", null);
   Meteor.subscribe("songs");
   Meteor.subscribe("images"); 
@@ -2685,6 +2931,34 @@ Template.homeProfile.onCreated(function(){
 
 );
 Template.homeProfile.events({
+  /*'click #youtube_video': function(e, t)
+  {
+    
+  },*/
+  'mouseenter .list li':function(e, t)
+  {
+
+    e.preventDefault();
+   var id = parseInt($(e.currentTarget).attr('id'));
+  $('.list').children('li').eq(id).children().eq(1).css({'opacity' : 1});//children('li').eq(0).children().find(' > .removewhishlistitem').css({'display','none'});
+  },
+  'mouseleave .list li':function(e, t)
+  {
+
+    e.preventDefault();
+   var id = parseInt($(e.currentTarget).attr('id'));
+  $('.list').children('li').eq(id).children().eq(1).css({'opacity' : 0});//children('li').eq(0).children().find(' > .removewhishlistitem').css({'display','none'});
+  },
+  'click .icon-remove' :function(e, t)
+  {
+   var myobj = {};
+    event.preventDefault();
+    var itemid = $(e.currentTarget).attr('id');
+          myobj = {"id": Meteor.userId(), "itemid": itemid };
+          Meteor.call('removewishlistitem', myobj);
+  if($('.whishlist .list').children().length === 0)
+   $('.emptywhishlist').css('display', 'block');        
+  },
   'click .loadsongs' : function(e, t ){
    e.preventDefault();
  if($('.mysongsplayer .music-player-list').children().length > 0)
@@ -2699,6 +2973,89 @@ $('.music-player-list').ttwMusicPlayer( Session.get("myPlaylist") , {
       //some logic to process the rating, perhaps through an ajax call
     }
   });},
+'click .loadgellery':function(e, t)
+{
+if ($("#tp-grid")[0]) {
+  var $grid = $('#tp-grid'),
+  $name = $('#name'),
+  $close = $('#close'),
+  $loader = $( '<div class="loader"><i></i><i></i><i></i><i></i><i></i><i></i><span>Loading...</span></div>' ).insertBefore( $grid ),
+  stapel = $grid.stapel( {
+    randomAngle : false,
+    delay : 100,
+    gutter : 0,
+    pileAngles : 0,
+    onLoad : function() {
+      $('.addAlbum').hide();
+      $('.removeAlbum').css('visibility', 'hidden');
+      $loader.remove();
+              },
+    onBeforeOpen : function( pileName ) {
+      $name.html( pileName );
+      $('.removeAlbum').hide();
+      $('.addAlbum').hide();
+      $('.removeAlbum').css('visibility', 'hidden');
+                      },
+    onAfterOpen : function( pileName ) {
+      showDelte = 1;
+      $('.addAlbum').hide();
+      $('.removeAlbum').css('visibility', 'hidden');
+      $('.removeAlbum').hide();
+      $('.def-block').on('mouseenter', 'ul.tp-grid li ', function(){
+        if(showDelte === 1)
+          {
+          $(this).find('> div.removeDiv').show();
+          }
+      }).on('mouseleave', 'ul.tp-grid li', function () {
+        $(".removeDiv").hide();
+                              });
+      $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+      $close.show();
+                      }
+    });
+    $close.on( 'click', function() {
+      //alert('onclose clicked ...');
+      //$('.addAlbum').hide();
+      $(this).hide();
+      $("a[rel^='prettyPhoto']").prettyPhoto().unbind();
+      //$(".removeDiv").hide();
+      $name.empty().html('Photo Gallery');
+      stapel.closePile();
+      /*stapel = $grid.stapel( {
+        randomAngle : false,
+        delay : 100,
+        gutter : 0,
+        pileAngles : 0,
+        onLoad : function() {
+          $('.addAlbum').hide();
+          $loader.remove();},
+        onBeforeOpen : function( pileName ) {
+        $('.addAlbum').hide();
+        $name.html( pileName );
+      },
+      onAfterOpen : function( pileName ) {
+        showDelte = 1;
+        $('.addAlbum').hide();
+            $('.def-block').on('mouseenter', 'ul.tp-grid li ', function()
+    {
+      if(showDelte === 1)
+      {
+      $(this).find('> div.removeDiv').show();
+      }
+    }).on('mouseleave', 'ul.tp-grid li', function () {
+      $(".removeDiv").hide();
+});
+        $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+        $close.show();
+      }
+    });*/
+    });
+  }
+  // prettyPhoto
+  if ($("a[rel^='prettyPhoto']")[0]) {
+    $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+  }
+},
  /* 'click #uploadingmysong' : function()
   {
     alert('upload on google cloud ...');
@@ -2804,6 +3161,36 @@ $("#errsongname").show();
 });
 
 Template.homeProfile.helpers({
+    whishlist: function(currentuser)
+  {
+    if(currentuser.profile.type === "costumer" /*&& currentuser.whishlist.length > 0 */)
+    {
+    if (currentuser.whishlist )
+    {
+      if (currentuser.whishlist.length > 0 )
+    {
+      $('.emptywhishlist').css('display', 'none');
+      console.log('hiding the emptywhishlist');
+      var mywhishlist  =[];
+      for (var i = 0 ; i <  currentuser.whishlist.length ; i ++ ) {
+        var item = {_id: currentuser.whishlist[i].id, username: currentuser.whishlist[i].username };
+        mywhishlist.push(item);
+      };
+        return mywhishlist;
+    }
+    else 
+    {
+      $('.emptywhishlist').css('display', 'block');
+      return false;
+    }
+  }
+  }
+  else 
+    {
+      $('.emptywhishlist').css('display', 'block');
+      return false;
+    }
+  },
      isUploading: function () {
         return Boolean(uploader.get());
     },
@@ -2829,6 +3216,63 @@ $("#myProgress").show();
     return Math.round(upload.progress() * 100);
   }
     },
+    youtubeurl : function()
+    {
+      
+    var band = Users.findOne({"_id": Meteor.userId()});
+    if(band !== undefined  && band.profile !== undefined )
+     {
+      Session.set("videoId", band.profile.youtubevideourl);
+      }
+  //  return true;
+
+    onYouTubeIframeAPIReady = function () {
+      player = new YT.Player("player", {height: "400", width: "600", videoId:  Session.get("videoId"), 
+            // Events like ready, state change, 
+            events: {
+                onReady: function (event) {
+                  $("#youtube_video").click(function(ev){
+                    //alert('click ...');
+                    ev.preventDefault();
+                    var myurlvideo = ""
+                    myurlvideo  = $("#input-i").val();
+                    var url = "";
+     if(myurlvideo === "" ||  myurlvideo === null || myurlvideo === undefined)
+    {
+      $("#erryoutubeurl").html("empty video url");
+    }
+    else
+    {
+    if(myurlvideo.toString().indexOf("www.youtube.com") === -1)
+    {
+      $("#erryoutubeurl").html("invalid video url ");
+    }
+    else
+    {
+     $("#erryoutubeurl").html("");
+       url =  myurlvideo.slice(myurlvideo.lastIndexOf("v=") + 2);
+     myobj = {"id": Meteor.userId(), "youtubevideourl": url  };
+       Meteor.call('updateyoutubevideo', myobj, function(err, result)
+       {
+        if(result)
+        {
+       $("#addyoutubebg").fadeOut("slow");
+      $("#popupvideo").removeClass('zigmaIn').fadeOut("slow");
+      event.target.loadVideoById(url);
+        }
+       }); //change .call
+       }
+  }
+                 // event.target.stopVideo();
+                 });
+                }
+            }
+        });
+    };
+    YT.load();
+    return true;
+  
+  },
 allsongs : function()
 {
   var band = Users.findOne({"_id": Meteor.userId()});

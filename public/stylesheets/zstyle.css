@@ -1,5 +1,6 @@
 .profilecover{ width: 100%; height: 450px; position: relative; /*background-color: red;*/
   }
+  .removewhishlistitem{opacity: 0}
   /*.userstable tfoot, .userstable tfoot tr, .userstable tfoot tr td {width: 100%}*/
   .coverImage{width: 100% ; height: 100%}
 .subcover{ /*background-color: yellow;*/ width: 100%; height: 100px;  position : absolute ; bottom: -35px}
@@ -14,8 +15,9 @@
 	display: inline; margin-left: 10px}
 	.blogcommentslist{display: none;}
 	.pages{display: none;}
+	#youtube_video{display: block; margin: 0 auto; width: 50px}
 /*upload song section */
-.uploadsongdiv, .uploadimgdiv, .uploadsongimgdiv{
+.uploadsongdiv, .uploadimgdiv, .uploadsongimgdiv, .uploadvideodiv{
 padding: 0px;
 	position: relative;  width:auto;  cursor: pointer; 
 background-color: red;}
@@ -36,7 +38,7 @@ background-color: red;}
 	-webkit-transition:all .2s;
 	transition:all .2s;
 }
-.songnamediv{margin-bottom: 10px}
+.songnamediv, .youtubenamediv{margin-bottom: 10px}
 .songnamediv span.songnamespanlabel{display: inline; width: auto;}
 .songnamespanlabel{font-size: 12px; font-weight: bold;width: auto; padding-right: 5px }
 /*#uploadsongfile{ width:100% ; height: 100%; }*/
@@ -125,7 +127,9 @@ max-height: 300px;
 	text-align: right;
    
 }
-.emtyresult{font-size: 12px ; font-weight: bold; color: #ff6600; display: none;}
+.emtyresult, .emptywhishlist{font-size: 12px ; font-weight: bold; color: #ff6600; display: none;}
+.emptywhishlist{display: block;}
+.addwishlist{cursor: pointer;}
 .togglenotification
 {
 	background-color: black;
@@ -255,6 +259,10 @@ max-height: 300px;
 	/*line-height: 1;*/
 	text-transform: uppercase;
 	 }
+
+	 .wishlistdiv{display: inline-block; width: auto;}
+	 .wishlistdiv .list li a{display: inline; margin-right: 20px ; cursor: pointer;}
+	 .wishlistdiv .list li .icon-remove{float: right; margin-top: 10px; color: red; cursor: pointer;}
 	.uprecommend , .downrecommend ,  .uprecommend i , .downrecommend i {padding: 0px ; margin: 0px ; }
 	   /*.spanmemebername,
 	   .inputmemebername, 
@@ -383,11 +391,11 @@ float: none; width: 100px ; display: inline; position: absolute; }
 .wishlist, .hire{
  position: relative;
  color: #ff6600 ; }
- .repRequest, .uploadsongdiv, .uploadimgdiv { display: none; width: auto;  float: left; 
+ .repRequest, .uploadsongdiv, .uploadimgdiv , .uploadvideodiv{ display: none; width: auto;  float: left; 
  	margin-top: 8px;  }
  	.uploadsongimgdiv{width: auto; float: left; margin-top: 8px}
  	.repRequest{background-color: gray}
- 	 .repRequest span , .uploadsongdiv span, .uploadimgdiv span, .uploadsongimgdiv span{
+ 	 .repRequest span , .uploadsongdiv span, .uploadimgdiv span, .uploadvideodiv span, .uploadsongimgdiv span{
 font-size: 12px;}
  
 .tabs li {display: inline;}
@@ -505,7 +513,7 @@ font-size: 12px;}
 	.wall{ background-color: red; width: 10%;}
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 25px ; cursor: pointer;}
 .removeHighlight {display: none;}
-.repRequest span, .uploadsongdiv span, .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
+.repRequest span, .uploadsongdiv span, .uploadimgdiv span, .uploadvideodiv span, .uploadsongimgdiv span{ font-size: 12px;}
 .product_inner p.price{ font-size: 15px ; margin-right: 10px}
 .product_inner p.rating{ float: left }
 
@@ -513,6 +521,9 @@ font-size: 12px;}
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 768px) and (max-width: 959px) {
+	nav ul{display: block ; }
+	nav {display: block ; }
+
 .usertypecontainer{display: block; position: relative; height: auto; padding-bottom: 0px}
 .suggest-usertype input, .suggest-usertype ul{margin-left: 0px ; width: 100% }
 .suggest-username input, .suggest-username ul{margin-left: 0px ; width: 100% }
@@ -570,7 +581,7 @@ font-size: 12px;}
 .addmemeberform span{padding-top: 0px ; margin-left: 15px}
 		.wishlist span { white-space: nowrap; position: absolute; }
 
-		.repRequest span , .uploadsongdiv span , .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
+		.repRequest span , .uploadsongdiv span ,.uploadvideodiv span , .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
 		.hire span{margin-top: -5px ; position: absolute; }
  
  .userstable tbody tr td:nth-child(7),
@@ -659,7 +670,7 @@ font-size: 12px;}
 .ullist header p  {font-size: 12px ; }
 p.notcontent {font-size: 12px ;  width:100%; display: block;}
 #memeberdiv >  #errors{font-size: 12px}
-.repRequest , .uploadsongdiv, .uploadimgdiv {margin-top: 0px}
+.repRequest , .uploadsongdiv, .uploadimgdiv , .uploadvideodiv{margin-top: 0px}
 .tabs li a  {display: inline;  }
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
 
@@ -682,6 +693,8 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 /*  #Mobile (Portrait) 320px
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 100px) and (max-width: 479px) {
+	.tback{top:0px;}
+	#erryoutubeurl{margin-left: -10px}
 .userstable tbody tr td:nth-child(7),
  .userstable thead tr th:nth-child(7),
  .userstable tbody tr td:nth-child(6),
@@ -777,14 +790,14 @@ p.notcontent {font-size: 11px}
 .suggest-holder {width: 145px}
 .suggest-holder input , .suggest-holder ul {width: 145px}
 .ratingdiv p{ font-size: 8px ; margin-top: -1px}
-.repRequest , .uploadsongdiv , .uploadimgdiv{margin-top: 0px}
-.uploadsongdiv , .uploadimgdiv{margin-top: 2px}
+.repRequest , .uploadsongdiv , .uploadimgdiv , .uploadvideodiv{margin-top: 0px}
+.uploadsongdiv , .uploadimgdiv, .uploadvideodiv{margin-top: 2px}
 .tabs li a  {display: inline;  }
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
 .suggest-holder {margin-left: 10px}
 #regioninput {margin-left: 25px}
 #cityinput{margin-left: 45px}
-.repRequest span , .uploadsongdiv span, .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 9px;}
+.repRequest span , .uploadsongdiv span, .uploadimgdiv span,.uploadvideodiv span ,.uploadsongimgdiv span{ font-size: 9px;}
 .bandnameinputsearch{display: inline; text-align: left;}
 .bandtypesearch {display: block; margin: -10px 0px}
 .savemember{display: none;}

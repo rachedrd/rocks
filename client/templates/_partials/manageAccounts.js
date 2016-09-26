@@ -3,13 +3,10 @@ import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { Mongo } from 'meteor/mongo';
 import { Session } from 'meteor/session';
-
-
 //import { Tasks } from '../../../imports/api/tasks.js';
 //import { Images } from '../../../imports/api/images.js';
 Session.setDefault("rachini","co");
 Meteor.startup (function(){
-
 });
 Meteor.subscribe("USERS");
 Template.nav.helpers({
@@ -62,7 +59,6 @@ Template.myPicture.helpers({
 });
 */
 Template.layout.onRendered(function(){
-
 $('head').append('<script type="text/javascript" src="js/jquery.min.js"></script>');
 $('head').append('<script type="text/javascript" src="js/calendar.js"></script>');
 $('head').append('<script type="text/javascript" src="js/datePicker.js"></script>');
@@ -399,11 +395,11 @@ Template.templateForm.events({
 							    rachini = Users.findOne({"_id":  Meteor.userId() }, { fields: { profile : 1} });
 							    if(rachini.profile.Status === 'inactive')
 							    {
-							    	alert('username is active');
+							    	console.log('username is inactive');
 							    }
 							    else
 							    {
-							    	alert('contact admin your profile has been disabled');
+							    	console.log('contact admin your profile has been disabled');
 							    	//Router.go('/');
 							    }
 							   // alert(rachini);

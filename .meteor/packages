@@ -34,3 +34,5 @@ edgee:slingshot
 disable-oplog
 manuelschoebel:wait-on-lib
 http
+nrser:accounts-soundcloud
+adrianliaw:youtube-iframe-api

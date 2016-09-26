@@ -498,8 +498,10 @@ textarea {
 }
 .logo {
 	float: left;
-	margin: 28px 0 14px;
-	width: 126px;
+	/*margin: 28px 0 14px;
+	width: 126px;*/
+	width: 100px;
+	height: 100px;
 }
 .social-head {
 	float: right;
@@ -2373,7 +2375,7 @@ html[xmlns] .slides {display: block;}
 .flex-control-thumbs img {width: 100%; display: block; opacity: .7; cursor: pointer;}
 .flex-control-thumbs img:hover {opacity: 1;}
 .flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
-#errsongname{margin-top: -5px ; position: absolute;}
+#errsongname, #erryoutubeurl{margin-top: -5px ; position: absolute;}
 @media screen and (max-width: 860px) {
 	.chngavatr{bottom: 85px ; left: 15px}
 	.changeavatar{bottom: 70px;}
@@ -3403,7 +3405,7 @@ a.notification-close {
 
 /*	Popup SignIn
 ----------------------------------------------------------------------*/
-#LoginBackgroundPopup , #addsongbg, #addblogimagebg{  
+#LoginBackgroundPopup , #addsongbg, #addblogimagebg, #addyoutubebg{  
 	display:none;
 	position:fixed;
 	height:100%;
@@ -3413,7 +3415,7 @@ a.notification-close {
 	background:#000;
 	z-index: 99999997;
 } 
-#popupLogin , #popupsong, #popupblogimage{  
+#popupLogin , #popupsong, #popupblogimage, #popupvideo{  
 	display:none;
 	position:fixed;
 	width:360px;
@@ -3431,7 +3433,7 @@ a.notification-close {
 	z-index: 99999998;
 	margin-left: 0;
 }
-#popupLogin .def-block , #popupsong .def-block , #popupblogimage .def-block
+#popupLogin .def-block ,#popupvideo .def-block , #popupsong .def-block , #popupblogimage .def-block
  {  
 	background: #000;
 	background: rgba(0, 0, 0, 0.9) !important;
@@ -3444,7 +3446,7 @@ a.notification-close {
 	box-shadow: none;
 	border: 2px solid #1F1F1F;
 }
-#popupLoginClose , #popupsongclose ,#popupblogimageclose {
+#popupLoginClose , #popupsongclose ,#popupvideoclose ,#popupblogimageclose {
 	position: absolute;
 	top: 25px;
 	right: 33px;
@@ -3454,7 +3456,7 @@ a.notification-close {
 	-webkit-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
-#popupLoginClose:hover , #popupsongclose:hover ,#popupblogimageclose:hover {
+#popupLoginClose:hover , #popupsongclose:hover, #popupvideoclose:hover ,#popupblogimageclose:hover {
 	color: #fff
 }
 #login_username, #login_password, #song_name  ,  #signup_username, #signup_firstname,
@@ -4709,8 +4711,8 @@ a.notification-close {
 
 /*	IE7 & IE8 & IE9 Hacks
 ----------------------------------------------------------------------*/
-.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup, .ie8 #addsongbg, .ie8  #addblogimagebg,
-.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup , .ie7 #addsongbg , .ie7  #addblogimagebg{
+.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup, .ie8 #addsongbg, .ie8  #addblogimagebg, .ie8 #addyoutubebg,
+.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup , .ie7 #addsongbg , .ie7  #addblogimagebg, .ie7 #addyoutubebg{
 	background: transparent url(../images/ie_000_80.png) repeat;
 }
 .ie8 .footer-last, .ie8 .ttw-music-player .player-controls, .ie8 .def-block, .ie8 .ttw-music-player .tracklist, .ie8 .breadcrumbIn,
@@ -4939,6 +4941,8 @@ a.notification-close {
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 768px) and (max-width: 959px) {
+	 #mymenu{display: inline;}
+	 nav.ul{display: inline;}
 	.usrPrflnm, .notificationsicon, .messagessicon{line-height: 10px;
 	font-family: "Tahoma", Helvetica, Arial; 
 	font-size: 15px}
@@ -4954,7 +4958,7 @@ a.notification-close {
 	#header {position: relative;background: rgba(0, 0, 0, 0.4);}
 	.little-head {float: none !important;display: table;margin: 0 auto}
 	.logo {float: none !important;display: block;margin: 28px auto 14px}
-	.sf-menu {float: none !important;display: table;margin: 20px auto 0 !important}
+	.sf-menu {float: none !important;display: inline-table;margin: 20px auto 0 !important}
 	.sf-menu a {padding: 0 28px 30px 0}
 	.sticky {margin-top: -150px !important}
 	.ttw-music-player .player {width: 100%}
@@ -5104,7 +5108,7 @@ a.notification-close {
 	.fb-profile .cover a.changecover { width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
 	
 		#errorMsgLgn  {float: right; margin: -33px 20px 0px 0px;}
-		#errsongname { margin-top: -4px ; font-size: 11px }
+		#errsongname, #erryoutubeurl { margin-top: -4px ; font-size: 11px }
 		#errorMsgSgnUp {float: right; margin: -5px 20px 0px 0px;}
 
 		/*#errorMsgSgnUp {width: 100%}*/
@@ -5209,7 +5213,7 @@ a.notification-close {
 	ul.showcomments li.child {margin: 0 0px 32px 2px}
 	.topbar h2, .topbar h3 { text-align: left; padding: 0; display: block;}
 	.tback {top: 40px}
-	#popupLogin , #popupsong, #popupblogimage { width: 310px}
+	#popupLogin , #popupsong, #popupvideo, #popupblogimage { width: 310px}
 	  #popupSignUp { width: 310px ; margin-top: 0px}
 	.ajde_evcal_calendar .calendar_header p {font-size: 26px}
 	.forum .search-forum {position: relative;width: 100%}
@@ -5249,7 +5253,7 @@ a.notification-close {
     z-index: 9;
 }
 /*login form styling */
-#popupLogin .input-group , #popupsong .input-group, #popupblogimage .input-group {
+#popupLogin .input-group , #popupsong .input-group, #popupvideo input, #popupblogimage .input-group {
 display: block !important;
 width: 100% !important;
 }
@@ -5316,12 +5320,12 @@ width: 100% !important;
 
 #validUsername, #validPassword, #validFisrtName_sgnUp,#viewPasswd_sgnUp, #viewRePasswd_sgnUp, #validLastName_sgnUp, #validRePsswd_sgnUp, #validEmail_sgnUp, #validPasswd_sgnUp,#validAlmName, #validUsername_sgnUp{color: red; position: absolute;float: right; margin-left: 93%;margin-top: 4%;}
 #viewPasswd_sgnUp, #viewRePasswd_sgnUp{margin-left: 85%; color: gray; cursor:pointer;}
-#errorMsgLgn, #errsongname,
+#errorMsgLgn, #errsongname, #erryoutubeurl,
  #errorMsgSgnUp,
   #errorMsgAlb
   { color: red;}
   #popupLogin h4  {margin-right: 45%;}
-  #popupsong h4 ,#popupblogimage h4{margin-right: 7%; margin-top: -10px; position: relative;}
+  #popupsong h4 ,#popupblogimage h4, #popupvideo h4{margin-right: 7%; margin-top: -10px; position: relative;}
    #popupSignUp h4 {margin-right: 24%;}
 /*#errorMsgSgnUp{ margin-left: 160px;}*/
 #errorMsgAlb{margin-left: 60px;}

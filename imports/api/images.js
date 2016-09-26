@@ -6,7 +6,16 @@ import { Mongo } from 'meteor/mongo';
  Images = new Mongo.Collection('images');
  songs = new Mongo.Collection('songs');
  blogs = new Mongo.Collection('blogs');
-
+ Calendars = new Mongo.Collection('calendars');
+/*Calendars.insert({
+  "_id": "myCalendarId2",
+  events: [ {"bandname" : "britneySpears",
+  "start":"2016-09-26",
+  "end": "2016-09-26",
+  "title": "all day events",
+  "venueId":"venue 1",
+  "owner": "agent1"  } ]
+ });*/
  Notifications = new Mongo.Collection('notifications');
 
  Users =  Meteor.users;
@@ -16,6 +25,8 @@ import { Mongo } from 'meteor/mongo';
 Meteor.publish('images', function(){ return Images.find({}); });
 Meteor.publish('songs', function(){ return songs.find({}); });
 Meteor.publish('blogs', function(){ return blogs.find({}); });
+Meteor.publish('Calendars', function(){ return Calendars.find({}); });
+
 
 
 Meteor.publish('notifications', function(){ return Notifications.find({},{_id: 1, owner: 1, reciever: 1 , type: 1, status :1 ,time :1}); });
@@ -23,7 +34,7 @@ Meteor.publish('notifications', function(){ return Notifications.find({},{_id: 1
 
 
 Meteor.publish('USERS', function(){ 
-    return Users.find({}, { fields: {_id:1, profile: 1 , emails: 1, username: 1 , agent: 1} });
+    return Users.find({}, { fields: {_id:1, profile: 1 , emails: 1, username: 1 , agent: 1, whishlist: 1} });
 	//return Users.find({});
 
      });
@@ -87,6 +98,11 @@ updatebirthdate: function(obj)
  Users.update({"_id": obj.id}, {$set : { "profile.birthdate" : obj.birthdate }   });
  return;
 },
+updateyoutubevideo: function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.youtubevideourl" : obj.youtubevideourl }   });
+ return true;
+},
 updatephonenumber:function(obj)
 {
  Users.update({"_id": obj.id}, {$set : { "profile.phoneNumber" : obj.phoneNumber }   });
@@ -115,7 +131,14 @@ updatebandsets: function(obj)
 savebandmember: function(obj)
 {
  //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
- Users.update({"_id": obj.id}, {$push : { "profile.members" : {"name" : obj.membername, "role":  obj.memberrole} }   });
+ Users.update({"_id": obj.id}, {$push : { "profile.members" : {"id" : obj.itemid, "role":  obj.itemname} }   });
+ 
+ return true;
+},
+savewhishlistitem: function(obj)
+{
+ //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
+ Users.update({"_id": obj.id}, {$push : { "whishlist" : {"id" : obj.itemid, "username":  obj.itemname} }   });
  
  return true;
 },
@@ -168,6 +191,10 @@ removememeber: function(obj)
 {
  Users.update({"_id": obj.id} , { $pull : { "profile.members" : {"name": obj.membername, "role" :obj.memberrole } } });
 },
+removewishlistitem: function(obj)
+{
+ Users.update({"_id": obj.id} , { $pull : { "whishlist" : {"id": obj.itemid} } });
+},          
 removecomment: function(obj)
 {
   console.log(obj.blogid + "  comment id " + obj.commentid);
