@@ -6,7 +6,10 @@ import { Mongo } from 'meteor/mongo';
  Images = new Mongo.Collection('images');
  songs = new Mongo.Collection('songs');
  blogs = new Mongo.Collection('blogs');
+ venues = new Mongo.Collection('venues');
  Calendars = new Mongo.Collection('calendars');
+ chat = new Mongo.Collection('chat');
+
 /*Calendars.insert({
   "_id": "myCalendarId2",
   events: [ {"bandname" : "britneySpears",
@@ -25,10 +28,9 @@ import { Mongo } from 'meteor/mongo';
 Meteor.publish('images', function(){ return Images.find({}); });
 Meteor.publish('songs', function(){ return songs.find({}); });
 Meteor.publish('blogs', function(){ return blogs.find({}); });
+Meteor.publish('venues', function(){ return venues.find({}); });
 Meteor.publish('Calendars', function(){ return Calendars.find({}); });
-
-
-
+Meteor.publish('chat', function(){ return chat.find({}); });
 Meteor.publish('notifications', function(){ return Notifications.find({},{_id: 1, owner: 1, reciever: 1 , type: 1, status :1 ,time :1}); });
 
 
@@ -141,6 +143,58 @@ savewhishlistitem: function(obj)
  Users.update({"_id": obj.id}, {$push : { "whishlist" : {"id" : obj.itemid, "username":  obj.itemname} }   });
  
  return true;
+},
+addEvent: function(obj)
+{     
+//var eventId = Calendars.insert({"events" : [ {"title" : obj.title, "type": obj.type, "start" : obj.start, "end" : obj.end , "ownerId" : obj.ownerId, "bandId" : obj.bandId } ]});
+var eventId = Calendars.insert({"title" : obj.title, "type": obj.type, "start" : obj.start, "end" : obj.end , "ownerId" : obj.ownerId, "bandId" : obj.bandId });
+
+if(eventId)
+{
+var venueid = venues.insert({ eventId : eventId, postcode : obj.postcode, regionname : obj.regionname, cityname: obj.cityname , address: obj.address, buildingname: obj.buildingname });
+console.log('venue id : ' + venueid);
+return eventId;
+}
+},
+sendMessage: function(obj)
+{  
+console.log('save chat into database ...');   
+var messageId = chat.insert({"senderId" : obj.senderId, "recieverId": obj.recieverId, "timeStamp" : obj.timeStamp, "content" : obj.content , "status" : obj.status });
+return messageId;
+},
+updateevent : function(obj)
+{
+console.log(obj);
+var eventId = Calendars.update({"_id" : obj.id }, { $set : { "title" : obj.title , "start" : obj.start, "end" : obj.end } });    
+//var eventId = Calendars.update({"_id" : obj.id }, { $set : { "title" : obj.title, "start" : obj.start, "end" : obj.end } });
+if(eventId)
+{
+var venueid = venues.update({ "eventId" : obj.id } , { $set :{ "postcode" : obj.postcode, "regionname" : obj.regionname, "cityname": obj.cityname , "address": obj.address, "buildingname": obj.buildingname } });
+console.log('updated venue id : ' + venueid);
+return  venueid;
+}
+},
+/*updateevent: function(id)
+{ 
+//var eventId = Calendars.update({"_id" : obj.id }, { $set : { "title" : obj.title , "start" : obj.start, "end" : obj.end } });    
+//var eventId = Calendars.update({"_id" : obj.id }, { $set : { "title" : obj.title, "start" : obj.start, "end" : obj.end } });
+//if(eventId)
+//{
+  //console.log("obj from updateevent " + id);
+  //console.log(obj);
+
+//var venueid = venues.update({ "eventId" : obj.id, postcode : obj.postcode, regionname : obj.regionname, cityname: obj.cityname , address: obj.address, buildingname: obj.buildingname });
+//console.log('updated venue id : ' + venueid);
+//return ;
+//}
+},*/
+removeevent : function(id)
+{
+ eventId = Calendars.remove({"_id" : id});
+console.log('event removed' + eventId);
+var venueid = venues.remove({"eventId": id});
+console.log('venue removed' + venueid);
+return venueid;
 },
 addComment: function(obj)
 {

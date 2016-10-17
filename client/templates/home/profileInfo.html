@@ -35,6 +35,269 @@
         <div id="popupvideoclose">x</div>
       </div>
       <div id="addyoutubebg"></div>    
+<div id="popupevent">
+        <div class="def-block widget">
+          <h4>New event </h4><span id="eventerr"><!--invalid video url empty video url--></span><span class="liner"></span>
+          <div class="widget-content row-fluid">
+ <form id="popup_signup_form">
+            <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="event name" title="event name">
+                <i class="icon-adn registerForm" alt="event name" title="event name"></i>
+              </span>
+              <input type="text" name="event_name" title="event name" id="event_name" onfocus="if (this.value=='event name') this.value = '';" onblur="if (this.value=='') this.value = 'event name';" value="event name" placeholder="event name">
+              <i id="validUsername_sgnUp" class="glyphicon valideventname"></i>
+            </div>
+            <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="your choice " title="your choice">
+                <i class="icon-group registerForm" alt="your choice" title="your choice"></i>
+              </span>
+              <label id="eventtypelabel">Event type</label>
+              <div class="dropdown" id="divToggleeventType">
+            <button id="Etype" class="btn dropdown-toggle" type="button" data-toggle="dropdown">Select type<i class="glyphicon glyphicon-chevron-right"></i>
+                  </button>
+                    <ul class="dropdown-menu" id="choiceeventType">
+                       <li><a href="#">private</a></li>
+                       <li><a href="#">public</a></li>
+                    </ul>
+              </div>
+            </div> 
+             <div class="input-group input-group-lg ">
+              <span class="input-goup-addon" alt="start date" title="start date">
+                <i class="icon-calendar registerForm" alt="start date" title="start date"></i>
+              </span>
+              <input type="text" name="event_startdate" title="start date" id="event_startdate" onfocus="if (this.value=='DD-MM-YYYY HH:MM') this.value = '';" onblur="if (this.value=='') this.value = 'DD-MM-YYYY HH:MM';" value="DD-MM-YYYY HH:MM" placeholder="start date and time" class=" date date-1 event_startdate"  data-timeformat="HH:MM PM">
+              <i id="validFisrtName_sgnUp" class="glyphicon valideventstart"></i>
+            </div>
+             <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="end date" title="end date">
+                <i class="icon-calendar registerForm" alt="end date" title="end date"></i>
+              </span>
+              <input type="text" name="event_enddate" title="end date" class=" date date-1 eventenddate" id="event_enddate" onfocus="if (this.value=='DD-MM-YYYY HH:MM') this.value = '';" onblur="if (this.value=='') this.value = 'DD-MM-YYYY HH:MM';" value="DD-MM-YYYY HH:MM" data-timeformat="HH:MM PM" placeholder="end date and time">
+              <i id="validLastName_sgnUp" class="glyphicon valideventenddate"></i>
+            </div>
+            <div class="input-group input-group-lg postcodeevent">
+                 <span class="input-goup-addon" alt="postcode" title="postcode"><i class="icon-map-marker registerForm" alt="postcode" title="postcode"></i></span>
+                 <input type="text" alt="postcode" title="postcode" name="event_postcode" id="event_postcode" onfocus="if (this.value=='postcode') this.value = '';" onblur="if (this.value=='postcode') this.value = '';" value="postcode" placeholder="nn13er">
+                 <ul class="zonecodes">
+                 </ul>
+                 <i id="validEmail_sgnUp" class="glyphicon valideventpostcode"></i>
+            </div>
+            <div class="input-group input-group-lg ">
+                 <span class="input-goup-addon" alt="region name" title="region name"><i class="icon-map-marker registerForm" alt="region name" title="region name"></i></span>
+                 <input type="text" alt="region name" title="region name" name="event_regionname" id="event_regionname" onfocus="if (this.value=='region name') this.value = '';" onblur="if (this.value=='region name') this.value = '';" value="region name" placeholder="Northshire">
+                 <i id="validEmail_sgnUp" class="valideventregion glyphicon"></i>
+            </div>
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="city name" title="city name"><i class="icon-map-marker registerForm" alt="city name" title="city name"></i></span>
+                 <input type="text" alt="city name" title="city name" name="event_cityname" id="event_cityname" onfocus="if (this.value=='city name') this.value = '';" onblur="if (this.value=='city name') this.value = '';" value="city name" placeholder="GB">
+                 <i id="validEmail_sgnUp" class="glyphicon valideventcity"></i>
+            </div>
+            <div class="input-group input-group-lg addressnameevent">
+                 <span class="input-goup-addon" alt="address" title="address"><i class="icon-map-marker registerForm" alt="address" title="address"></i></span>
+                 <input type="text" alt="address" title="address" name="event_address" id="event_address" onfocus="if (this.value=='address') this.value = '';" onblur="if (this.value=='address') this.value = '';" value="address" placeholder="14 green street">
+                 <i id="validEmail_sgnUp" class="valideventaddress glyphicon "></i>
+                 <ul class="zonecodes">
+                 </ul>
+            </div>
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="venue name" title="venue name"><i class="icon-home registerForm" alt="venue name" title="venue name"></i></span>
+                 <input type="text" alt="venue name" title="venue name" name="event_venue" id="event_venue" onfocus="if (this.value=='venue name') this.value = '';" onblur="if (this.value=='venue name') this.value = '';" value="venue name" placeholder="Darwin Venue">
+                 <i id="validEmail_sgnUp" class="glyphicon  valideventvenue"></i>
+            </div>
+                <a href="#" id="signup_register" class="tbutton small color3 saveevent"><span>Add</span></a>
+                <a href="#" id="event_cancel" class="tbutton color2 small"><span>Cancel</span></a>
+  </form>
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupeventclose">x</div>
+      </div>      
+      <div id="addeventbg"></div>
+<div id="popupeditevent" class="popupeventDetails">
+        <div class="def-block widget">
+          <h4>Event Details</h4><span id="eventediterr"><!--invalid video url empty video url--></span><span class="liner"></span>
+          <div class="widget-content row-fluid">
+ <form id="popup_signup_form">
+           <div class="displaydetails" id="displayeventname">
+            <span class="input-goup-addon" alt="event name" title="event name">
+                <i class="icon-adn registerForm" alt="event name" title="event name"></i>
+              </span>
+            <span class="eventnamespn bld">Title:</span>
+            <span class="eventnamevalue bld"></span>
+            <span id="updateeventname" class="updateeventname bld">
+            <i class="glyphicon glyphicon-pencil" alt="update event name" title="update event name"></i>
+          </span>
+           </div> 
+           <div class="eventnameedit">
+            <div class="input-group input-group-lg ">
+              <span class="input-goup-addon" alt="event name" title="event name">
+                <i class="icon-adn registerForm" alt="event name" title="event name"></i>
+              </span>
+              <input type="text" name="event_name" title="event name" id="event_name" onfocus="if (this.value=='event name') this.value = '';" onblur="if (this.value=='') this.value = 'event name';" value="event name" placeholder="event name" class="neweventname">
+              <i id="validUsername_sgnUp" class=" glyphicon valideventname"></i>
+            </div>
+          </div>
+            <div class="displaydetails" id="displayeventtype">
+            <span class="input-goup-addon" alt="event name" title="event name">
+                <i class="icon-group registerForm" alt="event name" title="event name"></i>
+              </span>
+            <span class="eventnamespn bld">Type:</span>
+            <span class="eventtypevalue bld"></span>
+            <span id="updateeventtype" class="updateeventtype bld">
+            <i class="glyphicon glyphicon-pencil" alt="update event type" title="update event type"></i>
+          </span>
+           </div>
+           <div class="eventtypeedit">
+            <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="your choice " title="your choice">
+                <i class="icon-group registerForm" alt="your choice" title="your choice"></i>
+              </span>
+              <label id="eventtypelabel">Event type</label>
+              <div class="dropdown" id="divToggleeventTypeupdate">
+                  <button id="Etypeupdate" class="btn dropdown-toggle neweventtype" type="button" data-toggle="dropdown">Select type
+                     <i class="glyphicon glyphicon-chevron-right"></i>
+                  </button>
+                    <ul class="dropdown-menu" id="choiceeventType">
+                       <li><a href="#">private</a></li>
+                       <li><a href="#">public</a></li>
+                    </ul>
+              </div>
+            </div>
+            </div> 
+            <div class="displaydetails" id="displayeventstartdate">
+            <span class="input-goup-addon" alt="event startdate" title="event start date">
+                <i class="icon-calendar registerForm" alt="event start date" title="event start date"></i>
+              </span>
+            <span class="eventnamespn bld">Start date:</span>
+            <span class="eventstartdatevalue bld"></span>
+            <span id="updateeventstartdate" class="updateeventstart bld">
+            <i class="glyphicon glyphicon-pencil" alt="update start date" title="update start date"></i>
+          </span>
+           </div>
+           <div class="eventstartdateedit">
+             <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="start date" title="start date">
+                <i class="icon-calendar registerForm" alt="start date" title="start date"></i>
+              </span>
+              <input type="text" name="event_startdate" title="start date" id="event_startdate" onfocus="if (this.value=='DD-MM-YYYY HH:MM') this.value = '';" onblur="if (this.value=='') this.value = 'DD-MM-YYYY HH:MM';" value="DD-MM-YYYY HH:MM" placeholder="start date and time" class=" date date-1 event_startdate"  data-timeformat="HH:MM PM">
+              <i id="validFisrtName_sgnUp" class="glyphicon valideventstart"></i>
+            </div>
+          </div>
+            <div class="displaydetails" id="displayeventenddate">
+            <span class="input-goup-addon" alt="event startdate" title="event start date">
+                <i class="icon-calendar registerForm" alt="event start date" title="event start date"></i>
+              </span>
+            <span class="eventnamespn bld">End date:</span>
+            <span class="eventenddatevalue bld"></span>
+            <span id="updateeventenddate" class="updateeventend bld">
+            <i class="glyphicon glyphicon-pencil" alt="update end date" title="update end date"></i>
+          </span>
+           </div>
+           <div class="eventenddateedit">
+             <div class="input-group input-group-lg">
+              <span class="input-goup-addon" alt="end date" title="end date">
+                <i class="icon-calendar registerForm" alt="end date" title="end date"></i>
+              </span>
+              <input type="text" name="event_enddate" title="end date" class=" date date-1 eventenddate" id="event_enddate" onfocus="if (this.value=='DD-MM-YYYY HH:MM') this.value = '';" onblur="if (this.value=='') this.value = 'DD-MM-YYYY HH:MM';" value="DD-MM-YYYY HH:MM" data-timeformat="HH:MM PM" placeholder="end date and time">
+              <i id="validLastName_sgnUp" class="glyphicon valideventenddate"></i>
+            </div>
+          </div>
+             <div class="displaydetails " id="displayeventpostcode">
+            <span class="input-goup-addon" alt="event startdate" title="event start date">
+                <i class="icon-map-marker registerForm" alt="event start date" title="event start date"></i>
+              </span>
+            <span class="eventnamespn bld">Postcode:</span>
+            <span class="eventpostcodevalue bld"></span>
+            <span id="updateeventpostcode" class="updateeventpostcode bld">
+            <i class="glyphicon glyphicon-pencil" alt="update postcode" title="update postcode"></i>
+          </span>
+           </div>
+           <div class="eventpostcodeedit">
+            <div class="input-group input-group-lg postcodeevent">
+                 <span class="input-goup-addon" alt="postcode" title="postcode"><i class="icon-map-marker registerForm" alt="postcode" title="postcode"></i></span>
+                 <input type="text" alt="postcode" title="postcode" name="event_postcode" id="event_postcode" onfocus="if (this.value=='postcode') this.value = '';" onblur="if (this.value=='postcode') this.value = '';" value="postcode" placeholder="nn13er" class="neweventpostcode">
+                 <ul class="zonecodes">
+                 </ul>
+                 <i id="validEmail_sgnUp" class="glyphicon valideventpostcode"></i>
+            </div>
+          </div>
+            <div class="displaydetails" id="displayeventregionname">
+            <span class="input-goup-addon" alt="event region name" title="event region name">
+                <i class="icon-map-marker registerForm" alt="event start date" title="event region name"></i>
+              </span>
+            <span class="eventnamespn bld">Region:</span>
+            <span class="eventregionnamevalue bld"></span>
+            <span id="updateeventregionname" class="updateeventregionname bld">
+            <i class="glyphicon glyphicon-pencil" alt="update region name" title="update region name"></i>
+          </span>
+           </div>
+           <div class="eventregionnameedit">
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="region name" title="region name"><i class="icon-map-marker registerForm" alt="region name" title="region name"></i></span>
+                 <input type="text" alt="region name" title="region name" name="event_regionname" id="event_regionname" onfocus="if (this.value=='region name') this.value = '';" onblur="if (this.value=='region name') this.value = '';" value="region name" placeholder="Northshire" class="neweventregionname">
+                 <i id="validEmail_sgnUp" class="glyphicon valideventregion"></i>
+            </div>
+            </div>
+            <div class="displaydetails" id="displayeventcity">
+            <span class="input-goup-addon" alt="event region name" title="event region name">
+                <i class="icon-map-marker registerForm" alt="event start date" title="event region name"></i>
+              </span>
+            <span class="eventnamespn bld">City:</span>
+            <span class="eventcitynamevalue bld"></span>
+            <span id="updateeventcity" class="updateeventcity bld">
+            <i class="glyphicon glyphicon-pencil" alt="update city name" title="update city name"></i>
+          </span>
+           </div>
+            <div class="eventcitynameedit">
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="city name" title="city name"><i class="icon-map-marker registerForm" alt="city name" title="city name"></i></span>
+                 <input type="text" alt="city name" class="neweventcityname" title="city name" name="event_cityname" id="event_cityname" onfocus="if (this.value=='city name') this.value = '';" onblur="if (this.value=='city name') this.value = '';" value="city name" placeholder="GB">
+                 <i id="validEmail_sgnUp" class="glyphicon valideventcity"></i>
+            </div>
+            </div>
+            <div class="displaydetails" id="displayeventaddress">
+            <span class="input-goup-addon" alt="event address" title="event address">
+                <i class="icon-map-marker registerForm" alt="event address" title="event address"></i>
+              </span>
+            <span class="eventnamespn bld">Addr:</span>
+            <span class="eventaddressvalue bld"></span>
+            <span id="updateeventaddress" class="updateeventaddress bld">
+            <i class="glyphicon glyphicon-pencil" alt="update address" title="update address"></i>
+          </span>
+           </div>
+            <div class="addresseventedit">
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="address" title="address"><i class="icon-map-marker registerForm" alt="address" title="address"></i></span>
+                 <input type="text" alt="address" class="neweventaddress" title="address" name="event_address" id="event_address" onfocus="if (this.value=='address') this.value = '';" onblur="if (this.value=='address') this.value = '';" value="address" placeholder="14 green street">
+                 <i id="validEmail_sgnUp" class="glyphicon valideventaddress"></i>
+                 <ul class="zonecodes">
+                 </ul>
+            </div>
+            </div>
+            <div class="displaydetails" id="displayeventvenue">
+            <span class="input-goup-addon" alt="event address" title="event address">
+                <i class="icon-map-marker registerForm" alt="event address" title="event address"></i>
+              </span>
+            <span class="eventnamespn bld">Venue:</span>
+            <span class="eventvenuevalue bld"></span>
+            <span id="updateeventvenue" class="updateeventvenue bld">
+            <i class="glyphicon glyphicon-pencil" alt="update venue" title="update venue"></i>
+          </span>
+           </div>
+            <div class="venueeventedit">
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="venue name" title="venue name"><i class="icon-home registerForm" alt="venue name" title="venue name"></i></span>
+                 <input type="text" alt="venue name" class="neweventvenue" title="venue name" name="event_venue" id="event_venue" onfocus="if (this.value=='venue name') this.value = '';" onblur="if (this.value=='venue name') this.value = '';" value="venue name" placeholder="Darwin Venue">
+                 <i id="validEmail_sgnUp" class="glyphicon valideventvenue"></i>
+            </div>
+          </div>
+                <a href="#" id="signup_register" class="tbutton small color3  updateevent"><span>Updtae</span></a>
+                <a href="#" id="event_cancel" class="tbutton color2 small removevent"><span>Remove</span></a>
+  </form>
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupediteventclose">x</div>
+      </div>      
+      <div id="eventeditbg" class="eventDetailsbg"></div>                
 <!--end edit youtube video url-->  
 <div class="profilecover">
  <img class = "coverImage" src="images/5.jpeg" />
@@ -144,13 +407,13 @@
         <!--<span class="addAlbum">add new album</span><span class="liner"></span>-->
     </div>
     <ul class="tabs">
-      <li><a href="#Details" class="active details"> Details </a></li>
+      <li><a href="#Details" id="details" class="active details"> Details </a></li>
        {{# if bandprofile  currentUser.profile.type }}
       <li><a class="loadsongs" href="#mp3" id="uploadsong"> Songs </a></li>
       <li><a href="#gallery" class="loadgellery" id="uploadimage">Gallery</a></li>
       <li><a  href="#videos" id="uploadvideo" >Videos</a></li>
-      <li><a href="#events" class="events">Events</a></li>
-      <li><a href="#calender" class="calender"> Calender </a></li>
+      <li><a href="#events" class="events">Documents</a></li>
+      <li><a href="#calender" id="calendar" class="calender"> Calendar </a></li>
       <li>
         <div class="tbutton small color3 uploadsongdiv">
           <span class="uploadnewsong" alt="upload song" title="upload song" >
@@ -164,7 +427,13 @@
         <div id="close" class="tbutton small color3 tback uploadimgdiv"><span>&gt; Back to Albums</span></div>
       </li>
       <li>
-        <div id="close" class="tbutton small color3 tback uploadvideodiv"><span> edit youtube video url</span></div>
+        <div id="close" class="tbutton small color3 tback uploadvideodiv"><span>Edit video url</span></div>
+      </li>
+      <li>  
+        <div id="close" class="tbutton small color3 tback addevent"><span>Add event</span></div>
+      </li>
+      <li>  
+        <div id="close" class="tbutton small color3 tback uploaddocument"><span>Add document</span></div>
       </li>
        {{/if}}
        <audio id="myaudio2"></audio>
@@ -231,14 +500,11 @@
       </li>
       <li id="events">
         <div class="video-grid">
-         events ...
-          <div id="player"></div>
+         documents here ...
         </div>
       </li>
       <li id="calender">
-        <div class="video-grid">
-         <!--{{ > mycalender }}-->
-        </div>
+          {{ > mycalender }}
       </li>
       {{# if userprofile currentUser.profile.type }}
       <li id="whishlist">
@@ -1410,6 +1676,14 @@
   <div class="music-player-list">
             </div>
   </template>
-  <!--<template name="mycalender">
-        {{ > ReactiveFullcalendar options=calendarOptions }}
-    </template>-->
+  <template name="mycalender">
+   
+        
+        {{#if mycalender}}
+        <div id="mycalendar"></div>
+        {{/if}}
+        <!--{{mycalender}}
+         {{#if mycalender}}
+        <div id="mycalendar"></div>
+        {{/if}}-->
+    </template>

@@ -204,8 +204,7 @@
        <li><a class="seeloadsongs" href="#mp3">Songs</a></li>
       <li><a href="#photogallery" class="seegallery">Gallery </a></li>
       <li><a href="#videos">Videos</a></li>
-      <li><a href="#events">Events</a></li>
-      <li><a href="#calender">Calender</a></li>
+      <li><a href="#calendar" id="calender">Calendar</a></li>
       <li>
         {{#if iamAgent currentUser.profile.type}}
           {{#if detectRequests currentUser._id}}
@@ -265,18 +264,16 @@
       </li>
       <li id="videos">
         <div class="video-grid">
-         videos ...
+         videos 2 ...
         </div>
       </li>
-      <li id="events">
-        <div class="video-grid">
-         events ...
-        </div>
-      </li>
- <li id="calender">
-        <div class="video-grid">
-         calender ...
-        </div>
+ <li id="calendar">
+      <!--{{#if ismyagent currentUser }}
+         {{ > mycalender }}
+         {{else}}
+         {{ > seecalender }}
+         {{/if}}-->
+         {{ > seecalender }}
       </li>
 
     </ul>
@@ -634,4 +631,8 @@
                         </div>
                       </a>
                     </template>    
- 
+<template name="seecalender">
+  {{#if mycalender}}
+        <div id="seecalendar"></div>
+        {{/if }}
+    </template> 

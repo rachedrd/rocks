@@ -42,6 +42,81 @@ Template.monitorusers.onRendered(function(){
 
 $('.userstablecontainer').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1});     
 });
+function validatemessagetext(text) {
+  var re = /^[A-Za-z0-9?=.~!:; ,'"+-@#\$%^&*()_|<>{}\[\]-]{1,}$/; //?=.~!@#\$%^&*()_|<>{}\[\]-]{}$/;
+    return re.test(text);
+}
+/*
+$("#cbp-spmenu-s2").on('keyup','.form-control', function(e){
+ if(e.keyCode === 13)
+ {
+  if(validatemessagetext($(this).val().toString()))
+  {
+  $('.chat').append('<div class="chat-item chat-item-right"><div class="chat-message">'+$(this).val()+'</div></div>');
+    $('.chat').scrollTop($('.chat')[0].scrollHeight);
+ $(this).val('');
+ }
+ }
+});*/
+Template.chatslider.onCreated(function(){
+  Meteor.subscribe('chat');
+});
+Template.chatslider.onRendered(function(){});
+Template.chatslider.helpers({
+   chathistory : function()
+   {
+    return  chat.find({
+     $or:[{"senderId" : Meteor.userId() ,"recieverId": 'giEinaQD9ZiuJFTQa'},
+                     {"recieverId" : Meteor.userId(), "senderId" : 'giEinaQD9ZiuJFTQa'}]
+              });
+
+  $('.chat').scrollTop($('.chat')[0].scrollHeight);
+   },
+   reciever : function(id)
+   {
+    if(id === Meteor.userId())
+    return  true;
+  
+  $('.chat').scrollTop($('.chat')[0].scrollHeight);
+   },
+
+});
+Template.chatslider.events({
+'keyup #chattext': function(e, t){
+ if(e.keyCode === 13)
+ {
+  var chattext = t.find("#chattext").value;
+  if(/\S/.test(chattext))
+ {
+  if(validatemessagetext(chattext))
+  {
+  var timeStamp = Math.floor(Date.now());
+  //$('.chat').append('<div class="chat-item chat-item-right"><div class="chat-message">'+chattext+'</div></div>');   
+//var eventId = Calendars.insert({"events" : [ {"title" : obj.title, "type": obj.type, "start" : obj.start, "end" : obj.end , "ownerId" : obj.ownerId, "bandId" : obj.bandId } ]});
+ var myobj = {"senderId" : Meteor.userId() , "recieverId": 'giEinaQD9ZiuJFTQa', "timeStamp" : timeStamp, "content" : chattext , "status" : 'pending' };
+ Meteor.call('sendMessage', myobj, function(err, result)
+  {
+ if (result)
+ {
+  //$('.chat').scrollTop(100);
+  $('.chat').scrollTop($('.chat')[0].scrollHeight);
+ // alert($('.chat').scrollTop($('.chat')[0].scrollHeight));
+ 
+ $("#chattext").val('');
+ }
+  });  
+ 
+}
+}
+ else
+ {
+  alert('contains only strings ...');
+ }
+}
+}
+});
+
+
 Template.monitorusers.events({
   'click .usertypes li' : function(e, t)
   {
@@ -477,6 +552,7 @@ Template.seeprofile.onCreated(function(){
  Meteor.subscribe("images"); 
   Meteor.subscribe("notifications");
   Meteor.subscribe("songs");
+  Meteor.subscribe('Calendars');
  /*setTimeout(function(){
   $.getScript('../js/zwindows.js');    
 },2000);*/
@@ -497,8 +573,39 @@ Template.singelblog.onRendered(function(){
  $('html').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1});     
 $('.commentcontent').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"black",cursoropacitymin:.1}); 
  });
-/*Template.homeEvents.helpers({
+Template.homeEvents.helpers({
+eventslist : function()
+  {
 
+    eventsList = [];
+    events =  Calendars.find({"type" : "public"}).fetch();
+    console.log(events);
+    if(events)
+    {
+   /* events.forEach(function(currentevent){
+eventsList.push({"id":currentevent._id,
+ //"title" : currentevent.events[0].title,
+ "title" : currentevent.title,
+ "startdate" :  currentevent.start,
+'enddate': currentevent.events[0].end
+ //"startdate" :  currentevent.events[0].start,
+  //'enddate': currentevent.events[0].end
+  
+});
+});*/
+
+    return events;
+  }
+  },
+ currentday: function(currentdate)
+ {
+
+  return currentdate.slice(8, 10);
+ },
+ currentTime: function(currentdate)
+ {
+   return currentdate.slice(11, 16);
+ },
 currentMonth: function()
 {
   return Session.get("monthName");
@@ -507,7 +614,583 @@ currentYear: function()
 {
   return Session.get("currentYear");
 }
-});*/
+});
+Template.seecalender.helpers({
+  mycalender: function()
+  {
+    var allevents = [{id: 100, title:'not available', start: '2016-10-05', end: '2016-10-12', textColor: 'black'},
+                     {id: 200, title:'not available2', start: '2016-10-05', end: '2016-10-15', textColor: 'black'}];
+    //alert('my calender from see calender ...');
+     Session.set('eventSrcs', []);
+    var evnts = Calendars.find({"bandId": Meteor.userId()}, {sort:{ 'start' : 1 }}).fetch();
+    console.log('the band events :');
+    console.log(evnts);
+    var currentdate = "";
+  myDate = new Date(); 
+  myYear = myDate.getFullYear();
+  var currentdate  = '' + myYear;
+  myMonth = ( myDate.getMonth() + 1 );
+  if (myMonth < 10)
+    currentdate = currentdate  + '-0' +myMonth;
+  else 
+   currentdate = currentdate  + '-' +myMonth;
+   myDay = myDate.getDate();
+  if (myDay < 10)
+    currentdate = currentdate  + '-0' +myDay;
+  else
+    currentdate = currentdate  + '-' +myDay;
+               Session.set('eventSrcs', evnts);             
+               if(evnts)
+    {
+      if(evnts.length > 0)
+      {
+        allevents = [];
+        evnts.forEach(function(event)
+        {
+          
+          //alert(event.title)
+         allevents.push({'title' :'unavailable', 'borderColor':'gray', 'start': event.start, 'end': event.end, 'textColor':'black',backgroundColor:'gray'});
+        });
+     Session.set('eventSrcs', allevents);
+                 setTimeout(function(){
+        var j = 0; var i = 0;
+              $("#seecalendar").fullCalendar({
+                header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month'
+      },
+      defaultDate: currentdate,
+      navLinks: true, // can click day/week names to navigate views
+      selectable: false,
+      allDay : true,
+      droppable: false,
+      selectHelper: true ,
+      dayRender : function(date, cell)
+      {
+       j= j+ 1;
+        mydate = date.format('YYYY-MM-DD');
+          mydate = date.format('YYYY-MM-DD');
+          for ( v = 0 ; v < allevents.length ; v++) { 
+            if(mydate === allevents[v].start.slice(0,10))// || mydate === allevents[v].end.slice(0,10) )
+        {
+          var begindate = new Date(''+allevents[v].start.slice(0,10)+'');
+          moment(begindate).format('YYYY-MM-DD');
+          var enddate = new Date(''+allevents[v].end.slice(0,10)+'');
+          moment(enddate).format('YYYY-MM-DD');
+          if( enddate > begindate )
+          {
+            var k = true; 
+            while(k === true)
+            {
+            begindate.setHours(begindate.getHours() + 24);
+            var momentdate = moment(begindate).format('YYYY-MM-DD');
+            $("td[data-date='"+momentdate+"']").addClass('unavailable');
+            if(begindate >= enddate)
+            {
+              k = false;
+            }     
+           }
+          }
+         $("td[data-date='"+mydate+"']").addClass('unavailable');
+         v = allevents.length -1;
+        }
+        };
+      },
+      
+      editable: false,
+      eventLimit: true, 
+      events   : allevents /*Session.get('eventSrcs')*/});
+        }, 100); 
+          return true;
+          }
+          else
+          {return false} 
+}
+}
+});
+Template.mycalender.helpers({
+  mycalender: function()
+  {
+     Session.set('eventSrc', []);
+    var evnts = Calendars.find({"bandId": Meteor.userId()}).fetch();
+    console.log(evnts);
+        var currentdate = "";
+  myDate = new Date(); 
+  myYear = myDate.getFullYear();
+  var currentdate  = '' + myYear;
+  myMonth = ( myDate.getMonth() + 1 );
+  if (myMonth < 10)
+    currentdate = currentdate  + '-0' +myMonth;
+  else 
+   currentdate = currentdate  + '-' +myMonth;
+   myDay = myDate.getDate();
+  if (myDay < 10)
+    currentdate = currentdate  + '-0' +myDay;
+  else
+    currentdate = currentdate  + '-' +myDay;
+               Session.set('eventSrc', evnts);             
+               if(evnts)
+    {
+      
+      if(evnts.length > 0)
+      {
+      console.log('events are ready ...');
+    Session.set('eventSrc', evnts);
+                 setTimeout(function(){
+              $("#mycalendar").fullCalendar({
+                header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      defaultDate: currentdate,
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      allDay : true,
+      droppable: true,
+      selectHelper: true ,
+     select: function(start, end) {
+     // $(".tabs").on('click', '.uploadvideodiv', function() {
+    //Aligning our box in the middle
+   var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupevent").height();
+    var popupWidth = $("#popupevent").width();
+    // Centering
+    $("#popupevent").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    // Aligning bg
+    $("#addeventbg").css({"height": windowHeight});
+  
+    // Pop up the div and Bg
+      $("#addeventbg").css({"opacity": "0.7"});
+      $("#addeventbg").fadeIn("slow");
+      $("#popupevent").addClass('zigmaIn').fadeIn("slow");
+  //}); 
+        //var title = prompt('Event Title:');
+        var title = $("#event_name").value;
+        var eventData;
+        if (title) {
+          eventData = {
+              id: id,
+            title: title,
+            start: start,
+            end: end
+          };
+          $('#mycalendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#mycalendar').fullCalendar('unselect');
+      },
+      eventClick: function(event, element) { 
+      $('body').on('click','.removeEvent', function(e){
+        //alert("band id : " + event.bandId + " ownerid :"+event.ownerId + " eventid " + event.id + "event._id" + event._id);
+        //alert(event.id);
+      $('#mycalendar').fullCalendar( 'removeEvents', event._id);
+      Meteor.call("removeevent", event._id);
+      });
+      $('body').on('click','.removevent', function(e){
+        //alert("band id : " + event.bandId + " ownerid :"+event.ownerId + " eventid " + event.id + "event._id" + event._id);
+        //alert("remove event second way" + event._id);
+      $('#mycalendar').fullCalendar( 'removeEvents', event._id);
+      Meteor.call("removeevent", event._id);
+      $("#eventeditbg").fadeOut("slow");
+      $("#popupeditevent").removeClass('zigmaIn').fadeOut("slow");
+      });
+      $('.updateevent').unbind('click').click(function(e){
+        e.preventDefault();
+         e.stopPropagation();
+        var eventname = $('.neweventname').val();
+        var eventtype = $('#Etypeupdate').text();
+        var postcode = $('.neweventpostcode').val();
+        var eventregion = $('.neweventregionname').val();
+        var eventcity = $('.neweventcityname').val();
+        var eventaddress = $('.neweventaddress').val();
+        var eventvenue = $('.neweventvenue').val();
+        var startdate = $(".eventstartdateedit #event_startdate").val();
+        var enddate  = $(".eventenddateedit .eventenddate").val();
+        var verifeventname = false;
+        var verifeventtype = false;
+        var verifeventstart = false;
+        var verifeventend = false;
+        var verifeventcity = false;
+        var verifeventregion = false;
+        var verifeventaddress = false;
+        var verifeventvenue = false;
+        var verifeventbuilding = false;
+        var verifeventpostcode = false;
+     if(startdate.indexOf('PM'))
+     {
+       time = ""+ (parseInt(startdate.substr(11,2)) +12)+"";
+      if(time ==="24")
+        time ="00";  
+     }
+     else
+     {
+       time = ""+ startdate.substr(11,2) +"";
+     }
+  sdate = startdate.substr(0,10) + "T"+time+startdate.substr(13,3);
+     if(enddate.indexOf('PM'))
+     {
+       time = ""+ (parseInt(enddate.substr(11,2)) +12)+"";
+      if(time ==="24")
+        time ="00";
+     }
+     else
+     {
+       time = ""+ enddate.substr(11,2) +"";
+     }
+
+     edate = enddate.substr(0,10) + "T"+time+enddate.substr(13,3);
+     if(eventvenue === "" || eventvenue === undefined || eventvenue ==='venue name')
+{
+  verifeventvenue = true;
+  $("#eventediterr").html("empty venue");
+  $(".valideventvenue").addClass('glyphicon-asterisk');
+}
+if(eventaddress === "" || eventaddress === undefined || eventaddress ==='address')
+{
+  verifeventaddress = true;
+  $("#eventediterr").html("empty address");
+  $(".valideventaddress").addClass('glyphicon-asterisk');
+}
+
+if(eventcity === "" || eventcity === undefined || eventcity ==='city name')
+{
+  $("#eventediterr").html("empty city name");
+  $(".valideventcity").addClass('glyphicon-asterisk');
+  verifeventcity = true;
+}
+if(eventregion === "" || eventregion === undefined || eventregion ==='region name')
+{
+  $("#eventediterr").html("empty region name");
+  $(".valideventregion").addClass('glyphicon-asterisk');
+  verifeventregion = true;
+}
+if(postcode === "" || postcode === undefined || postcode ==='postcode')
+{
+  $("#eventediterr").html("empty postcode");
+  $(".valideventpostcode").addClass('glyphicon-asterisk');
+  verifeventpostcode =true;
+}
+if(enddate === "DD-MM-YYYY HH:MM" )
+{
+  var verifeventend = false;
+  $("#eventediterr").html("empty end date");
+  $(".valideventenddate").addClass('glyphicon-asterisk');
+}
+if(startdate === "DD-MM-YYYY HH:MM" )
+{
+  var verifeventstart = true;
+  $("#eventediterr").html("empty start date");
+  $(".valideventstart").addClass('glyphicon-asterisk');
+}
+if( eventtype.indexOf('Select') > 0 )
+{
+  $("#eventediterr").html("empty event type");
+  alert(eventtype + ' === select type');
+  var verifeventtype = true;
+}
+if(eventname === "" || eventname === undefined || eventname === "event name")
+{
+  $("#eventediterr").html("empty event name");
+  $(".valideventname").addClass('glyphicon-asterisk');
+  verifeventname = true;
+}
+
+        if(!verifeventname && !verifeventtype && !verifeventstart && !verifeventend && !verifeventcity && !verifeventregion && !verifeventaddress && !verifeventvenue && !verifeventbuilding && !verifeventpostcode )
+        {
+        event.title = eventname;
+        event.type = eventtype;
+        event.cityname = eventcity;
+        event.regionname = eventregion;
+        event.address = eventaddress;
+        event.buildingname = eventvenue;
+        event.postcode = postcode;
+        event.start = sdate;
+        event.end = edate;
+        $('#displayeventname').show();
+        $('.eventnameedit').hide();
+        $('#displayeventtype').show();
+        $('.eventtypeedit').hide();
+        $('#displayeventstartdate').show();
+        $('.eventstartdateedit').hide();
+        $('#displayeventenddate').show();
+        $('.eventenddateedit').hide();
+        $('#displayeventregionname').show();
+        $('.eventregionnameedit').hide();
+        $('#displayeventcity').show();
+        $('.eventcitynameedit').hide();
+        $('#displayeventaddress').show();
+        $('.addresseventedit').hide();
+        $('#displayeventvenue').show();
+        $('.venueeventedit').hide();
+        $('#displayeventpostcode').show();
+        $('.eventpostcodeedit').hide();
+        $("#eventeditbg").fadeOut("slow");
+        $("#popupeditevent").removeClass('zigmaIn').fadeOut("slow");
+        $('#mycalendar').fullCalendar( 'updateEvent', event);
+        var myobj = { "id": event._id, "title" : eventname, "start" : sdate, "end" : edate, "postcode": postcode , "cityname" : eventcity, "regionname": eventregion , "address": eventaddress, "buildingname" : eventvenue };
+          Meteor.call('updateevent', myobj);
+        }  
+      });
+      
+      $('body').on('click','.fc-title', function(e){
+    var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupeditevent").height();
+    var popupWidth = $("#popupeditevent").width();
+    $("#popupeditevent").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+      $("#eventeditbg").css({"height": windowHeight});
+      $("#eventeditbg").css({"opacity": "0.7"});
+      $("#eventeditbg").fadeIn("slow");
+      $("#popupeditevent").addClass('zigmaIn').fadeIn("slow");   
+        //e.preventDefault();
+        //e.stopPropagation();
+        //alert(event._id);
+        var venue = venues.findOne({"eventId": event._id});
+        $(".eventnamevalue").text(event.title); //event._id
+        $(".eventnameedit input").val(event.title); //event._id
+
+        $(".eventtypevalue").text(event.type); //event.type
+        $("#Etypeupdate").text(event.type); //event.type
+
+        $(".eventpostcodevalue").text(venue.postcode);
+        $(".eventpostcodeedit input").val(venue.postcode);
+
+        $(".eventregionnamevalue").text(venue.regionname);
+        $(".eventregionnameedit input").val(venue.regionname);
+
+        $(".eventcitynamevalue").text(venue.cityname);
+        $(".eventcitynameedit input").val(venue.cityname);
+        $(".eventaddressvalue").text(venue.address);
+       $('.addresseventedit input').val(venue.address);
+        $(".eventvenuevalue").text(venue.buildingname);
+        $(".venueeventedit input").val(venue.buildingname);
+
+        var starteventdate = ""+event.start.toString()+"";
+        starteventdate = starteventdate.slice(0, starteventdate.lastIndexOf(":"));
+        $(".eventstartdatevalue").text(starteventdate);
+        myDate = new Date(starteventdate); 
+        myYear = myDate.getFullYear();
+        var currentdate  = '' + myYear;
+        myMonth = ( myDate.getMonth() + 1 );
+        if (myMonth < 10)
+        currentdate = currentdate  + '-0' +myMonth;
+        else 
+        currentdate = currentdate  + '-' +myMonth;
+        myDay = myDate.getDate();
+        if (myDay < 10)
+        currentdate = currentdate  + '-0' +myDay;
+        else
+        currentdate = currentdate  + '-' +myDay;
+        var hours = parseInt(myDate.getHours());
+        if(hours > 12)
+        {
+          hours = hours - 12;
+        if(hours < 10)
+          var myhours ='0'+hours;
+        else
+          var myhours = hours;
+        currentdate = currentdate+ ' ' + myhours+':' + myDate.getMinutes()+ ' PM';
+        }
+        else
+        {
+         if(hours < 10)
+          var myhours ='0'+hours;
+        else
+          var myhours = hours;
+        currentdate = currentdate + ' '+myhourss + ':' + myDate.getMinutes()+ ' AM';
+        }
+        $(".eventstartdateedit input").val(currentdate);
+        if(event.end === null)
+            {
+        $(".eventenddatevalue").text(starteventdate);
+        $(".eventenddateedit input").val(currentdate);
+            }
+            else
+            {
+        var endeventdate = ""+event.end.toString()+"";
+        endeventdate = endeventdate.slice(0, endeventdate.lastIndexOf(":"));
+        $(".eventenddatevalue").text(endeventdate);
+        myDate = new Date(endeventdate); 
+        myYear = myDate.getFullYear();
+        var currentdate  = '' + myYear;
+        myMonth = ( myDate.getMonth() + 1 );
+        if (myMonth < 10)
+        currentdate = currentdate  + '-0' +myMonth;
+        else 
+        currentdate = currentdate  + '-' +myMonth;
+        myDay = myDate.getDate();
+        if (myDay < 10)
+        currentdate = currentdate  + '-0' +myDay;
+        else
+        currentdate = currentdate  + '-' +myDay;
+        var hours = parseInt(myDate.getHours());
+        if(hours > 12)
+        {
+          hours = hours - 12;
+        if(hours < 10)
+          var myhours ='0'+hours;
+        else
+          var myhours = hours;
+        currentdate = currentdate+ ' ' + myhours+':' + myDate.getMinutes()+ ' PM';
+        }
+        else
+        {
+         if(hours < 10)
+          var myhours ='0'+hours;
+        else
+          var myhours = hours;
+        currentdate = currentdate + ' '+myhourss + ':' + myDate.getMinutes()+ ' AM';
+        }
+        $(".eventenddateedit input").val(currentdate);
+            }
+        
+        
+      });
+      
+     },
+
+      dayRender : function(date, cell)
+      {
+        //alert("the date is : "+ $.fullCalendar.formatDate(date, 'yyyy-MM-dd')); /*date.getDate()*/
+         today = new Date();
+          mydate = date.format('YYYY-MM-DD');
+        if(mydate === currentdate )
+        {
+      // cell.css("background-color", "rgba(255, 102, 0, 0.4)");
+        //cell.css("background-color", "#ff9752");
+         cell.css("background-color", "#ff6600");
+
+        }
+        else
+        {
+          cell.css("background-color", "white");
+        } 
+      },
+      drop: function(date, event) {
+        alert('drop' +date);
+        console.log('drop' +$("#awesome").data('hash') );
+        
+          $(this).remove();  
+      },
+       eventDrop: function(event) {
+        alert("id :  " + event._id + "title  :  " + event.title + " was dropped on " + event.start.format() );
+       //alert("id :  " + event._id + "title  :  " + event.title + " was dropped on " + event.start.format() + "end date" + event.end.format());
+      //var myobj = { "id": event._id,  "start" : event.start.format(), "end" : event.end.format() };
+          //Meteor.call('updateevent', myobj);
+       }
+      ,
+      editable: true,
+      eventLimit: true, 
+      events   : Session.get('eventSrc')});
+        }, 100); 
+          return true;
+          }
+          else
+          {return false} 
+
+     /*setTimeout(function(){
+      alert('integration the calendar');
+       $("#mycalendar").fullCalendar({
+                header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      defaultDate: '2016-09-30',
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      allDay : true,
+      droppable: true,
+      selectHelper: true });
+       return true ;
+     }, 20000);*/
+ alert('my calendar helper ....');
+  $('.fc-view').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+  $('.fc-scroller').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+  
+}
+}
+});
+Template.mycalender.events({
+'click #neweent': function(e){
+      //alert($("#awesome").data('hash'));
+    //e.preventDefault();
+    //alert('edit event');
+    eventData = {
+             
+            title:'new events ...', // $(this).data('title'),
+            start:  '2016-10-13',//$(this).data('start'),
+            end: '2016-10-13'//$(this).data('end')
+          };
+          console.log(eventData);
+          $('#mycalendar').fullCalendar('renderEvent', eventData, true); 
+    }
+
+});
+ 
+Template.mycalender.onRendered(function(){  
+    Meteor.subscribe('venues');
+});
+Template.seecalender.onRendered(function(){  
+    Meteor.subscribe('venues');
+});
+   /*$('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      defaultDate: '2016-09-12',
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      allDay : true,
+      droppable: true,
+      selectHelper: true,
+      select: function(start, end) {
+        var title = prompt('Event Title:');
+        var eventData;
+        if (title) {
+          eventData = {
+             // id: id,
+            title: title,
+            start: start,
+            end: end
+          };
+          $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#calendar').fullCalendar('unselect');
+      },
+      eventClick: function(event, element) { 
+      $('body').on('click','.fc-close', function(){
+      $('#calendar').fullCalendar( 'removeEvents', event._id);
+      });
+     },
+      dayRender : function(date, cell)
+      {
+       cell.css("background-color", "yellow");
+      },
+      drop: function(date, event) {
+        alert('drop' +date);
+        console.log('drop' +$("#awesome").data('hash') );
+        
+          $(this).remove();  
+      },
+       eventDrop: function(event) {
+        alert(event.title + " was dropped on " + event.start.format());
+    }
+      ,
+      editable: true,
+      eventLimit: true, 
+      eventSources   : eventSrc
+    });*/
 /*Template.mycalender.helpers({
         calendarOptions: {
             // Standard fullcalendar options
@@ -553,7 +1236,11 @@ currentYear: function()
             ]
         },
     });*/
-/* Template.homeEvents.onRendered(function(){
+Template.homeEvents.onCreated(function(){
+
+  Meteor.subscribe('Calendars');
+});
+ Template.homeEvents.onRendered(function(){
 setCal();
 function getTime() {
 // initialize time-related variables with current time settings
@@ -635,7 +1322,7 @@ year+=1900
 var month = now.getMonth()
 var monthName = getMonthName(month)
 Session.set("monthName", monthName);
-var date = now.getDate()
+var date = now.getDate();
 now = null
 
 // create instance of first day of month, and extract the day on which it occurs
@@ -666,7 +1353,11 @@ if (curCell < firstDay) {
 text += '<p class="evo_fc_day"></p>';
 curCell++
 } else {
+  if(digit === parseInt(date))
+text += '<p class="evo_fc_day has_events on_focus">' + digit + '</p>'
+else
 text += '<p class="evo_fc_day">' + digit + '</p>'
+
 digit++
 }
 //}
@@ -676,7 +1367,7 @@ digit++
  $(".eventon_fullcal").append('<div class="clear"></div>');
 
 }
- });*/
+ });
 Template.homeBlogs.helpers({
 blogs: function () {
  return blogs.find({}).fetch(); 
@@ -1185,6 +1876,27 @@ detectRequests : function(id)
       return true ;
     return false;
    },
+   ismyagent : function(user)
+   {
+    //alert(user.profile.type + '  :  '+user.agent.id);
+    if(user.profile.type === "agent")
+     {
+      var currentuser = Users.findOne({'_id': Meteor.userId()});
+      console.log(currentuser);
+      if(currentuser.agent.id === user._id)
+      {
+        return true;
+      }
+      else
+      {
+       return false;
+      }
+     } 
+     else
+     {
+      return false;
+     }
+   },
   imgs: function(){
     return Images.find({uploadedBy : this._id});
      },
@@ -1481,6 +2193,7 @@ Template.managebandInformations.onCreated( function(){
   this.subscribe("images");
   this.subscribe("USERS");});
 Template.homeProfile.onRendered( function(){
+   $(".zonecodes").niceScroll({zindex:9999999999999999,cursorborder:"0px solid gray",cursorborderradius:"2px",cursorcolor:"#ff6600",cursoropacitymin:.1}); 
   /**/
       //player = new YT.Player("player", {height: "400", width: "600", videoId:  Session.get("videoId")/*"LdH1hSWGFGU"*/, 
  
@@ -2931,10 +3644,238 @@ Template.homeProfile.onCreated(function(){
 
 );
 Template.homeProfile.events({
-  /*'click #youtube_video': function(e, t)
-  {
+'click #event_regionname':function(e, t)
+{
+  var postecode =""; postecode = $('#event_postcode').val();
+  //alert('event_regionname click '  + postecode);
+    if(postecode !== undefined &&  postecode !== "" /*&& postecode.length === 6*/) {
+     Meteor.call('getplace', postecode ,  function(err, result){
+      if(err) {
+            $('#emptyeventpostecodeerr').html('postcode not covered'); $('#emptyeventpostecodeerr').show();
+                myobj = {"id": Meteor.userId(), "postecode": "" +$('#event_postcode').val()+""   };
+              //  Meteor.call('savepostecode', myobj);
+              }
+      else{
+       var addressesRow = [] ; var values = [];
+       for (var i = 0 ; i <result.Addresses.length ; i++) {
+       addressesRow =  result.Addresses[i].split(",");
+       $('.eventregionnameedit #event_regionname').val(addressesRow[addressesRow.length - 1]);
+       $('#event_regionname').val(addressesRow[addressesRow.length - 1]);
+
+      $(' #event_cityname').val(addressesRow[addressesRow.length - 2]);
+      $('.eventcitynameedit #event_cityname').val(addressesRow[addressesRow.length - 2]);
+
+       $('#event_address').html(addressesRow[0]);
+       //alert(addressesRow[0]);
+       $('.addresseventedit input').val(addressesRow[0]);
+
+       $('.postcodeevent .zonecodes').empty();
+       $('.addresseventedit ul').empty();
+
+       for (var j = ( addressesRow.length - 3 ); j >= 0; j--)
+        {
+          if(addressesRow[j].length > 6)
+          {
+            values.push(addressesRow[j]);
+              $('.postcodeevent .zonecodes').append("<li><span class='suggest-name'>" + values[i] + "</span>");//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+              $('.postcodeevent ul li span').eq(0).css({'text-decoration': 'underline'});
+
+
+              $('.addresseventedit ul').append("<li><span class='suggest-name'>" + values[i] + "</span>");//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+              $('.addresseventedit ul li span').eq(0).css({'text-decoration': 'underline'});
+
+        }; };
+    }
+    var postecode  = t.find("#event_postcode").value;
+    if( (postecode !== "") && ( postecode !== null) && (postecode !== undefined)  )
+          { myobj = {"id": Meteor.userId(), "postecode": "" +postecode+""   }; // Meteor.call('savepostecode', myobj);     
+          } }
+  Session.set("alladresses", values); 
+    $('#event_address').val(values[0]);
+     $('#event_address').html(values[0]);
+});
+}
+}
+, 
+  'keyup #event_address': function(e, t ){
+    values = Session.get("alladresses");
+   search = $('#event_address').val();
+// Search regular expression
+  // Clear the ul
+  $('.addressnameevent .zonecodes').empty();
+for(var i = 0 ; i < values.length; i++){
+  //$("#uladdress").append("<li><span> "+ values[i]+" </span>");
+  if(values[i].match(search)){
+//alert('much ... values i ' + values[i] + "search input " + search);
+    $('.addressnameevent .zonecodes').append("<li><span class='suggest-name'>" + values[i] + "</span>");//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.addressnameevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+  }
+}
+$(".addressnameevent .zonecodes").show();
+}
+,
+'keyup .neweventaddress': function(e, t ){
+    values = Session.get("alladresses");
+   search = $('.neweventaddress').val();
+// Search regular expression
+  // Clear the ul
+  $('.addresseventedit .zonecodes').empty();
+for(var i = 0 ; i < values.length; i++){
+  //$("#uladdress").append("<li><span> "+ values[i]+" </span>");
+  if(values[i].match(search)){
+//alert('much ... values i ' + values[i] + "search input " + search);
+    $('.addresseventedit .zonecodes').append("<li><span class='suggest-name'>" + values[i] + "</span>");//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.addresseventedit .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+  }
+}
+$(".addresseventedit .zonecodes").show();
+}
+,   
+'click .saveevent': function(e, t)
+{
+var eventname = t.find("#event_name").value;
+var postcode = t.find("#event_postcode").value;
+var eventregion = t.find("#event_regionname").value;
+var eventcity = t.find("#event_cityname").value;
+var eventaddress = t.find("#event_address").value;
+var eventvenue = t.find("#event_venue").value;
+var eventtype = $("#Etype").text();
+var startdate = t.find("#event_startdate").value;
+var enddate  = t.find("#event_enddate").value;
+var postcode = t.find("#event_postcode").value;
+var verifeventname = false;
+var verifeventtype = false;
+var verifeventstart = false;
+var verifeventend = false;
+var verifeventcity = false;
+var verifeventregion = false;
+var verifeventaddress = false;
+var verifeventvenue = false;
+var verifeventbuilding = false;
+var verifeventpostcode = false;
+if(startdate.indexOf('PM'))
+     {
+       time = ""+ (parseInt(startdate.substr(11,2)) +12)+"";
+      if(time ==="24")
+        time ="00";  
+     }
+     else
+     {
+       time = ""+ startdate.substr(11,2) +"";
+      
+     }
+  sdate = startdate.substr(0,10) + "T"+time+startdate.substr(13,3);//21:00:00";//+time+startdate.substr(13,3);
+     //   alert(sdate);
+     
+     if(enddate.indexOf('PM'))
+     {
+       time = ""+ (parseInt(enddate.substr(11,2)) +12)+"";
+      if(time ==="24")
+        time ="00";
+     }
+     else
+     {
+       time = ""+ enddate.substr(11,2) +"";
+     }
+     edate = enddate.substr(0,10) + "T"+time+enddate.substr(13,3);//21:00:00";//+time+startdate.substr(13,3);
+
+if(eventvenue === "" || eventvenue === undefined || eventvenue ==='venue name')
+{
+  verifeventvenue = true;
+  $("#eventerr").html("empty venue");
+  $(".valideventvenue").addClass('glyphicon-asterisk');
+}
+if(eventaddress === "" || eventaddress === undefined || eventaddress ==='address')
+{
+  verifeventaddress = true;
+  $("#eventerr").html("empty address");
+  $(".valideventaddress").addClass('glyphicon-asterisk');
+}
+
+if(eventcity === "" || eventcity === undefined || eventcity ==='city name')
+{
+  $("#eventerr").html("empty city name");
+  $(".valideventcity").addClass('glyphicon-asterisk');
+  verifeventcity = true;
+}
+if(eventregion === "" || eventregion === undefined || eventregion ==='region name')
+{
+  $("#eventerr").html("empty region name");
+  $(".valideventregion").addClass('glyphicon-asterisk');
+  verifeventregion = true;
+}
+if(postcode === "" || postcode === undefined || postcode ==='postcode')
+{
+  $("#eventerr").html("empty postcode");
+  $(".valideventpostcode").addClass('glyphicon-asterisk');
+  verifeventpostcode =true;
+}
+if(enddate === "DD-MM-YYYY HH:MM" )
+{
+  var verifeventend = false;
+  $("#eventerr").html("empty end date");
+  $(".valideventenddate").addClass('glyphicon-asterisk');
+}
+if(startdate === "DD-MM-YYYY HH:MM" )
+{
+  var verifeventstart = true;
+  $("#eventerr").html("empty start date");
+  $(".valideventstart").addClass('glyphicon-asterisk');
+}
+if( eventtype.indexOf('Select') > 0 )
+{
+  $("#eventerr").html("empty event type");
+  alert(eventtype + ' === select type');
+  var verifeventtype = true;
+}
+if(eventname === "" || eventname === undefined || eventname === "event name")
+{
+  $("#eventerr").html("empty event name");
+  $(".valideventname").addClass('glyphicon-asterisk');
+  verifeventname = true;
+}
+
+        if(!verifeventname && !verifeventtype && !verifeventstart && !verifeventend && !verifeventcity && !verifeventregion && !verifeventaddress && !verifeventvenue && !verifeventbuilding && !verifeventpostcode )
+        {
+          myobj = { "title" : eventname, "type" : eventtype, "start" : sdate, "end" : edate , "ownerId": Meteor.userId(), "bandId": Meteor.userId(), "postcode": postcode , "cityname" : eventcity, "regionname": eventregion , "address": eventaddress, "buildingname" : eventvenue };
+          Meteor.call('addEvent', myobj, function(err, result){ 
+          //  alert(result);
+             eventData = {
+             id: result,
+            title: eventname, // $(this).data('title'),
+            start: sdate, // '2016-10-13',//$(this).data('start'),
+            end: edate, //'2016-10-13'//$(this).data('end')
+          };
+           $('#mycalendar').fullCalendar('renderEvent', eventData, true);
+           $("#addeventbg").removeClass('zigmaIn').fadeOut("slow");
+      $("#event_name").val("event name");
+      $("#event_startdate").val("DD-MM-YYYY HH:MM");
+      $("#event_enddate").val("DD-MM-YYYY HH:MM");
+             $("#event_postcode").val('postcode');
+             $("#event_cityname").val('city name');
+             $("#event_regionname").val('region name');
+             $(".zonecodes").hide();
+             $("#event_address").val('address');
+             $("#event_venue").val('venue name');
+      $('#Etype').html('Select type');
+             console.log(result); 
+                      $(".valideventname").removeClass('glyphicon-asterisk');
+             $(".valideventstart").removeClass('glyphicon-asterisk');
+             $(".valideventenddate").removeClass('glyphicon-asterisk');
+             $(".valideventpostcode").removeClass('glyphicon-asterisk');
+             $(".valideventregion").removeClass('glyphicon-asterisk');
+             $(".valideventcity").removeClass('glyphicon-asterisk');
+             $(".valideventaddress").removeClass('glyphicon-asterisk');
+             $(".valideventvenue").removeClass('glyphicon-asterisk');
+             $("#eventerr").html("");
+$("#popupevent").removeClass('zigmaIn').fadeOut("slow");
+$("#addeventbg").removeClass('zigmaIn').fadeOut("slow");
+
+
+           });
     
-  },*/
+}
+},
   'mouseenter .list li':function(e, t)
   {
 
@@ -3222,7 +4163,10 @@ $("#myProgress").show();
     var band = Users.findOne({"_id": Meteor.userId()});
     if(band !== undefined  && band.profile !== undefined )
      {
+      if(band.profile.youtubevideourl !== undefined)
       Session.set("videoId", band.profile.youtubevideourl);
+       else
+        Session.set("videoId", "LdH1hSWGFGU");
       }
   //  return true;
 

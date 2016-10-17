@@ -84,15 +84,17 @@
 							</div><!-- fullcal -->
 						    
 							<div id="evcal_list" class="eventon_events_list" style="display: block;">
+								{{#each eventslist}}
 								<div class="eventon_list_event">
 									<a class="evcal_list_a desc_trig mul_val">
-										<p class="evcal_cblock">4<span> - 12</span><em class="evo_month"></em></p>
+										<p class="evcal_cblock">{{currentday start}}<span>-{{currentday end }}</span><em class="evo_month"></em></p>
 										<p class="evcal_desc">
-											<span class="evcal_desc2 evcal_event_title">Event with eventbrite integration</span>
-											<span class="evcal_desc_info"><em class="evcal_time">September 4 9:00 am - September 12 10:00 am</em> </span>
+											<span class="evcal_desc2 evcal_event_title">{{title}}</span>
+											<span class="evcal_desc_info"><em class="evcal_time">{{currentday start}} {{ currentMonth }} {{currentTime start }} - {{currentday end}} {{ currentMonth }} {{currentTime end }} </em> </span>
 										</p>
 									</a>
 								</div>
+								{{/each}}
 							</div><!-- event list -->
 						<!-- Event Calendar -->
 

@@ -201,7 +201,7 @@
 	// datePicker... (except extra features defined in default options)
 	// ------------------------------------------------------------ //
 	window.myDatePicker_1 = new DatePicker('.userinfocontent  .date-1', options);
-	window.myDatePicker_2 = new DatePicker('.bandtypesearch  .date-1', options);
+	//window.myDatePicker_2 = new DatePicker('.bandtypesearch  .date-1', options);
 
 
 		

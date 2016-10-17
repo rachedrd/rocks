@@ -35,6 +35,10 @@ jQuery(document).ready(function ($) {
 		$('a.sf-with-ul .sub').before('<span class="sf-sub-indicator"><i class="icon-angle-down"></i></span>');
 	}
 	// Nice Scrollbar
+		$('[class^="scroll-"], [class*=" scroll-"]').niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
+		$('.slimscroll').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+		//$('.fc-day-grid-container').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+		
 		$('html').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
 		$('[class^="scroll-"], [class*=" scroll-"]').niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
 			// nice scroll 
@@ -81,17 +85,57 @@ $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px"
        var tabs = $('.full  ul.tabs');
 		var contentLocation = $(this).attr('href');
 		if( $(this).attr("id") === "uploadsong")
-			{$(".uploadsongdiv").show(); }
+			{
+				$(".uploadsongdiv").show(); 
+				$(".addevent").hide();
+				$(".uploadimgdiv").hide();
+				$('#close').trigger('click');
+			    $(".uploadvideodiv").hide();
+	        }
 		if($(this).attr("id") === "uploadimage")
 		{
 			/*$(".uploadimgdiv").show();*/
 			$(".uploadsongdiv").hide();
+			$(".addevent").hide();
+			$(".uploadvideodiv").hide();
+
         }
         if($(this).attr("id") === "uploadvideo")
 		{
 			/*$(".uploadimgdiv").show();*/
 			$(".uploadvideodiv").show();
+			$('#close').trigger('click');
+			$(".addevent").hide();
+			$(".uploadsongdiv").hide();
         }
+         if($(this).attr("id") === "details")
+		{
+			$(".uploadimgdiv").hide();
+			$(".uploadvideodiv").hide();
+			$('#close').trigger('click');
+			$(".addevent").hide();
+			$(".uploadsongdiv").hide();
+        }
+        if($(this).attr("id") === "calendar")
+		{
+			/*$(".uploadimgdiv").show();*/
+			$(".addevent").show();
+			$(".uploadsongdiv").hide();
+			$(".uploadvideodiv").hide();
+			$('#close').trigger('click');
+			setTimeout(function(){
+			  $('.fc-today-button').trigger('click');
+			},0);
+			//$('.fc-today-button').trigger('click');
+        }
+        if($(this).attr("id") === "calender")
+		{
+			alert('see calendar');
+			setTimeout(function(){
+				alert('trigger day ...');
+			  $('.fc-today-button').trigger('click');
+			},0);
+		}
 		//$('.full  ul.tabs').children().each(function (i) {
 			//var tab =  $('.full  ul.tabs').find('li').eq(i).find('> a');
 			//alert(tab.html());
@@ -196,9 +240,9 @@ $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px"
 		e.stopPropagation();
 	});
 	function checkWindowSize() {
-		if ($(window).width() > 768) {
+		if ($(window).width() >= 768) {
 			$('.headdown .sf-menu').css('display', 'block').removeClass("xactive");
-		} else {
+		} else  {
 			$('.headdown .sf-menu').css('display', 'none');
 		}
 	}
@@ -306,9 +350,113 @@ $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px"
   	$('#signupwrapper #Utype').html($(this).html());
   	$('#divToggleType').removeClass('open'); 
 });
+	//change dropdown selected event programatically 
+	$('#divToggleeventType .dropdown-menu li a').click(function(e){
+  	e.stopPropagation();
+  	$('#Etype').html($(this).html());
+  	$('#Etype').val($(this).html());
+  	$('#Etype').text($(this).html());
+
+
+  	$('#divToggleeventType').removeClass('open'); 
+});
+// update event type 
+	$('#divToggleeventTypeupdate .dropdown-menu li a').click(function(e){
+  	e.stopPropagation();
+  	$('#Etypeupdate').html($(this).html());
+  	$('#divToggleeventTypeupdate').removeClass('open'); 
+})	
 // form login validation 
 resetFields();
 function resetFields () {
+	//reset add event fields
+	$("#popupevent").on('click', '#event_name ', function(){
+     $("#eventerr").html("");
+     $(".valideventname").removeClass('glyphicon-asterisk');
+	});
+	$("#popupevent").on('click', '#event_startdate', function(){
+     $("#eventerr").html("");
+     $(".valideventstart").removeClass('glyphicon-asterisk');
+	});
+	$("#popupevent").on('click', '#event_enddate', function(){
+     $("#eventerr").html("");
+     $(".valideventenddate").removeClass('glyphicon-asterisk');
+	});
+
+$("#popupevent").on('click', '#Etype', function(){
+     $("#eventerr").html("");
+	});
+
+$("#popupevent").on('click', '#event_postcode', function(){
+     $("#eventerr").html("");
+     $(".valideventpostcode").removeClass('glyphicon-asterisk');
+	});
+
+$("#popupevent").on('click', '#event_regionname', function(){
+     $("#eventerr").html("");
+     $(".valideventregion").removeClass('glyphicon-asterisk');
+	});
+$("#popupevent").on('click', '#event_cityname', function(){
+     $("#eventerr").html("");
+     $(".valideventcity").removeClass('glyphicon-asterisk');
+	});
+
+$("#popupevent").on('click', '#event_address', function(){
+     $("#eventerr").html("");
+     $(".valideventaddress").removeClass('glyphicon-asterisk');
+	});
+ 
+$("#popupevent").on('click', '#event_venue', function(){
+     $("#eventerr").html("");
+     $(".valideventvenue").removeClass('glyphicon-asterisk');
+	});
+//reset update event fields
+	$("#popupeditevent").on('click', '.neweventname', function(){
+     $("#eventediterr").html("");
+     $(".valideventname").removeClass('glyphicon-asterisk');
+	});
+	$("#popupeditevent").on('click', '.eventstartdateedit', function(){
+     $("#eventediterr").html("");
+     $(".valideventstart").removeClass('glyphicon-asterisk');
+	});
+	$("#popupeditevent").on('click', '.eventenddateedit', function(){
+     $("#eventerr").html("");
+     $(".valideventenddate").removeClass('glyphicon-asterisk');
+	});
+
+$("#popupeditevent").on('click', '.neweventpostcode', function(){
+     $("#eventediterr").html("");
+     $(".valideventpostcode").removeClass('glyphicon-asterisk');
+	});
+
+$("#popupeditevent").on('click', '.neweventregionname', function(){
+     $("#eventediterr").html("");
+     $(".valideventregion").removeClass('glyphicon-asterisk');
+	});
+$("#popupeditevent").on('click', '.neweventcityname', function(){
+     $("#eventediterr").html("");
+     $(".valideventcity").removeClass('glyphicon-asterisk');
+	});
+
+$("#popupeditevent").on('click', '.neweventaddress', function(){
+     $("#eventediterr").html("");
+     $(".valideventaddress").removeClass('glyphicon-asterisk');
+	});
+ 
+$("#popupeditevent").on('click', '.neweventvenue', function(){
+     $("#eventediterr").html("");
+     $(".valideventvenue").removeClass('glyphicon-asterisk');
+	});
+/*var eventname = $('.neweventname').val();
+        var eventtype = $('#Etypeupdate').text();
+        var postcode = $('.neweventpostcode').val();
+        var eventregion = $('.neweventregionname').val();
+        var eventcity = $('.neweventcityname').val();
+        var eventaddress = $('.neweventaddress').val();
+        var eventvenue = $('.neweventvenue').val();
+        var startdate = $(".eventstartdateedit #event_startdate").val();
+        var enddate  = $(".eventenddateedit .eventenddate").val();*/
+
 	// reset logi  fields 
 $("#popupLogin").on('click', '#login_username ', function(){
      $("#errorMsgLgn").html("");
@@ -398,6 +546,31 @@ $("#popupSignUp").on('click', '#signup_lastname ', function(){
 
 	});
 
+$("#cbp-spmenu-s1").on('click','#closeRight i', function(){
+	$("#cbp-spmenu-s1").removeClass('cbp-spmenu-open');
+});
+$(".exampleHeader").on('click','#profileMessages a', function(){
+	//alert('add open class to the chat list ...');
+	$('#toggedfirst').removeClass('open'); 
+	$('#layout header').addClass('headerafterchat');	
+     $('#layout header').removeClass('oroginalheader');
+
+	$("#cbp-spmenu-s1").addClass('cbp-spmenu-open');
+	//$(' #header').addClass('headerafterchat');
+
+	$("#cbp-spmenu-s1").addClass('navafterchat');
+
+});
+$("#cbp-spmenu-s1").on('click','.showRight2', function(){
+	
+	$("#cbp-spmenu-s1").removeClass('cbp-spmenu-open');
+	$("#cbp-spmenu-s2").addClass('cbp-spmenu-open');
+});
+$("#cbp-spmenu-s2").on('click','#closeRight2 i', function(){
+	
+	$("#cbp-spmenu-s2").removeClass('cbp-spmenu-open');
+	$("#cbp-spmenu-s1").addClass('cbp-spmenu-open');
+});
 $("#popupLogin").on('click', '#login_password ', function(){
      $("#errorMsgLgn").html("");
 	 $("#validPassword").removeClass('glyphicon-asterisk');
@@ -477,6 +650,27 @@ $('.full').on('click' ,'.createblog' ,function () {
 			$("#popupsong").addClass('zigmaIn').fadeIn("slow");
 
 	});
+		// show the upload event form 
+		$(".tabs").on('click', '.addevent', function() {
+		//Aligning our box in the middle
+		var windowWidth = document.documentElement.clientWidth;
+		var windowHeight = document.documentElement.clientHeight;
+		var popupHeight = $("#popupevent").height();
+		var popupWidth = $("#popupevent").width();
+		// Centering
+		$("#popupevent").css({
+			"top": windowHeight / 2 - popupHeight / 2,
+			"left": windowWidth / 2 - popupWidth / 2
+		});
+		// Aligning bg
+		$("#addeventbg").css({"height": windowHeight});
+	
+		// Pop up the div and Bg
+			$("#addeventbg").css({"opacity": "0.7"});
+			$("#addeventbg").fadeIn("slow");
+			$("#popupevent").addClass('zigmaIn').fadeIn("slow");
+
+	});
 	// show the edit youtube video form 
 		$(".tabs").on('click', '.uploadvideodiv', function() {
 		//Aligning our box in the middle
@@ -500,6 +694,66 @@ $('.full').on('click' ,'.createblog' ,function () {
 	});	
 	// update user informations
 	// update first name
+     //update event name 
+     $(".updateeventname").click(function()
+     {
+      $('#displayeventname').hide();
+      $('.eventnameedit').show();
+
+     });
+     //update event type 
+     //update event name 
+     $("#updateeventtype").click(function()
+     {
+      $('#displayeventtype').hide();
+      $('.eventtypeedit').show();
+
+     });
+     $("#updateeventstartdate").click(function()
+     {
+       $('#displayeventstartdate').hide();
+      $('.eventstartdateedit').show();
+
+     });
+     $(".updateeventend").click(function()
+     {
+       $('#displayeventenddate').hide();
+      $('.eventenddateedit').show();
+
+     });
+      $(".updateeventpostcode").click(function()
+     {
+       $('#displayeventpostcode').hide();
+      $('.eventpostcodeedit').show();
+
+     });
+       $(".updateeventregionname").click(function()
+     {
+       $('#displayeventregionname').hide();
+       $('.eventregionnameedit').show();
+
+     });
+       //update event city 
+         $(".updateeventcity").click(function()
+     {
+       $('#displayeventcity').hide();
+       $('.eventcitynameedit').show();
+
+     });
+         $(".updateeventaddress").click(function()
+     {
+       $('#displayeventaddress').hide();
+       $('.addresseventedit').show();
+
+     }); 
+       
+       $(".updateeventvenue").click(function()
+     {
+       $('#displayeventvenue').hide();
+       $('.venueeventedit').show();
+
+     }); 
+       
      
 	// update address
 	$('.userinfocontent').on('click','.updateaddress' , function(){
@@ -1022,12 +1276,29 @@ $('.full').on('click' ,'.createblog' ,function () {
 	$('.userinfocontent').on('click' , '#birthinput', function(){
       window.myDatePicker1 = new DatePicker('.userinfocontent #birthinput', options);     
 	});
-	/*$('.bandtypesearch').on('click' , '.suggest-availability', function(){
+	$('#popupevent #event_enddate').click(function(){
+	window.myDatePicker2 = new DatePicker('#popupevent #event_enddate', options);     
+    });
+	$('#popupevent #event_startdate').click(function(){
+	  window.myDatePicker3 = new DatePicker('#popupevent #event_startdate', options);     
+	});
+	$('#popupeditevent #event_enddate').click(function(){
+	window.myDatePicker4 = new DatePicker('#popupeditevent #event_enddate', options);     
+    });
+	$('#popupeditevent #event_startdate').click(function(){
+	  window.myDatePicker5 = new DatePicker('#popupeditevent #event_startdate', options);     
+	});
+	/*
+	$('#popupevent').on('click' , '#event_enddate', function(){
+     alert('picker2');
+      window.myDatePicker1 = new DatePicker('#popupevent #event_enddate', options);     
+	});*/
+	$('.bandtypesearch').on('click' , '.suggest-availability', function(){
 		alert('click ...');
       //window.myDatePicker1 = new DatePicker('.banscontent .suggest-availability', options);     
       window.myDatePicker2 = new DatePicker('.bandtypesearch .suggest-availability', options);     
 
-	});*/
+	});
 $('.imaxnumber').click(function(){
 	if($('.bandnumbersinputsearch').val() === "")
 		{ 
@@ -1451,7 +1722,322 @@ for(var i = 0 ; i < userstype.length; i++){
 }
 $('.full .usertypes').show();
 });
+$('#popupevent').click(function(){
+	$('.postcodeevent .zonecodes').hide();
+	$('.addressnameevent .zonecodes').hide();
 
+});
+$(".postcodeevent").on('keyup','#event_postcode',function(){
+	//alert('key up ...');
+	var currenttext = ""; 
+	currenttext = $('.postcodeevent #event_postcode').val().toUpperCase();
+ 	$('.postcodeevent .zonecodes').empty();
+ 	$search = $(this).val();
+    $search = new RegExp($search.replace(/[^0-9a-z_]/i), 'i');
+  //  alert(currenttext);
+    if( currenttext.length <= 2){
+for(var i = 0 ; i < regions.length; i++){
+	 if(regions[i].name.match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regions[i].name + "</span><span class='suggest-description'>" + regions[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('AB')){
+for(var i = 0 ; i < regionsnumbersab.length; i++){
+    if(regionsnumbersab[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersab[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('AL')){
+for(var i = 0 ; i < regionsnumbersal.length; i++){
+    if(regionsnumbersal[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersal[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match(new RegExp('B|^\\d+$'))){
+for(var i = 0 ; i < regionsnumbersb.length; i++){
+    if(regionsnumbersb[i].match($search)){
+      $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersb[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+      $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BB')){
+for(var i = 0 ; i < regionsnumbersbb.length; i++){
+    if(regionsnumbersbb[i].match($search)){
+     $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbb[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+     $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BD')){
+for(var i = 0 ; i < regionsnumbersbd.length; i++){
+    if(regionsnumbersbd[i].match($search)){
+    $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbd[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BH')){
+for(var i = 0 ; i < regionsnumbersbh.length; i++){
+    if(regionsnumbersbh[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbh[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BL')){
+for(var i = 0 ; i < regionsnumbersbl.length; i++){
+    if(regionsnumbersbl[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbl[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BN')){
+for(var i = 0 ; i < regionsnumbersbn.length; i++){
+    if(regionsnumbersbn[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbn[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BR')){
+for(var i = 0 ; i < regionsnumbersbr.length; i++){
+    if(regionsnumbersbr[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbr[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BS')){
+for(var i = 0 ; i < regionsnumbersbs.length; i++){
+    if(regionsnumbersbs[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbs[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BT')){
+for(var i = 0 ; i < regionsnumbersbt.length; i++){
+    if(regionsnumbersbt[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbt[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('CB')){
+for(var i = 0 ; i < regionsnumberscb.length; i++){
+    if(regionsnumberscb[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumberscb[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('CA')){
+for(var i = 0 ; i < regionsnumbersca.length; i++){
+    if(regionsnumbersca[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersca[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length <= 7 && currenttext.length >= 4 && currenttext.match('AB10') ){
+for(var i = 0 ; i < regionsnumbersab10.length; i++){
+    if(regionsnumbersab10[i].match($search)){
+        $('.postcodeevent ul').append($("<li><span class='suggest-name'>" + regionsnumbersab10[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent ul li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length <= 7 && currenttext.length >= 4 && currenttext.match('AB11') ){
+for(var i = 0 ; i < regionsnumbersab11.length; i++){
+    if(regionsnumbersab11[i].match($search)){
+        $('.postcodeevent ul').append($("<li><span class='suggest-name'>" + regionsnumbersab11[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent ul li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+
+$('.postcodeevent ul').show();
+//$('.postcodeevent ul').css('z-index', '999999999999999999');
+
+});
+$(".eventpostcodeedit").on('keyup','#event_postcode',function(){
+	//alert('key up ...');
+	var currenttext = ""; 
+	currenttext = $('.eventpostcodeedit #event_postcode').val();
+ 	$('.postcodeevent .zonecodes').empty();
+ 	$search = $(this).val();
+    $search = new RegExp($search.replace(/[^0-9a-z_]/i), 'i');
+  //  alert(currenttext);
+    if( currenttext.length <= 2){
+for(var i = 0 ; i < regions.length; i++){
+	 if(regions[i].name.match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regions[i].name + "</span><span class='suggest-description'>" + regions[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('AB')){
+for(var i = 0 ; i < regionsnumbersab.length; i++){
+    if(regionsnumbersab[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersab[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('AL')){
+for(var i = 0 ; i < regionsnumbersal.length; i++){
+    if(regionsnumbersal[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersal[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match(new RegExp('B|^\\d+$'))){
+for(var i = 0 ; i < regionsnumbersb.length; i++){
+    if(regionsnumbersb[i].match($search)){
+      $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersb[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+      $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BB')){
+for(var i = 0 ; i < regionsnumbersbb.length; i++){
+    if(regionsnumbersbb[i].match($search)){
+     $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbb[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+     $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BD')){
+for(var i = 0 ; i < regionsnumbersbd.length; i++){
+    if(regionsnumbersbd[i].match($search)){
+    $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbd[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BH')){
+for(var i = 0 ; i < regionsnumbersbh.length; i++){
+    if(regionsnumbersbh[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbh[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BL')){
+for(var i = 0 ; i < regionsnumbersbl.length; i++){
+    if(regionsnumbersbl[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbl[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BN')){
+for(var i = 0 ; i < regionsnumbersbn.length; i++){
+    if(regionsnumbersbn[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbn[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BR')){
+for(var i = 0 ; i < regionsnumbersbr.length; i++){
+    if(regionsnumbersbr[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbr[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BS')){
+for(var i = 0 ; i < regionsnumbersbs.length; i++){
+    if(regionsnumbersbs[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbs[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('BT')){
+for(var i = 0 ; i < regionsnumbersbt.length; i++){
+    if(regionsnumbersbt[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersbt[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('CB')){
+for(var i = 0 ; i < regionsnumberscb.length; i++){
+    if(regionsnumberscb[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumberscb[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length >= 2 && currenttext.length <= 4 && currenttext.match('CA')){
+for(var i = 0 ; i < regionsnumbersca.length; i++){
+    if(regionsnumbersca[i].match($search)){
+        $('.postcodeevent .zonecodes').append($("<li><span class='suggest-name'>" + regionsnumbersca[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length <= 7 && currenttext.length >= 4 && currenttext.match('AB10') ){
+for(var i = 0 ; i < regionsnumbersab10.length; i++){
+    if(regionsnumbersab10[i].match($search)){
+        $('.postcodeevent ul').append($("<li><span class='suggest-name'>" + regionsnumbersab10[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent ul li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+if( currenttext.length <= 7 && currenttext.length >= 4 && currenttext.match('AB11') ){
+for(var i = 0 ; i < regionsnumbersab11.length; i++){
+    if(regionsnumbersab11[i].match($search)){
+        $('.postcodeevent ul').append($("<li><span class='suggest-name'>" + regionsnumbersab11[i] + "</span>"));//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.postcodeevent ul li span').eq(0).css({'text-decoration': 'underline'});
+	
+	}
+}
+}
+$('.postcodeevent ul').show();
+});
  $('.userinfocontent').on('keyup','.suggest-prompt', function(){
  	var currenttext = ""; currenttext = $('.suggest-prompt').val();
  	$('.userinfocontent .zonecodes').empty();
@@ -1635,6 +2221,27 @@ $(".userinfocontent").on("click", ".zonecodes > li", function(){
 	$(".zonecodes").hide();
 
 });
+$(".postcodeevent").on("click", ".zonecodes > li", function(){ 
+	var selected = $(this).find(".suggest-name").text();
+  $(".postcodeevent #event_postcode").val(selected);  
+	$(".postcodeevent .zonecodes").hide();
+
+});
+$(".addressnameevent").on("click", ".zonecodes > li", function(){ 
+	var selected = $(this).find(".suggest-name").text();
+  $("#event_address").val(selected);  
+	$(".addressnameevent .zonecodes").hide();
+
+});
+
+$(".addresseventedit").on("click", ".zonecodes > li", function(){ 
+	var selected = $(this).find(".suggest-name").text();
+  $(".addresseventedit input").val(selected);  
+	$(".addresseventedit .zonecodes").hide();
+
+});
+
+
 $(".userinfocontent").on("click", ".address > li", function(){ 
     $('.inputaddress').val($(this).text());  
 	$(".address").hide();
@@ -2037,6 +2644,54 @@ $('.full .usertypes').show();
 			$("#errsongname").html("");
 		}
 	});
+	//close event form 
+	
+	$("#popupeventclose").click(function() {
+		$("#popupevent").fadeOut("slow");
+			$("#addeventbg").removeClass('zigmaIn').fadeOut("slow");
+			$("#event_name").val("event name");
+			$("#event_startdate").val("DD-MM-YYYY HH:MM");
+			$("#event_enddate").val("DD-MM-YYYY HH:MM");
+             $("#event_postcode").val('postcode');
+             $("#event_cityname").val('city name');
+             $("#event_regionname").val('region name');
+             $(".zonecodes").hide();
+             $("#event_address").val('address');
+             $("#event_venue").val('venue name');
+			$('#Etype').html('Select type');
+		//if ($("#errsongname").html() !== "") {
+
+			$("#addeventbg").fadeOut("slow");
+			$("#popupevent").removeClass('zigmaIn').fadeOut("slow");
+			//$("#errsongname").html("");
+		//}
+	});
+	$("#popupediteventclose").click(function() {
+		//if ($("#errsongname").html() !== "") {
+		$('#displayeventname').show();
+        $('.eventnameedit').hide();
+        $('#displayeventtype').show();
+        $('.eventtypeedit').hide();
+        $('#displayeventstartdate').show();
+        $('.eventstartdateedit').hide();
+        $('#displayeventenddate').show();
+        $('.eventenddateedit').hide();
+        $('#displayeventregionname').show();
+        $('.eventregionnameedit').hide();
+        $('#displayeventcity').show();
+        $('.eventcitynameedit').hide();
+        $('#displayeventaddress').show();
+        $('.addresseventedit').hide();
+        $('#displayeventvenue').show();
+        $('.venueeventedit').hide();
+        $('#displayeventpostcode').show();
+        $('.eventpostcodeedit').hide();
+			$("#eventeditbg").fadeOut("slow");
+			$("#popupeditevent").removeClass('zigmaIn').fadeOut("slow");
+			//$("#errsongname").html("");
+		//}
+	});
+	
 	// close youtube video url
 	//close popup song upload
 	$("#popupvideoclose").click(function() {
@@ -2082,6 +2737,23 @@ $('.full .usertypes').show();
 			$("#rst_pw_bg").removeClass('zigmaIn').fadeOut("slow");
 			popupRstPwdStts = 0;
 		}
+	});
+	// close event popup
+	$("#event_cancel").click(function() {
+			$("#popupevent").fadeOut("slow");
+			$("#addeventbg").removeClass('zigmaIn').fadeOut("slow");
+			$("#event_name").val("event name");
+			$("#event_startdate").val("DD-MM-YYYY HH:MM");
+			$("#event_enddate").val("DD-MM-YYYY HH:MM");
+             $("#event_postcode").val('postcode');
+             $("#event_cityname").val('city name');
+             $("#event_regionname").val('region name');
+             $(".zonecodes").hide();
+             $("#event_address").val('address');
+             $("#event_venue").val('venue name');
+
+             
+			$('#Etype').html('Select type');
 	});
 	// close new password via X button 
 	
@@ -2162,8 +2834,8 @@ $('.full .usertypes').show();
 
 		$("#rst_pw_bg").fadeOut("slow");
 		$("#new_pw_bg").fadeOut("slow");
-
-
+        //$("#addeventbg").fadeOut("slow");
+		//$("#popupevent").removeClass('zigmaIn').fadeOut("slow");
 		$("#popupResetPassword").removeClass('zigmaIn').fadeOut("slow");
 		$("#popupLogin").removeClass('zigmaIn').fadeOut("slow");
 

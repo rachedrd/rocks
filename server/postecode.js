@@ -1,11 +1,15 @@
 // poste code api integration
 Meteor.methods({
 	'getplace': function  (codepost) {
-		var apiUrl = "https://api.getAddress.io/v2/uk/"+codepost+"?api-key=ERxa1xczw0CyAEWjd1DmKg5167";
+            console.log(codepost + "  : from getplace");
+		//var apiUrl = "https://api.getAddress.io/v2/uk/"+codepost+"?api-key=ERxa1xczw0CyAEWjd1DmKg5167";
+            var apiUrl = "https://api.getAddress.io/v2/uk/"+codepost+"?api-key=xqJHY6loQE2_pG0B8yWDKw6040";
 		// var result = Meteor.wrapAsync(apicall)(apiUrl);
 	//	var response = Meteor.wrapAsync(apicall)(apiUrl
-	response = HTTP.get(apiUrl).data;
+	var response = HTTP.get(apiUrl).data;
 				this.unblock();
+                      //  console.log('result is the next ...\n');
+
        /* var response = { "Latitude": 52.2457758, "Longitude": -0.89249070000000008 ,
 "Addresses":["10 Watkin Terrace, , , , , Northampton, Northamptonshire",
              "12 Watkin Terrace, , , , , Northampton, Northamptonshire",
@@ -49,7 +53,7 @@ Meteor.methods({
                                "Flat 7, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire",
                                "Flat 8, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire",
                                "Flat 9, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire"]};*/
-	//	console.log(response);
+                              // console.log(response); 
 		return response;
 	}
 });

@@ -1,6 +1,12 @@
 .profilecover{ width: 100%; height: 450px; position: relative; /*background-color: red;*/
   }
+
+  .unavailable{background-color: #ff6600; font-weight: bold;}
+  #seeprofile span.fc-title{ font-weight: bold;}
   .removewhishlistitem{opacity: 0}
+.postcodeevent ul.zonecodes {position: absolute; margin-top: 35px; background-color: rgba(255, 255, 255, 0.8);}
+.addressnameevent ul.zonecodes , .addresseventedit ul.zonecodes {position: absolute; margin-top: 35px; background-color: rgba(255, 255, 255, 0.8);}
+
   /*.userstable tfoot, .userstable tfoot tr, .userstable tfoot tr td {width: 100%}*/
   .coverImage{width: 100% ; height: 100%}
 .subcover{ /*background-color: yellow;*/ width: 100%; height: 100px;  position : absolute ; bottom: -35px}
@@ -17,7 +23,7 @@
 	.pages{display: none;}
 	#youtube_video{display: block; margin: 0 auto; width: 50px}
 /*upload song section */
-.uploadsongdiv, .uploadimgdiv, .uploadsongimgdiv, .uploadvideodiv{
+.uploadsongdiv, .uploadimgdiv, .uploadsongimgdiv, .uploadvideodiv, .addevent{
 padding: 0px;
 	position: relative;  width:auto;  cursor: pointer; 
 background-color: red;}
@@ -63,8 +69,10 @@ background-color: red;}
             	margin-left: 30px;
                 font-style: italic;
                 font-size: 11px;
-                color: #999;
+                /*color: #999;*/
             }
+        .postcodeevent ul li , .addressnameevent ul li , .addresseventedit ul.zonecodes{color: black; }
+        .addressnameevent ul li , .addresseventedit ul li{padding-bottom: 10px}
 .changeAvatar{position: absolute; height:50px;  bottom: -45px;/*  background-color: pink;*/ width: 135px ;} 
 .changeAvatar span{float: right ; margin-right: 4px;}
 .changeCover{  position: absolute ; bottom: 10px ; width: 100%; }
@@ -330,7 +338,7 @@ max-height: 300px;
     }
     .suggest-bandtlocation {margin-left: 17px}
 .suggest-bandtypeinput, .suggest-usernameinput{margin-left: 15px}
-.suggest-holder ul , .address-holder ul {
+.suggest-holder ul , .address-holder ul ,.postcodeevent ul, .addressnameevent ul ,.addresseventedit ul {
 	    color: white;
         display: none;
         list-style: none;
@@ -363,13 +371,18 @@ max-height: 300px;
     }
     .suggest-usertype ul , .suggest-username ul{margin-left: 17px}
     .address-holder ul  {width: 230px;}
+    .postcodeevent ul ,.addressnameevent ul ,.addresseventedit ul.zonecodes {width: 100%}
 .suggest-prompt, .suggest-bandtypeinput , .inputaddress , .suggest-usertype , .suggest-username{margin-bottom: 2px}
 .suggest-bandtypeinput {padding-left: 5px}
- .suggest-holder li:hover ,.suggest-usertype li:hover ,.suggest-username li:hover , .suggest-bandtype li:hover , .address-holder li:hover {color: #ff6600; cursor: pointer;}
+.postcodeevent ul li:hover, .addressnameevent ul li:hover, .addresseventedit ul li:hover{color: #ff6600; cursor: pointer; }
+ .suggest-holder li:hover , 
+ .suggest-usertype li:hover ,.suggest-username li:hover ,
+  .suggest-bandtype li:hover , .address-holder li:hover,
+   .address-holder li:hover {color: #ff6600; cursor: pointer;}
         .suggest-holder li, .suggest-bandtype li ,.suggest-username li , .address-holder li , .suggest-usertype li {
             padding: 5px;
         }
-        .suggest-holder > li:hover, .bandtype li:hover,  .bandtype li:active ,.suggest-holder > li.active , .address-holder > li:hover,.address-holder > li.active {
+        .suggest-holder > li:hover, .bandtype li:hover,  .bandtype li:active ,.suggest-holder > li.active , .postcodeevent >li:active, .addressnameevent >li:active, .addressnameevent >li:hover, .addresseventedit >li:hover, .addresseventedit >li:active, .postcodeevent >li:hover, .address-holder > li:hover,.address-holder > li.active {
             background: rgba(0,120,0, .2);
         }
             .suggest-name {
@@ -391,11 +404,11 @@ float: none; width: 100px ; display: inline; position: absolute; }
 .wishlist, .hire{
  position: relative;
  color: #ff6600 ; }
- .repRequest, .uploadsongdiv, .uploadimgdiv , .uploadvideodiv{ display: none; width: auto;  float: left; 
+ .repRequest, .uploadsongdiv, .uploadimgdiv , .uploadvideodiv, .addevent{ display: none; width: auto;  float: left; 
  	margin-top: 8px;  }
  	.uploadsongimgdiv{width: auto; float: left; margin-top: 8px}
  	.repRequest{background-color: gray}
- 	 .repRequest span , .uploadsongdiv span, .uploadimgdiv span, .uploadvideodiv span, .uploadsongimgdiv span{
+ 	 .repRequest span , .uploadsongdiv span, .uploadimgdiv span, .uploadvideodiv span, .addevent span, .uploadsongimgdiv span{
 font-size: 12px;}
  
 .tabs li {display: inline;}
@@ -487,6 +500,13 @@ font-size: 12px;}
 
 #socialpageinput, #socialpageuserinput{width: 300px; }
 
+.displaydetails {width: 100%; margin-bottom: 15px; };
+.displaydetails span  {display: inline; width: auto; }
+.displaydetails span.eventnamespn{margin-left: 38px; margin-top: 1px}
+.displaydetails .bld {font-size: 12px; font-weight: bold;} 
+ .updateeventname, .updateeventend,.updateeventvenue, .updateeventaddress, .updateeventcity, .updateeventtype,.updateeventregionname , .updateeventpostcode, .updateeventstart {float: right;  color: #001a4d; cursor: pointer;}
+.updateeventtype i,.updateeventvenue i, .updateeventend i,.updateeventaddress i, .updateeventcity i, .updateeventregionname i, .updateeventname i, .updateeventpostcode i, .updateeventstart i , .updateeventstartdate i {font-weight: bold; font-size: 17px;}
+.eventnameedit, .eventtypeedit,.addresseventedit, .venueeventedit, .eventregionnameedit, .eventstartdateedit,.eventcitynameedit, .eventregionnameedit, .eventenddateedit, .eventpostcodeedit{display: none;}
 /*end salary range slider */
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
@@ -495,7 +515,7 @@ font-size: 12px;}
 .banscontent .searchside{width: 35%}
 .banscontent .searchresult{width: 65%}
 */
-
+.postcodeevent ul ,.addressnameevent ul ,.addresseventedit ul.zonecodes {width: 100%}
 .songnamespanlabel{font-size: 12px; font-weight: bold;width: auto; padding-right: 5px }
 .ratingdiv p {  margin-top: -0.5px;}
 .togglenotification{text-align: right;
@@ -513,7 +533,7 @@ font-size: 12px;}
 	.wall{ background-color: red; width: 10%;}
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 25px ; cursor: pointer;}
 .removeHighlight {display: none;}
-.repRequest span, .uploadsongdiv span, .uploadimgdiv span, .uploadvideodiv span, .uploadsongimgdiv span{ font-size: 12px;}
+.repRequest span, .uploadsongdiv span, .uploadimgdiv span, .addevent span, .uploadvideodiv span, .uploadsongimgdiv span{ font-size: 12px;}
 .product_inner p.price{ font-size: 15px ; margin-right: 10px}
 .product_inner p.rating{ float: left }
 
@@ -521,9 +541,7 @@ font-size: 12px;}
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 768px) and (max-width: 959px) {
-	nav ul{display: block ; }
-	nav {display: block ; }
-
+	.postcodeevent ul ,.addressnameevent ul ,.addresseventedit ul.zonecodes {width: 100%}
 .usertypecontainer{display: block; position: relative; height: auto; padding-bottom: 0px}
 .suggest-usertype input, .suggest-usertype ul{margin-left: 0px ; width: 100% }
 .suggest-username input, .suggest-username ul{margin-left: 0px ; width: 100% }
@@ -581,7 +599,7 @@ font-size: 12px;}
 .addmemeberform span{padding-top: 0px ; margin-left: 15px}
 		.wishlist span { white-space: nowrap; position: absolute; }
 
-		.repRequest span , .uploadsongdiv span ,.uploadvideodiv span , .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
+		.repRequest span , .uploadsongdiv span , .addevent span, .uploadvideodiv span , .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
 		.hire span{margin-top: -5px ; position: absolute; }
  
  .userstable tbody tr td:nth-child(7),
@@ -591,6 +609,7 @@ font-size: 12px;}
 /* #Mobile (Landscape)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
+	.postcodeevent ul ,.addressnameevent ul ,.addresseventedit ul.zonecodes {width: 100%}
 	.userstable{font-size: 12px}
  .userstable tbody tr td:nth-child(7),
  .userstable thead tr th:nth-child(7)/*,
@@ -607,7 +626,7 @@ font-size: 12px;}
 
 .banscontent{width: 80% ; padding-left: 40px ; padding-right: 40px}
 	/*.ratingdiv {float: none; width: 100px; }*/
-	.ratingdiv p{margin-top:-1px;  font-size: 10px;}
+	.ratingdiv p{margin-top:2px;  font-size: 10px;}
 	#memeberdiv , #highlitsdiv , #repertoirediv {height: auto; padding-bottom: 68px}
 	#memeberdiv div , #highlitsdiv div{display: block;}
 	.addhighlightform{margin-top: 2px}
@@ -670,11 +689,13 @@ font-size: 12px;}
 .ullist header p  {font-size: 12px ; }
 p.notcontent {font-size: 12px ;  width:100%; display: block;}
 #memeberdiv >  #errors{font-size: 12px}
-.repRequest , .uploadsongdiv, .uploadimgdiv , .uploadvideodiv{margin-top: 0px}
+.repRequest , .uploadsongdiv, .uploadimgdiv ,.addevent , .uploadvideodiv{margin-top: 0px}
 .tabs li a  {display: inline;  }
-.tabs li  {display: inline;  margin: 10px 10px 7px -5px}
+/*.tabs li  {display: inline;  margin: 10px 10px 7px -5px}*/
+.tabs li  {display: inline;  margin: 10px 5px 7px -5px}
 
-.repRequest span, .uploadsongdiv span, .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 10px;}
+
+.repRequest span, .uploadsongdiv span, .addevent span,.uploadvideodiv span, .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 10px;}
 .usercontainer{margin-top: 50px}
 	.subcover {margin-bottom: -20px}
 	.hire span {margin-top: -5px ; position: absolute;}
@@ -693,8 +714,17 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 /*  #Mobile (Portrait) 320px
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 100px) and (max-width: 479px) {
+	.postcodeevent ul ,.addressnameevent ul ,.addresseventedit ul.zonecodes {width: 100%}
+	#mycalendar {width: 100%; height: 100%}
+	 #popupevent .input-group input ,#popupevent .input-group span { height: 30px}
+
+	 #popupevent .input-group  {width: 100%}
+	 #popupevent .input-group input {border-radius: 15px 5px 5px 5px}
+	 #popupevent .input-group span {margin-left: 0px; margin-top: 0px}
+     #popupevent .def-block {padding-bottom: 5px; margin-bottom: 0px; padding-top: 10px }
+     #popupevent #popupeventclose {margin-top: -15px}
 	.tback{top:0px;}
-	#erryoutubeurl{margin-left: -10px}
+	#erryoutubeurl, #eventerr, #eventediterr{margin-left: -10px}
 .userstable tbody tr td:nth-child(7),
  .userstable thead tr th:nth-child(7),
  .userstable tbody tr td:nth-child(6),
@@ -789,15 +819,15 @@ p.notcontent {font-size: 11px}
 .address-holder{margin-left: 0px}
 .suggest-holder {width: 145px}
 .suggest-holder input , .suggest-holder ul {width: 145px}
-.ratingdiv p{ font-size: 8px ; margin-top: -1px}
-.repRequest , .uploadsongdiv , .uploadimgdiv , .uploadvideodiv{margin-top: 0px}
-.uploadsongdiv , .uploadimgdiv, .uploadvideodiv{margin-top: 2px}
+.ratingdiv p{ font-size: 8px ; margin-top: 5px}
+.repRequest , .uploadsongdiv , .uploadimgdiv ,.addevent, .uploadvideodiv{margin-top: 0px}
+.uploadsongdiv , .uploadimgdiv,.addevent, .uploadvideodiv{margin-top: 2px}
 .tabs li a  {display: inline;  }
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
 .suggest-holder {margin-left: 10px}
 #regioninput {margin-left: 25px}
 #cityinput{margin-left: 45px}
-.repRequest span , .uploadsongdiv span, .uploadimgdiv span,.uploadvideodiv span ,.uploadsongimgdiv span{ font-size: 9px;}
+.repRequest span , .uploadsongdiv span, .addevent span, .uploadimgdiv span,.uploadvideodiv span ,.uploadsongimgdiv span{ font-size: 9px;}
 .bandnameinputsearch{display: inline; text-align: left;}
 .bandtypesearch {display: block; margin: -10px 0px}
 .savemember{display: none;}
@@ -808,6 +838,258 @@ p.notcontent {font-size: 11px}
 #socialpagediv{height: auto; padding-bottom: 20px}
 .sociallabel{display: block}
 }
+
+/*chat slider*/
+ul.chat-box {
+	color: #3a4049;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.chat-box li {
+	background-color:  #3a4049;
+    position: relative;
+    z-index: 35;
+    margin-bottom: 30px;
+    padding-right: 65px;
+}
+.chat-box li {
+    margin: 15px;
+    padding: 0;
+}
+.chat-box li .status-badge {
+    float: left;
+    margin: 0 10px 0 0;
+}
+.status-badge {
+    position: relative;
+    display: inline-block;
+}
+.chat-box li b {
+	color: white;
+    font-size: 12px;
+    display: block;
+    padding: 4px 0 0;
+}
+b, strong {
+    font-weight: 700;
+}
+.chat-box li p {
+	color: white;
+    font-size: 11px;
+    opacity: .6;
+}
+.title-hero, p {
+    margin-bottom: 25px;
+}
+p {
+    line-height: 1.6em;
+    margin: 0;
+}
+.chat-box li a.btn-md {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -17px;
+    padding: 0 10px;
+}
+.btn-black {
+    color: #ccc;
+    border-color: #000;
+    background: #2d2d2d;
+}
+.btn, .fc-button, .size-md {
+    /*line-height: 32px;
+    height: 34px;*/
+}
+.fc-head-container{background-color: #C0C0C0}
+.fc-day-header span {color:rgba(255,102, 0, 0.8);}
+.fc-view-container{ background-color:   white}
+.fc-day-number, .fc-more{color: #000000}
+span.removeEvent{float: right; margin-right: 0px}
+#seecalendar span.removeEvent, #seecalendar span.fc-time{display: none}
+#seecalendar span.fc-title{font-weight: bold;}
+.no-border {
+    border-color: transparent!important;
+}
+/*.btn{
+    font-size: 14px;
+    font-weight: 400;
+    position: relative;
+    display: inline-block;
+    padding: 0 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-align: center;
+    white-space: nowrap;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    background-image: none;
+    -o-user-select: none;
+}*/
+.radius-all-100 {
+	color: #7e7e7e;
+    border-radius: 100px!important;
+}
+.chat-box li .status-badge .small-badge {
+    border-color: #2a2a2a!important;
+}
+.status-badge .small-badge {
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+}
+.bg-green{ 
+ color: #fff;
+    border-color: #8eca3f;
+    background: #9cd159;
+	    color: #fff;
+    border-color: #8eca3f;
+    background: #9cd159;
+}
+.slimScrollDiv{width: auto; height: 100%}
+.slimscroll{background: rgba(0, 0, 0, 0.4);/*#3a4049;*/  overflow: hidden;  color: #9e9e9e; width: auto; height:100% }
+.small-badge {
+    overflow: hidden;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    border: 2px solid #fff!important;
+    border-radius: 20px;
+}
+
+
+
+
+.cbp-spmenu-right.cbp-spmenu-open {
+    right: 0px;
+}
+
+/*@media screen and (max-height: 26.375em)*/
+.cbp-spmenu-right {
+    right: -190px;
+}
+/*@media screen and (max-height: 26.375em)*/
+.cbp-spmenu-vertical {
+    font-size: 90%;
+    width: 190px;
+}
+.cbp-spmenu, .cbp-spmenu-push {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.cbp-spmenu-right {
+    right: -240px;
+}
+.cbp-spmenu-vertical {
+    width: 240px;
+    height: 100%;
+    top: 0;
+    z-index: 9999999;
+}
+.cbp-spmenu {
+    background: #fff;
+    position: fixed;
+    -webkit-box-shadow: -1px 0 1px rgba(0, 0, 0, .05);
+    -moz-box-shadow: -1px 0 1px rgba(0, 0, 0, .05);
+    box-shadow: -1px 0 1px rgba(0, 0, 0, .05);
+}
+.cbp-spmenu h3 {
+    font-size: 18px;
+    padding: 20px;
+    margin: 0;
+    font-weight: 300;
+    height: 60px;
+    border-bottom: 1px solid #f1f1f1;
+    color: black;
+}
+.closechat, .fa{color: black; display: inline-block;}
+.chat  {position: relative; padding-bottom: 100px}
+.chat .chat-item .chat-image  {float: left; display: inline-block;}
+.chat-item img {display: block; width: 40px; border-radius: 50%; margin-right: 5px;}
+.chat .chat-item .chat-message {position: relative; border-radius: 12px; padding: 4px 12px; 
+max-width:  75%; background: #f1f1f1; display: inline-block;}
+.chat .chat-item { display: block; padding: 10px 15px; width: 100%; overflow: hidden;}
+.chat .chat-item-left .chat-message { margin-top: 5px }
+.chat .chat-item-right .chat-message { margin-top: 5px ; float: right; color:#fff; background-color: #55BAA0 }
+.chat-write {padding: 5px; background: #fff; position: absolute; bottom: 0; width: 240px;}
+.chatfinder{padding: 5px; background: #fff; position: absolute; width: 240px;}
+.chat-write input , .chatfinder input{
+	width: 100%;
+	background: #fff;
+	border-radius: 0px;
+	border: 1px solid #dce1e4;
+	font-size: 13px;
+    padding: 6px 10px !important;	
+    display: block;
+    height: 34px;
+    color: #555;
+
+}
+/*@media screen and (max-height: 26.375em)*/
+.cbp-spmenu-vertical {
+    font-size: 90%;
+    width: 190px;
+}
+.cbp-spmenu h4 {height: 34px}
+.cbp-spmenu h3 a {
+    padding: 0;
+}
+.cbp-spmenu-vertical a {
+    padding: 18px;
+}
+.cbp-spmenu a {
+    display: block;
+    color: #5f5f5f;
+    font-size: 14px;
+    text-decoration: none;
+}
+.slimscroll {
+	overflow:scroll;
+    background-color: #3a4049;
+    /*background-color: rgba(0, 0, 0, 0 );*/
+    color: #9e9e9e;
+}
+/*@media screen and (max-height: 26.375em)*/
+.cbp-spmenu-right {
+    right: -190px;
+}
+
+/*@media screen and (max-height: 26.375em)*/
+.cbp-spmenu-vertical {
+    font-size: 90%;
+    width: 190px;
+}
+.cbp-spmenu, .cbp-spmenu-push {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.cbp-spmenu-right {
+    right: -240px;
+}
+.cbp-spmenu-vertical {
+    width: 240px;
+    height: 100%;
+    top: 0;
+    z-index: 9999999;
+}
+.cbp-spmenu {
+    background: #fff;
+    position: fixed;
+    -webkit-box-shadow: -1px 0 1px rgba(0, 0, 0, .05);
+    -moz-box-shadow: -1px 0 1px rgba(0, 0, 0, .05);
+    box-shadow: -1px 0 1px rgba(0, 0, 0, .05);
+}
+
+
+
 
  
 

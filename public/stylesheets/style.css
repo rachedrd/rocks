@@ -21,7 +21,7 @@ time, mark, audio, video {
 }
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section, img {
-	display: block;
+	display: block ;
 }
 body {
 	line-height: 1;
@@ -356,9 +356,6 @@ textarea {
 	width: 100%;
 	background: rgba(0, 0, 0, 0.8);
 	box-shadow: 0 2px rgba(0, 0, 0, 0.5);
-}
-.full #header {
-	width: 100%;
 }
 .under_header {
 	height: 375px;
@@ -2375,7 +2372,8 @@ html[xmlns] .slides {display: block;}
 .flex-control-thumbs img {width: 100%; display: block; opacity: .7; cursor: pointer;}
 .flex-control-thumbs img:hover {opacity: 1;}
 .flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
-#errsongname, #erryoutubeurl{margin-top: -5px ; position: absolute;}
+#errsongname, #erryoutubeurl {margin-top: -5px ; position: absolute;}
+ #eventerr, #eventediterr{margin-top: -5px ; position: relative; float: right; margin-right: 20px}
 @media screen and (max-width: 860px) {
 	.chngavatr{bottom: 85px ; left: 15px}
 	.changeavatar{bottom: 70px;}
@@ -3405,7 +3403,7 @@ a.notification-close {
 
 /*	Popup SignIn
 ----------------------------------------------------------------------*/
-#LoginBackgroundPopup , #addsongbg, #addblogimagebg, #addyoutubebg{  
+#LoginBackgroundPopup , #addsongbg, #addeventbg,#eventeditbg, #addblogimagebg, #addyoutubebg {  
 	display:none;
 	position:fixed;
 	height:100%;
@@ -3415,7 +3413,7 @@ a.notification-close {
 	background:#000;
 	z-index: 99999997;
 } 
-#popupLogin , #popupsong, #popupblogimage, #popupvideo{  
+#popupLogin , #popupsong, #popupblogimage, #popupvideo, #popupevent, #popupeditevent{  
 	display:none;
 	position:fixed;
 	width:360px;
@@ -3424,6 +3422,8 @@ a.notification-close {
 	z-index: 99999998;
 	margin-left: 0;
 }
+
+  .date-picker{z-index: 999999999999999}
 #popupSignUp {
 	display:none;
 	position:fixed;
@@ -3433,7 +3433,7 @@ a.notification-close {
 	z-index: 99999998;
 	margin-left: 0;
 }
-#popupLogin .def-block ,#popupvideo .def-block , #popupsong .def-block , #popupblogimage .def-block
+#popupLogin .def-block ,#popupevent .def-block, #popupeditevent .def-block, #popupvideo .def-block , #popupsong .def-block , #popupblogimage .def-block
  {  
 	background: #000;
 	background: rgba(0, 0, 0, 0.9) !important;
@@ -3446,7 +3446,7 @@ a.notification-close {
 	box-shadow: none;
 	border: 2px solid #1F1F1F;
 }
-#popupLoginClose , #popupsongclose ,#popupvideoclose ,#popupblogimageclose {
+#popupLoginClose , #popupsongclose ,#popupeventclose,#popupediteventclose, #popupvideoclose ,#popupblogimageclose {
 	position: absolute;
 	top: 25px;
 	right: 33px;
@@ -3456,11 +3456,11 @@ a.notification-close {
 	-webkit-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
-#popupLoginClose:hover , #popupsongclose:hover, #popupvideoclose:hover ,#popupblogimageclose:hover {
+#popupLoginClose:hover ,#popupeventclose:hover, #popupediteventclose:hover, #popupsongclose:hover, #popupvideoclose:hover ,#popupblogimageclose:hover {
 	color: #fff
 }
-#login_username, #login_password, #song_name  ,  #signup_username, #signup_firstname,
-#signup_lastname, #signup_email, #signup_retypePassword, #signup_password {
+#login_username, #login_password, #song_name , #event_address, #event_venue,#event_regionname ,#event_startdate, #event_enddate, #event_name,  #signup_username, #signup_firstname,
+#signup_lastname, #signup_email, #event_cityname, #event_postcode ,#signup_retypePassword, #signup_password {
 	display: block !important;
 	width: 100% !important;
 	-webkit-box-sizing: border-box;
@@ -4711,8 +4711,8 @@ a.notification-close {
 
 /*	IE7 & IE8 & IE9 Hacks
 ----------------------------------------------------------------------*/
-.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup, .ie8 #addsongbg, .ie8  #addblogimagebg, .ie8 #addyoutubebg,
-.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup , .ie7 #addsongbg , .ie7  #addblogimagebg, .ie7 #addyoutubebg{
+.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup, .ie8 #addsongbg, .ie8  #addblogimagebg, .ie8 #addyoutubebg, .ie8 #popupevent, .ie8 #popupeditevent,
+.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup , .ie7 #addsongbg , .ie7  #addblogimagebg, .ie7 #addyoutubebg, .ie7 #popupevent, .ie7 #popupeditevent{
 	background: transparent url(../images/ie_000_80.png) repeat;
 }
 .ie8 .footer-last, .ie8 .ttw-music-player .player-controls, .ie8 .def-block, .ie8 .ttw-music-player .tracklist, .ie8 .breadcrumbIn,
@@ -4727,19 +4727,24 @@ a.notification-close {
 .ie7 li.track:hover .buy, .ie7 .playing .buy {
 	background: #ff6600
 }
-.ie8 #login_username, .ie8 #song_name,  .ie8 #login_password, 
-.ie8 #signup_username, .ie8 #signup_firstname,
-.ie8 #signup_lastname,.ie8  #signup_email,
+.ie8 #login_username, .ie8 #song_name, .ie8 #event_name,  .ie8 #login_password, 
+.ie8 #signup_username, .ie8 #signup_firstname, .ie8 #event_address, .ie9 #event_venue,
+.ie8 #signup_lastname, .ie8  #signup_email, .ie8 #vent_postcode, .ie8 #event_cityname, .ie9 #event_cityname,
+.ie8 #event_startdate, .ie8 #event_enddate, .ie8 #event_regionname, .ie9 #event_regionname,
+.ie9 #event_startdate, .ie9 #event_enddate, .ie9 #event_postcode,
+
 .ie8 #signup_retypePassword, .ie8  #signup_password,
-.ie9 #signup_username, .ie9 #signup_firstname,
+.ie9 #signup_username, .ie9 #signup_firstname, .ie9 #event_name,
 .ie9 #signup_lastname, .ie9  #signup_email, .ie9 #song_name,
 .ie9 #signup_retypePassword, .ie9  #signup_password,
 .ie9 #login_username, .ie9 #login_password {
 	padding: 4px 10px 22px;
 }
+.ie7 #event_address, .ie7 #event_venue,
 .ie7 #login_username, .ie7 #song_name , .ie7 #login_password, .ie7 #signup_username, .ie7 #signup_firstname,
-.ie7 #signup_lastname, .ie7  #signup_email,
-.ie7 #signup_retypePassword, .ie7  #signup_password
+.ie7 #signup_lastname, .ie7  #signup_email, .ie7 #event_postcode,
+.ie7 #event_startdate, .ie7 #event_enddate, .ie7 #event_cityname,
+.ie7 #signup_retypePassword, .ie7  #signup_password , .ie7 #event_regionname
  {
 	padding: 4px 10px;
 	width: 276px !important
@@ -4937,12 +4942,14 @@ a.notification-close {
 	#flickr-photos li {width: 68px;height: 68px}
 }
 
+@media only screen and (min-width: 768px) and (max-width: 769px) {
+nav {display: block;}
+nav ul{display: block;}
 
+}
 /* #Tablet (Portrait)
 ----------------------------------------------------------------------*/
 @media only screen and (min-width: 768px) and (max-width: 959px) {
-	 #mymenu{display: inline;}
-	 nav.ul{display: inline;}
 	.usrPrflnm, .notificationsicon, .messagessicon{line-height: 10px;
 	font-family: "Tahoma", Helvetica, Arial; 
 	font-size: 15px}
@@ -5108,7 +5115,7 @@ a.notification-close {
 	.fb-profile .cover a.changecover { width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
 	
 		#errorMsgLgn  {float: right; margin: -33px 20px 0px 0px;}
-		#errsongname, #erryoutubeurl { margin-top: -4px ; font-size: 11px }
+		#errsongname, #erryoutubeurl , #eventerr, #eventediterr{ margin-top: -4px ; font-size: 11px }
 		#errorMsgSgnUp {float: right; margin: -5px 20px 0px 0px;}
 
 		/*#errorMsgSgnUp {width: 100%}*/
@@ -5213,7 +5220,7 @@ a.notification-close {
 	ul.showcomments li.child {margin: 0 0px 32px 2px}
 	.topbar h2, .topbar h3 { text-align: left; padding: 0; display: block;}
 	.tback {top: 40px}
-	#popupLogin , #popupsong, #popupvideo, #popupblogimage { width: 310px}
+	#popupLogin , #popupsong, #popupvideo, #popupblogimage ,#popupevent, #popupeditevent{ width: 310px}
 	  #popupSignUp { width: 310px ; margin-top: 0px}
 	.ajde_evcal_calendar .calendar_header p {font-size: 26px}
 	.forum .search-forum {position: relative;width: 100%}
@@ -5259,7 +5266,7 @@ width: 100% !important;
 }
 
 .input-group{width: 83%;}
-.input-group span{ 
+.input-group span:not(.suggest-name):not(.suggest-description), .displaydetails .input-goup-addon{ 
 	width:30px ;
 	height: 32px;
 	margin-left: 3px;
@@ -5269,14 +5276,14 @@ width: 100% !important;
 	     margin-top: 1px;
 	      position: absolute;
 	  }	
-.input-group span i{ 
+.input-group span i, .displaydetails .input-goup-addon i{ 
 	color: black;
 	     margin-top: 10px;
 	     margin-left: 8px;
 	      position: absolute;
 	  }
 
-#signup_username, #signup_firstname, #signup_lastname, #signup_password , #signup_email, #signup_retypePassword, #reset_email,#album_name{
+#signup_username, #event_name, #signup_firstname,#event_address, #event_venue, #event_regionname, #signup_lastname, #event_startdate,#event_cityname, #event_enddate ,#event_postcode, #signup_password , #signup_email, #signup_retypePassword, #reset_email,#album_name{
 	display: block !important;
 	width: 100% !important;
 	-webkit-box-sizing: border-box;
@@ -5291,7 +5298,7 @@ width: 100% !important;
 	margin-left: 30px;
 	border-radius: 5px 5px 5px 0px;
 }
-#signup_register, #signup_cancel  { float: left;
+#signup_register, #signup_cancel , #event_cancel { float: left;
 	margin-top: 0px ; margin-right:
 	 0px; margin-left: 30px; position: 0px}
 
@@ -5320,12 +5327,12 @@ width: 100% !important;
 
 #validUsername, #validPassword, #validFisrtName_sgnUp,#viewPasswd_sgnUp, #viewRePasswd_sgnUp, #validLastName_sgnUp, #validRePsswd_sgnUp, #validEmail_sgnUp, #validPasswd_sgnUp,#validAlmName, #validUsername_sgnUp{color: red; position: absolute;float: right; margin-left: 93%;margin-top: 4%;}
 #viewPasswd_sgnUp, #viewRePasswd_sgnUp{margin-left: 85%; color: gray; cursor:pointer;}
-#errorMsgLgn, #errsongname, #erryoutubeurl,
+#errorMsgLgn, #errsongname, #erryoutubeurl, #eventerr,#eventediterr,
  #errorMsgSgnUp,
   #errorMsgAlb
   { color: red;}
   #popupLogin h4  {margin-right: 45%;}
-  #popupsong h4 ,#popupblogimage h4, #popupvideo h4{margin-right: 7%; margin-top: -10px; position: relative;}
+  #popupsong h4 ,#popupevent h4 ,#popupeditevent h4, #popupblogimage h4, #popupvideo h4{margin-right: 7%; margin-top: -10px; position: relative;}
    #popupSignUp h4 {margin-right: 24%;}
 /*#errorMsgSgnUp{ margin-left: 160px;}*/
 #errorMsgAlb{margin-left: 60px;}
@@ -5373,19 +5380,19 @@ width: 100% !important;
 	70% {transform: perspective(400px) rotateY(10deg);}
 	100% {transform: perspective(400px) rotateY(0deg);opacity: 1;}
 }
-#userTypeLable{color: gray; float: left; margin-left: 38px; margin-top: 5px;}
-#divToggleType{margin-left: 130px; margin-top: 0px; margin-bottom: 10px;  color: #ff6600}
-#divToggleType .dropdown-menu:hover {background-color: white;}
-#divToggleType .dropdown-menu li a:hover{background-color: white; color: #ff6600}
-#divToggleType .dropdown{background-color: white;}
-#divToggleType .dropdown:hover{background-color: white;}
-#divToggleType button:hover {background-color: white;}
-#userTypeLable{color: gray; float: left; margin-left: 38px; margin-top: 5px;}
-#divToggleType .btn {background-color: white; background-image: none; color: #ff6600}
-#divToggleType .dropdown-toggle {background-color: white; background-image: none;}
-#choiceType li{background-image: none;}
-#choiceType li:hover {background-color: white; background-image: none;}
-#choiceType li a:hover{background-color: white; color: black; background-image: none;}
+#userTypeLable, #eventtypelabel{color: gray; float: left; margin-left: 38px; margin-top: 5px;}
+#divToggleType, #eventtypelabel, #divToggleeventType, #divToggleeventTypeupdate{margin-left: 130px; margin-top: 0px; margin-bottom: 10px;  color: #ff6600}
+#divToggleType .dropdown-menu:hover ,#divToggleeventType .dropdown-menu:hover, #divToggleeventTypeupdate .dropdown-menu:hover{background-color: white;}
+#divToggleType .dropdown-menu li a:hover, #divToggleeventType .dropdown-menu li a:hover , #divToggleeventTypeupdate .dropdown-menu li a:hover{background-color: white; color: #ff6600}
+#divToggleType .dropdown, #divToggleeventType .dropdown , #divToggleeventTypeupdate .dropdown{background-color: white;}
+#divToggleType .dropdown:hover, #divToggleeventType .dropdown:hover, #divToggleeventTypeupdate .dropdown:hover{background-color: white;}
+#divToggleType button:hover ,#divToggleeventType button:hover , #divToggleeventTypeupdate button:hover {background-color: white;}
+#userTypeLable, #eventtypelabel{color: gray; float: left; margin-left: 38px; margin-top: 5px;}
+#divToggleType .btn ,#divToggleeventType .btn, #divToggleeventTypeupdate .btn{background-color: white; background-image: none; color: #ff6600}
+#divToggleType .dropdown-toggle  ,#divToggleeventType .dropdown-toggle, #divToggleeventTypeupdate .dropdown-toggle{background-color: white; background-image: none;}
+#choiceType li, #choiceeventType li{background-image: none;}
+#choiceType li:hover , #choiceeventType li:hover{background-color: white; background-image: none;}
+#choiceType li a:hover, #choiceeventType li a:hover{background-color: white; color: black; background-image: none;}
 /*end popup signup styling */
 /*profile styling*/
 .fb-profile .cover img.fb-image-lg{
