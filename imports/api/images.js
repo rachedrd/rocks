@@ -4,6 +4,8 @@ import { Mongo } from 'meteor/mongo';
 
 //export const Tasks =  new Mongo.Collection('tasks');//Accounts.users;
  Images = new Mongo.Collection('images');
+ Rating = new Mongo.Collection('rating');
+ Docs = new Mongo.Collection('docs');
  songs = new Mongo.Collection('songs');
  blogs = new Mongo.Collection('blogs');
  venues = new Mongo.Collection('venues');
@@ -26,15 +28,14 @@ import { Mongo } from 'meteor/mongo';
 	return Images.find({}, 
 		{ fields: {_id:1, imageurl:1, time: 1, uploadedBy: 1,imageName: 1, imageFolder: 1 } } ); });*/
 Meteor.publish('images', function(){ return Images.find({}); });
+Meteor.publish('docs', function(){ return Docs.find({}); });
+Meteor.publish('rating', function(){ return Rating.find({}); });
 Meteor.publish('songs', function(){ return songs.find({}); });
 Meteor.publish('blogs', function(){ return blogs.find({}); });
 Meteor.publish('venues', function(){ return venues.find({}); });
 Meteor.publish('Calendars', function(){ return Calendars.find({}); });
 Meteor.publish('chat', function(){ return chat.find({}); });
 Meteor.publish('notifications', function(){ return Notifications.find({},{_id: 1, owner: 1, reciever: 1 , type: 1, status :1 ,time :1}); });
-
-
-
 Meteor.publish('USERS', function(){ 
     return Users.find({}, { fields: {_id:1, profile: 1 , emails: 1, username: 1 , agent: 1, whishlist: 1} });
 	//return Users.find({});
@@ -64,6 +65,17 @@ updatelastname:  function(obj)
  Users.update({"_id": obj.id}, {$set : { "profile.lastname" : obj.lastname }   });
  return;
 },
+
+uploadavatar:  function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.avatar" : obj.url }   });
+ return;
+},
+uploadcover:  function(obj)
+{
+ Users.update({"_id": obj.id}, {$set : { "profile.cover" : obj.url }   });
+ return;
+},
 updatestatus:  function(obj)
 {
  Users.update({"_id": obj.id}, {$set : { "profile.Status" : obj.status }   });
@@ -80,7 +92,21 @@ updateoprational:function(obj) {
 },
 updatesalary:  function(obj)
 {
- Users.update({"_id": obj.id}, {$set : { "profile.salary" : obj.salary }   });
+ Users.update({"_id": obj.id}, {$set : { "profile.salary" :parseInt( obj.salary) }   });
+ return;
+},
+incremetRating:  function(obj)
+{
+  if( Rating.find({"bandId": obj.bandId , "userId": obj.userId}).count()> 0)
+  {
+Rating.update({"bandId": obj.bandId, "userId": obj.userId },{$set: {"ratingvalue": obj.ratingvalue}});
+ console.log('justupdate the old rating value');
+  }
+  else
+  {
+ //Rating.insert({"bandId": obj.band, "userId": userId, "username": username , "ratingvalue": ratingvalue});
+Rating.insert({"bandId": obj.bandId, "userId": obj.userId, "username" : obj.userId, "ratingvalue": obj.ratingvalue});
+ }
  return;
 },
 updatesocialpage: function(obj)
@@ -137,12 +163,29 @@ savebandmember: function(obj)
  
  return true;
 },
+addfriend:  function(obj)
+{
+ //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
+
+ Users.update({"_id": obj.recieverId}, {$push : { "profile.friends" : {"id" : obj.senderId, "name":  obj.senderName} }   });
+ Users.update({"_id": obj.senderId}, {$push : { "profile.friends" : {"id" : obj.recieverId, "name":  obj.recieverName} }   });
+ 
+ return true;
+},
 savewhishlistitem: function(obj)
 {
  //Users.update({"_id": obj.id}, {$push : { "profile.members" : {"memeber name" : obj.membername , "role": obj.memberrole} }   });
  Users.update({"_id": obj.id}, {$push : { "whishlist" : {"id" : obj.itemid, "username":  obj.itemname} }   });
  
  return true;
+},
+addDocument: function(obj)
+{              
+var docId = Docs.insert({'uploadedBy' : obj.uploadedBy, "title": obj.docname, "timeStamp": obj.timeStamp, "url": obj.url });
+},
+removeDocument: function(id)
+{              
+ Docs.remove({'_id' : id });
 },
 addEvent: function(obj)
 {     
@@ -161,6 +204,10 @@ sendMessage: function(obj)
 console.log('save chat into database ...');   
 var messageId = chat.insert({"senderId" : obj.senderId, "recieverId": obj.recieverId, "timeStamp" : obj.timeStamp, "content" : obj.content , "status" : obj.status });
 return messageId;
+},
+updatemessageStatus: function(id)
+{
+ chat.update({"_id" : id},{$set : {"status" : "viewed"}});
 },
 updateevent : function(obj)
 {
@@ -188,6 +235,20 @@ return  venueid;
 //return ;
 //}
 },*/
+removeimage : function(id)
+{
+console.log('image removed' + id);
+var imageid = Images.remove({"_id": id});
+console.log('venue removed' + imageid);
+return imageid;
+},
+removeAlbum : function(albumname)
+{
+console.log('image removed' + albumname);
+var imageid = Images.remove({"imageFolder": albumname});
+console.log('venue removed' + albumname);
+return albumname;
+},
 removeevent : function(id)
 {
  eventId = Calendars.remove({"_id" : id});

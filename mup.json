@@ -48,7 +48,7 @@
   "env": {
     //"ROOT_URL": "http://staging.localhost",
     //"ROOT_URL": "http://localhost", //staging url 
-    "ROOT_URL": "http://www.giggorilla.co.uk", // droplet domain
+    //"ROOT_URL": "http://www.giggorilla.co.uk", // droplet domain
     "PORT": "80"
   },
 

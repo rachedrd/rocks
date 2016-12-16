@@ -72,9 +72,9 @@ modules@0.5.1
 modules-runtime@0.6.1
 mongo@1.1.5
 mongo-id@1.0.2
+mrgalaxy:stripe@2.2.2
 npm-bcrypt@0.7.8_2
 npm-mongo@1.4.41
-nrser:accounts-soundcloud@0.0.2
 oauth@1.1.8
 oauth1@1.1.7
 oauth2@1.1.7

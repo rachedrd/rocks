@@ -15,20 +15,28 @@ var currentUserId = Meteor.userId();
 //Images.remove({id: imageId });            
 }
 });*/    
-/*Template.task.events({ 'click .rnm': function(e, t)
+Template.task.events({ 
+  /*,
+  'click .removeDiv': function(e, t)
   {
-    alert('removing ....');
-    //e.preventDefault();
-    //e.cancelBubble = true;
-   // alert('hello rached' + this._id);
-   // var currentLi = this.closest('li');
-   // alert(currentLi.html());
-//var imageId = $(this).closest('li').attr("id");
-alert('removing from db ' + this._id);
-//$('.removeImage').trigger('click');
-Images.remove(this._id );     
-  }
-});*/
+    if(!e)  var e = window.event;
+    e.stopPropagation();
+    e.cancelBubble = true;
+    if(e.stopPropagation())
+      e.stopPropagation();
+    alert('removing image DIV....');
+  },*/
+
+  /*'click .removeImage': function(e, t)
+  {
+    if(!e)  var e = window.event ;
+    e.stopPropagation();
+    e.cancelBubble = true;
+    if(e.stopPropagation())
+      e.stopPropagation();
+    alert('removing image span....');
+  }*/
+});
 Template.monitorusers.onCreated(function(){
   Session.setDefault("skipusers", 0);
   Session.setDefault('currentPage', 1);
@@ -61,27 +69,43 @@ $("#cbp-spmenu-s2").on('keyup','.form-control', function(e){
 Template.chatslider.onCreated(function(){
   Meteor.subscribe('chat');
 });
+
 Template.chatslider.onRendered(function(){});
 Template.chatslider.helpers({
    chathistory : function()
    {
-    return  chat.find({
-     $or:[{"senderId" : Meteor.userId() ,"recieverId": 'giEinaQD9ZiuJFTQa'},
-                     {"recieverId" : Meteor.userId(), "senderId" : 'giEinaQD9ZiuJFTQa'}]
+    conv = chat.find({
+     $or:[{"senderId" : Meteor.userId() ,"recieverId": Session.get("chatto") },
+                     {"recieverId" : Meteor.userId(), "senderId" : Session.get("chatto")}]
               });
-
+    if(conv.count() > 0)
+    {
   $('.chat').scrollTop($('.chat')[0].scrollHeight);
+   }
+    return conv;
+
+   },
+   friends : function()
+   {
+    friends = Users.findOne({"_id": Meteor.userId() });
+    return friends;
    },
    reciever : function(id)
    {
     if(id === Meteor.userId())
     return  true;
-  
+
   $('.chat').scrollTop($('.chat')[0].scrollHeight);
    },
 
 });
 Template.chatslider.events({
+'click .showRight2':function(e, t)
+{
+ var username = $(e.currentTarget).find('> .chattoname').attr('id');
+ $(".chatto").text(username);
+ Session.set("chatto", $(e.currentTarget).attr('id'));
+},   
 'keyup #chattext': function(e, t){
  if(e.keyCode === 13)
  {
@@ -91,17 +115,12 @@ Template.chatslider.events({
   if(validatemessagetext(chattext))
   {
   var timeStamp = Math.floor(Date.now());
-  //$('.chat').append('<div class="chat-item chat-item-right"><div class="chat-message">'+chattext+'</div></div>');   
-//var eventId = Calendars.insert({"events" : [ {"title" : obj.title, "type": obj.type, "start" : obj.start, "end" : obj.end , "ownerId" : obj.ownerId, "bandId" : obj.bandId } ]});
- var myobj = {"senderId" : Meteor.userId() , "recieverId": 'giEinaQD9ZiuJFTQa', "timeStamp" : timeStamp, "content" : chattext , "status" : 'pending' };
+ var myobj = {"senderId" : Meteor.userId() , "recieverId": Session.get("chatto"), "timeStamp" : timeStamp, "content" : chattext , "status" : 'pending' };
  Meteor.call('sendMessage', myobj, function(err, result)
   {
  if (result)
  {
-  //$('.chat').scrollTop(100);
   $('.chat').scrollTop($('.chat')[0].scrollHeight);
- // alert($('.chat').scrollTop($('.chat')[0].scrollHeight));
- 
  $("#chattext").val('');
  }
   });  
@@ -549,13 +568,20 @@ var myarg2 = { "ownerId": currentUserId,
 });*/
 Template.seeprofile.onCreated(function(){
  Meteor.subscribe("USERS"); 
- Meteor.subscribe("images"); 
+  Meteor.subscribe("rating"); 
+  Meteor.subscribe("images"); 
   Meteor.subscribe("notifications");
   Meteor.subscribe("songs");
   Meteor.subscribe('Calendars');
+  Meteor.subscribe('venues');
  /*setTimeout(function(){
   $.getScript('../js/zwindows.js');    
 },2000);*/
+});
+Template.seeprofile.onRendered(function()
+{
+   $(".sendmessagecontent").niceScroll({zindex:9999999999999999,cursorborder:"0px solid gray",cursorborderradius:"2px",cursorcolor:"#ff6600",cursoropacitymin:.1}); 
+    $(".sendmessagecontent").getNiceScroll().show();
 });
 Template.homeBlogs.onCreated(function(){
  Meteor.subscribe("USERS"); 
@@ -573,12 +599,61 @@ Template.singelblog.onRendered(function(){
  $('html').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1});     
 $('.commentcontent').niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"black",cursoropacitymin:.1}); 
  });
+Template.homeEvents.events
+({
+'click .evo_fc_day':function(e, t)
+{
+var datenumber = ''+$(e.currentTarget).html()+'';
+myDate = Session.get('myDate'); 
+myDate.setDate(datenumber);
+Session.set('myDate', myDate);
+$(e.currentTarget).addClass('on_focus');
+$(e.currentTarget).addClass('has_events');
+$(e.currentTarget).siblings().removeClass('on_focus');
+$(e.currentTarget).siblings().removeClass('has_events');
+
+},
+'click .evcal_btn_prev i':function(e, t)
+{
+  e.stopPropagation();
+console.log('mydate is : '+Session.get('myDate'));
+myDate = Session.get('myDate'); 
+myDate.setMonth(myDate.getMonth() -1 );
+myDate.setFullYear(myDate.getFullYear());
+Session.set('myDate', myDate);
+Session.set("monthName", getMonthName(Session.get('myDate').getMonth()));
+},
+'click .evcal_btn_next i':function(e, t)
+{
+  e.stopPropagation();
+myDate = Session.get('myDate'); 
+myDate.setMonth(myDate.getMonth() + 1 );
+myDate.setFullYear(myDate.getFullYear() );
+Session.set('myDate', myDate);
+Session.set("monthName", getMonthName(Session.get('myDate').getMonth()));
+},
+});
 Template.homeEvents.helpers({
 eventslist : function()
   {
+    console.log('the month is : ' + Session.get('myDate').getMonth());
+    if(parseInt(Session.get('myDate').getMonth() < 10))
+      var month = '0'+parseInt(Session.get('myDate').getMonth() + 1);
+       else
+      var month = parseInt(Session.get('myDate').getMonth() + 1);
+    if(parseInt(Session.get('myDate').getDate() < 10))
+      var day = '0'+Session.get('myDate').getDate();
+       else
+      var day = Session.get('myDate').getDate();  
+    var startdate = Session.get('myDate').getFullYear()+'-'+month+'-'+ (day ) ;
+   var enddate = Session.get('myDate').getFullYear()+'-'+month+'-'+(day);
+    console.log('enddate : ' + enddate);
+    console.log('start : ' + startdate);
 
     eventsList = [];
-    events =  Calendars.find({"type" : "public"}).fetch();
+   // events =  Calendars.find({"type" : "public", "start" : { $regex: startdate },  "end": {$lte: enddate } }).fetch();
+   events =  Calendars.find({$or: [{ "type" : "public", "start" : { $lt: startdate },  "end": {$gte: startdate } }, { "type" : "public", "start" : { $regex: startdate }}]}).fetch();
+   //$or: [ { "type" : "public", "start" : { $lt: startdate }
     console.log(events);
     if(events)
     {
@@ -612,12 +687,13 @@ currentMonth: function()
 },
 currentYear: function()
 {
-  return Session.get("currentYear");
+  return Session.get("myDate").getFullYear();
 }
 });
-Template.seecalender.helpers({
+/*Template.seecalender.helpers({
   mycalender: function()
   {
+    alert(this._id);
     var allevents = [{id: 100, title:'not available', start: '2016-10-05', end: '2016-10-12', textColor: 'black'},
                      {id: 200, title:'not available2', start: '2016-10-05', end: '2016-10-15', textColor: 'black'}];
     //alert('my calender from see calender ...');
@@ -700,7 +776,7 @@ Template.seecalender.helpers({
       
       editable: false,
       eventLimit: true, 
-      events   : allevents /*Session.get('eventSrcs')*/});
+      events   : allevents });
         }, 100); 
           return true;
           }
@@ -708,7 +784,7 @@ Template.seecalender.helpers({
           {return false} 
 }
 }
-});
+});*/
 Template.mycalender.helpers({
   mycalender: function()
   {
@@ -1237,14 +1313,27 @@ Template.seecalender.onRendered(function(){
         },
     });*/
 Template.homeEvents.onCreated(function(){
-
   Meteor.subscribe('Calendars');
+  var date = new Date(Date.now());
+  Session.setDefault('myDate', date);
+  console.log(Session.get('myDate'));
+});
+Template.homeBands.onCreated(function(){
+   Session.setDefault("skipbands", 0);
+  Session.setDefault('currentbandspage', 1);
+  Meteor.subscribe('Calendars');
+  Session.setDefault('locations', null);
 });
  Template.homeEvents.onRendered(function(){
+  this.autorun(function(){
+   $('.eventon_fc_days').nextAll('p').remove(); 
+   //$('.eventon_fullcal').append('.eventon_fc_daynames'); 
+
+ // Session.set('myDate', Session.get('myDate'));
 setCal();
 function getTime() {
 // initialize time-related variables with current time settings
-var now = new Date()
+var now = Session.get('myDate');
 var hour = now.getHours()
 var minute = now.getMinutes()
 now = null
@@ -1314,13 +1403,14 @@ return ar[month]
 }
 function setCal() {
 // standard time attributes
-var now = new Date()
+var now = Session.get('myDate');
 var year = now.getYear();
 Session.set("currentYear", now.getFullYear());
 if (year < 1000)
 year+=1900
 var month = now.getMonth()
-var monthName = getMonthName(month)
+Session.set('monthnumber', month);
+var monthName = getMonthName(Session.get('monthnumber'));
 Session.set("monthName", monthName);
 var date = now.getDate();
 now = null
@@ -1367,6 +1457,7 @@ digit++
  $(".eventon_fullcal").append('<div class="clear"></div>');
 
 }
+});
  });
 Template.homeBlogs.helpers({
 blogs: function () {
@@ -1670,6 +1761,363 @@ $.getScript('../js/zzzrevolution.js');
 }, 2000);
 });
 Template.seeprofile.events({
+  'mouseenter .icon-star' :function(e, t)
+  {
+     var id = parseInt($(e.currentTarget).attr('id'));
+    $(".ratingdiv p i").each(function(i)
+      {
+        if(i+1 <= id )
+        $(this).css({'color' : '#ffb800'});
+      });  
+  },
+  'mouseleave .icon-star': function(e, t)
+  {
+  $(".ratingdiv p i").each(function(i)
+      {
+        if(Session.get('myratings') < i + 1 )
+        $(this).css({'color' : 'gray'});
+      });  
+  },
+  'click .icon-star': function(e, t)
+  {
+    ratingvalue =  parseInt($(e.currentTarget).attr('id'));
+    var myobj = {"bandId": this._id, "userId": Meteor.userId(), "username": Meteor.userId() , "ratingvalue": ratingvalue};
+   Meteor.call('incremetRating', myobj);//:  function(obj)
+  },
+  'click .sendMessage': function(e, t)
+  {
+    reciever = Users.findOne({ "_id": this._id }, {profile : 1});
+     sender = Users.findOne({ "_id": Meteor.userId() }, {profile : 1});
+  var chattext = t.find(".sendmessagecontent").value;
+  if(/\S/.test(chattext))
+ {
+  if(validatemessagetext(chattext))
+  {
+  var timeStamp = Math.floor(Date.now());
+  if(reciever.profile.type === "band")
+    var recievername = reciever.profile.bandName;
+  else
+    var recievername = reciever.username;
+
+if(sender.profile.type === "band")
+    var sendername = sender.profile.bandName;
+  else
+    var sendername = sender.username;
+ var myobj = {"senderId" : Meteor.userId() , "recieverId": this._id, "timeStamp" : timeStamp, "content" : chattext , "status" : 'pending' };
+ var myobj2 = {"senderId" : Meteor.userId() ,"senderName":  sendername , "recieverId": this._id, "recieverName": recievername  };
+ Meteor.call('sendMessage', myobj, function(err, result){
+ if (result)
+ {
+       $("#sendmessagepopupbg").removeClass('zigmaIn').fadeOut("slow");
+       $(".sendmessagecontent").val('');
+       $("#sendmessagepopup").removeClass('zigmaIn').fadeOut("slow");
+       $(".validmessage").html("");
+ 
+  $('.chat').scrollTop($('.chat')[0].scrollHeight);
+  $(".sendmessagecontent").val('');
+  if(sender.profile.hasOwnProperty('friends'))
+  {
+    if(sender.profile.friends.length > 0)
+    {
+    for (var i = 0 ; i < sender.profile.friends.length; i++) {
+      if(sender.profile.friends[i].id === reciever._id )
+      {
+      i = sender.profile.friends.length + 10;
+      }
+      if((sender.profile.friends[i].id !== reciever._id)  && (i === (sender.profile.friends.length -1)) )
+      {
+        Meteor.call('addfriend', myobj2);
+      }
+    };
+  }
+  if(sender.profile.friends.length === 0)
+  {
+    Meteor.call('addfriend', myobj2);
+  }
+  }
+  else
+    {     Meteor.call('addfriend', myobj2);
+    }
+ //hide the send message popup   
+ }
+  }); 
+}
+}
+ else
+ {
+  $(".validmessage").html("empty message");
+ }
+  },
+  'click #event_regionname':function(e, t)
+{
+  var postecode =""; postecode = $('#event_postcode').val();
+  //alert('event_regionname click '  + postecode);
+    if(postecode !== undefined &&  postecode !== "" /*&& postecode.length === 6*/) {
+     Meteor.call('getplace', postecode ,  function(err, result){
+      if(err) {
+            $('#emptyeventpostecodeerr').html('postcode not covered'); $('#emptyeventpostecodeerr').show();
+                myobj = {"id": Meteor.userId(), "postecode": "" +$('#event_postcode').val()+""   };
+              //  Meteor.call('savepostecode', myobj);
+              }
+      else{
+       var addressesRow = [] ; var values = [];
+       for (var i = 0 ; i <result.Addresses.length ; i++) {
+       addressesRow =  result.Addresses[i].split(",");
+       $('.eventregionnameedit #event_regionname').val(addressesRow[addressesRow.length - 1]);
+       $('#event_regionname').val(addressesRow[addressesRow.length - 1]);
+
+      $(' #event_cityname').val(addressesRow[addressesRow.length - 2]);
+      $('.eventcitynameedit #event_cityname').val(addressesRow[addressesRow.length - 2]);
+
+       $('#event_address').html(addressesRow[0]);
+       //alert(addressesRow[0]);
+       $('.addresseventedit input').val(addressesRow[0]);
+
+       $('.postcodeevent .zonecodes').empty();
+       $('.addresseventedit ul').empty();
+
+       for (var j = ( addressesRow.length - 3 ); j >= 0; j--)
+        {
+          if(addressesRow[j].length > 6)
+          {
+            values.push(addressesRow[j]);
+              $('.postcodeevent .zonecodes').append("<li><span class='suggest-name'>" + values[i] + "</span>");//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+              $('.postcodeevent ul li span').eq(0).css({'text-decoration': 'underline'});
+
+
+              $('.addresseventedit ul').append("<li><span class='suggest-name'>" + values[i] + "</span>");//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+              $('.addresseventedit ul li span').eq(0).css({'text-decoration': 'underline'});
+
+        }; };
+    }
+    var postecode  = t.find("#event_postcode").value;
+    if( (postecode !== "") && ( postecode !== null) && (postecode !== undefined)  )
+          { myobj = {"id": Meteor.userId(), "postecode": "" +postecode+""   }; // Meteor.call('savepostecode', myobj);     
+          } }
+  Session.set("alladresses", values); 
+    $('#event_address').val(values[0]);
+     $('#event_address').html(values[0]);
+});
+}
+}
+, 
+  'keyup #event_address': function(e, t ){
+    values = Session.get("alladresses");
+   search = $('#event_address').val();
+// Search regular expression
+  // Clear the ul
+  $('.addressnameevent .zonecodes').empty();
+for(var i = 0 ; i < values.length; i++){
+  //$("#uladdress").append("<li><span> "+ values[i]+" </span>");
+  if(values[i].match(search)){
+//alert('much ... values i ' + values[i] + "search input " + search);
+    $('.addressnameevent .zonecodes').append("<li><span class='suggest-name'>" + values[i] + "</span>");//<span class='suggest-description'>" + data[i].description + "</span></li>"));
+    $('.addressnameevent .zonecodes li span').eq(0).css({'text-decoration': 'underline'});
+  }
+}
+$(".addressnameevent .zonecodes").show();
+}
+,
+
+'click .savebooking': function(e, t)
+{
+var Currentuser =  Users.findOne({"_id": Meteor.userId() },  { fields: { username: 1 }});
+var band = Users.findOne({"_id": this._id}, {"profile" : 1 } );
+var eventname = t.find("#event_name").value;
+var postcode = t.find("#event_postcode").value;
+var eventregion = t.find("#event_regionname").value;
+var eventcity = t.find("#event_cityname").value;
+var eventaddress = t.find("#event_address").value;
+var eventvenue = t.find("#event_venue").value;
+var startdate = t.find("#event_startdate").value; 
+var enddate  = t.find("#event_enddate").value;
+var postcode = t.find("#event_postcode").value;
+var verifeventname = false;
+var verifeventstart = false;
+var verifeventend = false;
+var verifeventcity = false;
+var verifeventregion = false;
+var verifeventaddress = false;
+var verifeventvenue = false;
+var verifeventbuilding = false;
+var verifeventpostcode = false;
+if(startdate.indexOf('PM'))
+     {
+       time = ""+ (parseInt(startdate.substr(11,2)) +12)+"";
+      if(time ==="24")
+        time ="00";  
+     }
+     else
+     {
+       time = ""+ startdate.substr(11,2) +"";
+      
+     }
+  sdate = startdate.substr(0,10) + "T"+time+startdate.substr(13,3);//21:00:00";//+time+startdate.substr(13,3);
+     //   alert(sdate);
+     
+     if(enddate.indexOf('PM'))
+     {
+       time = ""+ (parseInt(enddate.substr(11,2)) +12)+"";
+      if(time ==="24")
+        time ="00";
+     }
+     else
+     {
+       time = ""+ enddate.substr(11,2) +"";
+     }
+     edate = enddate.substr(0,10) + "T"+time+enddate.substr(13,3);//21:00:00";//+time+startdate.substr(13,3);
+
+if(eventvenue === "" || eventvenue === undefined || eventvenue ==='venue name')
+{
+  verifeventvenue = true;
+  $("#eventerr").html("empty venue");
+  $(".valideventvenue").addClass('glyphicon-asterisk');
+}
+if(eventaddress === "" || eventaddress === undefined || eventaddress ==='address')
+{
+  verifeventaddress = true;
+  $("#eventerr").html("empty address");
+  $(".valideventaddress").addClass('glyphicon-asterisk');
+}
+
+if(eventcity === "" || eventcity === undefined || eventcity ==='city name')
+{
+  $("#eventerr").html("empty city name");
+  $(".valideventcity").addClass('glyphicon-asterisk');
+  verifeventcity = true;
+}
+if(eventregion === "" || eventregion === undefined || eventregion ==='region name')
+{
+  $("#eventerr").html("empty region name");
+  $(".valideventregion").addClass('glyphicon-asterisk');
+  verifeventregion = true;
+}
+if(postcode === "" || postcode === undefined || postcode ==='postcode')
+{
+  $("#eventerr").html("empty postcode");
+  $(".valideventpostcode").addClass('glyphicon-asterisk');
+  verifeventpostcode =true;
+}
+if(enddate === "DD-MM-YYYY HH:MM" )
+{
+  var verifeventend = false;
+  $("#eventerr").html("empty end date");
+  $(".valideventenddate").addClass('glyphicon-asterisk');
+}
+if(startdate === "DD-MM-YYYY HH:MM" )
+{
+  var verifeventstart = true;
+  $("#eventerr").html("empty start date");
+  $(".valideventstart").addClass('glyphicon-asterisk');
+}
+
+if(eventname === "" || eventname === undefined || eventname === "event name")
+{
+  $("#eventerr").html("empty event name");
+  $(".valideventname").addClass('glyphicon-asterisk');
+  verifeventname = true;
+}
+
+        if(!verifeventname  && !verifeventstart && !verifeventend && !verifeventcity && !verifeventregion && !verifeventaddress && !verifeventvenue && !verifeventbuilding && !verifeventpostcode )
+        {
+          myobj = { "title" : eventname, "type" : "private", "start" : sdate, "end" : edate , "ownerId": Meteor.userId(), "bandId": band._id, "postcode": postcode , "cityname" : eventcity, "regionname": eventregion , "address": eventaddress, "buildingname" : eventvenue };
+         // Meteor.call('addEvent', myobj, function(err, result){ 
+           $("#addeventbg").removeClass('zigmaIn').fadeOut("slow");
+           $("#event_name").val("event name");
+           $("#event_startdate").val("DD-MM-YYYY HH:MM");
+           $("#event_enddate").val("DD-MM-YYYY HH:MM");
+             $("#event_postcode").val('postcode');
+             $("#event_cityname").val('city name');
+             $("#event_regionname").val('region name');
+             $(".zonecodes").hide();
+             $("#event_address").val('address');
+             $("#event_venue").val('venue name');
+             $(".valideventname").removeClass('glyphicon-asterisk');
+             $(".valideventstart").removeClass('glyphicon-asterisk');
+             $(".valideventenddate").removeClass('glyphicon-asterisk');
+             $(".valideventpostcode").removeClass('glyphicon-asterisk');
+             $(".valideventregion").removeClass('glyphicon-asterisk');
+             $(".valideventcity").removeClass('glyphicon-asterisk');
+             $(".valideventaddress").removeClass('glyphicon-asterisk');
+             $(".valideventvenue").removeClass('glyphicon-asterisk');
+             $("#eventerr").html("");
+             $("#popupevent").removeClass('zigmaIn').fadeOut("slow");
+             $("#addeventbg").removeClass('zigmaIn').fadeOut("slow");
+             var timeStamp = Math.floor(Date.now()); 
+             var myarg2 = { "ownerId": Currentuser._id,
+             "ownerName": Currentuser.username,
+             "recieverId": band._id,
+             "recieverName": band.username,
+             "time": timeStamp,
+             "typ": "Booking Request" , 
+             "status" : "pending",
+             "viewed" : false };
+       // Meteor.call('addNotification', myarg2);
+        StripeCheckout.open({
+        key: 'pk_test_ttDtWgEzdTLxocVFZR64GmIh',
+        image:'images/logo_300_png.png',
+        amount : parseInt(band.profile.salary)*100, // this is equivalent to $50
+        name: 'Payment Process',
+        description: 'Salary ($'+parseInt(band.profile.salary)+')',
+        panelLabel: 'Pay now',
+        token: function(res) {
+          stripeToken = res.id;
+         var  amount = parseInt(band.profile.salary)*100;
+            alert(res.id +' '+ res.card.name);//+ ''+res.source.name);
+           console.log('res \n');
+          console.log(res);
+          console.log('res');
+          var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#paymentpopup").height();
+    var popupWidth = $("#paymentpopup").width();
+    // Centering
+    $("#paymentpopup").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    //$(".currentsonname").html(mysongname);
+    //$('#song_name').val(mysongname);
+    // Aligning bg
+    $("#paymentpopupbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#paymentpopupbg").css({"opacity": "0.7"});
+      $("#paymentpopupbg").fadeIn("slow");
+      $("#paymentpopup").addClass('zigmaIn').fadeIn("slow");
+      $("#paymentpopup p.reciept").text('your reciept id :'+ res.id);
+      $("#paymentpopup p.rcptmail").text('We sent it for you on :'+ res.card.name);
+
+             var mystripeToken = {'stripeToken': stripeToken, 'amount': amount}
+          Meteor.call('chargeCard', mystripeToken,  function(err, result)
+            {
+              if(err)
+              {
+                console.log('threr is an error :');
+                console.log(err);
+              }
+              if(result)
+              {
+              console.log('res is :\n');
+             // alert('thanks for your trust thisis your reciept : '+stripeToken+' we sent it for you by mail also');
+             alert(stripeToken+' we sent it for you by mail also');
+           
+            console.log('charge : \n');
+            console.log(result.amount);
+           }
+            /*var myarg2 = { "ownerId": Currentuser._id,
+             "ownermail": res.mail,
+             "amount": res.mail,
+             "bandId": band._id,
+             "bandName": band.username,
+             "time": timeStamp,
+             "type": "booking payment" };*/
+            });
+        }
+      });
+           //});
+    
+}
+},
   'click .addwishlist' :function(event, t)
   {
     var myobj = {};
@@ -1715,6 +2163,83 @@ Template.seeprofile.events({
         //  t.find(".inputmemebername").value = "";
         //  t.find(".memeberoleinput").value = "";
   },
+  'click .messagessicon': function(e, t)
+  {
+    //alert('message popup')
+    
+   var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#sendmessagepopup").height();
+    var popupWidth = $("#sendmessagepopup").width();
+    // Centering
+    $("#sendmessagepopup").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    // Aligning bg
+      $("#sendmessagepopupbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#sendmessagepopupbg").css({"opacity": "0.7"});
+      $("#sendmessagepopupbg").fadeIn("slow");
+      $("#sendmessagepopup").addClass('zigmaIn').fadeIn("slow");
+  },
+  'click .bookband' :function(e, t)
+  {
+    e.preventDefault();
+    //Aligning our box in the middle
+   /* var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#bookingdetails").height();
+    var popupWidth = $("#bookingdetails").width();
+    // Centering
+    $("#bookingdetails").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    // Aligning bg
+    $("#bookingdetailsbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#bookingdetailsbg").css({"opacity": "0.7"});
+      $("#bookingdetailsbg").fadeIn("slow");
+      $("#bookingdetails").addClass('zigmaIn').fadeIn("slow");
+      */
+      $("#popupevent .bookingtype").hide();
+    var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupevent").height();
+    var popupWidth = $("#popupevent").width();
+    // Centering
+    $("#popupevent").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    // Aligning bg
+    $("#addeventbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#addeventbg").css({"opacity": "0.7"});
+      $("#addeventbg").fadeIn("slow");
+      $("#popupevent").addClass('zigmaIn').fadeIn("slow");
+      
+      /*
+      StripeCheckout.open({
+        key: 'pk_test_ttDtWgEzdTLxocVFZR64GmIh',
+        image:'images/logo_300_png.png',
+        amount: 5000, // this is equivalent to $50
+        name: 'Giggorilla payment',
+        description: 'Salary ($50.00)',
+        panelLabel: 'Pay the booked band',
+        token: function(res) {
+          stripeToken = res.id;
+          console.info(res);
+          alert('res.id : ' + res.id)
+          Meteor.call('chargeCard', stripeToken, function(err, res)
+            {
+              console.log('res is ');
+              console.log(stripeToken);
+            });
+        }
+      });*/
+  },
   'click .seegallery': function(e, t)
   {
 if ($("#tp-grid")[0]) {
@@ -1729,19 +2254,19 @@ if ($("#tp-grid")[0]) {
     pileAngles : 0,
     onLoad : function() {
       $('.addAlbum').hide();
-      $('.removeAlbum').css('visibility', 'hidden');
+      $('.removeAlbum').hide();
       $loader.remove();
               },
     onBeforeOpen : function( pileName ) {
       $name.html( pileName );
       $('.removeAlbum').hide();
       $('.addAlbum').hide();
-      $('.removeAlbum').css('visibility', 'hidden');
+      //$('.removeAlbum').css('visibility', 'hidden');
                       },
     onAfterOpen : function( pileName ) {
       showDelte = 1;
       $('.addAlbum').hide();
-      $('.removeAlbum').css('visibility', 'hidden');
+     // $('.removeAlbum').css('visibility', 'hidden');
       $('.removeAlbum').hide();
       $('.def-block').on('mouseenter', 'ul.tp-grid li ', function(){
         if(showDelte === 1)
@@ -1749,7 +2274,7 @@ if ($("#tp-grid")[0]) {
           $(this).find('> div.removeDiv').show();
           }
       }).on('mouseleave', 'ul.tp-grid li', function () {
-        $(".removeDiv").hide();
+        //$(".removeDiv").hide();
                               });
       $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
       $close.show();
@@ -1757,9 +2282,10 @@ if ($("#tp-grid")[0]) {
     });
     $close.on( 'click', function() {
       $('.addAlbum').hide();
+      $(".removeAlbum").show();
       $(this).hide();
       $("a[rel^='prettyPhoto']").prettyPhoto().unbind();
-      $(".removeDiv").hide();
+      //$(".removeDiv").hide();
       $name.empty().html('Photo Gallery');
       stapel.closePile();
       stapel = $grid.stapel( {
@@ -1781,10 +2307,10 @@ if ($("#tp-grid")[0]) {
     {
       if(showDelte === 1)
       {
-      $(this).find('> div.removeDiv').show();
+     // $(this).find('> div.removeDiv').show();
       }
     }).on('mouseleave', 'ul.tp-grid li', function () {
-      $(".removeDiv").hide();
+      //$(".removeDiv").hide();
 });
         $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
         $close.show();
@@ -1836,6 +2362,98 @@ return "";
 },
 });
 Template.seeprofile.helpers({ 
+   mycalender: function()
+  {
+    var allevents = [{id: 100, title:'not available', start: '2016-10-05', end: '2016-10-12', textColor: 'black'},
+                     {id: 200, title:'not available2', start: '2016-10-05', end: '2016-10-15', textColor: 'black'}];
+    //alert('my calender from see calender ...');
+     Session.set('eventSrcs', []);
+    var evnts = Calendars.find({"bandId": this._id}, {sort:{ 'start' : 1 }}).fetch();
+    console.log('the band events :');
+    console.log(evnts);
+    var currentdate = "";
+  myDate = new Date(); 
+  myYear = myDate.getFullYear();
+  var currentdate  = '' + myYear;
+  myMonth = ( myDate.getMonth() + 1 );
+  if (myMonth < 10)
+    currentdate = currentdate  + '-0' +myMonth;
+  else 
+   currentdate = currentdate  + '-' +myMonth;
+   myDay = myDate.getDate();
+  if (myDay < 10)
+    currentdate = currentdate  + '-0' +myDay;
+  else
+    currentdate = currentdate  + '-' +myDay;
+               Session.set('eventSrcs', evnts);             
+               if(evnts)
+    {
+      if(evnts.length > 0)
+      {
+        allevents = [];
+        evnts.forEach(function(event)
+        {
+          
+          //alert(event.title)
+         allevents.push({'title' :'unavailable', 'borderColor':'gray', 'start': event.start, 'end': event.end, 'textColor':'black',backgroundColor:'gray'});
+        });
+     Session.set('eventSrcs', allevents);
+                 setTimeout(function(){
+        var j = 0; var i = 0;
+              $("#seecalendar").fullCalendar({
+                header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month'
+      },
+      defaultDate: currentdate,
+      navLinks: true, // can click day/week names to navigate views
+      selectable: false,
+      allDay : true,
+      droppable: false,
+      selectHelper: true ,
+      dayRender : function(date, cell)
+      {
+       j= j+ 1;
+        mydate = date.format('YYYY-MM-DD');
+          mydate = date.format('YYYY-MM-DD');
+          for ( v = 0 ; v < allevents.length ; v++) { 
+            if(mydate === allevents[v].start.slice(0,10))// || mydate === allevents[v].end.slice(0,10) )
+        {
+          var begindate = new Date(''+allevents[v].start.slice(0,10)+'');
+          moment(begindate).format('YYYY-MM-DD');
+          var enddate = new Date(''+allevents[v].end.slice(0,10)+'');
+          moment(enddate).format('YYYY-MM-DD');
+          if( enddate > begindate )
+          {
+            var k = true; 
+            while(k === true)
+            {
+            begindate.setHours(begindate.getHours() + 24);
+            var momentdate = moment(begindate).format('YYYY-MM-DD');
+            $("td[data-date='"+momentdate+"']").addClass('unavailable');
+            if(begindate >= enddate)
+            {
+              k = false;
+            }     
+           }
+          }
+         $("td[data-date='"+mydate+"']").addClass('unavailable');
+         v = allevents.length -1;
+        }
+        };
+      },
+      
+      editable: false,
+      eventLimit: true, 
+      events   : allevents /*Session.get('eventSrcs')*/});
+        }, 100); 
+          return true;
+          }
+          else
+          {return false} 
+}
+},
 seeallsongs : function()
 {
   var band = Users.findOne({"_id": this._id});
@@ -1863,6 +2481,27 @@ else {
 return Session.get("myPlaylist")
 
 }
+},
+myratings: function()
+{
+  //alert('myratings....');
+var length = 0;
+var total = 0;
+var band = Users.findOne({"_id": this._id});
+var myratings = Rating.find({"bandId": this._id}).fetch();
+totalRatings = myratings.forEach(function(rating)
+  {
+    length ++;
+   total = total + rating.ratingvalue;
+  });
+if(length > 0 && total > 0)
+var myratings = total / length;
+$(".ratingdiv p i").each(function(i)
+      {
+       if(i+1 <= myratings)
+        $(this).css({'color' : '#ffb800'});
+      });  
+Session.set('myratings', myratings);
 },
 detectRequests : function(id)
 {
@@ -1957,8 +2596,83 @@ detectRequests : function(id)
 
       });
 Template.homeBands.events({
-'click .searchlabel':function()
+  'click .bandspaginationitem' : function(e, t)
+  {
+    var counter = parseInt($(e.currentTarget).attr('id')  );
+    if(counter === 1) 
+    {
+
+  Session.set('currentbandspage', counter);
+  Session.set('bandskip', 0);
+       counter -- ;  
+    }
+   
+    else
+      {
+        Session.set('currentbandspage', counter);
+        counter = (counter -  1) * 3;
+       }
+    Session.set("bandskip", counter);
+  },
+  'keyup .suggest-bandtlocation': function(e, t){
+    $('.locations').empty();
+    $('.locations').show();
+  var currenttext = t.find('.suggest-bandtlocation').value;
+  currenttext = currenttext.toLowerCase();
+$('.locations').empty();
+for (var i =  0 ; i < Session.get('locations').length; i++) {
+  var city = Session.get('locations')[i].cityname.toLowerCase();
+  if(city.match(currenttext )) {
+        $('.locations').append($("<li><span class='suggest-name'>" + city + "</span></li>"));
+        $('.locations li span').eq(0).css({'text-decoration': 'underline'}); 
+  }
+}
+$('.locations').show();
+},
+'click .locations > li': function(e , t){ 
+    t.find('.suggest-bandtlocation').value = $(e.currentTarget).text();  
+  $(".locations").hide();
+},
+  
+'click .searchlabel':function(e , t)
 {
+   var location = t.find('.suggest-bandtlocation').value;  
+   console.log('location city value : '+ location);
+    if ((location.length > 0 )  && (location !== '' ))
+       Session.set('cityname', t.find('.suggest-bandtlocation').value);
+    else
+        Session.set('cityname', undefined);
+var availability =  t.find('.suggest-availability').value; 
+if(availability === null || availability === '' || availability === undefined)
+{
+  Session.set('availability', null);  
+}
+
+else 
+{
+  calendars = null;
+var year = availability.substr(0,4)
+var month =  availability.substr(5,2);
+var day = availability.substr(8,2)
+var startdate = year+'-'+month+'-'+ day  ;
+var enddate = year+'-'+month+'-'+(parseInt(day) + 5 );
+    //console.log('enddate : ' + enddate);
+    //console.log('start : ' + startdate); 
+      var calendars = Calendars.find({$or: [{ "start" : { $lt: startdate },  "end": {$gte: startdate } },{ "start" : { $regex: startdate }}]}).fetch();//$or: [{ "start" : { $lt: startdate },  "end": {$gte: startdate } }, { "start" : { $regex: startdate }}]}).fetch());
+unavailableBands = [];
+   calendars.forEach(function(calendar){
+    if(calendar.bandId != null)
+       unavailableBands.push({'bandId': calendar.bandId});
+    });
+ Session.set('unavailableBands', unavailableBands );
+}       
+//bookedBands =  Calendars.find({"start" : {$gte : Session.get('availability')} }).fetch();
+//var  unavailabilBands =  Calendars.find({$or: [{"start" : { $lt: startdate },  "end": {$gte: startdate } }, { "start" : { $regex: startdate }}]}).fetch();  
+// events =  Calendars.find({$or: [{ "type" : "public", "start" : { $lt: startdate },  "end": {$gte: startdate } }, { "type" : "public", "start" : { $regex: startdate }}]}).fetch();
+ 
+/*var startdate = t.find("#event_startdate").value; 
+sdate = startdate.substr(0,10)*/
+
   //Session.set("salaryasc", -1);
   var value = "";
   value = $('#ex2').slider('getValue').toString();
@@ -1996,26 +2710,172 @@ Session.set("salaryasc", 1);
 },
 });
 Template.homeBands.onRendered(function(){
+Session.set('availability', null);  
 $(".bandtypes").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+$(".locations").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+
 setTimeout(function(){
 $("#ex2").slider({tooltip: 'show'});
 }, 0);
 $("#ex2").show();
 });
+Template.band.helpers({
+background: function(user)
+  {
+     alert(user.username);
+    alert(user.profile.cover)
+    if(user && user.profile)
+    {
+    if(user.profile.hasOwnProperty('cover'))
+      return user.profile.cover;
+    else
+      return '../../images/assets/shop/1.jpg';
+    }
+  }});  
 Template.homeBands.helpers({
+  areArtists: function()
+  {
+    if(Session.get("totalbands") >= 3) 
+      return true;
+    return false;
+  },
+    currentPage: function(){
+    return Session.get('currentbandspage');
+  },
+  bandspaging: function()
+  {
+    var paginationarray = [];
+    console.log(Session.get("totalbands"));
+    if (Session.get("totalbands") >= 3 )
+    {
+     $('.pagesbands').show();
+     var length = Session.get("totalbands") / 3;
+    for (var i = 1 ; i < length + 1 ; i++) 
+    {
+      paginationarray.push({"number": i });
+      //i = i + 5 ;
+    } 
+    }
+    else 
+      {
+        $('.pages').hide();
+      }
+    return paginationarray;
+  },
+/*background: function(user)
+  {
+    alert(user.profile.cover)
+    if(user && user.profile)
+    {
+    if(user.profile.hasOwnProperty('cover'))
+      return user.profile.cover;
+    else
+      return '../../images/assets/shop/1.jpg';
+    }
+  }*/  
+ haslocation: function(user)
+ {
+   if(user != undefined)
+   {
+    if(user.profile !== undefined)
+    {
+      if(user.profile.hasOwnProperty('address'))
+        return true
+    }
+    else
+      return false;
+   }
+ }, 
+locations: function()
+{
+var alllocations = null;
+locations = [];
+   alllocations =  Users.find({}).fetch();//get('locations');
+alllocations.forEach(function (location)
+{
+  if(location.profile.hasOwnProperty('address'))
+  {
+    if(location.profile.address.city !== undefined)
+ locations.push({"cityname" : location.profile.address.city});
+}
+});
+Session.set('locations', locations);
+   return  alllocations;
+ 
+  //var venues = [];
+ /*
+  if(allvenues !== undefined)
+  {
+    if(allvenues.length > 0)
+      {
+        //allvenues.forEach(function(venue)
+        //{
+         // venue._id
+          //alert(event.title)
+        // venues.push({'_id' : venue._id,'eventId': venue.eventId ,'cityname': venue.cityname, 'end': event.end, 'bandId':event.bandId});
+        //});/
+  return allvenues ; 
+   }
+     else
+     {
+
+    return null ;
+     }
+   }
+   else
+   {
+    return null ;
+  }*/
+ // return allvenues;
+  }, 
 artits: function() {
+var bands = null;
 //alert(Session.get("bandtype"));
 var query = { $and : [] };
+var operational = {"profile.oprational" : "yes"};
+query.$and.push(operational);
 var minmaxsalary = { "profile.salary" : {$lt: 5001  , $gte : 0 } };
 var bandtype = {"profile.bandtype" : /./ };
-if(Session.get("bandtype")  !== undefined  )
+var cityname = {"profile.address.city" : /./}
+if(Session.get('availability' !== null))
+{ 
+console.log('search by availability : ' + Session.get('availability'));
+  var startdate = Session.get('availability').getFullYear()+'-'+Session.get('availability').getMonth()+'-'+Session.get('availability').getDate();
+  //  eventsList = [];
+//     events =  Calendars.find({"start" : {$gte : startdate} }).fetch();
+
+}
+else 
+{ 
+console.log('search by availability : ' + Session.get('availability'));
+  //  eventsList = [];
+}
+if(Session.get("bandtype")  !== undefined    )
 {
   //alert("undefined session");
   //bandtype = {"profile.bandtype" : /./ }
+   console.log('no band type specified ....');
     bandtype = {"profile.bandtype" : { $regex: "" + Session.get("bandtype")+ "" } };
     query.$and.push(bandtype);
 // var bandtype = { "profile.bandtype" : Session.get("bandtype") } ;
 //query = query + '"profile.bandtype": "'+Session.get("bandtype")+'"' ; //+Session.get("bandtype")+"  }";
+}
+else
+{
+    console.log('no band type specified ....');
+    //bandtype = {"profile.bandtype" : { $regex: "" + Session.get("bandtype")+ "" } };
+    query.$and.slice(bandtype);
+}
+if( Session.get('cityname') !== undefined  )
+{
+  console.log('cityname :', Session.get('cityname') );
+    cityname = {"profile.address.city" : { $regex: new RegExp("^" + Session.get("cityname")+ "", 'i' )} };
+    query.$and.push(cityname);
+}
+else
+{
+  Session.get('cityname')
+   query.$and.slice(cityname);
 }
 if(Session.get("bandnumbers")  !== undefined  )
 {
@@ -2048,6 +2908,9 @@ if(Session.get("salarymin")  !== undefined && Session.get("salarymax")  !== unde
   minmaxsalary = { "profile.salary" : { $lt: parseInt(Session.get("salarymax")) , $gte : parseInt(Session.get("salarymin"))  } };
 }
 query.$and.push(minmaxsalary);
+if(Session.get("salarymin")  === undefined && Session.get("salarymax")  === undefined )
+{query.$and.slice(minmaxsalary);}
+
  var type = {"profile.type" : "band"};
  query.$and.push(type);
 //query = {$and : [minmaxsalary /*, bandtype*/ ]} ;
@@ -2071,9 +2934,56 @@ var result =  Users.find(
                      //{"profile.salary" : 300}
                    // {"profile.bandtype" : /jazz/}
                    query
-                     , { sort : {"profile.salary" : parseInt(Session.get("salaryasc")) } } );
+                     , { sort : {"profile.salary" : parseInt(Session.get("salaryasc")) } , limit : 3 , skip: Session.get('bandskip')} );
                  // ).sort({"profile.salary" : -1});
-
+//var locations = [];
+//if(Session.get('availability') !== null)
+ //{
+  var newresult = Users.find(query);
+   Session.set('totalbands', newresult.count());
+   console.log(Session.get('totalbands'));
+if (result.count() > 0 )
+{
+ // Session.set("totalbands", result.count());
+ console.log(Session.get("totalbands"));
+  $('.emtyresult').hide();
+  if(Session.get('unavailableBands') !== null)
+   {
+if(( Session.get('unavailableBands') !== undefined )  && ( Session.get('unavailableBands').length > 0 ))
+{
+bands = [];
+result.forEach(function(band){
+  for (var i = 0 ; i < Session.get('unavailableBands').length; i++) {
+    if( Session.get('unavailableBands')[i].bandId === band._id)
+    {
+      console.log('unavailable band ');
+    }
+    else
+    {
+    bands.push({band});
+    return bands;
+    }
+  };
+console.log("forEach band id : " + band._id);
+});
+}
+else
+{
+  bands = [];
+result.forEach(function(band){
+  bands.push({'band': band });
+});
+}
+  return bands ;
+  }
+  else
+  {
+   result.forEach(function(band){
+  bands.push({band});
+  return bands ;
+}); 
+  }
+}
 if (result.count() > 0 )
 {
   $('.emtyresult').hide();
@@ -2081,6 +2991,7 @@ if (result.count() > 0 )
   }
 if(result.count() === 0 )
 {
+
   $('.emtyresult').show();
   return false;
 }
@@ -2096,7 +3007,194 @@ if(result.count() === 0 )
 });
 Template.imageUploader.onRendered(function(){this.subscribe("images"); });
 
-Template.imageUploader.events({'click .uploading': function(event, template) {
+Template.imageUploader.events({
+'change .ddodo':function(event, t)
+{
+if(t.find('.uploadFile').files[0].name.indexOf(".jpg") <= 0 )//0 && e.target.result.indexOf(".jpeg") === 0 && e.target.result.indexOf(".png")) 
+ {
+  alert('file invalid');
+  $("#errsongname").html("invalid file");
+  $("#errsongname").show();
+ }
+ else
+ {
+  alert('valid File');
+  function dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--)
+    {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
+  }
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    // get loaded data and render thumbnail.
+    document.getElementById("image").src = e.target.result;
+    alert(e.target.result);
+    var loadedImage = document.getElementById("image");//new Image();
+    loadedImage.onload = function()
+    {
+      var canvas = document.getElementById("myCanvas");
+      canvas.width =670;
+      canvas.height = 525;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(this, 0, 0 , 670, 525);
+      alert('loading ....');
+      var upload = new Slingshot.Upload("myImageUploads");
+      var timeStamp = Math.floor(Date.now()); 
+      var canv = document.getElementById("myCanvas").toDataURL('image/jpeg', 0.95);
+      var blb = dataURLtoBlob(canv);
+      blb.name=  document.getElementById('uploadFile').files[0].name;
+      alert('filename : ' + blb.name);
+      event.preventDefault();
+      var upload = new Slingshot.Upload("myImageUploads");
+      var timeStamp = Math.floor(Date.now()); 
+      $grid = $( '#tp-grid' );
+      upload.send(blb, function (error, downloadUrl) 
+      {
+        uploader.set();
+        if (error) {
+          $("#processingImage").hide();
+          console.error('Error uploading');
+          alert (error);
+                  }
+        else{
+                // insert the uploaded image url into the database document
+          var foldername = $("#album_name").val();
+          //alert(foldername);
+          if(foldername !== '' &&  foldername !== undefined)
+            {        imageFolder = $("#album_name").val();
+            }
+          else 
+          {
+            //($('.def-block ul.tp-grid').children().length > 1){
+            $grid.children().each(function() {
+            //imageFolder = $(this).attr('id') ;
+            imageFolder = 'chinaTour';         
+            });
+          }    
+         // alert(imageFolder);
+          imageName = document.getElementById('uploadFile').files[0].name;
+          //alert(downloadUrl);
+          var myarg = {"imageurl": downloadUrl,"uploadedBy" : currentUserId,
+          "imageName": imageName, 
+          "imageFolder" : imageFolder,
+          "timeStamp": timeStamp }
+          Meteor.call('addImage',  myarg, function(error, result){
+          if(error)
+          {
+            alert('inable to insert into database ')
+          }
+          else
+          {    
+            /*$("#processingImage").hide();
+            $("#process").hide();
+            $("#processbg").hide();*/
+            Images.insert({
+            imageurl: downloadUrl,
+            imageName: imageName,
+            imageFolder: imageFolder,
+            time: timeStamp,
+            uploadedBy: currentUserId
+            }); 
+            $("#close").click();
+            setTimeout(function(){ 
+              alert('initialise gallery ...');      
+              var $grid = $('#tp-grid'),
+              $name = $('#name'),
+              $close = $('#close'),
+              $loader = $( '<div class="loader"><i></i><i></i><i></i><i></i><i></i><i></i><span>Loading...</span></div>' ).insertBefore( $grid ),
+              stapel = $grid.stapel({
+              randomAngle : false,
+              delay : 100,
+              gutter : 0,
+              pileAngles : 0,
+              onLoad : function() {
+                $('.addAlbum').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+                $('.removeAlbum').show();
+                $loader.remove();
+              },
+              onBeforeOpen : function( pileName ) {
+                $name.html( pileName );
+                $('.removeAlbum').hide();
+                $('.addAlbum').hide();
+                $('.removeDiv').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+              },
+              onAfterOpen : function( pileName ) {
+                $("#addImagediv").show();
+                 $('.testingspan').hide();
+                showDelte = 1;
+                $('.addAlbum').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+                $('.removeAlbum').hide();
+                $('.def-block').on('mouseenter', 'ul.tp-grid li ', function(){
+                  if(showDelte === 1)
+                    {
+                    $(this).find('> div.removeDiv').show();
+                    }
+                }).on('mouseleave', 'ul.tp-grid li', function () {
+                  $(".removeDiv").hide();
+                                        });
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+                $close.show();
+              }
+              });
+              $close.on( 'click', function() {
+                showDelte = 0;
+                //alert('onclose clicked ...');
+                //$('.addAlbum').hide();
+                $("#addImagediv").hide();
+                $(this).hide();
+                $("a[rel^='prettyPhoto']").prettyPhoto().unbind();
+                $(".removeDiv").hide();
+                $name.empty().html('Photo Gallery');
+                stapel.closePile();
+              });
+              if ($("a[rel^='prettyPhoto']")[0]) 
+              {
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+              }
+               
+            },0);
+          }
+        });
+      }
+    });
+    uploader.set(upload);
+  }
+  };
+  }
+  var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupavatar").height();
+    var popupWidth = $("#popupavatar").width();
+    // Centering
+    $("#popupavatar").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    var mysongname = file.name; 
+    $(".currentsonname").html(mysongname);
+    var mysongname =  mysongname.slice(0, mysongname.lastIndexOf(".mp3"));
+    $('#song_name').val(mysongname);
+    // Aligning bg
+    $("#addavatarbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#addavatarbg").css({"opacity": "1"});
+      $("#addavatarbg").fadeIn("slow");
+      $("#popupavatar").addClass('zigmaIn').fadeIn("slow");
+    
+    // read the image file as a data URL.
+    reader.readAsDataURL(document.getElementById('uploadFile').files[0]);
+    alert('reading file as dataurl ....');
+    event.preventDefault();
+       
+},
+  'click .uploading': function(event, template) {
   function dataURLtoBlob(dataurl) {
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -2118,6 +3216,7 @@ blb.name=  document.getElementById('uploadFile').files[0].name;
           $grid = $( '#tp-grid' );
          upload.send(blb, function (error, downloadUrl) {
              uploader.set();
+             console.log('uploader is : ' + uploader.set());
              if (error) {
               $("#processingImage").hide();
                console.error('Error uploading');
@@ -2193,7 +3292,9 @@ Template.managebandInformations.onCreated( function(){
   this.subscribe("images");
   this.subscribe("USERS");});
 Template.homeProfile.onRendered( function(){
-   $(".zonecodes").niceScroll({zindex:9999999999999999,cursorborder:"0px solid gray",cursorborderradius:"2px",cursorcolor:"#ff6600",cursoropacitymin:.1}); 
+  this.subscribe("images");
+ $("#messagesWrapper #ullist").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
+ $(".zonecodes").niceScroll({zindex:9999999999999999,cursorborder:"0px solid gray",cursorborderradius:"2px",cursorcolor:"#ff6600",cursoropacitymin:.1}); 
   /**/
       //player = new YT.Player("player", {height: "400", width: "600", videoId:  Session.get("videoId")/*"LdH1hSWGFGU"*/, 
  
@@ -2308,6 +3409,8 @@ if ($("#tp-grid")[0]) {
 
   if($('.mysongsplayer .music-player-list').children().length > 0)
     $('.mysongsplayer .music-player-list').empty();
+  if( $('ul#tp-grid').children('li').length > 0)
+    $('ul#tp-grid li').remove();
    // {
  //     alert('remove one ...');
     //  $('.mysongsplayer .music-player-list').find('> .ttw-music-player:not(:last)').remove();
@@ -2609,6 +3712,11 @@ Template.notification.helpers({
       return false;
     }
   },
+  representrequest: function(type)
+  {
+    if(type === 'representation Request')
+      return true;
+  },
   formatdate: function(timeStamp)
   {
    myDate = new Date(timeStamp); 
@@ -2634,6 +3742,95 @@ Template.notification.helpers({
     } 
     else {return false}
     
+  }
+});
+Template.message.events({
+  'click .message' :function(event, template)
+  { 
+    var messageid = $(event.currentTarget).attr('id');
+    Meteor.call('updatemessageStatus', messageid);
+   var senderid = $(event.currentTarget).find('> .notcontent').attr('id');
+  $('.full .chat-box').children().each(function (i) {
+    var friendmessages = $('.full .chat-box').find('li').eq(i);
+    if(friendmessages.attr('id') === senderid)
+    {
+       friendmessages.trigger('click');
+       return ;
+    } 
+     });
+  }
+});
+
+Template.message.helpers({
+  compareStatus: function(status, recieverId , notificationId, currentUserId){ 
+    if((recieverId ==  currentUserId ) && (status == "pending") ) 
+      { 
+        return true ;
+      }
+    else {
+      return false;
+    }
+  },
+  formatdate: function(timeStamp)
+  {
+   myDate = new Date(timeStamp); 
+   myYear = myDate.getFullYear();
+   myMonth = ( myDate.getMonth() + 1 );
+   myDay = myDate.getDate();
+   return "" + myDay+ "-" +myMonth + "-" +myYear+"";
+  },
+  sendername: function(id)
+  {
+    user =  Users.findOne({"_id" : id});
+    if( user.profile.hasOwnProperty('bandName') )
+        {
+          return user.profile.bandName; 
+        }
+        else {
+          return user.username; 
+
+        }
+  },
+  bitofcontent: function(message)
+  {
+    var bitofstring = '';
+    var newmessage = '';
+    if(message.indexOf(' ') === -1 )
+    { 
+      if(message.length <= 20)
+      {
+        return message;
+      }
+      else
+      {
+      return message.slice(0, 20) +' ...';
+    }
+    }
+    else{
+      if(message.length <= 20)
+         {
+          return  message;
+         }
+         else  {         
+     bitofstring = message.slice(0, message.indexOf(' ') + 1);
+     newmessage = message.slice(message.indexOf(' ') + 1 , message.length);
+    while (bitofstring.length <= 20 ) //  || (bitofstring.length >= message.length ))
+    {
+      bitofstring = bitofstring + newmessage.slice(0, newmessage.indexOf(' ') + 1);
+      newmessage = newmessage.slice(newmessage.indexOf(' ') +1, newmessage.length);
+       if(newmessage.indexOf(' ') === -1 )
+       {
+         bitofstring = bitofstring + newmessage;
+         newmessage = '';
+         if(bitofstring.length > 20)
+          bitofstring = bitofstring.slice(0, 20) +' ...';  
+       return  bitofstring;
+       }
+       }
+    return  bitofstring;
+  }
+   
+     }
   }
 });
 Template.manageuserInformations.helpers({
@@ -3623,12 +4820,19 @@ Meteor.call('addAgent' , agent);
  
 });
 Template.homeProfile.onCreated(function(){
+  Session.set('myratings', 0);
+  Meteor.subscribe("rating"); 
+  Meteor.subscribe("docs"); 
   Meteor.subscribe("USERS");
   Meteor.subscribe('Calendars');
   Session.setDefault("videoId", "LdH1hSWGFGU");
   Session.set("myPlaylist", null);
+  Session.set("myGallery", null);
+  Session.set('pileName', null);
   Meteor.subscribe("songs");
   Meteor.subscribe("images"); 
+  Meteor.subscribe("docs"); 
+
 /*  var rached = "rach";
  rached = Users.find({"_id":  Meteor.userId() }, { fields: { profile : 1} }).fetch();
                   console.log(rached);
@@ -3643,7 +4847,595 @@ Template.homeProfile.onCreated(function(){
     }
 
 );
-Template.homeProfile.events({
+Template.homeProfile.events({ 
+'click #popupdocreadclose': function(e, t)
+{
+  $("#adddocreadbg").fadeOut("slow");
+      $("#popupdocread").fadeOut("slow");
+}, 
+'click .docnameurl': function(e, t)
+{
+//var url = $('.readdocument').attr('id');
+window.open(Session.get('docurl')); 
+}, 
+'click .readdocument': function(e, t)
+{
+  Session.set('docurl', $(e.currentTarget).attr('id'));
+  var gviewurl = "https://docs.google.com/gview?url="+Session.get('docurl')+"&embedded=true";
+  $('.doc').attr('src',gviewurl);
+  //$('.doc').attr('src',Session.get('docurl'));
+  var url = $(e.currentTarget).attr('id').slice(0, $(e.currentTarget).attr('id').lastIndexOf('.'));
+
+  //window.open(url);
+  $('.docnameurl').text(url);
+    var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupdocread").height();
+    var popupWidth = $("#popupdocread").width();
+    // Centering
+    $("#popupdocread").css({
+      "top": 10,
+      "left": 10
+    });
+    // Aligning bg
+    $("#adddocreadbg").css({"height": windowHeight});
+    var pourcent = (windowHeight*70)/100;
+    $(".doc").css({"height":pourcent });
+  
+    // Pop up the div and Bg
+      $("#adddocreadbg").css({"opacity": "0.7"});
+      $("#adddocreadbg").fadeIn("slow");
+      $("#popupdocread").fadeIn("slow");
+},  
+'change .uploaddoc': function(e, t)
+{
+  var file = null;
+  var myfile = {};
+  e.stopImmediatePropagation();
+  e.preventDefault();
+    var reader = null;
+file = t.find('.uploaddoc').files[0];
+myfile.name  = file.name;
+if(file.name.indexOf(".doc") > 0 || file.name.indexOf(".docx") > 0 || file.name.indexOf(".pdf") > 0) 
+ {
+ reader = new FileReader();
+  myfile.name = t.find('.uploaddoc').files[0].name;
+var upload = new Slingshot.Upload("myDocUploads");
+             var timeStamp = Math.floor(Date.now());               
+         upload.send(document.getElementById('uploaddocfile').files[0], function (error, downloadUrl) {
+             uploader.set();
+             console.log("uploader is : " + uploader.get());
+             if (error) 
+              {
+               console.error('Error uploading');
+               alert (error);
+              }
+             else
+             {
+              console.log('uploaded file available here: '+downloadUrl);
+              var obj = {docname: document.getElementById('uploaddocfile').files[0].name, timeStamp :timeStamp, uploadedBy: currentUserId, url: downloadUrl };
+              Meteor.call('addDocument', obj, function(error, result){ });            
+             }
+});
+         uploader.set(upload);
+         console.log("uploader is : " + uploader.get());
+         //return false;
+reader.readAsDataURL(file);
+} 
+else
+{
+$("#errdocname").html("only DOC & PDF supported");
+$("#errdocname").show();
+
+}
+    var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupdoc").height();
+    var popupWidth = $("#popupdoc").width();
+    // Centering
+    $("#popupdoc").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    $(".currentdocname").html(myfile.name);
+    // Aligning bg
+    $("#adddocbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#adddocbg").css({"opacity": "0.7"});
+      $("#adddocbg").fadeIn("slow");
+      $("#popupdoc").addClass('zigmaIn').fadeIn("slow");
+},
+'click #album_name':function(e, t)
+{
+$("#erralbumname").html("");
+$(".validatealbumname").removeClass('glyphicon-asterisk');
+},
+'click #album_add': function(e, t)
+{
+ var albumname = t.find("#album_name").value;
+ if(albumname === "" || albumname === undefined || albumname === "albumname")
+{
+  $("#erralbumname").html("empty album name");
+  $(".validatealbumname").addClass('glyphicon-asterisk');
+}
+else 
+{
+  $(".validatealbumname").removeClass('glyphicon-asterisk');
+  $("#erralbumname").html("");
+  $("#addalbumbg").fadeOut("slow");
+  $("#popupalbum").removeClass('zigmaIn').fadeOut("slow");   // Aligning bg
+  $(".uploadFile").trigger('click'); 
+}
+},
+'click #popupalbumclose': function(e, t)
+{
+    $("#errsongname").html("");
+    $("#addalbumbg").fadeOut("slow");
+    $("#popupalbum").removeClass('zigmaIn').fadeOut("slow");   // Aligning bg
+},
+'click #addalbumbg': function(e, t)
+{
+    $("#errsongname").html("");
+    $("#addalbumbg").fadeOut("slow");
+    $("#popupalbum").removeClass('zigmaIn').fadeOut("slow");   // Aligning bg
+},
+'click #popupdocclose': function(e, t)
+{
+    $("#errdocname").html("");
+    $("#adddocbg").fadeOut("slow");
+    $("#popupdoc").removeClass('zigmaIn').fadeOut("slow");   // Aligning bg
+},
+'click #adddocbg': function(e, t)
+{
+    $("#errdocname").html("");
+    $("#adddocbg").fadeOut("slow");
+    $("#popupdoc").removeClass('zigmaIn').fadeOut("slow");   // Aligning bg
+},
+'click #album_cancel': function(e, t)
+{
+    $("#errsongname").html("");
+    $("#addalbumbg").fadeOut("slow");
+    $("#popupalbum").removeClass('zigmaIn').fadeOut("slow");   // Aligning bg
+},
+'change .uploadFile':function(event, t)
+{
+  var file = null; 
+  file = t.find('.uploadFile').files[0];
+  file.name = t.find('.uploadFile').files[0].name;
+  if( (t.find('.uploadFile').files[0].name.indexOf(".jpg") <= 0)  && (t.find('.uploadFile').files[0].name.indexOf(".jpeg") <= 0) && (t.find('.uploadFile').files[0].name.indexOf(".png") <= 0) ) 
+  {
+  $("#popupavatar #errsongname").html("invalid file");
+  $("#popupavatar #errsongname").show();
+  }
+  else
+  {
+  //alert('valid File');
+  function dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--)
+    {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
+  }
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    // get loaded data and render thumbnail.
+    document.getElementById("image").src = e.target.result;
+    //alert(e.target.result);
+    var loadedImage = document.getElementById("image");//new Image();
+    loadedImage.onload = function()
+    {
+      var canvas = document.getElementById("myCanvas");
+      canvas.width =670;
+      canvas.height = 525;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(this, 0, 0 , 670, 525);
+      //alert('loading ....');
+      //var upload = new Slingshot.Upload("myImageUploads");
+      var timeStamp = Math.floor(Date.now()); 
+      var canv = document.getElementById("myCanvas").toDataURL('image/jpeg', 0.95);
+      var blb = dataURLtoBlob(canv);
+      blb.name=  document.getElementById('uploadFile').files[0].name;
+      //alert('filename : ' + blb.name);
+      event.preventDefault();
+      var upload = new Slingshot.Upload("myImageUploads");
+      var timeStamp = Math.floor(Date.now()); 
+      //$grid = $( '#tp-grid' );
+      Meteor.call('updatefoldername',  Session.get('pileName'));
+      upload.send(blb, function (error, downloadUrl) 
+      {
+        uploader.set();
+        if (error) {
+          $("#processingImage").hide();
+          console.error('Error uploading');
+          alert (error);
+                  }
+        else{
+          console.log('uploder : '  + uploader.get());
+                // insert the uploaded image url into the database document
+          var foldername = $("#album_name").val();
+          //alert(foldername);
+          if(foldername !== '' &&  foldername !== undefined && foldername !== 'albumname')
+            {       
+             imageFolder = $("#album_name").val();
+             $("#album_name").val('');
+
+            }
+          else 
+          {
+            //($('.def-block ul.tp-grid').children().length > 1){
+            //$grid.children().each(function() {
+            //imageFolder = $(this).attr('id') ;
+            imageFolder = Session.get('pileName');
+
+            //});
+          }    
+          //alert(imageFolder);
+          imageName = document.getElementById('uploadFile').files[0].name;
+          //alert(downloadUrl);
+          var myarg = {"imageurl": downloadUrl,"uploadedBy" : currentUserId,
+          "imageName": imageName, 
+          "imageFolder" : imageFolder,
+          "timeStamp": timeStamp }
+          Meteor.call('addImage',  myarg, function(error, result){
+          if(error)
+          {
+            alert('inable to insert into database ')
+          }
+          else
+          {    
+            //$("#processingImage").hide();
+            //$("#process").hide();
+            //$("#processbg").hide();
+            Images.insert({
+            imageurl: downloadUrl,
+            imageName: imageName,
+            imageFolder: imageFolder,
+            time: timeStamp,
+            uploadedBy: currentUserId
+            }); 
+            var myImages = Images.find({uploadedBy : currentUserId }, {sort:{ time : -1 } }).fetch();
+            Session.set("myGallery", myImages);
+            $(".closealbum").click();
+            setTimeout(function(){ 
+              //alert('initialise gallery ...');      
+              var $grid = $('#tp-grid'),
+              $name = $('#name'),
+              $close = $('#close'),
+              $loader = $( '<div class="loader"><i></i><i></i><i></i><i></i><i></i><i></i><span>Loading...</span></div>' ).insertBefore( $grid ),
+              stapel = $grid.stapel({
+              randomAngle : false,
+              delay : 100,
+              gutter : 0,
+              pileAngles : 0,
+              onLoad : function() {
+                $('.addAlbum').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+                $('.removeAlbum').show();
+                $loader.remove();
+              },
+              onBeforeOpen : function( pileName ) {
+                $name.html( pileName );
+               //$('.removeAlbum').hide();
+               $(".addnewalbum").hide();  
+                //$('.addAlbum').hide();
+                $('.removeDiv').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+              },
+              onAfterOpen : function( pileName ) {
+                $(".addnewalbum").hide();
+                $('.testingspan').hide();
+                  Session.set('pileName',pileName);
+                $("#addImagediv").show();
+                showDelte = 1;
+                $('.addAlbum').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+                $('.removeAlbum').hide();
+                $('.def-block').on('mouseenter', 'ul.tp-grid li ', function(){
+                  if(showDelte === 1)
+                    {
+                     $(".addnewalbum").hide();  
+                    $(this).find('> div.removeDiv').show();
+                    }
+                }).on('mouseleave', 'ul.tp-grid li', function () {
+                  if(showDelte === 1)
+                    {
+                      $(".addnewalbum").hide();  
+                    $(this).find('> div.removeDiv').hide();
+                    }
+                  //$(".removeDiv").hide();
+                                        });
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+                $close.show();
+              }
+              });
+              $close.on( 'click', function() {
+                $(".addnewalbum").show();
+                showDelte = 0;
+                //alert('onclose clicked ...');
+                //$('.addAlbum').hide();
+                $("#addImagediv").hide();
+                $(this).hide();
+                $("a[rel^='prettyPhoto']").prettyPhoto().unbind();
+                $(".removeDiv").hide();
+                $name.empty().html('Photo Gallery');
+                stapel.closePile();
+              });
+
+              if ($("a[rel^='prettyPhoto']")[0]) 
+              {
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+              }
+               //$('ul#tp-grid li#'+Session.get('pileName')).trigger('click');
+               setTimeout (function(){
+                //alert('openeing the pile again ....');
+                 $("#addavatarbg").fadeOut("slow");
+                 $("#popupavatar").removeClass('zigmaIn').fadeOut("slow");
+                 $("#addavatarbg").fadeOut("slow");
+                 $("#popupavatar").removeClass('zigmaIn').fadeOut("slow");
+                  $("#addavatarbg").fadeOut("slow");
+                  $("#popupavatar").removeClass('zigmaIn').fadeOut("slow");
+               $(".full li#"+Session.get('pileName')).click();
+             }, 3000);
+            },1000);
+          }
+        });
+      }
+    });
+    uploader.set(upload);
+  }
+  };
+  reader.readAsDataURL(file);
+  }
+  var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupavatar").height();
+    var popupWidth = $("#popupavatar").width();
+    // Centering
+    $("#popupavatar").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    var myimagename = file.name; 
+    $(".currentsonname").html(myimagename);
+    var myimagename =  myimagename.slice(0, myimagename.lastIndexOf("."));
+    $('#song_name').val(myimagename);
+    // Aligning bg
+    $("#addavatarbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#addavatarbg").css({"opacity": "0.7"});
+      $("#popupavatar").fadeIn("slow");
+      $("#addavatarbg").addClass('zigmaIn').fadeIn("slow");
+    
+    // read the image file as a data URL.
+    event.preventDefault();
+       
+},
+  'click .removeDiv': function(e, t)
+  {
+    var id = $(e.currentTarget).attr('id');
+    $li = $(e.currentTarget).parent();
+    //alert('id of li : ' + $li.attr('id'));
+    var showDelte = 0;
+   //alert($li.html());
+   // alert('removing image with....' + id);
+    //alert(var myImages = Images.find({uploadedBy : currentUserId }, {sort:{ time : -1 } }).fetch();
+     //Session.set("myGallery", myImages);
+    // alert(Session.get('myGallery').length);
+    Meteor.call("removeimage", id, function (err, result)
+      {
+        if(result){
+          //console.log(Images.find({uploadedBy : Meteor.userId()}));
+          $(".closealbum").click();
+           $li.remove();
+          //$('ul#tp-grid').remove($li);
+         // alert(Images.find({uploadedBy : Meteor.userId()}).count());
+          setTimeout(function(){ 
+              var $grid = $('#tp-grid'),
+              $name = $('#name'),
+              $close = $('#close'),
+              $loader = $( '<div class="loader"><i></i><i></i><i></i><i></i><i></i><i></i><span>Loading...</span></div>' ).insertBefore( $grid ),
+              stapel = $grid.stapel({
+              randomAngle : false,
+              delay : 100,
+              gutter : 0,
+              pileAngles : 0,
+              onLoad : function() {
+                $('.addAlbum').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+                //$('.removeAlbum').show();
+                $loader.remove();
+              },
+              onBeforeOpen : function( pileName ) {
+                $(".addnewalbum").hide();
+                //$('.testingspan').hide();
+                $name.html( pileName );
+                $('.removeAlbum').hide();
+                $('.addAlbum').hide();
+                $('.removeDiv').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+              },
+              onAfterOpen : function( pileName ) {
+                //$('.testingspan').hide();
+                  Session.set('pileName',pileName);
+                 // alert('pileName : ' + Session.get('pileName'));
+                $("#addImagediv").show();
+                showDelte = 1;
+                $('.addAlbum').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+                $('.removeAlbum').hide();
+                $('.testingspan').hide();
+                $('.def-block').on('mouseenter', 'ul.tp-grid li ', function(){
+                  if(showDelte === 1)
+                    {
+                    $(this).find('> div.removeDiv').show();
+                    //$('.testingspan').hide();
+                    }
+                    if(showDelte === 0)
+                    {
+                    $(this).find('> div.removeDiv').hide();
+                    //$('.testingspan').show();
+                    }
+                }).on('mouseleave', 'ul.tp-grid li', function () {
+                  if(showDelte === 1)
+                    {
+                  $(this).find('> div.removeDiv').hide();
+                  //$('.testingspan').hide();
+                    }
+                    if(showDelte === 0)
+                    {
+                    //$(this).find('> div.removeDiv').hide();
+                   // $('.testingspan').hide();
+                    }
+                  //$(".removeDiv").hide();
+                                        });
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+                $close.show();
+              }
+              });
+              $close.on( 'click', function() {
+                $(".addnewalbum").show();
+                $('.testingspan').show();
+                showDelte = 0;
+                //alert('onclose clicked ...');
+                //$('.addAlbum').hide();
+                $("#addImagediv").hide();
+                $(this).hide();
+                $("a[rel^='prettyPhoto']").prettyPhoto().unbind();
+                $(".removeDiv").hide();
+                $name.empty().html('Photo Gallery');
+                stapel.closePile();
+              });
+
+              if ($("a[rel^='prettyPhoto']")[0]) 
+              {
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+              }
+               //$('ul#tp-grid li#'+Session.get('pileName')).trigger('click');
+               setTimeout(function(){
+                //alert('openeing the pile again ....');
+                 /*$("#addavatarbg").fadeOut("slow");
+                 $("#popupavatar").removeClass('zigmaIn').fadeOut("slow");
+                 $("#addavatarbg").fadeOut("slow");
+                 $("#popupavatar").removeClass('zigmaIn').fadeOut("slow");
+                  $("#addavatarbg").fadeOut("slow");
+                  $("#popupavatar").removeClass('zigmaIn').fadeOut("slow");*/
+               $(".full li#"+Session.get('pileName')).click();
+             }, 1000);
+            },3000);
+        }
+      });
+      
+  },
+  /*'change .uploadavatar':function(e)
+  {
+    e.preventDefault();
+    $('.uploadedblogimage').html(document.getElementById('uploadavatar').files[0].name); 
+  },*/
+ 'change .uploadavatar': function(e, t )
+ {
+   var file = null;
+  e.preventDefault();
+    var reader = null;
+file = t.find('.uploadavatar').files[0];
+//if(file.name.indexOf(".jpeg") > 0 || file.name.indexOf(".jpg") > 0 || file.name.indexOf(".png") > 0) 
+ reader = new FileReader();
+ var upload = new Slingshot.Upload("myavatarUploads");              
+         upload.send(document.getElementById('uploadavatar').files[0], function (error, downloadUrl) {
+             uploader.set();
+             console.log("uploader is : " + uploader.get());
+             if (error) {
+               //console.error('Error uploading');
+               alert(error);
+               console.log(error);
+             }
+             else{
+               console.log('uploaded file available here: '+downloadUrl); 
+          myobj = {"id": Meteor.userId() , "url" : downloadUrl };
+          Meteor.call('uploadavatar', myobj);
+                  }
+  });                      
+         uploader.set(upload);
+reader.readAsDataURL(file);
+var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupavatar").height();
+    var popupWidth = $("#popupavatar").width();
+    // Centering
+    $("#popupcover").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    /*var mysongname = file.name; 
+    $(".currentsonname").html(mysongname);
+    var mysongname =  mysongname.slice(0, mysongname.lastIndexOf(".jpeg"));
+    $('#song_name').val(mysongname);*/
+    // Aligning bg
+    $("#addavatarbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      /*$("#addavatarbg").css({"opacity": "0.7"});
+      $("#addavatarbg").fadeIn("slow");
+      $("#popupavatar").addClass('zigmaIn').fadeIn("slow");*/
+  /*'change .uploadblogimage':function(e)
+  {
+    e.preventDefault();
+    $('.uploadedblogimage').html(document.getElementById('uploadblogimage').files[0].name); 
+  }*/
+ },
+ 'change .uploadcover': function(e, t )
+ {
+   var file = null;
+  e.preventDefault();
+    var reader = null;
+file = t.find('.uploadcover').files[0];
+//if(file.name.indexOf(".jpeg") > 0 || file.name.indexOf(".jpg") > 0 || file.name.indexOf(".png") > 0) 
+ reader = new FileReader();
+ var upload = new Slingshot.Upload("myavatarUploads");              
+         upload.send(document.getElementById('uploadcover').files[0], function (error, downloadUrl) {
+             uploader.set();
+             console.log("uploader is : " + uploader.get());
+             if (error) {
+               //console.error('Error uploading');
+               alert(error);
+               console.log(error);
+             }
+             else{
+               console.log('uploaded file available here: '+downloadUrl); 
+          myobj = {"id": Meteor.userId() , "url" : downloadUrl };
+          Meteor.call('uploadcover', myobj);
+                  }
+  });                      
+uploader.set(upload);
+reader.readAsDataURL(file);
+var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupcover").height();
+    var popupWidth = $("#popupcover").width();
+    // Centering
+    $("#popupcover").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    /*var mysongname = file.name; 
+    $(".currentsonname").html(mysongname);
+    var mysongname =  mysongname.slice(0, mysongname.lastIndexOf(".mp3"));
+    $('#song_name').val(mysongname);*/
+    // Aligning bg
+   /* $("#addcoverbg").css({"height": windowHeight});
+    // Pop up the div and Bg
+      $("#addcoverbg").css({"opacity": "0.7"});
+      $("#addbcoverbg").fadeIn("slow");
+      $("#popupcover").addClass('zigmaIn').fadeIn("slow");*/
+  /*'change .uploadblogimage':function(e)
+  {
+    e.preventDefault();
+    $('.uploadedblogimage').html(document.getElementById('uploadblogimage').files[0].name); 
+  }*/
+
+ },
+
 'click #event_regionname':function(e, t)
 {
   var postecode =""; postecode = $('#event_postcode').val();
@@ -3900,7 +5692,17 @@ $("#addeventbg").removeClass('zigmaIn').fadeOut("slow");
   if($('.whishlist .list').children().length === 0)
    $('.emptywhishlist').css('display', 'block');        
   },
-  'click .loadsongs' : function(e, t ){
+  'click .removeDoc' :function(e, t)
+  {
+   var myobj = {};
+    event.preventDefault();
+    var itemId = $(e.currentTarget).attr('id');
+          Meteor.call('removeDocument', itemId);
+  /*if($('.whishlist .list').children().length === 0)
+   $('.emptywhishlist').css('display', 'block');*/        
+  },
+  'click .loadsongs' : function(e, t )
+  {
    e.preventDefault();
  if($('.mysongsplayer .music-player-list').children().length > 0)
    $('.mysongsplayer .music-player-list').empty();
@@ -3913,83 +5715,251 @@ $('.music-player-list').ttwMusicPlayer( Session.get("myPlaylist") , {
     ratingCallback:function(index, playlistItem, rating){
       //some logic to process the rating, perhaps through an ajax call
     }
-  });},
+  });
+},
+'mouseenter ul#tp-grid li': function(e, t )
+{
+$li = $(e.currentTarget);
+//alert('position left : ' + $li.position().left + ' top : '+$li.position().top);
+//alert($li.offset().top + '  ' + $li.offset().left);
+ // alert($li.find('> .removeDiv').position().left + '  ' + $li.find('> .removeDiv').position().top);
+var id = $(e.currentTarget).attr('id');
+$('#tp-grid div.testingspan').attr('id', id);
+$('#tp-grid div.testingspan').css({'left': $li.position().left , 'top': $li.position().top});
+//alert($li.find('> .removeDiv').position().left + ' '+$li.find('> .removeDiv').position().top);
+/*$('#tp-grid div.testingspan').each(function (i) {
+  if($(this).attr('id') == id)
+  {
+$(this).css({'left': $li.position().left , 'top': $li.position().top});
+$(this).show();
+return false;
+}
+});*/
+//alert('id:  ' +id);
+//$('#tp-grid li').each(function (i) {
+  //  var id = $('#tp-grid li:first');
+  //  if(id);
+      //var tab =  $('.full  ul.tabs').find('li').eq(i).find('> a');
+      //alert(tab.html());
+  //  });
+},
+'mouseleave ul#tp-grid li': function(e, t )
+{
+
+$li = $(e.currentTarget);
+   //  $li.find('> .removeDiv').hide();
+  //else{$('div.testingspan').hide();}
+},
+'click .testingspan': function(e, t)
+  {
+   e.preventDefault();
+    //e.preventDefault();
+    //e.cancelBubble = true;
+  // e.stopPropagation();
+   // alert('hello rached' + this._id);
+   // var currentLi = this.closest('li');
+   // alert(currentLi.html());
+//var imageId = $(this).closest('li').attr("id");
+//alert('removing from db ' + this._id);
+//$('.removeImage').trigger('click');
+//Images.remove(this._id );     
+ /* if(!e)  var e = window.event;
+    e.stopPropagation();
+    e.cancelBubble = true;
+    if(e.stopPropagation())
+      e.stopPropagation();*/
+    var albumname = $(e.currentTarget).attr('id');
+    Meteor.call('removeAlbum', albumname , function(err, result)
+      {
+        if(result)
+        {
+          $(".closealbum").click();
+          $('ul#tp-grid li#'+albumname+'').remove();
+          setTimeout(function(){ 
+              var $grid = $('#tp-grid'),
+              $name = $('#name'),
+              $close = $('#close'),
+              $loader = $( '<div class="loader"><i></i><i></i><i></i><i></i><i></i><i></i><span>Loading...</span></div>' ).insertBefore( $grid ),
+              stapel = $grid.stapel({
+              randomAngle : false,
+              delay : 100,
+              gutter : 0,
+              pileAngles : 0,
+              onLoad : function() {
+                $('.addAlbum').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+                //$('.removeAlbum').show();
+                $loader.remove();
+              },
+              onBeforeOpen : function( pileName ) {
+                //$('.testingspan').hide();
+                $name.html( pileName );
+                $('.removeAlbum').hide();
+                $('.addAlbum').hide();
+                $('.removeDiv').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+              },
+              onAfterOpen : function( pileName ) {
+                //$('.testingspan').hide();
+                  Session.set('pileName',pileName);
+                 // alert('pileName : ' + Session.get('pileName'));
+                $("#addImagediv").show();
+                showDelte = 1;
+                $('.addAlbum').hide();
+                //$('.removeAlbum').css('visibility', 'hidden');
+                $('.removeAlbum').hide();
+                $('.testingspan').hide();
+                $('.def-block').on('mouseenter', 'ul.tp-grid li ', function(){
+                  if(showDelte === 1)
+                    {
+                    $(this).find('> div.removeDiv').show();
+                    //$('.testingspan').hide();
+                    }
+                    if(showDelte === 0)
+                    {
+                    $(this).find('> div.removeDiv').hide();
+                    //$('.testingspan').show();
+                    }
+                }).on('mouseleave', 'ul.tp-grid li', function () {
+                  if(showDelte === 1)
+                    {
+                  $(this).find('> div.removeDiv').hide();
+                  //$('.testingspan').hide();
+                    }
+                    if(showDelte === 0)
+                    {
+                    //$(this).find('> div.removeDiv').hide();
+                   // $('.testingspan').hide();
+                    }
+                  //$(".removeDiv").hide();
+                                        });
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+                $close.show();
+              }
+              });
+              $close.on( 'click', function() {
+                $('.testingspan').show();
+                showDelte = 0;
+                //alert('onclose clicked ...');
+                //$('.addAlbum').hide();
+                $("#addImagediv").hide();
+                $(this).hide();
+                $("a[rel^='prettyPhoto']").prettyPhoto().unbind();
+                $(".removeDiv").hide();
+                $name.empty().html('Photo Gallery');
+                stapel.closePile();
+              });
+
+              if ($("a[rel^='prettyPhoto']")[0]) 
+              {
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
+              }
+               //$('ul#tp-grid li#'+Session.get('pileName')).trigger('click');
+               //setTimeout(function(){
+                //alert('openeing the pile again ....');
+                 /*$("#addavatarbg").fadeOut("slow");
+                 $("#popupavatar").removeClass('zigmaIn').fadeOut("slow");
+                 $("#addavatarbg").fadeOut("slow");
+                 $("#popupavatar").removeClass('zigmaIn').fadeOut("slow");
+                  $("#addavatarbg").fadeOut("slow");
+                  $("#popupavatar").removeClass('zigmaIn').fadeOut("slow");*/
+              // $(".full li#"+Session.get('pileName')).click();
+             //}, 1000);
+            },1000);
+        }
+      });
+        
+
+  },
+
+
 'click .loadgellery':function(e, t)
 {
+  /*$('#tp-grid li').each(function (i) {
+    var id = $('#tp-grid li:first');
+    if(id);
+      //var tab =  $('.full  ul.tabs').find('li').eq(i).find('> a');
+      //alert(tab.html());
+    });*/
 if ($("#tp-grid")[0]) {
   var $grid = $('#tp-grid'),
   $name = $('#name'),
-  $close = $('#close'),
+  $close = $('.closealbum'),
   $loader = $( '<div class="loader"><i></i><i></i><i></i><i></i><i></i><i></i><span>Loading...</span></div>' ).insertBefore( $grid ),
-  stapel = $grid.stapel( {
+  stapel = $grid.stapel({
     randomAngle : false,
     delay : 100,
     gutter : 0,
     pileAngles : 0,
     onLoad : function() {
       $('.addAlbum').hide();
-      $('.removeAlbum').css('visibility', 'hidden');
+      //$('.removeAlbum').css('visibility', 'hidden');
+      $('.removeAlbum').hide();
       $loader.remove();
               },
     onBeforeOpen : function( pileName ) {
+      $(".addnewalbum").hide();
       $name.html( pileName );
       $('.removeAlbum').hide();
       $('.addAlbum').hide();
-      $('.removeAlbum').css('visibility', 'hidden');
+         Session.set('pileName',pileName);
+         //$('span.testingspan').hide();
+               //   alert('pileName : ' + Session.get('pileName'));
+      //$('.removeAlbum').css('visibility', 'hidden');
                       },
     onAfterOpen : function( pileName ) {
+      // alert('hiding remove album ...');
+      $('.testingspan').hide();
+      //$('.testingspan').show();
+      $("#addImagediv").show();
       showDelte = 1;
       $('.addAlbum').hide();
-      $('.removeAlbum').css('visibility', 'hidden');
+      //$('.removeAlbum').css('visibility', 'hidden');
       $('.removeAlbum').hide();
       $('.def-block').on('mouseenter', 'ul.tp-grid li ', function(){
         if(showDelte === 1)
-          {
+        {
+        //if(showDelte === 1)
+         // {
           $(this).find('> div.removeDiv').show();
-          }
+        }
+          //}
       }).on('mouseleave', 'ul.tp-grid li', function () {
-        $(".removeDiv").hide();
+        if(showDelte === 1)
+        {
+        $(this).find('> div.removeDiv').hide();
+      }
                               });
       $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
       $close.show();
                       }
     });
     $close.on( 'click', function() {
-      //alert('onclose clicked ...');
+      $(".addnewalbum").show();
+      showDelte = 0;
+     // $('ul.tp-grid li').find('> div.removeDiv').hide();
+           /* $('#tp-grid span.testingspan').each(function (i) {
+     if((i < 1) && ($(this).attr('id') === Session.get('pileName')))
+     {
+//$('span.testingspan')
+$(this).css({'left': $li.find('> .removeDiv').position().left , 'top': $li.find('> .removeDiv').position().top});
+$(this).show();
+i = 1;
+return;
+}
+});*/
       //$('.addAlbum').hide();
+      //$('span.testingspan').hide();
+      $("#addImagediv").hide();
+      $('.removeAlbum').show();
+      //$('.testingspan').show();
       $(this).hide();
       $("a[rel^='prettyPhoto']").prettyPhoto().unbind();
       //$(".removeDiv").hide();
       $name.empty().html('Photo Gallery');
       stapel.closePile();
-      /*stapel = $grid.stapel( {
-        randomAngle : false,
-        delay : 100,
-        gutter : 0,
-        pileAngles : 0,
-        onLoad : function() {
-          $('.addAlbum').hide();
-          $loader.remove();},
-        onBeforeOpen : function( pileName ) {
-        $('.addAlbum').hide();
-        $name.html( pileName );
-      },
-      onAfterOpen : function( pileName ) {
-        showDelte = 1;
-        $('.addAlbum').hide();
-            $('.def-block').on('mouseenter', 'ul.tp-grid li ', function()
-    {
-      if(showDelte === 1)
-      {
-      $(this).find('> div.removeDiv').show();
-      }
-    }).on('mouseleave', 'ul.tp-grid li', function () {
-      $(".removeDiv").hide();
-});
-        $("a[rel^='prettyPhoto']").prettyPhoto({theme: 'dark_rounded',deeplinking:false});
-        $close.show();
-      }
-    });*/
+      $('.testingspan').show();
+      
     });
   }
   // prettyPhoto
@@ -4102,6 +6072,39 @@ $("#errsongname").show();
 });
 
 Template.homeProfile.helpers({
+    showAvatar : function(currentuser)
+    {
+      if(currentuser) {
+      if(currentuser.profile.hasOwnProperty('avatar'))
+      {
+        //$(".full #avatarProf").attr("src", currentuser.profile.avatar);
+        return currentuser.profile.avatar;
+      }
+      else
+      {
+        return "images/avatarProfileM3.png";
+      }
+                     }
+                     else 
+                     {
+                      return "images/avatarProfileM3.png";
+                     }
+
+    },
+      showCover : function(currentuser)
+    {
+      if(currentuser) {
+      if(currentuser.profile.hasOwnProperty('cover'))
+        return currentuser.profile.cover;
+      else
+        return "images/5.jpeg";
+                     }
+                     else 
+                     {
+                      return "images/5.jpeg";
+                     }
+
+    },
     whishlist: function(currentuser)
   {
     if(currentuser.profile.type === "costumer" /*&& currentuser.whishlist.length > 0 */)
@@ -4148,15 +6151,72 @@ $("#myProgress").show();
         $("#processbg").show();
        $("#myProgress").css('visibility', 'hidden');*/
        $("#addsongbg").fadeOut("slow");
-    $("#popupsong").removeClass('zigmaIn').fadeOut("slow");
-    $(".songuploadbox").css({"visibility":"visible"});
-    setTimeout(function(){
-      $(".songuploadbox").css({"visibility":"hidden"});
-    }, 2000);
+       $("#popupsong").removeClass('zigmaIn').fadeOut("slow");
+       
+       $("#addsongbg").fadeOut("slow");
+       $("#popupsong").removeClass('zigmaIn').fadeOut("slow");
+
+       $("#addsongbg").fadeOut("slow");
+       $("#popupsong").removeClass('zigmaIn').fadeOut("slow");
+
+       /*$(".songuploadbox").css({"visibility":"visible"});
+       setTimeout(function(){
+       $(".songuploadbox").css({"visibility":"hidden"});
+       }, 2000);*/
       }
     return Math.round(upload.progress() * 100);
   }
     },
+    progressimage: function () {
+    var upload = uploader.get();
+    //alert('uploader is :');
+    if (upload)
+    {
+      console.log('progressimage : ' + upload.progress() * 100);
+      $("#popupavatar #myProgress").show();
+      $("#popupavatar #progressUploading").show();
+      if(Math.round(upload.progress()*100) === 100)
+      {
+        /*$("#processingImage").show();
+        $("#process").show();
+        $("#processbg").show();
+       $("#myProgress").css('visibility', 'hidden');*/
+      
+
+       /*$(".songuploadbox").css({"visibility":"visible"});
+       setTimeout(function(){
+       $(".songuploadbox").css({"visibility":"hidden"});
+       }, 2000);*/
+      }
+    return Math.round(upload.progress() * 100);
+  }
+    },
+    progressdoc: function () {
+    var upload = uploader.get();
+    //alert('uploader is :');
+    if (upload)
+    {
+      console.log('progressimage : ' + upload.progress() * 100);
+      $("#popupdoc #myProgress").show();
+      $("#popupdoc #progressUploading").show();
+      if(Math.round(upload.progress()*100) === 100)
+      {
+         $("#popupdoc").hide();
+         $("#adddocbg").hide();
+        /*$("#processingImage").show();
+        $("#process").show();
+        $("#processbg").show();
+       $("#myProgress").css('visibility', 'hidden');*/
+      
+
+       /*$(".songuploadbox").css({"visibility":"visible"});
+       setTimeout(function(){
+       $(".songuploadbox").css({"visibility":"hidden"});
+       }, 2000);*/
+      }
+    return Math.round(upload.progress() * 100);
+  }
+    },    
     youtubeurl : function()
     {
       
@@ -4335,17 +6395,45 @@ return Session.get("myPlaylist")
     return counter;
   },
   images: function() {
-   //return Images.find({});
-    return Images.find({uploadedBy : currentUserId }, {sort:{ time : 1 } });
+   //return Images.find({uploadedBy : currentUserId});
+    var myImages = Images.find({uploadedBy : currentUserId }, {sort:{ time : -1 } }).fetch();
+     Session.set("myGallery", myImages);
+     //alert('proceeding images ....');
+     return Session.get('myGallery');
    //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
 
   },
+documents: function()
+{
+  if(Docs.find({uploadedBy : currentUserId }, {sort:{ time : -1 } }).count() > 0)
+  {
+ return  Docs.find({uploadedBy : currentUserId }, {sort:{ time : -1 } }).fetch();
+  }
+else 
+  return false; 
+},
   notifications: function() {
    //return Images.find({});
-    return Notifications.find({ recieverId:  currentUserId }, {sort:{ time : 1 } });
+    return Notifications.find({ recieverId:  currentUserId}, {sort:{ time : 1 } });
    //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
 
   },
+  messages: function() {
+   //return Images.find({});
+    return chat.find({ recieverId:  currentUserId, status :'pending'  }, {sort:{ time : 1 } });
+   //return Tasks.find(" (this.profile.gender ==  null ||  this.profile.phoneNumber ==  null || this.profile.city ==  null || this.profile.phoneNumber ==  null) && (this.createdAt <= new Date() || this.createdAt >= new Date().getDate()-1 ) ");
+
+  },
+  emtyMesages : function()
+    {
+      if ( chat.find({ recieverId:  currentUserId, status :'pending'  }).count() == 0 )
+      {
+           return true ;
+        
+      }
+      else {  return false; }
+      
+    },
   users: function() {
    //return Images.find({});
     return Meteor.users.find({});
@@ -4461,3 +6549,22 @@ Template.imageUploader.helpers({
     },
 
 });*/
+function getMonthName(month) {
+// create array to hold name of each month
+var ar = new Array(12)
+ar[0] = "January"
+ar[1] = "February"
+ar[2] = "March"
+ar[3] = "April"
+ar[4] = "May"
+ar[5] = "June"
+ar[6] = "July"
+ar[7] = "August"
+ar[8] = "September"
+ar[9] = "October"
+ar[10] = "November"
+ar[11] = "December"
+
+// return name of specified month (parameter)
+return ar[month]
+}

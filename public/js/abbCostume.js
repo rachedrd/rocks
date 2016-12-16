@@ -53,8 +53,11 @@ jQuery(document).ready(function ($) {
 //$('.usernotifications').niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
 //$('#notificationsList').niceScroll({cursorborder:"",cursorborderradius:"2px",	cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
 $("#ullist").mouseover(function(){ $("#ullist").getNiceScroll().show();});
+
 $(".notificationsicon").click(function(){
 $("#notificationWrapper").toggle(); 
+$("#messagesWrapper").hide();
+$('.messagessicon').removeClass('togglenotification'); 
 $('.notificationsicon').toggleClass('togglenotification');
 	var x = 0 ;
 	if(x === 0 ) {
@@ -71,10 +74,32 @@ x = 1;
 $("#ullist").getNiceScroll().remove();
     }
 });
+$(".messagessicon").click(function(){
+	$("#notificationWrapper").hide(); 
+$('.notificationsicon').removeClass('togglenotification');
+$("#messagesWrapper").toggle(); 
+$('.messagessicon').toggleClass('togglenotification');
+	var x = 0 ;
+	if(x === 0 ) {
+  $("#messagesWrapper").css('visibility', 'visible');
+$("#ullist").getNiceScroll().show();
+$("#ullist").getNiceScroll().resize();
+
+
+x = 1; 
+    }
+    else 
+    {
+  $("#messagesWrapper").css('visibility', 'hidden');
+$("#ullist").getNiceScroll().remove();
+    }
+});
+   //$(".sendmessagecontainer").niceScroll({zindex:9999999999999999,cursorborder:"0px solid gray",cursorborderradius:"2px",cursorcolor:"#ff6600",cursoropacitymin:.1}); 
 $("#ullist").niceScroll({zindex:1000000,cursorborder:"0px solid #ccc",cursorborderradius:"2px",cursorcolor:"#ddd",cursoropacitymin:.1}); 
 $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px",cursorcolor:"#121212",scrollspeed:100,cursoropacitymin:.4}); 
 	// Tabs
 	//show blog comments 
+	
 	$('.full').on('click' ,'.showmecomments' ,function(e)
 	{
 		$('.blogcommentslist').slideToggle();
@@ -86,15 +111,28 @@ $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px"
 		var contentLocation = $(this).attr('href');
 		if( $(this).attr("id") === "uploadsong")
 			{
+				
+				$(".adddocument").hide();
 				$(".uploadsongdiv").show(); 
 				$(".addevent").hide();
 				$(".uploadimgdiv").hide();
 				$('#close').trigger('click');
 			    $(".uploadvideodiv").hide();
+			    $(".addnewalbum").hide();
 	        }
+	        if($(this).attr("id") === "documents")
+	        	{
+			$(".addnewalbum").hide();
+			$(".uploadsongdiv").hide();
+			$(".addevent").hide();
+			$(".uploadvideodiv").hide();
+			$(".adddocument").show();
+
+        }
 		if($(this).attr("id") === "uploadimage")
 		{
-			/*$(".uploadimgdiv").show();*/
+			$(".adddocument").hide();
+			$(".addnewalbum").show();
 			$(".uploadsongdiv").hide();
 			$(".addevent").hide();
 			$(".uploadvideodiv").hide();
@@ -102,27 +140,33 @@ $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px"
         }
         if($(this).attr("id") === "uploadvideo")
 		{
+			$(".adddocument").hide();
 			/*$(".uploadimgdiv").show();*/
 			$(".uploadvideodiv").show();
 			$('#close').trigger('click');
 			$(".addevent").hide();
 			$(".uploadsongdiv").hide();
+			$(".addnewalbum").hide();
         }
          if($(this).attr("id") === "details")
 		{
+			$(".adddocument").hide();
 			$(".uploadimgdiv").hide();
 			$(".uploadvideodiv").hide();
 			$('#close').trigger('click');
 			$(".addevent").hide();
 			$(".uploadsongdiv").hide();
+			$(".addnewalbum").hide();
         }
         if($(this).attr("id") === "calendar")
 		{
+			$(".adddocument").hide();
 			/*$(".uploadimgdiv").show();*/
 			$(".addevent").show();
 			$(".uploadsongdiv").hide();
 			$(".uploadvideodiv").hide();
 			$('#close').trigger('click');
+			$(".addnewalbum").hide();
 			setTimeout(function(){
 			  $('.fc-today-button').trigger('click');
 			},0);
@@ -130,9 +174,10 @@ $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px"
         }
         if($(this).attr("id") === "calender")
 		{
-			alert('see calendar');
+			//$(".adddocument").show();
+			//alert('see calendar');
 			setTimeout(function(){
-				alert('trigger day ...');
+				//alert('trigger day ...');
 			  $('.fc-today-button').trigger('click');
 			},0);
 		}
@@ -370,15 +415,15 @@ $("#ullist").niceScroll({zindex:1000000,cursorborder:"",cursorborderradius:"2px"
 resetFields();
 function resetFields () {
 	//reset add event fields
-	$("#popupevent").on('click', '#event_name ', function(){
+	$(".full").on('click', '#popupevent #event_name ', function(){
      $("#eventerr").html("");
      $(".valideventname").removeClass('glyphicon-asterisk');
 	});
-	$("#popupevent").on('click', '#event_startdate', function(){
+	$(".full").on('click', '#popupevent #event_startdate', function(){
      $("#eventerr").html("");
      $(".valideventstart").removeClass('glyphicon-asterisk');
 	});
-	$("#popupevent").on('click', '#event_enddate', function(){
+	$(".full").on('click', '#popupevent #event_enddate', function(){
      $("#eventerr").html("");
      $(".valideventenddate").removeClass('glyphicon-asterisk');
 	});
@@ -387,26 +432,26 @@ $("#popupevent").on('click', '#Etype', function(){
      $("#eventerr").html("");
 	});
 
-$("#popupevent").on('click', '#event_postcode', function(){
+$(".full").on('click', '#popupevent #event_postcode', function(){
      $("#eventerr").html("");
      $(".valideventpostcode").removeClass('glyphicon-asterisk');
 	});
 
-$("#popupevent").on('click', '#event_regionname', function(){
+$(".full").on('click', '#popupevent #event_regionname', function(){
      $("#eventerr").html("");
      $(".valideventregion").removeClass('glyphicon-asterisk');
 	});
-$("#popupevent").on('click', '#event_cityname', function(){
+$(".full").on('click', '#popupevent #event_cityname', function(){
      $("#eventerr").html("");
      $(".valideventcity").removeClass('glyphicon-asterisk');
 	});
 
-$("#popupevent").on('click', '#event_address', function(){
+$(".full").on('click', '#popupevent #event_address', function(){
      $("#eventerr").html("");
      $(".valideventaddress").removeClass('glyphicon-asterisk');
 	});
  
-$("#popupevent").on('click', '#event_venue', function(){
+$(".full").on('click', '#popupevent #event_venue', function(){
      $("#eventerr").html("");
      $(".valideventvenue").removeClass('glyphicon-asterisk');
 	});
@@ -472,6 +517,22 @@ $("#popupSignUp").on('click', '#signup_username ', function(){
 	 $("#validUsername_sgnUp").removeClass('glyphicon-asterisk');
 
 	});
+$("#newpasswordpopup").on('click', '#reset_password ', function(){
+     $("#errorMsgReset").html("");
+     //$("#errorMsgSgnUp").css({"margin-left" : "160px"});
+     $("#validPasswd_reset").removeClass('glyphicon-remove');
+	 $("#validPasswd_reset").removeClass('glyphicon-asterisk');
+
+	});
+$("#newpasswordpopup").on('click', '#reset_retypePassword ', function(){
+     $("#errorMsgReset").html("");
+     //$("#errorMsgSgnUp").css({"margin-left" : "160px"});
+     $("#validPasswdretype_reset").removeClass('glyphicon-remove');
+	 $("#validPasswdretype_reset").removeClass('glyphicon-asterisk');
+
+	});
+
+
 $("#popupnewalbbum").on('click', '#album_name ', function(){
      $("#errorMsgAlb").html("");
      $("#validAlmName").css("color","red");
@@ -521,7 +582,7 @@ $("#popupSignUp").on('click', '#signup_retypePassword', function(){
     $("#validRePsswd_sgnUp").removeClass('glyphicon-remove');
 	$("#validRePsswd_sgnUp").removeClass('glyphicon-asterisk');
 	});
-
+// sign up view password on hover 
 $("#popupSignUp").on('mouseenter', '#viewPasswd_sgnUp', function () {
     $('#signup_password').attr('type', 'text');
 }).on('mouseleave', '#viewPasswd_sgnUp', function () {
@@ -531,6 +592,18 @@ $("#popupSignUp").on('mouseenter', '#viewRePasswd_sgnUp', function () {
     $('#signup_retypePassword').attr('type', 'text');
 }).on('mouseleave', '#viewRePasswd_sgnUp', function () {
     $('#signup_retypePassword').attr('type', 'password');
+});
+
+// reset password view password on hover 
+$("#newpasswordpopup").on('mouseenter', '#viewPasswd_resetpass', function () {
+    $('#reset_password').attr('type', 'text');
+}).on('mouseleave', '#viewPasswd_resetpass', function () {
+    $('#reset_password').attr('type', 'password');
+});
+$("#newpasswordpopup").on('mouseenter', '#viewPasswdretype_resetpass', function () {
+    $('#reset_retypePassword').attr('type', 'text');
+}).on('mouseleave', '#viewPasswdretype_resetpass', function () {
+    $('#reset_retypePassword').attr('type', 'password');
 });
 
 /*
@@ -549,7 +622,7 @@ $("#popupSignUp").on('click', '#signup_lastname ', function(){
 $("#cbp-spmenu-s1").on('click','#closeRight i', function(){
 	$("#cbp-spmenu-s1").removeClass('cbp-spmenu-open');
 });
-$(".exampleHeader").on('click','#profileMessages a', function(){
+/*$(".exampleHeader").on('click','#profileMessages a', function(){
 	//alert('add open class to the chat list ...');
 	$('#toggedfirst').removeClass('open'); 
 	$('#layout header').addClass('headerafterchat');	
@@ -560,7 +633,7 @@ $(".exampleHeader").on('click','#profileMessages a', function(){
 
 	$("#cbp-spmenu-s1").addClass('navafterchat');
 
-});
+});*/
 $("#cbp-spmenu-s1").on('click','.showRight2', function(){
 	
 	$("#cbp-spmenu-s1").removeClass('cbp-spmenu-open');
@@ -606,6 +679,8 @@ $('.full').on('click' ,'.createblog' ,function () {
 		alert('hover');
 	$('#toggedfirst .dropdown-menu li a span').css("background","#02baff");
 });*/
+
+// open reading doc
 		//nav  navbar-right
 	$(".exampleHeader").on('click', '#signInSpan', function() {
 		//Aligning our box in the middle
@@ -776,7 +851,7 @@ $('.full').on('click' ,'.createblog' ,function () {
 		$('.savefirstname').show();
 	});
 	//managesalary
-	$('.userinfocontent').on('click','.managesalaryupdate' , function(){
+	$('.full').on('click','.managesalaryupdate' , function(){
 		$('#managesalaryspan').hide();
 		$('#managesalaryinput').show();
 		$(this).hide();
@@ -799,7 +874,7 @@ $('.full').on('click' ,'.createblog' ,function () {
 		
 	});
 	// save salary by admin 
-	$('.userinfocontent').on('click' , '.savesalarymanage', function(){
+	$('.full').on('click' , '.savesalarymanage', function(){
 		if(( $("#managesalaryinput").val() === "" ) || ( $("#managesalaryinput").val() === undefined ) )
 		{
 			$(this).hide();
@@ -1276,25 +1351,34 @@ $('.full').on('click' ,'.createblog' ,function () {
 	$('.userinfocontent').on('click' , '#birthinput', function(){
       window.myDatePicker1 = new DatePicker('.userinfocontent #birthinput', options);     
 	});
-	$('#popupevent #event_enddate').click(function(){
+	$('.full').on('click', '#popupevent #event_enddate', function(){
 	window.myDatePicker2 = new DatePicker('#popupevent #event_enddate', options);     
     });
-	$('#popupevent #event_startdate').click(function(){
+	$('.full').on('click', '#popupevent #event_startdate', function(){
 	  window.myDatePicker3 = new DatePicker('#popupevent #event_startdate', options);     
 	});
+	
 	$('#popupeditevent #event_enddate').click(function(){
 	window.myDatePicker4 = new DatePicker('#popupeditevent #event_enddate', options);     
     });
+
 	$('#popupeditevent #event_startdate').click(function(){
 	  window.myDatePicker5 = new DatePicker('#popupeditevent #event_startdate', options);     
 	});
+	/*
+    $('.full').on('click', ' #bookingdetails #event_enddate', function(){
+ 	window.myDatePicker6 = new DatePicker('#bookingdetails #event_enddate', options);     
+    });
+
+	$('.full').on('click', '#bookingdetails #event_startdate', function(){
+	  window.myDatePicker7 = new DatePicker('#bookingdetails #event_startdate', options);     
+	});*/
 	/*
 	$('#popupevent').on('click' , '#event_enddate', function(){
      alert('picker2');
       window.myDatePicker1 = new DatePicker('#popupevent #event_enddate', options);     
 	});*/
 	$('.bandtypesearch').on('click' , '.suggest-availability', function(){
-		alert('click ...');
       //window.myDatePicker1 = new DatePicker('.banscontent .suggest-availability', options);     
       window.myDatePicker2 = new DatePicker('.bandtypesearch .suggest-availability', options);     
 
@@ -1722,13 +1806,12 @@ for(var i = 0 ; i < userstype.length; i++){
 }
 $('.full .usertypes').show();
 });
-$('#popupevent').click(function(){
+$('.full').on('click', '#popupevent', function(){
 	$('.postcodeevent .zonecodes').hide();
 	$('.addressnameevent .zonecodes').hide();
 
 });
-$(".postcodeevent").on('keyup','#event_postcode',function(){
-	//alert('key up ...');
+$(".full").on('keyup','.postcodeevent #event_postcode',function(){
 	var currenttext = ""; 
 	currenttext = $('.postcodeevent #event_postcode').val().toUpperCase();
  	$('.postcodeevent .zonecodes').empty();
@@ -2221,13 +2304,13 @@ $(".userinfocontent").on("click", ".zonecodes > li", function(){
 	$(".zonecodes").hide();
 
 });
-$(".postcodeevent").on("click", ".zonecodes > li", function(){ 
+$(".full").on("click", ".postcodeevent .zonecodes > li", function(){ 
 	var selected = $(this).find(".suggest-name").text();
-  $(".postcodeevent #event_postcode").val(selected);  
+  $("#popupevent .postcodeevent #event_postcode").val(selected);  
 	$(".postcodeevent .zonecodes").hide();
 
 });
-$(".addressnameevent").on("click", ".zonecodes > li", function(){ 
+$(".full").on("click",".addressnameevent .zonecodes > li", function(){ 
 	var selected = $(this).find(".suggest-name").text();
   $("#event_address").val(selected);  
 	$(".addressnameevent .zonecodes").hide();
@@ -2267,6 +2350,10 @@ $(".full").on("click", ".usernames > li", function(){
 $(".full").on("click", ".searchside" , function(event){ 
 $(".bandtypes").hide();
 });
+$(".full").on("click", ".searchside" , function(event){ 
+$(".locations").hide();
+});
+
 $(".full").on("click", ".searchusers" , function(event){ 
 $(".usernames").hide();
 $(".usertypes").hide();
@@ -2310,6 +2397,18 @@ $('.full .usertypes').show();
 	{
 		alert('onpening the pile2 ...');
 	});*/
+$('.full').on('click','.removeAlbum', function(e)
+		{
+    if(!e)  var e = window.event;
+    e.stopPropagation();
+    e.cancelBubble = true;
+    if(e.stopPropagation())
+    	e.preventDefault();
+      e.stopPropagation();
+			alert('remove album ....');  
+
+			e.preventDefault();
+		});
 	/*$('.def-block').on('click','.removeImage', function(e)
 		{
 			if($(':animated').length) {
@@ -2644,9 +2743,26 @@ $('.full .usertypes').show();
 			$("#errsongname").html("");
 		}
 	});
+	//close avatar song upload
+	$("#popupavatarclose").click(function() {
+		if ($("#popupavatar #errsongname").html() !== "") {
+			$("#popupavatar").fadeOut("slow");
+			$("#addavatarbg").removeClass('zigmaIn').fadeOut("slow");
+			$("#errsongname").html("");
+		}
+	});
+	// close inactive account popup 
+	$("#inactiveaccountclose").click(function() {
+			$("#inactivebg").fadeOut("slow");
+			$("#popupinactiveaccount").removeClass('zigmaIn').fadeOut("slow");
+	}); 
+	// close chat popup
+	$("#chatallowedclose").click(function() {
+			$("#chatallowedbg").fadeOut("slow");
+			$("#popupchatalowed").removeClass('zigmaIn').fadeOut("slow");
+	});
 	//close event form 
-	
-	$("#popupeventclose").click(function() {
+	$(".full").on('click', '#popupevent #popupeventclose',function() {
 		$("#popupevent").fadeOut("slow");
 			$("#addeventbg").removeClass('zigmaIn').fadeOut("slow");
 			$("#event_name").val("event name");
@@ -2665,6 +2781,46 @@ $('.full .usertypes').show();
 			$("#popupevent").removeClass('zigmaIn').fadeOut("slow");
 			//$("#errsongname").html("");
 		//}
+	});
+	//close popup messages form 
+	$(".full").on('click', '#sendmessagepopupclose',function() {
+			$("#sendmessagepopupbg").removeClass('zigmaIn').fadeOut("slow");
+			 $(".sendmessagecontent").val('');
+			//$("#addeventbg").fadeOut("slow");
+			$("#sendmessagepopup").removeClass('zigmaIn').fadeOut("slow");
+			$(".validmessage").html("");
+		//}
+	});
+	$(".full").on('click', '.cancelMessage',function() {
+			$("#sendmessagepopupbg").removeClass('zigmaIn').fadeOut("slow");
+			 $(".sendmessagecontent").val('');
+			//$("#addeventbg").fadeOut("slow");
+			$("#sendmessagepopup").removeClass('zigmaIn').fadeOut("slow");
+			$(".validmessage").html("");
+		//}
+	});
+	$(".full").on('click', '.sendmessagecontent',function() {
+			$(".validmessage").html("");
+		//}
+	});
+	$(".full").on('keyup', '.sendmessagecontent',function() {
+			$(".validmessage").html("");
+		//}
+	});
+
+	$(".full").on('click', '#bookingdetailsclose',function() {
+		   $("#bookingdetailsbg").removeClass('zigmaIn').fadeOut("slow");
+			$("#event_name").val("event name");
+			$("#event_startdate").val("DD-MM-YYYY HH:MM");
+			$("#event_enddate").val("DD-MM-YYYY HH:MM");
+            $("#event_postcode").val('postcode');
+            $("#event_cityname").val('city name');
+            $("#event_regionname").val('region name');
+            $(".zonecodes").hide();
+            $("#event_address").val('address');
+            $("#event_venue").val('venue name');
+			$("#bookingdetails").removeClass('zigmaIn').fadeOut("slow");
+		
 	});
 	$("#popupediteventclose").click(function() {
 		//if ($("#errsongname").html() !== "") {
@@ -2739,7 +2895,7 @@ $('.full .usertypes').show();
 		}
 	});
 	// close event popup
-	$("#event_cancel").click(function() {
+	$("full #event_cancel").click(function() {
 			$("#popupevent").fadeOut("slow");
 			$("#addeventbg").removeClass('zigmaIn').fadeOut("slow");
 			$("#event_name").val("event name");
@@ -2751,17 +2907,22 @@ $('.full .usertypes').show();
              $(".zonecodes").hide();
              $("#event_address").val('address');
              $("#event_venue").val('venue name');
-
-             
 			$('#Etype').html('Select type');
 	});
 	// close new password via X button 
 	
-	$("#popup_new_pass").click(function() {
-			$("#popupNewPassword").fadeOut("slow");
+	$("#popup_new_pass").click(function(e) {
+		e.preventDefault();
+			$("#newpasswordpopup").removeClass('zigmaIn').fadeOut("slow");
 			$("#new_pw_bg").removeClass('zigmaIn').fadeOut("slow");
-			$("#rst_pw_bg").removeClass('zigmaIn').fadeOut("slow");
 	});
+	$("#new_password_cancel").click(function(e) {
+		e.preventDefault();
+		alert('close');
+			$("#newpasswordpopup").removeClass('zigmaIn').fadeOut("slow");
+			$("#new_pw_bg").removeClass('zigmaIn').fadeOut("slow");
+	});
+
 	//cance change password 
 	$("#new_password_cancel").click(function() {
 			$("#popupNewPassword").fadeOut("slow");
@@ -2800,7 +2961,7 @@ $('.full .usertypes').show();
 	$("#popup_new_pass").click(function() {
 		if (popupSignUpStatus == 1) {
 			$("#popupNewPassword").fadeOut("slow");
-			$("#new_pw_bg").removeClass('zigmaIn').fadeOut("slow");
+			//$("#new_pw_bg").removeClass('zigmaIn').fadeOut("slow");
 			$("#rst_pw_bg").removeClass('zigmaIn').fadeOut("slow");
 			popupSignUpStatus = 0;
 		}
@@ -2818,9 +2979,8 @@ $('.full .usertypes').show();
 		});
 // click on body rome frames and back grounds
 
-	$("body").click(function() {
-
-		$("#validAlmName").css("color","red");
+	$("body").click(function(e) {
+       $("#validAlmName").css("color","red");
 						$('#errorMsgAlb').html('');
 						$("#validAlmName").removeClass('glyphicon-remove');
 						$("#validAlmName").removeClass('glyphicon-asterisk');
@@ -2833,7 +2993,7 @@ $('.full .usertypes').show();
 
 
 		$("#rst_pw_bg").fadeOut("slow");
-		$("#new_pw_bg").fadeOut("slow");
+		//$("#new_pw_bg").fadeOut("slow");
         //$("#addeventbg").fadeOut("slow");
 		//$("#popupevent").removeClass('zigmaIn').fadeOut("slow");
 		$("#popupResetPassword").removeClass('zigmaIn').fadeOut("slow");

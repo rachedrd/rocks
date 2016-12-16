@@ -415,7 +415,7 @@
 						$el.css( extraStyle ).data( 'extraStyle', extraStyle );
 					}
 					else if( pile.substr( 0, 6 ) !== 'nopile' ) {
-					//	$el.data( 'front', true ).append( '<div class="removeAlbum"><span class="removeImage">X</span></div><div class="tp-title"><span>' + pile + '</span><span>' + len + '</span></div>' );
+					//$el.data( 'front', true ).append( '<div class="removeAlbum"><span class="removeImage">X</span></div><div class="tp-title"><span>' + pile + '</span><span>' + len + '</span></div>' );
 					$el.data( 'front', true ).append( '<div class="tp-title"><span>' + pile + '</span><span>' + len + '</span></div>' );
 					
 					}

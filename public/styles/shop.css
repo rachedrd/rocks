@@ -510,7 +510,7 @@ table.shop_table td.product-subtotal, .woocommerce table.shop_table td.product-s
 	padding: 10px;
 }
 .rating {
-	color: #FFB800;
+	color: gray;
 	font-size: 16px;
 	float: right;
 	margin: 0

@@ -308,6 +308,18 @@ Template.templateSignUpForm.events({
 				}
 	}
 });
+Template.UserConnected.helpers({
+	avatar: function(user)
+	{
+		if(user && user.profile)
+		{
+		if(user.profile.hasOwnProperty('avatar'))
+			return user.profile.avatar;
+		else
+			return ' ../../images/avatarProfileM2.png';
+		}
+	}
+})
 Template.UserConnected.events({
 'click #logOut':	function(event, t)
 				{
@@ -325,6 +337,42 @@ Meteor.logout( function(err)
 							Router.go('/');
 						}
 						});
+},
+'click #profileMessages a': function(){
+	var Currentuser =  Users.findOne({"_id": Meteor.userId() },  { fields: { profile: 1 }});
+	//alert('add open class to the chat list ...');
+	if(Currentuser && Currentuser.profile)
+	{
+		if(Currentuser.profile.chatFunctionnality === "allowed")
+		{
+			
+         $('#toggedfirst').removeClass('open'); 
+	$('#layout header').addClass('headerafterchat');	
+     $('#layout header').removeClass('oroginalheader');
+
+	$("#cbp-spmenu-s1").addClass('cbp-spmenu-open');
+	//$(' #header').addClass('headerafterchat');
+
+	$("#cbp-spmenu-s1").addClass('navafterchat');
+		}
+		if(Currentuser.profile.chatFunctionnality === "not allowed")
+		{
+			   var windowWidth = document.documentElement.clientWidth;
+									    var windowHeight = document.documentElement.clientHeight;
+									    var popupHeight = $("#popupinactiveaccount").height();
+									    var popupWidth = $("#popupinactiveaccount").width();
+									    // Centering
+									    
+			
+			$("#popupchatalowed").css({"top": windowHeight / 2 - popupHeight / 2,"left": windowWidth / 2 - popupWidth / 2});
+			// Aligning bg
+			$("#chatallowedbg").css({"height": windowHeight});
+			$("#chatallowedbg").css({"opacity": "0.7"});
+			$("#chatallowedbg").fadeIn("slow");
+			$("#popupchatalowed").addClass('zigmaIn').fadeIn("slow");
+		}
+	}
+
 }
 });
 Template.templateForm.onCreated(function(){
@@ -397,6 +445,23 @@ Template.templateForm.events({
 							    if(rachini.profile.Status === 'inactive')
 							    {
 							    	console.log('username is inactive');
+							    	  //Aligning our box in the middle
+									   var windowWidth = document.documentElement.clientWidth;
+									    var windowHeight = document.documentElement.clientHeight;
+									    var popupHeight = $("#popupinactiveaccount").height();
+									    var popupWidth = $("#popupinactiveaccount").width();
+									    // Centering
+									    $("#popupinactiveaccount").css({
+									      "top": windowHeight / 2 - popupHeight / 2,
+									      "left": windowWidth / 2 - popupWidth / 2
+									    });
+									    // Aligning bg
+									    $("#inactivebg").css({"height": windowHeight});
+									  
+									    // Pop up the div and Bg
+									      $("#inactivebg").css({"opacity": "0.7"});
+									      $("#inactivebg").fadeIn("slow");
+									      $("#popupinactiveaccount").addClass('zigmaIn').fadeIn("slow");
 							    }
 							    else
 							    {
@@ -514,15 +579,145 @@ Template.resetform.helpers({
 		return count.get();
 	}
 });
-Template.newPasswordForm.events({
+Template.homeReset.onCreated( function(){
+Session.setDefault("token", false);
+  
+});
 
-	'click #new_password': function(evt, t){alert('handel events'); }
+Template.homeReset.onRendered( function(){
+	if(Accounts._resetPasswordToken)
+	{
+	var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#newpasswordpopup").height();
+    var popupWidth = $("#newpasswordpopup").width();
+    // Centering
+    $("#newpasswordpopup").css({
+      "top": windowHeight / 2 - popupHeight / 2,
+      "left": windowWidth / 2 - popupWidth / 2
+    });
+    // Aligning bg
+    $("#new_pw_bg").css({"height": windowHeight});
+  
+    // Pop up the div and Bg
+      $("#new_pw_bg").css({"opacity": "0.7"});
+      $("#new_pw_bg").fadeIn("slow");
+      $("#newpasswordpopup").addClass('zigmaIn').fadeIn("slow");
+
+   
+	Session.set("token", true); 
+	}	
+});
+Template.homeReset.helpers({
+validtoken : function()
+{
+
+     if(Session.get("token") === true)
+    {
+    }  
+	return Session.get("token");
+}
+});
+Template.homeReset.events({
+'click  .changepassword': function(evnt, t)
+	{
+		evnt.preventDefault();
+		var password = t.find('#reset_password').value;
+		var RePassword = t.find('#reset_retypePassword').value;
+		if((password === '' || password == 'password') )
+						{
+							$('#errorMsgReset').html('password is empty');
+						    $("#validPasswd_reset").addClass('glyphicon-asterisk');
+						}
+
+						if((password.length <= 6 )&& (password !== '') && (password !== 'password'))
+						{
+							$('#errorMsgReset').html('password < 6 characters');
+						    $("#validPasswd_reset").removeClass('glyphicon-asterisk');
+						    //$("#errorMsgSgnUp").css({"margin-left": "90px"});
+						    $("#validPasswd_reset").addClass('glyphicon-remove');
+						}	
+
+						if((RePassword === '' || RePassword === 'password')  && (password.length > 6 )&& (password !== '') && (password !== 'password') )
+						{
+							$('#errorMsgReset').html('Retype your password');
+						    $("#validPasswdretype_reset").addClass('glyphicon-asterisk');
+						}
+
+						if((RePassword !== password) &&(RePassword !== '') && (RePassword !== 'password')  && (password.length > 6 )&& (password !== '') && (password !== 'password'))
+						{
+							$('#errorMsgReset').html('passwords does not much');
+						    $("#validPasswdretype_reset").addClass('glyphicon-remove');
+						    $("#validPasswdretype_reset").removeClass('glyphicon-asterisk');
+						}
+						if((RePassword === password) &&(RePassword !== '') && (RePassword !== 'password')  && (password.length > 6 )&& (password !== '') && (password !== 'password'))
+						{
+		                  alert('new password' + password + 'retypePassword : ' + RePassword);
+		                  alert(Accounts._resetPasswordToken);
+		                  Accounts.resetPassword(Accounts._resetPasswordToken, password , function(err, res)
+			{
+				if(err) 
+					{
+						$('#errorMsgReset').html('token expired'); 
+					}
+				else
+				{
+				alert('password changed Succefully !');
+				$('#errorMsgReset').html("");
+				t.find('#reset_password').value = "password";
+		        t.find('#reset_retypePassword').value = "password";
+		        $("#new_pw_bg").fadeOut("slow");
+                $("#newpasswordpopup").removeClass('zigmaIn').fadeOut("slow");
+
+
+			    }
+			});
+		               }
+		/*Accounts.resetPassword(Accounts._resetPasswordToken, newPassword , function(err, res)
+			{
+				if(err) 
+					{
+						alert('error : ' +err.message); 
+					}
+				else
+				{
+				alert(' password changed Succefully !');
+			    }
+			});*/
+	}
 });
 Template.resetform.events({
+'click #reset_email': function(e, t)
+{
+ $(".errorMsSendmail").html("");
+$(".validsendmail").removeClass('glyphicon-asterisk');
+$(".validsendmail").removeClass('glyphicon-remove');
+
+},	
+'keyup #reset_email': function(e, t)
+{
+ $(".errorMsSendmail").html("");
+$(".validsendmail").removeClass('glyphicon-asterisk');
+$(".validsendmail").removeClass('glyphicon-remove');
+
+},	
 'click #reset_mail_send':	function(evt, t)
 				{
 					evt.preventDefault();
 					var email = t.find("#reset_email").value;
+					alert(email);
+					if(( email === '') || (email === 'email') || ( email === undefined) )
+					{
+						alert('empty mail ...');
+					$(".errorMsSendmail").html("empty email");
+					$(".validsendmail").addClass('glyphicon-asterisk');
+					}
+					else 
+					{
+					$(".errorMsSendmail").html("");
+					$(".validsendmail").removeClass('glyphicon-asterisk');
+						if(( email !== '') && (email !== 'email') && (validateEmail(email) ))
+						{
 					Meteor.call('sendEmail', email,
             						'Welcome to giggorilla.uk.com web site',
             						'Thanks for joining us. Enjoy our service.');
@@ -531,13 +726,13 @@ Template.resetform.events({
 						if(err)
 							 alert("the error is:  " + err);
 						else{
-							//alert('email has been sent Succefully!')
- 						$("#popupResetPassword").removeClass('zigmaIn').fadeOut("slow");
+
+						//$('.sentResetmail').html('a rest mail is sent to'+ email );	
+						$("#popupResetPassword").removeClass('zigmaIn').fadeOut("slow");
  						$("#rst_pw_bg").fadeOut("slow");
 						$("#popupResetPassword").removeClass('zigmaIn').fadeOut("slow");
-						Router.go('/rest password');
-						//fadein new password
-						var windowWidth = document.documentElement.clientWidth;
+						//Router.go('/restPassword');
+						/*var windowWidth = document.documentElement.clientWidth;
 						var windowHeight = document.documentElement.clientHeight;
 						var popupHeight = $("#popupNewPassword").height();
 						var popupWidth = $("#popupNewPassword").width();
@@ -545,16 +740,21 @@ Template.resetform.events({
 						"top": windowHeight / 2 - popupHeight / 2,
 						"left": windowWidth / 2 - popupWidth / 2
 						});
-						// Aligning bg
 						$("#new_pw_bg").css({"height": windowHeight});
-	
-						// Pop up the div and Bg
 					$("#new_pw_bg").css({"opacity": "0.7"});
 					$("#new_pw_bg").fadeIn("slow");
-					$("#popupNewPassword").addClass('zigmaIn').fadeIn("slow");
+					$("#popupNewPassword").addClass('zigmaIn').fadeIn("slow");*/
 						}
 						});
-					return false;
+				     }
+				     else
+				     {
+				     	$(".errorMsSendmail").html("incorrect email");
+					$(".validsendmail").removeClass('glyphicon-remove');
+					
+				     }
+				     }
+					//return false;
 				}
 				});
 /*Template.resetform.events({

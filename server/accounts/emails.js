@@ -1,6 +1,12 @@
 import { Email } from 'meteor/email';
 Accounts.emailTemplates.from ="admin@giggorilla.uk.co";
 Accounts.emailTemplates.siteName ="giggorilla.uk.co";
+Accounts.emailTemplates.resetPassword.text = function ( user, url ) {
+ url = url.replace('/#', '');
+ url = url.replace('/reset-password/', '/reset-password:');
+
+return 'updated click here to reset you password   ' + url;
+};
 Accounts.emailTemplates.verifyEmail = {
   subject() {
     return "[giggorilla] Verify Your Email Address";

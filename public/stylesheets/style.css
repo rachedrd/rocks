@@ -2372,11 +2372,11 @@ html[xmlns] .slides {display: block;}
 .flex-control-thumbs img {width: 100%; display: block; opacity: .7; cursor: pointer;}
 .flex-control-thumbs img:hover {opacity: 1;}
 .flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
-#errsongname, #erryoutubeurl {margin-top: -5px ; position: absolute;}
+#errsongname,#erralbumname, #erryoutubeurl, #errdocname {margin-top: -5px ; position: absolute;}
  #eventerr, #eventediterr{margin-top: -5px ; position: relative; float: right; margin-right: 20px}
 @media screen and (max-width: 860px) {
 	.chngavatr{bottom: 85px ; left: 15px}
-	.changeavatar{bottom: 70px;}
+	.changeavatar{bottom: 70px; }
 	.flex-direction-nav .flex-prev {opacity: 1; left: 0;}
 	.flex-direction-nav .flex-next {opacity: 1; right: 0;}
 }
@@ -3403,7 +3403,7 @@ a.notification-close {
 
 /*	Popup SignIn
 ----------------------------------------------------------------------*/
-#LoginBackgroundPopup , #addsongbg, #addeventbg,#eventeditbg, #addblogimagebg, #addyoutubebg {  
+#LoginBackgroundPopup ,  #rst_pw_bg ,#chatallowedbg , #inactivebg, #addalbumbg, #adddocbg,#adddocreadbg , #new_pw_bg, #addsongbg, #inactivebg ,#paymentpopupbg, #addeventbg,#addavatarbg, #eventeditbg,  #paymentpopupbg, #addblogimagebg, #addyoutubebg, #sendmessagepopupbg {  
 	display:none;
 	position:fixed;
 	height:100%;
@@ -3413,7 +3413,7 @@ a.notification-close {
 	background:#000;
 	z-index: 99999997;
 } 
-#popupLogin , #popupsong, #popupblogimage, #popupvideo, #popupevent, #popupeditevent{  
+#popupLogin ,#popupalbum,#popupdoc,#popupdocread, #popupsong,#popupcover,#popupavatar, #popupchatalowed ,#popupinactiveaccount, #newpasswordpopup, #popupResetPassword , #popupblogimage, #popupNewPassword, #popupvideo, #popupevent, #sendmessagepopup, #popupeditevent, #paymentpopup, #paymentpopup{  
 	display:none;
 	position:fixed;
 	width:360px;
@@ -3421,6 +3421,34 @@ a.notification-close {
 	left:50%;
 	z-index: 99999998;
 	margin-left: 0;
+}
+#popupdocread{width: 100%}
+#popupResetPasswordClose {
+	position: absolute;
+	top: 25px;
+	right: 33px;
+	font-size: 24px;
+	color: #5C5C5C;
+	cursor: pointer;
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+#popupResetPasswordClose:hover {
+	color: #fff
+}
+
+#popup_new_pass {
+	position: absolute;
+	top: 25px;
+	right: 33px;
+	font-size: 24px;
+	color: #5C5C5C;
+	cursor: pointer;
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+#popup_new_pass:hover {
+	color: #fff
 }
 
   .date-picker{z-index: 999999999999999}
@@ -3433,7 +3461,7 @@ a.notification-close {
 	z-index: 99999998;
 	margin-left: 0;
 }
-#popupLogin .def-block ,#popupevent .def-block, #popupeditevent .def-block, #popupvideo .def-block , #popupsong .def-block , #popupblogimage .def-block
+#popupLogin .def-block , #newpasswordpopup .def-block , #popupResetPassword .def-block ,#popupNewPassword .def-block  ,#popupevent .def-block,#sendmessagepopup .def-block, #paymentpopup .def-block,#paymentpopup .def-block, #popupeditevent .def-block, #popupvideo .def-block ,#popupalbum .def-block, #popupsong .def-block ,#popupdoc .def-block, #popupdocread .def-block, #popupinactiveaccount .def-block,#popupchatalowed .def-block, #popupblogimage .def-block, #popupcover .def-block, #popupavatar .def-block
  {  
 	background: #000;
 	background: rgba(0, 0, 0, 0.9) !important;
@@ -3446,7 +3474,7 @@ a.notification-close {
 	box-shadow: none;
 	border: 2px solid #1F1F1F;
 }
-#popupLoginClose , #popupsongclose ,#popupeventclose,#popupediteventclose, #popupvideoclose ,#popupblogimageclose {
+#popupLoginClose ,#popupalbumclose, #popupsongclose,#popupdocclose,#popupdocreadclose,#popupavatarclose,  #popupcoverclose ,#inactiveaccountclose ,#chatallowedclose ,#popupeventclose , #sendmessagepopupclose, #paymentpopupclose, #popupediteventclose, #popupvideoclose ,#popupblogimageclose {
 	position: absolute;
 	top: 25px;
 	right: 33px;
@@ -3456,11 +3484,11 @@ a.notification-close {
 	-webkit-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
-#popupLoginClose:hover ,#popupeventclose:hover, #popupediteventclose:hover, #popupsongclose:hover, #popupvideoclose:hover ,#popupblogimageclose:hover {
+#popupLoginClose:hover ,#popupeventclose:hover,#sendmessagepopupclose:hover,#popupdocclose:hover, #popupdocreadclose:hover, #paymentpopupclose:hover, #popupediteventclose:hover, #popupsongclose:hover,#popupalbumclose:hover ,#popupavatarcslose:hover,#popupcoverclose:hover, #popupvideoclose:hover ,#popupblogimageclose:hover , #inactiveaccountclose:hover, #chatallowedclose:hover{
 	color: #fff
 }
 #login_username, #login_password, #song_name , #event_address, #event_venue,#event_regionname ,#event_startdate, #event_enddate, #event_name,  #signup_username, #signup_firstname,
-#signup_lastname, #signup_email, #event_cityname, #event_postcode ,#signup_retypePassword, #signup_password {
+#signup_lastname, #signup_email, #event_cityname, #event_postcode ,#signup_retypePassword, #signup_password ,#reset_retypePassword, #reset_password{
 	display: block !important;
 	width: 100% !important;
 	-webkit-box-sizing: border-box;
@@ -4711,8 +4739,8 @@ a.notification-close {
 
 /*	IE7 & IE8 & IE9 Hacks
 ----------------------------------------------------------------------*/
-.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup, .ie8 #addsongbg, .ie8  #addblogimagebg, .ie8 #addyoutubebg, .ie8 #popupevent, .ie8 #popupeditevent,
-.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup , .ie7 #addsongbg , .ie7  #addblogimagebg, .ie7 #addyoutubebg, .ie7 #popupevent, .ie7 #popupeditevent{
+.ie8 #header, .ie8 .sf-menu ul li,  .ie8 #bgsup , .ie8 .ttw-music-player .buy, .ie8 #LoginBackgroundPopup, .ie8 #adddocbg, .ie8 #adddocreadbg, .ie8 #addsongbg, .ie8 #addalbumbg ,.ie8  #addblogimagebg, .ie8 #addyoutubebg, .ie8 #popupevent, .ie8 #popupavatar, .ie8 #popupeditevent,.ie8 #paymentpopup, .ie8 #sendmessagepopup,
+.ie7 #header, .ie7 .sf-menu ul li,  .ie7 #bgsup , .ie7 .ttw-music-player .buy, .ie7 #LoginBackgroundPopup , .ie7 #adddocbg, .ie8 #adddocreadbg, .ie7 #addsongbg , .ie7 #addalbumbg  , .ie7 #addavatarbg, .ie7  #addblogimagebg, .ie7 #addyoutubebg, .ie7 #popupevent,.ie7 #paymentpopup, .ie7 #popupeditevent, .ie7 #sendmessagepopup{
 	background: transparent url(../images/ie_000_80.png) repeat;
 }
 .ie8 .footer-last, .ie8 .ttw-music-player .player-controls, .ie8 .def-block, .ie8 .ttw-music-player .tracklist, .ie8 .breadcrumbIn,
@@ -4733,9 +4761,9 @@ a.notification-close {
 .ie8 #event_startdate, .ie8 #event_enddate, .ie8 #event_regionname, .ie9 #event_regionname,
 .ie9 #event_startdate, .ie9 #event_enddate, .ie9 #event_postcode,
 
-.ie8 #signup_retypePassword, .ie8  #signup_password,
+.ie8 #signup_retypePassword, .ie8  #signup_password, .ie8 #reset_password, .ie8 #reset_retypePassword,
 .ie9 #signup_username, .ie9 #signup_firstname, .ie9 #event_name,
-.ie9 #signup_lastname, .ie9  #signup_email, .ie9 #song_name,
+.ie9 #signup_lastname, .ie9  #signup_email, .ie9 #song_name, .ie9 #reset_password, .ie9 #reset_retypePassword,
 .ie9 #signup_retypePassword, .ie9  #signup_password,
 .ie9 #login_username, .ie9 #login_password {
 	padding: 4px 10px 22px;
@@ -4744,7 +4772,7 @@ a.notification-close {
 .ie7 #login_username, .ie7 #song_name , .ie7 #login_password, .ie7 #signup_username, .ie7 #signup_firstname,
 .ie7 #signup_lastname, .ie7  #signup_email, .ie7 #event_postcode,
 .ie7 #event_startdate, .ie7 #event_enddate, .ie7 #event_cityname,
-.ie7 #signup_retypePassword, .ie7  #signup_password , .ie7 #event_regionname
+.ie7 #signup_retypePassword, .ie7  #signup_password , .ie7 #event_regionname, .ie7 #reset_password , .ie7 #reset_retypePassword
  {
 	padding: 4px 10px;
 	width: 276px !important
@@ -4919,7 +4947,7 @@ a.notification-close {
 @media only screen and (min-width: 959px) and (max-width: 1177px) {
 	.chngavatr{bottom: 75px}
 	.changeavatar{bottom: -35px;}
-	#errorMsgSgnUp {float: right; margin: -5px 20px 0px 0px;}
+	#errorMsgSgnUp , #errorMsgReset{float: right; margin: -5px 20px 0px 0px;}
 	body {overflow-x: hidden}
 	.boxed, .boxed-margin {width: 1000px}
 	.row { width: 944px }
@@ -4955,7 +4983,7 @@ nav ul{display: block;}
 	font-size: 15px}
   .chngavatr{bottom: 55px}
 	.changeavatar{bottom: 20px;}
-	#errorMsgSgnUp {float: right; margin: -5px 20px 0px 0px;}
+	#errorMsgSgnUp, #errorMsgReset {float: right; margin: -5px 20px 0px 0px;}
 	body {overflow-x: hidden}
 	#Login_PopUp_Link{ float: left; margin-left: 80%; }
 	#tempwrap{ float: left; margin-left: 80%; }
@@ -5008,7 +5036,8 @@ nav ul{display: block;}
 	.fb-profile .cover a.changecover { width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
 	.fb-profile .cover a.changeavatar { bottom: 30px; width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
 
-	#errorMsgSgnUp {float: right; margin: -6px 20px 0px 0px;}
+	#errorMsgSgnUp, #errorMsgReset {float: right; margin: -6px 20px 0px 0px;}
+	#errorMsgReset {margin-right: 18px}
 	#tempwrap{ /*float: left; margin-left: 60%;*/ 
 		width: 100%;
 		position: relative;
@@ -5115,12 +5144,12 @@ nav ul{display: block;}
 	.fb-profile .cover a.changecover { width: 110px ; height: 22px ; font-size: 12px; line-height: 0px}
 	
 		#errorMsgLgn  {float: right; margin: -33px 20px 0px 0px;}
-		#errsongname, #erryoutubeurl , #eventerr, #eventediterr{ margin-top: -4px ; font-size: 11px }
-		#errorMsgSgnUp {float: right; margin: -5px 20px 0px 0px;}
+		#errsongname,#erralbumname, #erryoutubeurl , #eventerr, #eventediterr{ margin-top: -4px ; font-size: 11px }
+		#errorMsgSgnUp, #errorMsgReset {float: right; margin: -5px 20px 0px 0px;}
 
 		/*#errorMsgSgnUp {width: 100%}*/
 
-	#loginRegister a:last-child, #loginRegister a:last-child{margin-right: 20px; float: right;}
+	#loginRegister a:last-child, #reset_loginregister a:last-child{margin-right: 20px; float: right;}
 		#tempwrap{
 		width: 100%;
 		position: relative;
@@ -5220,7 +5249,7 @@ nav ul{display: block;}
 	ul.showcomments li.child {margin: 0 0px 32px 2px}
 	.topbar h2, .topbar h3 { text-align: left; padding: 0; display: block;}
 	.tback {top: 40px}
-	#popupLogin , #popupsong, #popupvideo, #popupblogimage ,#popupevent, #popupeditevent{ width: 310px}
+	#popupLogin , #newpasswordpopup, #popupsong,#popupdoc,#popupdocread, #popupalbum, #popupavatar, #popupcover, #popupchatalowed, #popupinactiveaccount, #popupvideo, #popupblogimage ,#popupevent, #sendmessagepopup, #paymentpopup, #popupeditevent{ width: 310px}
 	  #popupSignUp { width: 310px ; margin-top: 0px}
 	.ajde_evcal_calendar .calendar_header p {font-size: 26px}
 	.forum .search-forum {position: relative;width: 100%}
@@ -5260,7 +5289,7 @@ nav ul{display: block;}
     z-index: 9;
 }
 /*login form styling */
-#popupLogin .input-group , #popupsong .input-group, #popupvideo input, #popupblogimage .input-group {
+#popupLogin .input-group ,  #popupalbum .input-group,#popupdoc .input-group, #popupsong .input-group, #popupvideo input, #popupblogimage .input-group {
 display: block !important;
 width: 100% !important;
 }
@@ -5283,7 +5312,7 @@ width: 100% !important;
 	      position: absolute;
 	  }
 
-#signup_username, #event_name, #signup_firstname,#event_address, #event_venue, #event_regionname, #signup_lastname, #event_startdate,#event_cityname, #event_enddate ,#event_postcode, #signup_password , #signup_email, #signup_retypePassword, #reset_email,#album_name{
+#signup_username, #event_name, #signup_firstname,#event_address, #event_venue, #event_regionname, #signup_lastname, #event_startdate,#event_cityname, #event_enddate ,#event_postcode, #signup_password ,#reset_password , #reset_retypePassword, #signup_email,#album_name, #signup_retypePassword, #reset_email,#album_name{
 	display: block !important;
 	width: 100% !important;
 	-webkit-box-sizing: border-box;
@@ -5298,14 +5327,15 @@ width: 100% !important;
 	margin-left: 30px;
 	border-radius: 5px 5px 5px 0px;
 }
-#signup_register, #signup_cancel , #event_cancel { float: left;
+#signup_register, #signup_cancel , #event_cancel,#album_cancel { float: left;
 	margin-top: 0px ; margin-right:
 	 0px; margin-left: 30px; position: 0px}
 
 #signin_facebbok, #signin_twitter  { margin-right: 0px; margin-left: 15px;}
-#reset_mail_send, #reset_mail_cancel, #createAlbum ,#cancelAddAlbm  { margin-top: 5px ; margin-right: 0px; margin-left: 40px; margin-bottom: 0px}
+#reset_mail_send,#album_add, #reset_mail_cancel, #createAlbum ,#cancelAddAlbm  { margin-top: 5px ; margin-right: 0px; margin-left: 40px; margin-bottom: 0px}
 #new_password, #new_password_cancel  { margin-top: 5px ; margin-right: 0px; margin-left: 35px; margin-bottom: 0px}
 #signin_twitter{ margin-top: 12px;}
+#album_add{margin-top: 0px}
 #signin_facebook{ margin-top: 14px;}
 #iconFacebook, #iconTwitter {
 	 height: 10px; width: 10px;
@@ -5321,18 +5351,18 @@ width: 100% !important;
 	   padding : 0%;
 	    margin-top: 5px;
 	}
-#loginRegister { width: 100% ;}
-#loginRegister a:first-child {margin-left: 20px;}
+#loginRegister , #reset_loginregister{ width: 100% ;}
+#loginRegister a:first-child , #reset_loginregister a:first-child {margin-left: 20px;}
 #loginRegister a:last-child {margin-left: 70px;}
 
-#validUsername, #validPassword, #validFisrtName_sgnUp,#viewPasswd_sgnUp, #viewRePasswd_sgnUp, #validLastName_sgnUp, #validRePsswd_sgnUp, #validEmail_sgnUp, #validPasswd_sgnUp,#validAlmName, #validUsername_sgnUp{color: red; position: absolute;float: right; margin-left: 93%;margin-top: 4%;}
-#viewPasswd_sgnUp, #viewRePasswd_sgnUp{margin-left: 85%; color: gray; cursor:pointer;}
-#errorMsgLgn, #errsongname, #erryoutubeurl, #eventerr,#eventediterr,
- #errorMsgSgnUp,
+#validUsername, #validPassword, #validFisrtName_sgnUp,#viewPasswd_sgnUp, #viewPasswd_resetpass, #viewPasswdretype_resetpass, #viewRePasswd_sgnUp, #validLastName_sgnUp, #validRePsswd_sgnUp, #validEmail_sgnUp, #validPasswd_sgnUp, #validPasswd_reset, #validPasswdretype_reset, #validAlmName, #validUsername_sgnUp{color: red; position: absolute;float: right; margin-left: 93%;margin-top: 4%;}
+#viewPasswd_sgnUp, #viewRePasswd_sgnUp, #viewPasswd_resetpass, #viewPasswdretype_resetpass{margin-left: 85%; color: gray; cursor:pointer;}
+#errorMsgLgn, #errsongname,#erralbumname, #erryoutubeurl, #eventerr,#eventediterr,
+ #errorMsgSgnUp, #errorMsgReset, #errdocname,
   #errorMsgAlb
   { color: red;}
   #popupLogin h4  {margin-right: 45%;}
-  #popupsong h4 ,#popupevent h4 ,#popupeditevent h4, #popupblogimage h4, #popupvideo h4{margin-right: 7%; margin-top: -10px; position: relative;}
+  #popupsong h4,#popupdoc h4 ,#popupdocread h4,#popupalbum h4,#popupinactiveaccount h4,#popupavatar h4, #popupcover h4, #popupchatalowed h4, #newpasswordpopup h4, #popupevent h4, #sendmessagepopup h4, #paymentpopup h4, #popupeditevent h4, #popupblogimage h4, #popupvideo h4{margin-right: 7%; margin-top: -10px; position: relative;}
    #popupSignUp h4 {margin-right: 24%;}
 /*#errorMsgSgnUp{ margin-left: 160px;}*/
 #errorMsgAlb{margin-left: 60px;}
@@ -5444,13 +5474,14 @@ width: 100% !important;
         openspace 0.3s ease forwards, 
         restored-item-animation 0.3s 0.3s cubic-bezier(0, 0.8, 0.32, 1.07) forwards;
 }
-#rac, #image{width: 670px; height: 525px; background: red; visibility: hidden;}
+#image{width: 670px; height: 525px; background: gray; visibility: hidden;}
+#image{visibility: visible; display: none;}
 .cropper {
-	visibility: hidden;
+	/*visibility: hidden;*/
 	      }
-	      #myCanvas{ background: url('checkboard.png'); visibility: hidden;}
+	      #myCanvas{ background-color: white; display: none; visibility: hidden; /*background: url('checkboard.png');*/ }
 	#givs{width: 550px;
-	 height: }
+	 display: none; visibility: hidden; }
 #myProgress {
     position: relative;
     width: 100%;

@@ -38,12 +38,21 @@
 						          </div>
 						        </div>
 						    </div>
-						    <div  class="userinforow bandtypesearch">
+						    <div  class="userinforow bandlocationsearch">
 						        <span class="oldinfo bld">Location: </span>
-						        <div class="bandtypecontainer userinforow">
-						          <div class='suggest-bandtype'>
+						        <div class="bandlocationcontainer userinforow">
+						          <div class='suggest-bandloc'>
 						            <input type='text' class='suggest-bandtlocation'>
-						          
+						          <ul class="locations">
+						          	{{#each locations}}
+						          	{{# if haslocation this}}
+						          	<li><span class='suggest-name'>{{this.profile.address.city}}</span></li>
+						          	<li><span class='suggest-name'>{{this.profile.address.city}}</span></li>
+						          	<li><span class='suggest-name'>{{this.profile.address.city}}</span></li>
+						          	{{/if}}
+						          <!--	<li><span class='suggest-name'>" + values[i] + "</span>-->
+						          	{{/each}}
+                                      </ul>
 						          </div>
 						        </div>
 						    </div>
@@ -148,18 +157,18 @@
            						<span class="emtyresult">No result match the query ! </span>
 							</div>
 							</div>
-							{{#if artits}}
+							{{#if areArtists}}
 							<div class="pagination-tt clearfix">
 								<ul>
-									<li><span class="deactive">1</span></li>
-									<li><a href="#" class="tbutton"><span>2</span></a></li>
-									<li><a href="#" class="tbutton"><span>3</span></a></li>
-									<li><span class="deactive">...</span></li>
-									<li><a href="#" class="tbutton"><span>8</span></a></li>
+                                  {{# each bandspaging}}
+									<li><a href="#" id="{{number}}" class="tbutton color3 bandspaginationitem"><span> {{number }} </span></a></li>
+									{{/each}}
+									
 								</ul>
-								<span class="pages">Page 1 of 8</span>
+								<span class="pagesbands">Page {{currentPage}} of {{bandspaging.length}}</span>
 							</div>
 							{{/if }}
+
 
 					</div>
 				</div>
@@ -167,14 +176,20 @@
 		</div>
 </template>
 <template name="band">
-	<div class="product grid_4">
-									<img class="product_img" src="images/assets/shop/1.jpg" alt="">
-									<img class="product_img_hover" src="images/assets/shop/1.jpg" alt="">
+	<div class="product grid_4">    {{#if band.profile.cover }}
+									<img class="product_img" src="{{band.profile.cover}}" style="height:240px; width: 200px" alt="">
+									<img class="product_img_hover" src="{{band.profile.cover}}" style="height:240px; width: 200px" alt="">
+									{{else}}
+									<img class="product_img" src="images/assets/shop/1.jpg" style="height:240px; width: 200px" alt="">
+									<img class="product_img_hover" src="images/assets/shop/1.jpg" style="height:240px; width: 200px" alt="">
+
+									{{/if}}
+
 									<div class="sale"><i class="icon-thumbs-up"></i></div>
 									<div class="product_inner">
-										<h3> <a href="{{pathFor 'seeprofile'}}" >{{profile.name}} </a> </h3>
+										<h3> <a href="/profile:{{band._id}}" >{{band.profile.name}} </a> </h3>
 										<div class="clearfix">
-											<p class="price"> ${{profile.salary}} </p>
+											<p class="price"> ${{band.profile.salary}} </p>
 											<p class="rating">
 												<i class="icon-star"></i>
 												<i class="icon-star"></i>

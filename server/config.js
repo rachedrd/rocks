@@ -15,10 +15,10 @@ service: "twitter",
 consumerKey: "mKPyDdTVcY2lMJKRIpHXXQmPW",
 secret: "7hQUAhojXET16IM1FhuPylTsqN70v5VR7ni56uPhI7wtw648l1"
 });
-
+/*
 ServiceConfiguration.configurations.remove({
     service: "soundcloud"
-  });
+  });*/
 /*ServiceConfiguration.configurations.remove({
     service: "soundCloud"
   });

@@ -6,11 +6,11 @@ Meteor.methods({
             var apiUrl = "https://api.getAddress.io/v2/uk/"+codepost+"?api-key=xqJHY6loQE2_pG0B8yWDKw6040";
 		// var result = Meteor.wrapAsync(apicall)(apiUrl);
 	//	var response = Meteor.wrapAsync(apicall)(apiUrl
-	var response = HTTP.get(apiUrl).data;
+	//var response = HTTP.get(apiUrl).data;
 				this.unblock();
                       //  console.log('result is the next ...\n');
 
-       /* var response = { "Latitude": 52.2457758, "Longitude": -0.89249070000000008 ,
+        var response = { "Latitude": 52.2457758, "Longitude": -0.89249070000000008 ,
 "Addresses":["10 Watkin Terrace, , , , , Northampton, Northamptonshire",
              "12 Watkin Terrace, , , , , Northampton, Northamptonshire",
              "14 Watkin Terrace, , , , , Northampton, Northamptonshire",
@@ -52,8 +52,31 @@ Meteor.methods({
                                "Flat 6, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire",
                                "Flat 7, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire",
                                "Flat 8, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire",
-                               "Flat 9, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire"]};*/
+                               "Flat 9, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire"]};
                               // console.log(response); 
 		return response;
-	}
+	},
+    'chargeCard': function(mystripeToken) {
+      //check(stripeToken, String);
+      var Stripe = StripeAPI('sk_test_ajhUKVHS0APlgjVPWmbeeMQP');
+      Stripe.charges.create({
+        source: mystripeToken.stripeToken,
+        amount: mystripeToken.amount, // this is equivalent to $50
+        currency: 'usd'
+      }, function(err, charge) {
+            if(err)
+            {
+                  console.log('there is an error ....\n');
+                  console.log(err);
+                  return err;
+            }
+            if(charge)
+            {
+                  console.log('success payment ...\n');
+                  console.log(charge); 
+                  return charge;
+            }
+       // console.log(err, charge);
+      });
+    }
 });

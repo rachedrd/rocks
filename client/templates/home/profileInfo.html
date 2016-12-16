@@ -1,6 +1,41 @@
 <template name="homeProfile">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<!--embedded document popup read-->
+<div id="popupdocread">
+        <div class="def-block widget">
+          <h4><span class="docnameurl" alt="Open new tab" title="Open in new tab"></span> </h4><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+            <form id="popup_login_form">
+              <iframe class="doc" src=""><!---https://docs.google.com/gview?url=https://giggorrilla.storage.googleapis.com/britneySpears/docs/description du projet GiGorilla.pdf&embedded=true"-->
+              </iframe>
+            </form>
+          </div>
+        </div>
+        <div id="popupdocreadclose">x</div>
+      </div>
+      <div id="adddocreadbg"></div>
+<!--end embedded document red popup-->
+<!--upload document popup-->
+<div id="popupdoc">
+        <div class="def-block widget">
+          <h4> Add doucment </h4><span id="errdocname"></span><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+           <form id="popup_login_form">
+              <div class="songnamediv">
+                <span class="currentdocname"></span>
+              </div>
+              <div id="myProgress">
+    <span id="progressUploading"> {{progressdoc}} %</span>
+  <div id="myBar" style="width: {{progressdoc}}%;"></div>
+</div>
+    </form><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupdocclose">x</div>
+      </div>
+      <div id="adddocbg"></div>
+<!--end upload document popup-->
 <div id="popupsong">
         <div class="def-block widget">
           <h4> Add song </h4><span id="errsongname"></span><span class="liner"></span>        
@@ -19,6 +54,66 @@
         <div id="popupsongclose">x</div>
       </div>
       <div id="addsongbg"></div>
+<!--add album pupop-->      
+<div id="popupalbum">
+        <div class="def-block widget">
+          <h4> Add album </h4><span id="erralbumname"></span><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+           <form id="popup_login_form">
+            <div class="input-group input-group-lg">
+                 <span class="input-goup-addon" alt="album name" title="album name"><i class="icon-camera-retro registerForm" alt="album name" title="album name"></i></span>
+                 <input type="text" alt="album name" title="album name" name="reset_email" id="album_name" onfocus="if (this.value=='albumname') this.value = '';" onblur="if (this.value=='albumname') this.value = '';" value="albumname" placeholder="album name">
+                 <i id="validEmail_sgnUp" class="validatealbumname glyphicon"></i>
+            </div> 
+                
+                <a href="#" id="album_add" class="tbutton color3 small"><span>Add</span></a>
+                <a href="#" id="album_cancel" class="tbutton color2 small"><span>Cancel</span></a>
+    </form><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupalbumclose">x</div>
+      </div>
+      <div id="addalbumbg"></div>
+      <!--end add album-->      
+
+<!--popup avatar-->
+<div id="popupavatar">
+        <div class="def-block widget">
+          <h4>Upload image</h4><span id="errsongname"></span><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+           <form id="popup_login_form">
+              <div class="songnamediv">
+                <span class="currentsonname"></span>
+              </div>
+              <div id="myProgress">
+    <span id="progressUploading"> {{progressimage}} %</span>
+  <div id="myBar" style="width: {{progressimage}}%;"></div>
+</div>
+    </form><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupavatarclose">x</div>
+      </div>
+      <div id="addavatarbg"></div>
+<!--popup cover-->
+<div id="popupcover">
+        <div class="def-block widget">
+          <h4>Upload Cover </h4><span id="errsongname"></span><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+           <form id="popup_login_form">
+              <div class="songnamediv">
+                <span class="currentsonname"></span>
+              </div>
+              <div id="myProgress">
+    <span id="progressUploading"> {{progress}} %</span>
+  <div id="myBar" style="width: {{progress}}%;"></div>
+</div>
+    </form><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="popupcoverclose">x</div>
+      </div>
+      <div id="addcoverbg"></div>            
 <!--popup edit youtube video url-->
 <div id="popupvideo">
         <div class="def-block widget">
@@ -300,14 +395,15 @@
       <div id="eventeditbg" class="eventDetailsbg"></div>                
 <!--end edit youtube video url-->  
 <div class="profilecover">
- <img class = "coverImage" src="images/5.jpeg" />
+ <img class = "coverImage" src="{{showCover currentUser}}" />
   <div class="subcover">
     <div class="avatarContainer">
       <div class="changeAvatar">
         <br>
         <span>change avatar</span>
+        <input type="file"  class="uploadavatar upload" id="uploadavatar">
       </div>
-      <img class = "avatarImage" src="images/avatarProfileM3.png" />
+      <img class = "avatarImage" src="{{showAvatar currentUser }}"/>
     </div>
     <div class="usercontainer">
       <div class="username">
@@ -315,56 +411,18 @@
         </span>
       </div>
       <div class="usernotifications">
-        <span class="notificationsicon" alt="Notifications" title="Notifications">
+        <span class="notificationsicon transparent" alt="Notifications" title="Notifications">
           <span class="notificationcount" value="{{counter}}">{{counter}}
           </span>
           <i class="glyphicon glyphicon-globe" alt="NOtifications" title="NOtifications"></i>
         </span>
       </div>
-      <div class="usermessages dropdown" >
-        <span class="messagessicon  dropdown-toggle" data-toggle="dropdown" alt="Messages" title="Messages">
+      <div class="usermessages">
+        <span class="messagessicon transparent" alt="Messages" title="Messages">
+          <span class="notificationcount" value="{{counter}}">{{counter}}
+          </span>
           <i class="glyphicon glyphicon-envelope" alt="Messages" title="Messages"></i>
         </span>
-        <ul class="dropdown-menu" id="messagesList" > 
-          <li>
-            <a href="{{pathFor 'homeProfile'}}">Messages 1
-              <span class="glyphicon glyphicon-cog pull-right">
-              </span>
-            </a>
-          </li>
-          <li class="nav-divider">
-          </li>
-          <li>
-            <a href="#">Stats
-              <span class="glyphicon glyphicon-stats pull-right">
-              </span>
-            </a>
-          </li>
-          <li class="nav-divider">
-          </li>
-          <li id="profileMessages">
-            <a href="#" >Messages 2
-              <span class="badge pull-right"> 42 
-              </span>
-            </a>
-          </li>
-          <li class="nav-divider">
-          </li>
-          <li>
-            <a href="#">Messages 3
-              <span class="glyphicon glyphicon-heart pull-right">
-              </span>
-            </a>
-          </li>
-          <li class="nav-divider">
-          </li>
-          <li>
-            <a href="#" id="logOut">Messages 4
-              <span class="glyphicon glyphicon-log-out pull-right">
-              </span>
-            </a>
-          </li>
-        </ul>
       </div>
       <div id="notificationWrapper">
         <div id="notificationTitle"> 
@@ -383,6 +441,23 @@
           </ul>
         </div>  
       </div>
+      <div id="messagesWrapper">
+        <div id="notificationTitle"> 
+          <h4> MESSAGES </h4>
+          <span class="liner">
+          </span>
+        </div>
+        <div id="notificationList">
+          <ul id="ullist" class="ullist"> 
+            {{#if emtyMesages }}
+              <p class="emptmessages"> there is no new messages</p>
+            {{/if}}                 
+           {{# each messages}}
+              {{> message}}
+            {{/each}}
+          </ul>
+        </div>  
+      </div>
     </div>  
   </div>
   <div class="changeCover">
@@ -390,6 +465,7 @@
       <span class="glyphicon glyphicon-picture">
       </span> Change cover
     </a>
+    <input type="file"  class="uploadcover upload" id="uploadcover">
   </div>
 </div>
 <br>
@@ -412,7 +488,7 @@
       <li><a class="loadsongs" href="#mp3" id="uploadsong"> Songs </a></li>
       <li><a href="#gallery" class="loadgellery" id="uploadimage">Gallery</a></li>
       <li><a  href="#videos" id="uploadvideo" >Videos</a></li>
-      <li><a href="#events" class="events">Documents</a></li>
+      <li><a href="#docs" id="documents" >Documents</a></li>
       <li><a href="#calender" id="calendar" class="calender"> Calendar </a></li>
       <li>
         <div class="tbutton small color3 uploadsongdiv">
@@ -424,8 +500,22 @@
         </div>
       </li>
       <li>
-        <div id="close" class="tbutton small color3 tback uploadimgdiv"><span>&gt; Back to Albums</span></div>
+        <div id="close" class="tbutton small color3 tback closealbum uploadimgdiv"><span><!--&gt-->Back to Albums</span></div>
       </li>
+      <li>
+        <div class="tbutton small color3 tback addnewalbum"><span>Add album</span></div>
+      </li>
+      <li>  
+        <div class="tbutton small color3 tback adddocument">
+          <span class="uploadnewdoc" alt="upload doc" title="upload doc" >
+            Add doc
+          </span>
+          <input type="file"  class="uploaddoc upload" id="uploaddocfile">
+        </div>
+      </li>
+      <!--<li>
+        <div id="close" class="tbutton small color3 tback uploadimagediv"><span>Add image</span></div>
+      </li>-->
       <li>
         <div id="close" class="tbutton small color3 tback uploadvideodiv"><span>Edit video url</span></div>
       </li>
@@ -481,14 +571,89 @@
           </div>
         </div>
       </li>
+      <li id="docs">
+        <div class="video-grid">
+            {{# if documents currentUser}}
+            <div class="def-block widget wishlistdiv">
+            <div class="widget-content ">
+              <!--{{# if whishlist currentUser}}-->
+              
+              <ul class="list">
+                {{#each documents}}
+              <!--{{#each whishlist currentUser}}-->
+            <li id="{{@index}}">
+              <a class="readdocument" id="{{url}}">
+                <i class="icon-caret-right"></i>
+                {{title}}
+              </a>
+              <i class="icon-remove removeDoc" alt="remove document" title="remove document" id="{{_id}}">
+              </i>
+            </li>
+            {{/each}}
+              </ul>
+            
+            </div><!-- widget content -->
+          </div>
+          {{else}}
+            <span class="emptywhishlist">
+             No documents
+            </span> 
+            {{/if}} 
+          <!-- def block widget categories -->
+          <!--<iframe class="doc" src="https://docs.google.com/gview?url=http://writing.engr.psu.edu/workbooks/formal_report_template.doc&embedded=true"></iframe>-->
+           <!--<iframe src=""></iframe>-->
+        </div>
+      </li>
       <li id="gallery">
         <div class="video-grid">
+          <br>
+          <br>
+          <br>
+          <br>
           <ul id="tp-grid" class="tp-grid">
             {{#each images}}
               {{> task}}
             {{/each}}
+            <div class="testingspan" id="germanyTour">
+             <span> Remove Album</span>
+            </div>
           </ul>
+          <!--<span id="addPhoto">upload new image</span>-->
           <!--{{> imageUploader}}-->
+  <!--<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+      <span style="font-size:15px; margin-left:10px;">
+        <div class="form-group">
+          <p class="help-block">Upload image here. {{progress}} % Complete </p>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <span class="sr-only currentprogress">{{progress}} % Completeeeee</span>
+          </div>
+        </div>
+      </span>
+    </div>
+    {{isUploading}}
+  </div>-->   
+  <div class="fileUpload" id="addImagediv"> 
+    <input type="file"  class="uploadFile uploadImage upload" id="uploadFile">
+    <span class="addImage">add new image</span>
+  </div>
+
+  <input type="button" class="uploading" value="uploading" id="uploadingImage" />
+  <br>
+  <div id="myProgress"> progress is : {{progressimage}}
+    <span id="progressUploading"> {{progressimage}} %</span>
+  <!--<div id="myBar" style="width: {{progressimage}} %;"></div>-->
+</div>
+<div class="cropper">
+    <div id="givs">
+     <img class="img-responsive" id="image" src="" alt="Picture" width="670" height="525">
+    </div>
+    <canvas id="myCanvas" width="670"  height="525" style="border:1px solid #d3d3d3;">
+    </canvas>    
+  </div>
+
         </div>
       </li>
       <li id="videos">
@@ -646,7 +811,7 @@
       <div class="posts">
         <div class="def-block" style="min-height: 400px;">
           <div class="topbar">
-            <div id="close" class="tbutton small tback"><span>&gt; Back to Albums</span></div>
+            <div id="close" class="tbutton small tback closealbum"><span>&gt; Back to Albums</span></div>
             <h4 id="name">Photo Gallery</h4>
             <span class="addAlbum">add new album</span><span class="liner"></span>
           </div>
@@ -693,14 +858,13 @@
  </template>    
 <template name="task">
   <li data-pile="{{imageFolder}}" class="grid_3" id="{{imageFolder}}">
-    <!--<div class="removeDiv">
-    <span class="removeImage">X</span>
-    </div>-->
-      <a href="{{imageurl}}" rel="prettyPhoto[{{imageFolder}}]">
+    <div class="removeDiv" id="{{_id}}">
+       <span class="removeImage">Remove image</span>
+  </div>
+      <a href="{{imageurl}}" rel="prettyPhoto[{{imageFolder}}]" class="link">
       <img  src="{{imageurl}}" alt="{{imageName}}" />
     </a>
    </li>
-   <!--<img src="{{imageurl}}" alt="{{imageurl}}" caption="{{imageName}}" /> --> 
    </template>
 <template name="newAlbum">    
   <div id="popupnewalbbum">
@@ -721,43 +885,6 @@
   </div>
   <div id="new_al_bg"></div> 
 </template>
-<template name="imageUploader">
-  <!--<div class="container">
-    <div class="col-md-6 col-md-offset-3">
-      <span style="font-size:15px; margin-left:10px;">
-        <div class="form-group">
-          <p class="help-block">Upload image here. {{progress}} % Complete </p>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <span class="sr-only currentprogress">{{progress}} % Completeeeee</span>
-          </div>
-        </div>
-      </span>
-    </div>
-    {{isUploading}}
-  </div>-->   
-  <div class="fileUpload"> 
-    <input type="file"  class="uploadFile upload" id="uploadFile">
-    <span class="addImage">add new image</span>
-  </div>
-
-  <input type="button" class="uploading" value="uploading" />
-  <br>
-  <div id="myProgress">
-    <span id="progressUploading"> {{progress}} %</span>
-  <div id="myBar" style="width: {{progress}}%;"></div>
-</div>
-<div class="cropper">
-    <div id="givs">
-      next image
-     <img class="img-responsive" id="image" src="" alt="Picture" width="670" height="525">
-    </div>
-    <canvas id="myCanvas" width="670"  height="525" style="border:1px solid #d3d3d3;">
-    </canvas>    
-    <img id="rac" src="" width="670"  height="525">
-  </div>
-</template>
 <template name="notification">
  <li class="notification-box notification-box-one notification" id="{{_id}}">
               <header><p> {{type}} </p><p>{{formatdate time }}</p>
@@ -774,12 +901,26 @@
                 {{/if}}
                 {{#if compareStatus status recieverId _id currentUser._id  }}
                    <a href="/profile:{{ownerId}}" class="owner" id="{{ownerId}}" value="{{ownerName}}">{{ownerName}}</a> sent for you {{type}}
+                   {{#if representrequest type }}
                     <a href="#" id="{{ownerId}}" class="reject">Reject</a>
                     <a href="#" id="{{ownerId}}" class="accept" value="{{owner}}" >Accept</a>
+                    {{/if}}
 
                                                     {{/if}}</p>
     
                 <a href="#" id="{{_id}}"  class="removenotif notification-close remove toptip" original-title="remove notification" alt="Remove notification"><i class="icon-remove"></i></a>
+  </li>
+  
+</template>
+<template name="message">
+ <li class="notification-box notification-box-one notification message" id="{{_id}}">
+              <header><p> {{sendername senderId}} </p><p>{{formatdate timeStamp }}</p>
+              </header>
+              <br>
+              <p class="notcontent" id="{{senderId}}"><i class="icon icon-comments"></i>
+                {{#if compareStatus status recieverId _id currentUser._id  }}
+                   <a href="/profile:{{senderId}}" class="owner" id="{{senderId}}" value="{{sendername senderId}}"><!--{{sendername senderId}}-->SAID : </a> {{bitofcontent content}}<!--{{bitofcontent content}}-->
+                                                    {{/if}}</p>
   </li>
   
 </template>
@@ -1687,3 +1828,5 @@
         <div id="mycalendar"></div>
         {{/if}}-->
     </template>
+    <template name="imageUploader">
+    </template>  

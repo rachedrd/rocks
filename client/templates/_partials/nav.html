@@ -1,7 +1,37 @@
 <template name="nav">
     {{> login }}
     {{> signUp }}
-     <!-- {{> resetMailTemplate }}{{> NewPasswordTemplate }}-->
+     {{> resetMailTemplate }}
+     <div id="popupinactiveaccount">
+        <div class="def-block widget">
+          <h4>Your account is inactive</h4><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+           <form id="popup_login_form">
+              <div class="songnamediv">
+                <span class="currentsonname">Please contact  <a href="#">admin@giggorilla.co.uk</a></span>
+              </div>
+    </form><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="inactiveaccountclose">x</div>
+      </div>
+      <div id="inactivebg"></div>
+
+      <div id="popupchatalowed">
+        <div class="def-block widget">
+          <h4>Chat is disabled</h4><span class="liner"></span>        
+          <div class="widget-content row-fluid">
+           <form id="popup_login_form">
+              <div class="songnamediv">
+                <span class="currentsonname">Please contact  <a href="#">admin@giggorilla.co.uk</a></span>
+              </div>
+    </form><!-- login form -->
+          </div><!-- content -->
+        </div><!-- widget -->
+        <div id="chatallowedclose">x</div>
+      </div>
+      <div id="chatallowedbg"></div>
+
     <header id="header" class="glue oroginalheader exampleHeader">
       <div class="row clearfix rp">
         <div class="little-head lefter">
@@ -132,7 +162,7 @@
           <ul id="ulProfile">
             <li>
           <a id="showProfile" class="dropdown-toggle" data-toggle="dropdown">
-            <img class="img-rounded inline" id="avatarProf" style="height: 32px; margin-top: 4px; " src="../../images/avatarProfileM2.png" />
+            <img class="img-rounded inline" id="avatarProf" style="height: 32px; margin-top: 4px; " src="{{avatar currentUser}}" />
           </a>
         </li>
         <li>
@@ -275,7 +305,7 @@
 <template name="resetMailTemplate" >
   <div id="popupResetPassword">
       <div class="def-block widget">
-        <h4> Reset Password  </h4><span class="liner"></span>        
+        <h4> Reset Password  </h4><span id="errorMsgLgn" class="errorMsSendmail"></span><span class="liner"></span>        
         <div class="widget-content row-fluid">
           {{> resetform}}
         </div><!-- content -->
@@ -289,20 +319,22 @@
             <div class="input-group input-group-lg">
                  <span class="input-goup-addon" alt="your email" title="your email"><i class="icon-envelope registerForm" alt="your email" title="your email"></i></span>
                  <input type="text" alt="your email" title="your email" name="reset_email" id="reset_email" onfocus="if (this.value=='email') this.value = '';" onblur="if (this.value=='email') this.value = '';" value="email" placeholder="youremail@example.com">
+                 <i id="validEmail_sgnUp" class="validsendmail glyphicon"></i>
             </div> 
                 
                 <a href="#" id="reset_mail_send" class="tbutton small"><span>Send</span></a>
                 <a href="#" id="reset_mail_cancel" class="tbutton color2 small"><span>Cancel</span></a>
-          </form><!-- login form -->
+          </form>
 </template>
+<!--
 <template name="NewPasswordTemplate" >
  <div id="popupNewPassword">
       <div class="def-block widget">
         <h4> New Password  </h4><span class="liner"></span>        
         <div class="widget-content row-fluid">
           {{> newPasswordForm}}
-        </div><!-- content -->
-      </div><!-- widget -->
+        </div>
+      </div>
       <div id="popup_new_pass">x</div>
     </div>
     <div id="new_pw_bg"></div> 
@@ -312,7 +344,6 @@
             <div class="input-group input-group-lg">
                  <span class="input-goup-addon" alt=" password" title=" your new password"><i class="icon-lock registerForm" alt="your new password" title="your new password"></i></span>
                  <input type="password" name="login_password" id="signup_password" onfocus="if (this.value=='password') this.value = '';" onblur="if (this.value=='') this.value = 'password';" value="password" placeholder="password">
-                <!--<label for="login_retypePassword" class="liner">Retype password</label>-->
             </div>
             <div class="input-group input-group-lg">
                 <span class="input-goup-addon" alt="retype new password" title="retype new password">
@@ -322,8 +353,8 @@
             </div>  
                 <a href="#" id="new_password" class="tbutton small"><span>Change</span></a>
                 <a href="#" id="new_password_cancel" class="tbutton color2 small"><span>Cancel</span></a>
-  </form><!-- login form -->
-</template>
+  </form>
+</template>-->
 <template name="count">
   {{#if mycounter}}
  <span class="badge pull-right"> {{mycounter}} </span>
@@ -351,20 +382,22 @@
             <div class="slimScrollDiv" >
             <div class="slimscroll">
           <ul class="chat-box">
-            
+           {{#each friends.profile.friends}}  
+  <li class="showRight2" id="{{id}}" ><div class="status-badge chattoname" id="{{name}}">
+  <img class="img-circle" width="40" src="../../images/avatarProfileM2.png" alt="">
+  <div class="small-badge bg-green"></div></div>
+  <b>{{name}}</b><p>On the other hand, we denounce...</p>
+  <a href="#" class="btn btn-md no-border radius-all-100 btn-black">
+  <i class="icon icon-comments "></i></a>
+  </li>
+      {{/each}}
+  <!--
   <li class="showRight2" ><div class="status-badge">
   <img class="img-circle" width="40" src="../../images/avatarProfileM2.png" alt="">
   <div class="small-badge bg-green"></div></div>
   <b>Grace Padilla</b><p>On the other hand, we denounce...</p>
   <a href="#" class="btn btn-md no-border radius-all-100 btn-black">
   <i class="icon icon-comments "></i></a>
-  </li>
-  <li class="showRight2" ><div class="status-badge">
-  <img class="img-circle" width="40" src="../../images/avatarProfileM2.png" alt="">
-  <div class="small-badge bg-green"></div></div>
-  <b>Grace Padilla</b><p>On the other hand, we denounce...</p>
-  <a href="#" class="btn btn-md no-border radius-all-100 btn-black">
-  <i class="icon icon-comments "></i></a>
   </li><li class="showRight2" ><div class="status-badge">
   <img class="img-circle" width="40" src="../../images/avatarProfileM2.png" alt="">
   <div class="small-badge bg-green"></div></div>
@@ -419,14 +452,14 @@
   <b>Grace Padilla</b><p>On the other hand, we denounce...</p>
   <a href="#" class="btn btn-md no-border radius-all-100 btn-black">
   <i class="icon icon-comments "></i></a>
-  </li>
+  </li>-->
   </ul>
 </div>
       </div>
     </nav>
         <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
             <h3>
-              <span class="pull-left">Sandra Smith</span>
+              <span class="pull-left chatto">Sandra Smith</span>
               <a href="javascript:void(0);" class="pull-right" id="closeRight2">
                 <i class="icon icon-angle-right"></i>
               </a>

@@ -1,12 +1,16 @@
 .profilecover{ width: 100%; height: 450px; position: relative; /*background-color: red;*/
   }
-
+.docnameurl{cursor: pointer;}  
+  .usrPrflnm , .notificationsicon, .messagessicon, { cursor: pointer;}
+#paymentpopup p {display: block; font-size: 11px; color: white}
+#addImagediv{color: #ff6600; display: none;}
+#uploadingImage{display: none;}
   .unavailable{background-color: #ff6600; font-weight: bold;}
   #seeprofile span.fc-title{ font-weight: bold;}
   .removewhishlistitem{opacity: 0}
 .postcodeevent ul.zonecodes {position: absolute; margin-top: 35px; background-color: rgba(255, 255, 255, 0.8);}
 .addressnameevent ul.zonecodes , .addresseventedit ul.zonecodes {position: absolute; margin-top: 35px; background-color: rgba(255, 255, 255, 0.8);}
-
+.popup_newPassword_form div{display: block;}
   /*.userstable tfoot, .userstable tfoot tr, .userstable tfoot tr td {width: 100%}*/
   .coverImage{width: 100% ; height: 100%}
 .subcover{ /*background-color: yellow;*/ width: 100%; height: 100px;  position : absolute ; bottom: -35px}
@@ -23,20 +27,63 @@
 	.pages{display: none;}
 	#youtube_video{display: block; margin: 0 auto; width: 50px}
 /*upload song section */
-.uploadsongdiv, .uploadimgdiv, .uploadsongimgdiv, .uploadvideodiv, .addevent{
+.uploadsongdiv, .adddocument, .addnewalbum, .uploadimgdiv, .uploadsongimgdiv, .uploadvideodiv, .addevent, #addImagediv{
 padding: 0px;
 	position: relative;  width:auto;  cursor: pointer; 
-background-color: red;}
-.uploadsongdiv input.upload , .uploadsongimgdiv input.upload{
+}
+.genericDisplay{display: inline-block;}
+.removeDiv
+{
+	display: none;
+	cursor: pointer;
+	 position: absolute;
+	  width: auto; ;
+	  height: auto;
+	   padding-left: 5px;
+	   background-color: #ff6000; 
+	   border-radius: 10px;
+	    right: 1px; margin-top: 1px;
+	    opacity: 1;
+	    z-index: 999999999999999999;
+}
+.testingspan{
+	padding: 0px;
+	 display: inline-block;
+	 width: auto;
+	  margin: 0px;
+	   cursor: pointer;
+	    color :white;
+	    margin-left: 20px;
+	   background-color: #ff6000; 
+	   border-radius: 10px;
+	    padding: 0px 10px;
+	     z-index: 9999999999999999; position: relative;}
+
+.removeAlbum
+{
+	  cursor: pointer;
+	  position: relative;
+	  z-index: 10000;
+	  width: 20px ;
+	  float: right;
+	  margin-right: -2px;
+	  height: 20px;
+	  padding-left: 5px;
+	  background-color: red; 
+	  border-radius: 10px;
+	  opacity: 0.9;
+}
+.uploadsongdiv input.upload , .adddocument input.upload, .uploadsongimgdiv input.upload, .changeCover input.upload , .changeAvatar input.upload  {
 	position: absolute; cursor: pointer;
 	 margin-top: -25px;
-	
 	width: 100%;
 	height: 100%;
 	padding: 0px; 
 	opacity: 0;
-
 }
+#addImagediv input.upload{z-index: 10; margin-top: 0px; height: 40px; position: absolute;opacity: 0}
+#addImagediv input.upload:hover{cursor: pointer;}
+#addImagediv span.addImage , #addImagediv span.addImage:hover{cursor: pointer; position: absolute;}
 .userstable  td, .userstable  th {padding: 10px 0px 10px 0px}
 .userstable tbody tr.topic-sticky:hover {
      background: #222;
@@ -74,9 +121,19 @@ background-color: red;}
         .postcodeevent ul li , .addressnameevent ul li , .addresseventedit ul.zonecodes{color: black; }
         .addressnameevent ul li , .addresseventedit ul li{padding-bottom: 10px}
 .changeAvatar{position: absolute; height:50px;  bottom: -45px;/*  background-color: pink;*/ width: 135px ;} 
-.changeAvatar span{float: right ; margin-right: 4px;}
-.changeCover{  position: absolute ; bottom: 10px ; width: 100%; }
-.changeCover span {float: left; margin-right: 10px;}
+.changeAvatar span{
+	float: right ; margin-right: 4px; 
+	cursor: pointer;
+color: white;
+ -webkit-text-shadow: 1px 0px 10px #ff6600;
+    -moz-text-shadow: 1px 0px 10px #ff6600;
+    text-shadow:  1px 0px 10px #ff6600;
+}
+.changeCover{  
+	position: absolute ; bottom: 10px ; 
+	width: 100%; 
+}
+.changeCover span {float: left; margin-right: 10px; }
 .usrPrflnm{line-height: 24px;
 	font-family: "Oswald", Tahoma, Arial;
 	font-weight: bold;
@@ -113,7 +170,7 @@ padding: 10px;}
 	border-bottom: 1px solid #ff6600;
 	display: inline-block;
 }
-#notificationWrapper{ 
+#notificationWrapper, #messagesWrapper{ 
 	position: relative;
 	z-index: 10;
 	white-space: nowrap; 
@@ -141,6 +198,14 @@ max-height: 300px;
 .togglenotification
 {
 	background-color: black;
+    padding-left: 12px; padding-right:  5px;
+    padding-top: 2px; padding-bottom:  17px;
+    opacity: 0.5;
+    border-radius: 5px 5px 0px 0px;
+}
+.usermessages .togglenotification{padding-right:  11px;}
+ .transparent
+{
     padding-left: 12px; padding-right:  5px;
     padding-top: 2px; padding-bottom:  17px;
     opacity: 0.5;
@@ -232,11 +297,11 @@ max-height: 300px;
 	/* .memebernamespan , .memeberrolespan {display: none;}*/
 	 .memeberlabel , .listsetlabel {width: auto; float: left; margin: -2px  0px 0px 20px}
 	 .memeberdiv{width: 100%; height: auto; display: inline;}
-	 .memeberdiv span , .addmemeberform ,.suggest-bandtype , .suggest-username,  .suggest-usertype, .address-holder, .suggest-holder, .addhighlightform , .addrepertoireform { 
+	 .memeberdiv span , .addmemeberform ,.suggest-bandtype ,.suggest-bandloc, .suggest-username,  .suggest-usertype, .address-holder, .suggest-holder, .addhighlightform , .addrepertoireform { 
 	 	display: inline;}
 	 .addmemeberform  * , .addhighlightform *, .addrepertoireform *{float: left;  margin: 0px;}
 	 .suggest-holder , .address-holder { margin-left: 20px;}
-	 .suggest-holder input,.suggest-username input , .suggest-usertype input, .suggest-bandtype input , .address-holder input{  border-radius: 2px;
+	 .suggest-holder input,.suggest-username input , .suggest-usertype input, .suggest-bandloc input, .suggest-bandtype input , .address-holder input{  border-radius: 2px;
 	 	 /* margin: 0px; 
 	 	margin-left: 20px; 
 	 	margin-top: -3px; margin-bottom: 0px ;
@@ -282,9 +347,10 @@ max-height: 300px;
 #spostecodeinput{color: red}
 #selectaddress{width: 100%}
 /*styling dropdown postecode*/
-.addpostecode, .addadress , .bandtypesearch .bandtypecontainer, .usertypecontainer{height: 30px; display: inline; width: auto ; }
-.bandtypesearch .bandtypecontainer{width: 85%}
+.addpostecode, .addadress , .bandtypesearch .bandtypecontainer,.bandlocationsearch .bandlocationcontainer, .usertypecontainer{height: 30px; display: inline; width: auto ; }
+.bandtypesearch .bandtypecontainer, .bandlocationsearch .bandlocationcontainer {width: 85%}
 .usertypecontainer{width: 90%}
+.bandlocationcontainer {width: 90%}
 /*.addpostecode > div , .addpostecode > span  {display: inline; margin-right: 0px; padding-right: 0px}*/
 
 /*.addpostecode > span {margin-top: -20px ; margin-left: 20px}*/
@@ -326,7 +392,7 @@ max-height: 300px;
 		/*margin-bottom: 1px; */
 		border-radius: 5px;
     }
-    .suggest-usertype  input , .suggest-username input{
+    .suggest-bandloc  input , .suggest-username input, .suggest-usertype input {
     	width: 70%;
         height: 28px;
         border: 1px solid rgba(0,120,0,.6);
@@ -353,7 +419,7 @@ max-height: 300px;
 		z-index: 10;
 		overflow-x: hidden;
     }
-    .suggest-bandtype ul , .suggest-usertype ul , .suggest-username ul
+    .suggest-bandtype ul , .suggest-usertype ul , .suggest-username ul , .suggest-bandloc ul
     {
        color: white;
         display: none;
@@ -369,17 +435,17 @@ max-height: 300px;
 		z-index: 10;
 		overflow-x: hidden;
     }
-    .suggest-usertype ul , .suggest-username ul{margin-left: 17px}
+    .suggest-usertype ul , .suggest-username ul, .suggest-bandloc ul{margin-left: 17px}
     .address-holder ul  {width: 230px;}
     .postcodeevent ul ,.addressnameevent ul ,.addresseventedit ul.zonecodes {width: 100%}
-.suggest-prompt, .suggest-bandtypeinput , .inputaddress , .suggest-usertype , .suggest-username{margin-bottom: 2px}
+.suggest-prompt, .suggest-bandtypeinput , .suggest-bandloc input, .inputaddress , .suggest-usertype , .suggest-username{margin-bottom: 2px}
 .suggest-bandtypeinput {padding-left: 5px}
-.postcodeevent ul li:hover, .addressnameevent ul li:hover, .addresseventedit ul li:hover{color: #ff6600; cursor: pointer; }
+.postcodeevent ul li:hover, .locations li:hover , .addressnameevent ul li:hover, .addresseventedit ul li:hover{color: #ff6600; cursor: pointer; }
  .suggest-holder li:hover , 
  .suggest-usertype li:hover ,.suggest-username li:hover ,
   .suggest-bandtype li:hover , .address-holder li:hover,
    .address-holder li:hover {color: #ff6600; cursor: pointer;}
-        .suggest-holder li, .suggest-bandtype li ,.suggest-username li , .address-holder li , .suggest-usertype li {
+        .suggest-holder li,.locations li, .suggest-bandtype li ,.suggest-username li , .address-holder li , .suggest-usertype li {
             padding: 5px;
         }
         .suggest-holder > li:hover, .bandtype li:hover,  .bandtype li:active ,.suggest-holder > li.active , .postcodeevent >li:active, .addressnameevent >li:active, .addressnameevent >li:hover, .addresseventedit >li:hover, .addresseventedit >li:active, .postcodeevent >li:hover, .address-holder > li:hover,.address-holder > li.active {
@@ -390,8 +456,13 @@ max-height: 300px;
                 display: block;
                 height: 15px;
             }
+.doc {
+width: 100%;
+height: 300px;
+z-index: 99999999999999999;
+}
 
-.addpostecode , .bandtypecontainer , .usertypecontainer{ padding-bottom: 20px; position: absolute;}
+.addpostecode , .bandtypecontainer , .usertypecontainer, .bandlocationcontainer { padding-bottom: 20px; position: absolute;}
 .addadress { padding-bottom: 20px; position: absolute;}
 
 .highlightslist ul li:hover{cursor: pointer ;}
@@ -400,15 +471,16 @@ max-height: 300px;
 	position: relative; 
 }
 .ratingdiv p { position: relative; margin-left: 10px; margin-top: 5px;
-float: none; width: 100px ; display: inline; position: absolute; }
+float: none; width: 100px ; display: inline; position: absolute; cursor: pointer; }
 .wishlist, .hire{
  position: relative;
+ cursor: pointer;
  color: #ff6600 ; }
- .repRequest, .uploadsongdiv, .uploadimgdiv , .uploadvideodiv, .addevent{ display: none; width: auto;  float: left; 
+ .repRequest, .uploadsongdiv, .adddocument, .addnewalbum, .uploadimgdiv , .uploadvideodiv, .addevent{ display: none; width: auto;  float: left; 
  	margin-top: 8px;  }
- 	.uploadsongimgdiv{width: auto; float: left; margin-top: 8px}
+ 	.uploadsongimgdiv {width: auto; float: left; margin-top: 8px}
  	.repRequest{background-color: gray}
- 	 .repRequest span , .uploadsongdiv span, .uploadimgdiv span, .uploadvideodiv span, .addevent span, .uploadsongimgdiv span{
+ 	 .repRequest span , .uploadsongdiv span, .addnewalbum span , .adddocument span, .uploadimgdiv span, .uploadvideodiv span, .addevent span, .uploadsongimgdiv span{
 font-size: 12px;}
  
 .tabs li {display: inline;}
@@ -432,12 +504,13 @@ font-size: 12px;}
 .badge:hover {display : none ; background-color: #ff6600}
 /*end styling dropdown postecode*/ 
 /*search section styling*/
-#bandnamesearch, .bandtypesearch , .salarydiv, .sortby{width: 100%; height: auto; margin: 10px 0px}
+#bandnamesearch, .bandtypesearch ,.bandlocationsearch , .salarydiv, .sortby{width: 100%; height: auto; margin: 10px 0px}
 
 .salarylabel{width: auto; ; display: inline; font-size: 12px ; font-weight: bold;}
 .searchdiv {width:  100% ; margin: 0px ; position: relative;}
 .searchlabel{float: right ; cursor: pointer; padding: 0px ; font-size: 12px; font-weight: bold; position: relative;}
-.bandtypecontainer {margin-left: 13px ;}
+.bandtypecontainer , .bandlocationcontainer {margin-left: 13px ;}
+.bandlocationcontainer {margin-left:  13px}
 #bandnamesearch input {
 	display: inline; 
 	width: 70% ;
@@ -507,6 +580,9 @@ font-size: 12px;}
  .updateeventname, .updateeventend,.updateeventvenue, .updateeventaddress, .updateeventcity, .updateeventtype,.updateeventregionname , .updateeventpostcode, .updateeventstart {float: right;  color: #001a4d; cursor: pointer;}
 .updateeventtype i,.updateeventvenue i, .updateeventend i,.updateeventaddress i, .updateeventcity i, .updateeventregionname i, .updateeventname i, .updateeventpostcode i, .updateeventstart i , .updateeventstartdate i {font-weight: bold; font-size: 17px;}
 .eventnameedit, .eventtypeedit,.addresseventedit, .venueeventedit, .eventregionnameedit, .eventstartdateedit,.eventcitynameedit, .eventregionnameedit, .eventenddateedit, .eventpostcodeedit{display: none;}
+.sendmessagecontainer {width: 100%; height:100px; position: relative;}
+ .rating {color: gray}
+.sendmessagecontainer textarea { width: 100%;min-height:80px; position: relative; padding: 0px; margin: 0px}
 /*end salary range slider */
 /* #Tablet (Landscape)
 ----------------------------------------------------------------------*/
@@ -533,7 +609,7 @@ font-size: 12px;}
 	.wall{ background-color: red; width: 10%;}
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 25px ; cursor: pointer;}
 .removeHighlight {display: none;}
-.repRequest span, .uploadsongdiv span, .uploadimgdiv span, .addevent span, .uploadvideodiv span, .uploadsongimgdiv span{ font-size: 12px;}
+.repRequest span, .adddocument span, .addnewalbum span, .uploadsongdiv span, .uploadimgdiv span, .addevent span, .uploadvideodiv span, .uploadsongimgdiv span{ font-size: 12px;}
 .product_inner p.price{ font-size: 15px ; margin-right: 10px}
 .product_inner p.rating{ float: left }
 
@@ -549,7 +625,7 @@ font-size: 12px;}
 .usertypesearch {height: auto;}
 .songnamespanlabel{font-size: 12px; font-weight: bold;width: auto; padding-right: 5px }
 	.salarylabel {display: block;}
-	 .suggest-bandtype .suggest-availability{font-size: 11px}
+	 .suggest-bandtype .suggest-availability, .suggest-bandloc {font-size: 11px}
 	.product_meta a.f_btn {float: left; }
 	.product_inner p.rating , .product_inner p.price{float: left ; font-size: 12px}
 	.product_inner p.price{margin-right: 10px;}
@@ -599,7 +675,7 @@ font-size: 12px;}
 .addmemeberform span{padding-top: 0px ; margin-left: 15px}
 		.wishlist span { white-space: nowrap; position: absolute; }
 
-		.repRequest span , .uploadsongdiv span , .addevent span, .uploadvideodiv span , .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
+		.repRequest span , .adddocument span, .addnewalbum span, .uploadsongdiv span , .addevent span, .uploadvideodiv span , .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 12px;}
 		.hire span{margin-top: -5px ; position: absolute; }
  
  .userstable tbody tr td:nth-child(7),
@@ -663,7 +739,7 @@ font-size: 12px;}
     opacity: 0.5;
     border-radius: 5px 5px 0px 0px;}
 #notificationTitle h4{font-size: 13px}
-#notificationWrapper{padding:9px; margin-top: 12px; }
+#notificationWrapper, #messagesWrapper {padding:9px; margin-top: 12px; }
 .usrPrflnm , .notificationsicon, .messagessicon {font-size: 15px }
 	.profilecover { height: 300px}
 	.usercontainer{margin-top: 70px; float: none;}
@@ -673,7 +749,7 @@ font-size: 12px;}
 	/*.avatarContainer span{height: 80% ; font-size: 5px; color: red;}*/
 	.wall{ background-color: blue; width: 10%; height: 500px}
 .username{font-size : 0.5em ;}
-#notificationWrapper{float: left; width: 75% ; padding:9px;}
+#notificationWrapper, #messagesWrapper {float: left; width: 75% ; padding:9px;}
 #ullist li p.notcontent  { display:inline; float: none; width: 100% }
 
 #ullist li .notcontent a  { /*display: block;*/ }
@@ -683,19 +759,19 @@ font-size: 12px;}
 /*#ullist li .notcontent a.accept  { display: block; float: none; width:  20% }
 #ullist li .notcontent a.reject  { display: inline; float: right; width: 0% }*/
 .notcontent i {display: none;}
-	#notificationWrapper #ullist li > p > a.owner  
+	#notificationWrapper #ullist li > p > a.owner ,  #notificationWrapper #ullist li > p > a.owner 
 	{/*display: inline;float: none; */
 		width: 10% ;font-size: 13px}
 .ullist header p  {font-size: 12px ; }
 p.notcontent {font-size: 12px ;  width:100%; display: block;}
 #memeberdiv >  #errors{font-size: 12px}
-.repRequest , .uploadsongdiv, .uploadimgdiv ,.addevent , .uploadvideodiv{margin-top: 0px}
+.repRequest , .uploadsongdiv, .adddocument , .addnewalbum, .uploadimgdiv ,.addevent , .uploadvideodiv{margin-top: 0px}
 .tabs li a  {display: inline;  }
 /*.tabs li  {display: inline;  margin: 10px 10px 7px -5px}*/
 .tabs li  {display: inline;  margin: 10px 5px 7px -5px}
 
 
-.repRequest span, .uploadsongdiv span, .addevent span,.uploadvideodiv span, .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 10px;}
+.repRequest span, .adddocument span, .addnewalbum span, .uploadsongdiv span, .addevent span,.uploadvideodiv span, .uploadimgdiv span, .uploadsongimgdiv span{ font-size: 10px;}
 .usercontainer{margin-top: 50px}
 	.subcover {margin-bottom: -20px}
 	.hire span {margin-top: -5px ; position: absolute;}
@@ -716,13 +792,13 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 @media only screen and (min-width: 100px) and (max-width: 479px) {
 	.postcodeevent ul ,.addressnameevent ul ,.addresseventedit ul.zonecodes {width: 100%}
 	#mycalendar {width: 100%; height: 100%}
-	 #popupevent .input-group input ,#popupevent .input-group span { height: 30px}
+	 #popupevent .input-group input ,#popupevent .input-group span, #bookingdetails .input-group input, #bookingdetails .input-group span { height: 30px}
 
-	 #popupevent .input-group  {width: 100%}
-	 #popupevent .input-group input {border-radius: 15px 5px 5px 5px}
-	 #popupevent .input-group span {margin-left: 0px; margin-top: 0px}
-     #popupevent .def-block {padding-bottom: 5px; margin-bottom: 0px; padding-top: 10px }
-     #popupevent #popupeventclose {margin-top: -15px}
+	 #popupevent .input-group, #bookingdetails .input-group   {width: 100%}
+	 #popupevent .input-group input, #bookingdetails .input-group input {border-radius: 15px 5px 5px 5px}
+	 #popupevent .input-group span , #bookingdetails .input-group span{margin-left: 0px; margin-top: 0px}
+     #popupevent .def-block , #bookingdetails .def-block {padding-bottom: 5px; margin-bottom: 0px; padding-top: 10px }
+     #popupevent #popupeventclose, #bookingdetails #bookingdetailsclose  {margin-top: -15px}
 	.tback{top:0px;}
 	#erryoutubeurl, #eventerr, #eventediterr{margin-left: -10px}
 .userstable tbody tr td:nth-child(7),
@@ -763,6 +839,16 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 	text-align: left;
    
 }
+
+/*.usermessages .togglenotification{padding-right:  11px;}
+ .transparent
+{
+    padding-left: 12px; padding-right:  5px;
+    padding-top: 2px; padding-bottom:  17px;
+    opacity: 0.5;
+    border-radius: 5px 5px 0px 0px;
+}*/
+
 .togglenotification{
 	 background-color: black;
     padding-left: 5px; padding-right:  2px;
@@ -770,13 +856,20 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
     opacity: 0.5;
     border-radius: 5px 5px 0px 0px;
 }
-#notificationWrapper{float: none; 
+.usermessages .togglenotification{padding-right:  4px;}
+.transparent {
+	padding-left: 5px; padding-right:  2px;
+    padding-top: 2px; padding-bottom:  11px;
+    opacity: 0.5;
+    border-radius: 5px 5px 0px 0px;
+}
+#notificationWrapper, #messagesWrapper {float: none; 
 	width: 75% ; padding:9px;  margin-left: 90px;
 	margin-top: -22px;
 }
 .username{width: 100%; float: none; font-size : 0.5em ;}
 /*.usernotifications, .usermessages{width: 50%; float: left }*/
-#notificationWrapper{float: left; width: 75% ; padding:9px;}
+#notificationWrapper, #messagesWrapper {float: left; width: 75% ; padding:9px;}
 #ullist li .notcontent a.accept  { display: block; float: none; width:  20% }
 #ullist li .notcontent a.reject  { display: inline; float: left; width: 20% }
 .notcontent i {display: none;}
@@ -793,8 +886,8 @@ p.notcontent {font-size: 12px ;  width:100%; display: block;}
 	.avatarContainer{height: 60px ; width:60px ; margin-top: 45px;  border: 3px solid white; border-radius: 2px}
 	.changeAvatar {width: 60px}
 	.wall{font-size : 0.5em ; background-color: blue; width: 10%; height: 500px;}
-	#notificationWrapper #ullist > li > p.owner  {font-size: 12px }
-	#notificationWrapper #ullist li > p > a.owner  {display: block;float: none; width: 100% ; font-size: 12px}
+	#notificationWrapper #ullist > li > p.owner, #messagesWrapper #ullist > li > p.owner  {font-size: 12px }
+	#notificationWrapper #ullist li > p > a.owner , #messagesWrapper #ullist li > p > a.owner {display: block;float: none; width: 100% ; font-size: 12px}
 .ullist header p  {font-size: 11px}
 p.notcontent {font-size: 11px}
   .addrepertoireform {padding-right: 10%  }
@@ -820,16 +913,17 @@ p.notcontent {font-size: 11px}
 .suggest-holder {width: 145px}
 .suggest-holder input , .suggest-holder ul {width: 145px}
 .ratingdiv p{ font-size: 8px ; margin-top: 5px}
-.repRequest , .uploadsongdiv , .uploadimgdiv ,.addevent, .uploadvideodiv{margin-top: 0px}
+.repRequest , .uploadsongdiv , .adddocument, .addnewalbum .uploadimgdiv ,.addevent, .uploadvideodiv{margin-top: 0px}
+.addnewalbum {margin-top: -5px}
 .uploadsongdiv , .uploadimgdiv,.addevent, .uploadvideodiv{margin-top: 2px}
 .tabs li a  {display: inline;  }
 .tabs li  {display: inline;  margin: 10px 10px 7px -5px}
 .suggest-holder {margin-left: 10px}
 #regioninput {margin-left: 25px}
 #cityinput{margin-left: 45px}
-.repRequest span , .uploadsongdiv span, .addevent span, .uploadimgdiv span,.uploadvideodiv span ,.uploadsongimgdiv span{ font-size: 9px;}
+.repRequest span , .uploadsongdiv span, .adddocument span, .addnewalbum span, .addevent span, .uploadimgdiv span,.uploadvideodiv span ,.uploadsongimgdiv span{ font-size: 9px;}
 .bandnameinputsearch{display: inline; text-align: left;}
-.bandtypesearch {display: block; margin: -10px 0px}
+.bandtypesearch , .bandlocationsearch {display: block; margin: -10px 0px}
 .savemember{display: none;}
 #socialpageinput, #socialpageuserinput{width: 100%; float: none; font-size: 11px}
 /*#socialpagespan a{width: 100%; float: none; font-size: 11px}
